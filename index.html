@@ -117,4 +117,120 @@
     const pagination = document.getElementById("pagination");
 
     const owner = "monana670-create";
-    const repo = "C.
+    const repo = "C.T.-Gallery";
+    const folder = "images";
+
+    const ITEMS_PER_PAGE = 9;
+    let currentPage = 1;
+    let allImageFiles = [];
+
+    fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${folder}`)
+      .then(response => {
+        if (!response.ok) throw new Error("Network response was not ok");
+        return response.json();
+      })
+      .then(files => {
+        // 응답이 배열인지 확인 후 이미지 필터링
+        if (Array.isArray(files)) {
+          allImageFiles = files.filter(file =>
+            /\.(jpg|jpeg|png|gif|webp)$/i.test(file.name)
+          );
+        } else {
+          allImageFiles = [];
+        }
+
+        // 개수 표시
+        imageCount.textContent =
+          String(allImageFiles.length).padStart(2, "0") + " IMAGES";
+
+        // 이미지가 없거나 폴더가 비어있는 경우 예외 처리
+        if (allImageFiles.length === 0) {
+          gallery.innerHTML = `<p class="error">등록된 이미지가 없습니다.</p>`;
+        } else {
+          renderPage(currentPage);
+        }
+      })
+      .catch(error => {
+        console.error("이미지를 불러오지 못했습니다.", error);
+        imageCount.textContent = "00 IMAGES";
+        gallery.innerHTML = `
+          <p class="error">
+            등록된 이미지가 없거나 불러오지 못했습니다.
+          </p>
+        `;
+      });
+
+    function renderPage(page) {
+      gallery.innerHTML = "";
+
+      const startIndex = (page - 1) * ITEMS_PER_PAGE;
+      const endIndex = startIndex + ITEMS_PER_PAGE;
+      const pageFiles = allImageFiles.slice(startIndex, endIndex);
+
+      pageFiles.forEach(file => {
+        const item = document.createElement("div");
+        item.className = "gallery-item";
+
+        const img = document.createElement("img");
+        img.src = file.download_url;
+        img.alt = file.name;
+        img.loading = "lazy";
+
+        item.appendChild(img);
+        gallery.appendChild(item);
+      });
+
+      renderPaginationButtons();
+    }
+
+    function renderPaginationButtons() {
+      pagination.innerHTML = "";
+      const totalPages = Math.ceil(allImageFiles.length / ITEMS_PER_PAGE);
+
+      if (totalPages <= 1) return;
+
+      const prevBtn = document.createElement("button");
+      prevBtn.textContent = "PREV";
+      prevBtn.disabled = currentPage === 1;
+      prevBtn.addEventListener("click", () => {
+        if (currentPage > 1) {
+          currentPage--;
+          renderPage(currentPage);
+          scrollToGallery();
+        }
+      });
+      pagination.appendChild(prevBtn);
+
+      for (let i = 1; i <= totalPages; i++) {
+        const pageBtn = document.createElement("button");
+        pageBtn.textContent = i;
+        if (i === currentPage) pageBtn.classList.add("active");
+
+        pageBtn.addEventListener("click", () => {
+          currentPage = i;
+          renderPage(currentPage);
+          scrollToGallery();
+        });
+        pagination.appendChild(pageBtn);
+      }
+
+      const nextBtn = document.createElement("button");
+      nextBtn.textContent = "NEXT";
+      nextBtn.disabled = currentPage === totalPages;
+      nextBtn.addEventListener("click", () => {
+        if (currentPage < totalPages) {
+          currentPage++;
+          renderPage(currentPage);
+          scrollToGallery();
+        }
+      });
+      pagination.appendChild(nextBtn);
+    }
+
+    function scrollToGallery() {
+      document.querySelector('.content-section.active').scrollIntoView({ behavior: 'smooth' });
+    }
+  </script>
+
+</body>
+</html>
