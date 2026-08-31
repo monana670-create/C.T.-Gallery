@@ -1,435 +1,553 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+KR:wght@400;500;600;700&display=swap');
 
 /* =========================
-   기본 설정
+BASIC
 ========================= */
 
 * {
   box-sizing: border-box;
-}
+  }
 
 html {
-  scroll-behavior: smooth;
+scroll-behavior: smooth;
 }
 
 body {
-  margin: 0;
+margin: 0;
 
-  background: #0b0b0d;
-  color: #f5f5f5;
+background: #f5f1e8;
+color: #171717;
 
-  font-family: 'Inter', sans-serif;
+font-family: 'Noto Sans KR', sans-serif;
 }
 
-
 /* =========================
-   HEADER & NAV
+HEADER
 ========================= */
 
 .header {
-  height: 80px;
+height: 82px;
 
-  padding: 0 5vw;
+padding: 0 5vw;
 
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+display: flex;
+align-items: center;
+justify-content: space-between;
 
-  border-bottom: 1px solid #242428;
+border-bottom: 2px solid #171717;
+
+background: #f5f1e8;
 }
-
 
 .logo {
-  display: flex;
-  align-items: baseline;
+display: flex;
+align-items: baseline;
 
-  gap: 10px;
+gap: 10px;
 
-  letter-spacing: -0.03em;
+letter-spacing: -0.04em;
 }
-
 
 .logo span {
-  font-size: 22px;
-  font-weight: 700;
-}
+font-family: 'Bebas Neue', sans-serif;
 
+font-size: 30px;
+
+letter-spacing: 0.03em;
+}
 
 .logo small {
-  font-size: 10px;
+font-size: 9px;
 
-  color: #777;
+color: #3157ff;
 
-  letter-spacing: 0.2em;
+font-weight: 700;
+
+letter-spacing: 0.22em;
 }
-
 
 .header-nav {
-  display: flex;
-  gap: 20px;
-}
+display: flex;
 
+gap: 26px;
+}
 
 .nav-btn {
-  background: transparent;
-  border: none;
-  padding: 0;
+position: relative;
 
-  font-family: 'Inter', sans-serif;
-  font-size: 10px;
-  font-weight: 600;
+background: transparent;
+border: none;
 
-  color: #555;
+padding: 8px 0;
 
-  letter-spacing: 0.18em;
-  cursor: pointer;
+font-family: 'Noto Sans KR', sans-serif;
 
-  transition: color 0.3s ease;
+font-size: 10px;
+font-weight: 700;
+
+color: #999;
+
+letter-spacing: 0.15em;
+
+cursor: pointer;
+
+transition:
+color 0.25s ease,
+transform 0.25s ease;
 }
-
 
 .nav-btn:hover {
-  color: #aaa;
-}
+color: #3157ff;
 
+transform: translateY(-2px);
+}
 
 .nav-btn.active {
-  color: #f5f5f5;
+color: #171717;
 }
 
+.nav-btn.active::after {
+content: "";
+
+position: absolute;
+
+left: 0;
+bottom: 0;
+
+width: 100%;
+height: 3px;
+
+background: #3157ff;
+}
 
 /* =========================
-   MAIN
+MAIN
 ========================= */
 
 main {
-  width: min(1400px, 90%);
+width: min(1400px, 90%);
 
-  margin: 0 auto;
+margin: 0 auto;
 }
 
-
 /* =========================
-   INTRO
+INTRO
 ========================= */
 
 .intro {
-  padding: 120px 0 100px;
-}
+padding: 120px 0 100px;
 
+position: relative;
+}
 
 .eyebrow {
-  margin: 0 0 25px;
+margin: 0 0 28px;
 
-  color: #777;
+color: #3157ff;
 
-  font-size: 11px;
-  font-weight: 600;
+font-size: 10px;
 
-  letter-spacing: 0.25em;
+font-weight: 700;
+
+letter-spacing: 0.25em;
 }
-
 
 .intro h1 {
-  margin: 0;
+margin: 0;
 
-  font-size: clamp(70px, 13vw, 190px);
+font-family: 'Bebas Neue', sans-serif;
 
-  line-height: 0.82;
+font-size: clamp(90px, 15vw, 210px);
 
-  letter-spacing: -0.08em;
+line-height: 0.75;
 
-  font-weight: 700;
+letter-spacing: 0.015em;
+
+font-weight: 400;
 }
-
 
 .intro h1 span {
-  color: #555;
+color: #3157ff;
 }
-
 
 .description {
-  margin-top: 55px;
+margin-top: 60px;
 
-  color: #888;
+color: #666;
 
-  font-size: 14px;
+font-size: 13px;
 
-  line-height: 1.8;
+line-height: 1.9;
 }
 
+.intro-line {
+width: 100%;
+
+height: 12px;
+
+margin-top: 75px;
+
+background:
+linear-gradient(
+90deg,
+#3157ff 0%,
+#3157ff 18%,
+#dfe4ff 18%,
+#dfe4ff 100%
+);
+}
 
 /* =========================
-   CONTENT SECTIONS
+CONTENT
 ========================= */
 
 .content-section {
-  display: none;
-  padding-bottom: 120px;
-}
+display: none;
 
+padding-bottom: 120px;
+}
 
 .content-section.active {
-  display: block;
+display: block;
 }
-
 
 .section-title {
-  display: flex;
+display: flex;
 
-  align-items: center;
-  justify-content: space-between;
+align-items: flex-end;
 
-  margin-bottom: 25px;
+justify-content: space-between;
 
-  padding-bottom: 15px;
+margin-bottom: 28px;
 
-  border-bottom: 1px solid #29292d;
+padding-bottom: 16px;
+
+border-bottom: 2px solid #171717;
 }
 
+.section-title > div {
+display: flex;
+
+align-items: baseline;
+
+gap: 15px;
+}
+
+.section-number {
+margin: 0;
+
+color: #3157ff;
+
+font-family: 'Bebas Neue', sans-serif;
+
+font-size: 20px;
+
+letter-spacing: 0.05em;
+}
 
 .section-title h2 {
-  margin: 0;
+margin: 0;
 
-  font-size: 12px;
+font-family: 'Bebas Neue', sans-serif;
 
-  font-weight: 600;
+font-size: 27px;
 
-  letter-spacing: 0.18em;
+font-weight: 400;
+
+letter-spacing: 0.06em;
 }
 
+.section-title > span {
+color: #777;
 
-.section-title span {
-  color: #666;
+font-size: 9px;
 
-  font-size: 11px;
+font-weight: 700;
 
-  letter-spacing: 0.1em;
+letter-spacing: 0.16em;
 }
-
 
 /* =========================
-   GALLERY (원래의 2열 복원)
+GALLERY
 ========================= */
 
 .gallery {
-  display: grid;
+display: grid;
 
-  grid-template-columns: repeat(2, 1fr);
+grid-template-columns:
+repeat(2, minmax(0, 1fr));
 
-  gap: 18px;
+gap: 22px;
 }
-
 
 .gallery-item {
-  overflow: hidden;
+position: relative;
 
-  background: #151519;
+overflow: hidden;
 
-  border-radius: 3px;
+background: #e8e3d9;
 
-  cursor: pointer;
+border: 1px solid #d5d0c6;
+
+cursor: pointer;
+
+transition:
+transform 0.35s ease,
+box-shadow 0.35s ease;
 }
 
+.gallery-item::after {
+content: "";
+
+position: absolute;
+
+inset: 0;
+
+border: 0 solid #3157ff;
+
+pointer-events: none;
+
+transition: border-width 0.3s ease;
+}
 
 .gallery-item img {
-  display: block;
+display: block;
 
-  width: 100%;
+width: 100%;
 
-  height: auto;
+height: auto;
 
-  transition:
-    transform 0.5s cubic-bezier(.2,.7,.2,1),
-    filter 0.5s ease;
+transition:
+transform 0.55s cubic-bezier(.2,.7,.2,1),
+filter 0.4s ease;
 }
 
+.gallery-item:hover {
+transform: translateY(-5px);
+
+box-shadow:
+8px 8px 0 #3157ff;
+}
+
+.gallery-item:hover::after {
+border-width: 4px;
+}
 
 .gallery-item:hover img {
-  transform: scale(1.025);
+transform: scale(1.035);
 
-  filter: brightness(0.85);
+filter: brightness(0.94);
 }
-
-
-/* 임시 플레이스홀더 영역 */
-.tab-content-placeholder {
-  padding: 80px 0;
-  color: #666;
-  font-size: 13px;
-  letter-spacing: 0.05em;
-}
-
 
 /* =========================
-   PAGINATION
+PLACEHOLDER
+========================= */
+
+.tab-content-placeholder {
+padding: 100px 0;
+
+color: #777;
+
+font-size: 13px;
+
+letter-spacing: 0.04em;
+}
+
+/* =========================
+PAGINATION
 ========================= */
 
 .pagination {
-  display: flex;
+display: flex;
 
-  justify-content: center;
+justify-content: center;
 
-  align-items: center;
+align-items: center;
 
-  gap: 8px;
+gap: 7px;
 
-  margin-top: 60px;
+margin-top: 60px;
 }
-
 
 .pagination button {
-  background: transparent;
+min-width: 36px;
 
-  color: #777;
+height: 36px;
 
-  border: 1px solid #29292d;
+background: transparent;
 
-  border-radius: 3px;
+color: #555;
 
-  padding: 8px 14px;
+border: 1px solid #c9c4ba;
 
-  font-size: 11px;
+border-radius: 0;
 
-  font-family: inherit;
+padding: 0 10px;
 
-  letter-spacing: 0.1em;
+font-size: 11px;
 
-  cursor: pointer;
+font-family: 'Noto Sans KR', sans-serif;
 
-  transition: all 0.2s ease;
+font-weight: 600;
+
+cursor: pointer;
+
+transition: all 0.2s ease;
 }
-
 
 .pagination button:hover:not(:disabled) {
-  color: #f5f5f5;
+color: #fff;
 
-  border-color: #555;
+border-color: #3157ff;
 
-  background: #151519;
+background: #3157ff;
 }
-
 
 .pagination button.active {
-  color: #0b0b0d;
+color: #fff;
 
-  background: #f5f5f5;
+background: #171717;
 
-  border-color: #f5f5f5;
+border-color: #171717;
 
-  font-weight: 600;
+font-weight: 700;
 }
-
 
 .pagination button:disabled {
-  opacity: 0.25;
+opacity: 0.25;
 
-  cursor: not-allowed;
+cursor: not-allowed;
 }
 
-
 /* =========================
-   에러 메시지
+ERROR
 ========================= */
 
 .error {
-  width: 100%;
+width: 100%;
 
-  padding: 60px 20px;
+padding: 70px 20px;
 
-  color: #777;
+color: #888;
 
-  text-align: center;
+text-align: center;
 
-  font-size: 14px;
+font-size: 13px;
 }
 
-
 /* =========================
-   FOOTER
+FOOTER
 ========================= */
 
 footer {
-  width: 90%;
+width: 90%;
 
-  max-width: 1400px;
+max-width: 1400px;
 
-  margin: 0 auto;
+margin: 0 auto;
 
-  padding: 25px 0 40px;
+padding: 25px 0 40px;
 
-  display: flex;
+display: flex;
 
-  justify-content: space-between;
+justify-content: space-between;
 
-  border-top: 1px solid #242428;
+border-top: 2px solid #171717;
 
-  color: #555;
+color: #777;
 
-  font-size: 10px;
+font-size: 9px;
 
-  letter-spacing: 0.12em;
+font-weight: 600;
+
+letter-spacing: 0.13em;
 }
 
-
 /* =========================
-   MOBILE
+MOBILE
 ========================= */
 
 @media (max-width: 700px) {
 
-  .header {
-    height: 65px;
+.header {
+height: 68px;
 
-    padding: 0 20px;
-  }
+padding: 0 20px;
 
+}
 
-  .header-nav {
-    gap: 12px;
-  }
+.logo span {
+font-size: 26px;
+}
 
+.header-nav {
+gap: 14px;
+}
 
-  .nav-btn {
-    font-size: 9px;
-  }
+.nav-btn {
+font-size: 8px;
+}
 
+main {
+width: calc(100% - 40px);
+}
 
-  main {
-    width: calc(100% - 40px);
-  }
+.intro {
+padding: 80px 0 70px;
+}
 
+.intro h1 {
+font-size: clamp(80px, 23vw, 130px);
 
-  .intro {
-    padding: 80px 0 70px;
-  }
+line-height: 0.78;
 
+}
 
-  .intro h1 {
-    font-size: clamp(65px, 20vw, 120px);
-  }
+.description {
+margin-top: 45px;
 
+font-size: 12px;
 
-  .description {
-    margin-top: 40px;
-  }
+}
 
+.intro-line {
+margin-top: 55px;
 
-  .content-section {
-    padding-bottom: 80px;
-  }
+height: 8px;
 
+}
 
-  .gallery {
-    grid-template-columns: 1fr;
+.content-section {
+padding-bottom: 80px;
+}
 
-    gap: 12px;
-  }
+.section-title h2 {
+font-size: 23px;
+}
 
+.gallery {
+grid-template-columns: 1fr;
 
-  footer {
-    width: calc(100% - 40px);
-  }
+gap: 14px;
+
+}
+
+.gallery-item:hover {
+transform: none;
+
+box-shadow: none;
+
+}
+
+.gallery-item:hover::after {
+border-width: 0;
+}
+
+footer {
+width: calc(100% - 40px);
+
+font-size: 8px;
+
+}
 
 }
