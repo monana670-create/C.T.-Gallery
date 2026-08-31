@@ -3,13 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <title>C.T. Gallery</title>
-  <meta name="description" content="C.T. Gallery - Image Archive">
-
+  <meta name="description" content="C.T. Gallery - Creative Archive">
   <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
   <header class="header">
@@ -18,96 +15,117 @@
       <small>GALLERY</small>
     </div>
 
-    <div class="header-info">
-      IMAGE ARCHIVE
-    </div>
+    <!-- 우측 상단 메뉴 (경로 이동 링크) -->
+    <nav class="nav-menu">
+      <button class="nav-btn active" data-target="gallery-section">IMAGE ARCHIVE</button>
+      <button class="nav-btn" data-target="character-section">CHARACTER</button>
+      <button class="nav-btn" data-target="worldview-section">WORLDVIEW</button>
+    </nav>
   </header>
 
-
   <main>
-
     <section class="intro">
       <p class="eyebrow">CREATIVE ARCHIVE</p>
-
-      <h1>
-        C.T.<br>
-        <span>Gallery</span>
-      </h1>
-
+      <h1>C.T.<br><span>Gallery</span></h1>
       <p class="description">
         이미지와 작업물을 한곳에 모아두는<br>
         개인 갤러리입니다.
       </p>
     </section>
 
-
-    <section class="gallery-section">
-
+    <!-- 1. 기존 이미지 아카이브 섹션 -->
+    <section id="gallery-section" class="content-section active">
       <div class="section-title">
         <h2>ALL WORKS</h2>
         <span id="image-count">LOADING...</span>
       </div>
-
       <div class="gallery" id="gallery"></div>
-
       <div class="pagination" id="pagination"></div>
-
     </section>
 
-  </main>
+    <!-- 2. 캐릭터 설정 섹션 (추가됨) -->
+    <section id="character-section" class="content-section">
+      <div class="section-title">
+        <h2>CHARACTER SETTINGS</h2>
+      </div>
+      <div class="placeholder-box">
+        <p>캐릭터 설정 내용을 여기에 추가하세요.</p>
+      </div>
+    </section>
 
+    <!-- 3. 세계관 설정 섹션 (추가됨) -->
+    <section id="worldview-section" class="content-section">
+      <div class="section-title">
+        <h2>WORLDVIEW</h2>
+      </div>
+      <div class="placeholder-box">
+        <p>세계관 설정 내용을 여기에 추가하세요.</p>
+      </div>
+    </section>
+  </main>
 
   <footer>
     <span>© C.T. Gallery</span>
-    <span>IMAGE ARCHIVE</span>
+    <span>CREATIVE ARCHIVE</span>
   </footer>
 
-
   <script>
+    /* =========================
+       메뉴 전환 로직 (SPA)
+    ========================= */
+    const navButtons = document.querySelectorAll(".nav-btn");
+    const contentSections = document.querySelectorAll(".content-section");
+
+    navButtons.forEach(button => {
+      button.addEventListener("click", () => {
+        const targetId = button.getAttribute("data-target");
+
+        // 모든 버튼과 섹션의 active 클래스 제거
+        navButtons.forEach(btn => btn.classList.remove("active"));
+        contentSections.forEach(sec => sec.classList.remove("active"));
+
+        // 클릭한 버튼과 해당 섹션 활성화
+        button.classList.add("active");
+        document.getElementById(targetId).classList.add("active");
+      });
+    });
+
+    /* =========================
+       기존 갤러리 API 불러오기
+    ========================= */
     const gallery = document.getElementById("gallery");
     const imageCount = document.getElementById("image-count");
     const pagination = document.getElementById("pagination");
 
-    // GitHub 저장소 정보
     const owner = "monana670-create";
     const repo = "C.T.-Gallery";
     const folder = "images";
 
-    // 페이지네이션 관련 변수
     const ITEMS_PER_PAGE = 9;
     let currentPage = 1;
     let allImageFiles = [];
 
-    // GitHub에서 images 폴더의 파일 목록 가져오기
     fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${folder}`)
       .then(response => {
         if (!response.ok) throw new Error("Network response was not ok");
         return response.json();
       })
       .then(files => {
-        // 이미지 파일만 골라내기
         allImageFiles = files.filter(file =>
           /\.(jpg|jpeg|png|gif|webp)$/i.test(file.name)
         );
 
-        // 이미지 총 개수 표시
         imageCount.textContent =
           String(allImageFiles.length).padStart(2, "0") + " IMAGES";
 
-        // 첫 페이지 출력
         renderPage(currentPage);
       })
       .catch(error => {
         console.error("이미지를 불러오지 못했습니다.", error);
         imageCount.textContent = "ERROR";
-        gallery.innerHTML = `
-          <p class="error">
-            이미지를 불러오지 못했습니다.
-          </p>
-        `;
+        gallery.innerHTML = `<p class="error">이미지를 불러오지 못했습니다.</p>`;
       });
 
-    // 특정 페이지의 이미지를 렌더링하는 함수
     function renderPage(page) {
       gallery.innerHTML = "";
 
@@ -131,14 +149,12 @@
       renderPaginationButtons();
     }
 
-    // 페이지 이동 버튼 생성 함수
     function renderPaginationButtons() {
       pagination.innerHTML = "";
       const totalPages = Math.ceil(allImageFiles.length / ITEMS_PER_PAGE);
 
       if (totalPages <= 1) return;
 
-      // 이전 버튼
       const prevBtn = document.createElement("button");
       prevBtn.textContent = "PREV";
       prevBtn.disabled = currentPage === 1;
@@ -151,7 +167,6 @@
       });
       pagination.appendChild(prevBtn);
 
-      // 숫자 버튼
       for (let i = 1; i <= totalPages; i++) {
         const pageBtn = document.createElement("button");
         pageBtn.textContent = i;
@@ -165,7 +180,6 @@
         pagination.appendChild(pageBtn);
       }
 
-      // 다음 버튼
       const nextBtn = document.createElement("button");
       nextBtn.textContent = "NEXT";
       nextBtn.disabled = currentPage === totalPages;
@@ -179,11 +193,10 @@
       pagination.appendChild(nextBtn);
     }
 
-    // 페이지 변경 시 갤러리 상단으로 부드럽게 이동
     function scrollToGallery() {
-      document.querySelector('.gallery-section').scrollIntoView({ behavior: 'smooth' });
+      document.querySelector('.content-section.active').scrollIntoView({ behavior: 'smooth' });
     }
   </script>
-
 </body>
 </html>
+
