@@ -3,10 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>C.T. Gallery</title>
-  <meta name="description" content="C.T. Gallery - Creative Archive">
+  <meta name="description" content="C.T. Gallery - Image Archive">
+
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
   <header class="header">
@@ -15,188 +18,103 @@
       <small>GALLERY</small>
     </div>
 
-    <!-- 우측 상단 메뉴 (경로 이동 링크) -->
-    <nav class="nav-menu">
-      <button class="nav-btn active" data-target="gallery-section">IMAGE ARCHIVE</button>
+    <nav class="header-nav">
+      <button class="nav-btn active" data-target="gallery-section">WORKS</button>
       <button class="nav-btn" data-target="character-section">CHARACTER</button>
       <button class="nav-btn" data-target="worldview-section">WORLDVIEW</button>
     </nav>
   </header>
 
+
   <main>
+
     <section class="intro">
       <p class="eyebrow">CREATIVE ARCHIVE</p>
-      <h1>C.T.<br><span>Gallery</span></h1>
+
+      <h1>
+        C.T.<br>
+        <span>Gallery</span>
+      </h1>
+
       <p class="description">
         이미지와 작업물을 한곳에 모아두는<br>
         개인 갤러리입니다.
       </p>
     </section>
 
-    <!-- 1. 기존 이미지 아카이브 섹션 -->
+
     <section id="gallery-section" class="content-section active">
+
       <div class="section-title">
         <h2>ALL WORKS</h2>
         <span id="image-count">LOADING...</span>
       </div>
+
       <div class="gallery" id="gallery"></div>
+
       <div class="pagination" id="pagination"></div>
+
     </section>
 
-    <!-- 2. 캐릭터 설정 섹션 (추가됨) -->
+
     <section id="character-section" class="content-section">
+
       <div class="section-title">
         <h2>CHARACTER SETTINGS</h2>
+        <span>ARCHIVE</span>
       </div>
-      <div class="placeholder-box">
-        <p>캐릭터 설정 내용을 여기에 추가하세요.</p>
+
+      <div class="tab-content-placeholder">
+        <p>캐릭터 설정 관련 작업물과 데이터가 들어갈 공간입니다.</p>
       </div>
+
     </section>
 
-    <!-- 3. 세계관 설정 섹션 (추가됨) -->
+
     <section id="worldview-section" class="content-section">
+
       <div class="section-title">
         <h2>WORLDVIEW</h2>
+        <span>ARCHIVE</span>
       </div>
-      <div class="placeholder-box">
-        <p>세계관 설정 내용을 여기에 추가하세요.</p>
+
+      <div class="tab-content-placeholder">
+        <p>세계관 설정 및 스토리 데이터가 들어갈 공간입니다.</p>
       </div>
+
     </section>
+
   </main>
+
 
   <footer>
     <span>© C.T. Gallery</span>
-    <span>CREATIVE ARCHIVE</span>
+    <span>IMAGE ARCHIVE</span>
   </footer>
 
+
   <script>
-    /* =========================
-       메뉴 전환 로직 (SPA)
-    ========================= */
+    // 탭 메뉴 전환
     const navButtons = document.querySelectorAll(".nav-btn");
     const contentSections = document.querySelectorAll(".content-section");
 
-    navButtons.forEach(button => {
-      button.addEventListener("click", () => {
-        const targetId = button.getAttribute("data-target");
+    navButtons.forEach(btn => {
+      btn.addEventListener("click", () => {
+        const targetId = btn.getAttribute("data-target");
 
-        // 모든 버튼과 섹션의 active 클래스 제거
-        navButtons.forEach(btn => btn.classList.remove("active"));
-        contentSections.forEach(sec => sec.classList.remove("active"));
+        navButtons.forEach(b => b.classList.remove("active"));
+        contentSections.forEach(s => s.classList.remove("active"));
 
-        // 클릭한 버튼과 해당 섹션 활성화
-        button.classList.add("active");
+        btn.classList.add("active");
         document.getElementById(targetId).classList.add("active");
       });
     });
 
-    /* =========================
-       기존 갤러리 API 불러오기
-    ========================= */
+
+    // GitHub 갤러리 불러오기
     const gallery = document.getElementById("gallery");
     const imageCount = document.getElementById("image-count");
     const pagination = document.getElementById("pagination");
 
     const owner = "monana670-create";
-    const repo = "C.T.-Gallery";
-    const folder = "images";
-
-    const ITEMS_PER_PAGE = 9;
-    let currentPage = 1;
-    let allImageFiles = [];
-
-    fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${folder}`)
-      .then(response => {
-        if (!response.ok) throw new Error("Network response was not ok");
-        return response.json();
-      })
-      .then(files => {
-        allImageFiles = files.filter(file =>
-          /\.(jpg|jpeg|png|gif|webp)$/i.test(file.name)
-        );
-
-        imageCount.textContent =
-          String(allImageFiles.length).padStart(2, "0") + " IMAGES";
-
-        renderPage(currentPage);
-      })
-      .catch(error => {
-        console.error("이미지를 불러오지 못했습니다.", error);
-        imageCount.textContent = "ERROR";
-        gallery.innerHTML = `<p class="error">이미지를 불러오지 못했습니다.</p>`;
-      });
-
-    function renderPage(page) {
-      gallery.innerHTML = "";
-
-      const startIndex = (page - 1) * ITEMS_PER_PAGE;
-      const endIndex = startIndex + ITEMS_PER_PAGE;
-      const pageFiles = allImageFiles.slice(startIndex, endIndex);
-
-      pageFiles.forEach(file => {
-        const item = document.createElement("div");
-        item.className = "gallery-item";
-
-        const img = document.createElement("img");
-        img.src = file.download_url;
-        img.alt = file.name;
-        img.loading = "lazy";
-
-        item.appendChild(img);
-        gallery.appendChild(item);
-      });
-
-      renderPaginationButtons();
-    }
-
-    function renderPaginationButtons() {
-      pagination.innerHTML = "";
-      const totalPages = Math.ceil(allImageFiles.length / ITEMS_PER_PAGE);
-
-      if (totalPages <= 1) return;
-
-      const prevBtn = document.createElement("button");
-      prevBtn.textContent = "PREV";
-      prevBtn.disabled = currentPage === 1;
-      prevBtn.addEventListener("click", () => {
-        if (currentPage > 1) {
-          currentPage--;
-          renderPage(currentPage);
-          scrollToGallery();
-        }
-      });
-      pagination.appendChild(prevBtn);
-
-      for (let i = 1; i <= totalPages; i++) {
-        const pageBtn = document.createElement("button");
-        pageBtn.textContent = i;
-        if (i === currentPage) pageBtn.classList.add("active");
-
-        pageBtn.addEventListener("click", () => {
-          currentPage = i;
-          renderPage(currentPage);
-          scrollToGallery();
-        });
-        pagination.appendChild(pageBtn);
-      }
-
-      const nextBtn = document.createElement("button");
-      nextBtn.textContent = "NEXT";
-      nextBtn.disabled = currentPage === totalPages;
-      nextBtn.addEventListener("click", () => {
-        if (currentPage < totalPages) {
-          currentPage++;
-          renderPage(currentPage);
-          scrollToGallery();
-        }
-      });
-      pagination.appendChild(nextBtn);
-    }
-
-    function scrollToGallery() {
-      document.querySelector('.content-section.active').scrollIntoView({ behavior: 'smooth' });
-    }
-  </script>
-</body>
-</html>
-
+    const repo = "C.
