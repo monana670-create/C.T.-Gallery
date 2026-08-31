@@ -48,8 +48,9 @@
         <span id="image-count">LOADING...</span>
       </div>
 
-      <!-- 이미지가 자동으로 들어오는 곳 -->
       <div class="gallery" id="gallery"></div>
+
+      <div class="pagination" id="pagination"></div>
 
     </section>
 
@@ -63,70 +64,125 @@
 
 
   <script>
-
     const gallery = document.getElementById("gallery");
     const imageCount = document.getElementById("image-count");
+    const pagination = document.getElementById("pagination");
 
     // GitHub 저장소 정보
     const owner = "monana670-create";
     const repo = "C.T.-Gallery";
     const folder = "images";
 
+    // 페이지네이션 관련 변수
+    const ITEMS_PER_PAGE = 9;
+    let currentPage = 1;
+    let allImageFiles = [];
 
     // GitHub에서 images 폴더의 파일 목록 가져오기
     fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${folder}`)
-
-      .then(response => response.json())
-
+      .then(response => {
+        if (!response.ok) throw new Error("Network response was not ok");
+        return response.json();
+      })
       .then(files => {
-
         // 이미지 파일만 골라내기
-        const imageFiles = files.filter(file =>
+        allImageFiles = files.filter(file =>
           /\.(jpg|jpeg|png|gif|webp)$/i.test(file.name)
         );
 
-
-        // 이미지 개수 표시
+        // 이미지 총 개수 표시
         imageCount.textContent =
-          String(imageFiles.length).padStart(2, "0") + " IMAGES";
+          String(allImageFiles.length).padStart(2, "0") + " IMAGES";
 
-
-        // 이미지 출력
-        imageFiles.forEach(file => {
-
-          const item = document.createElement("div");
-          item.className = "gallery-item";
-
-
-          const img = document.createElement("img");
-
-          img.src = file.download_url;
-          img.alt = file.name;
-          img.loading = "lazy";
-
-
-          item.appendChild(img);
-          gallery.appendChild(item);
-
-        });
-
+        // 첫 페이지 출력
+        renderPage(currentPage);
       })
-
-
       .catch(error => {
-
         console.error("이미지를 불러오지 못했습니다.", error);
-
         imageCount.textContent = "ERROR";
-
         gallery.innerHTML = `
           <p class="error">
             이미지를 불러오지 못했습니다.
           </p>
         `;
-
       });
 
+    // 특정 페이지의 이미지를 렌더링하는 함수
+    function renderPage(page) {
+      gallery.innerHTML = "";
+
+      const startIndex = (page - 1) * ITEMS_PER_PAGE;
+      const endIndex = startIndex + ITEMS_PER_PAGE;
+      const pageFiles = allImageFiles.slice(startIndex, endIndex);
+
+      pageFiles.forEach(file => {
+        const item = document.createElement("div");
+        item.className = "gallery-item";
+
+        const img = document.createElement("img");
+        img.src = file.download_url;
+        img.alt = file.name;
+        img.loading = "lazy";
+
+        item.appendChild(img);
+        gallery.appendChild(item);
+      });
+
+      renderPaginationButtons();
+    }
+
+    // 페이지 이동 버튼 생성 함수
+    function renderPaginationButtons() {
+      pagination.innerHTML = "";
+      const totalPages = Math.ceil(allImageFiles.length / ITEMS_PER_PAGE);
+
+      if (totalPages <= 1) return;
+
+      // 이전 버튼
+      const prevBtn = document.createElement("button");
+      prevBtn.textContent = "PREV";
+      prevBtn.disabled = currentPage === 1;
+      prevBtn.addEventListener("click", () => {
+        if (currentPage > 1) {
+          currentPage--;
+          renderPage(currentPage);
+          scrollToGallery();
+        }
+      });
+      pagination.appendChild(prevBtn);
+
+      // 숫자 버튼
+      for (let i = 1; i <= totalPages; i++) {
+        const pageBtn = document.createElement("button");
+        pageBtn.textContent = i;
+        if (i === currentPage) pageBtn.classList.add("active");
+
+        pageBtn.addEventListener("click", () => {
+          currentPage = i;
+          renderPage(currentPage);
+          scrollToGallery();
+        });
+        pagination.appendChild(pageBtn);
+      }
+
+      // 다음 버튼
+      const nextBtn = document.createElement("button");
+      nextBtn.textContent = "NEXT";
+      nextBtn.disabled = currentPage === totalPages;
+      nextBtn.addEventListener("click", () => {
+        if (currentPage < totalPages) {
+          currentPage++;
+          renderPage(currentPage);
+          scrollToGallery();
+        }
+      });
+      pagination.appendChild(nextBtn);
+    }
+
+    // 페이지 변경 시 갤러리 상단으로 부드럽게 이동
+    function scrollToGallery() {
+      document.querySelector('.gallery-section').scrollIntoView({ behavior: 'smooth' });
+    }
   </script>
 
 </body>
