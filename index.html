@@ -3,16 +3,131 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>내 이미지 갤러리</title>
+
+  <title>C.T. Gallery</title>
+  <meta name="description" content="C.T. Gallery - Image Archive">
+
   <link rel="stylesheet" href="style.css">
 </head>
-<body>
-  <h1>내 이미지 / 짤 보관소</h1>
 
-  <div class="gallery">
-    <!-- 여기에 이미지들이 들어갈 거야 -->
-    <img src="images/1.jpg" alt="이미지1">
-    <img src="images/2.jpg" alt="이미지2">
-  </div>
+<body>
+
+  <header class="header">
+    <div class="logo">
+      <span>C.T.</span>
+      <small>GALLERY</small>
+    </div>
+
+    <div class="header-info">
+      IMAGE ARCHIVE
+    </div>
+  </header>
+
+
+  <main>
+
+    <section class="intro">
+      <p class="eyebrow">CREATIVE ARCHIVE</p>
+
+      <h1>
+        C.T.<br>
+        <span>Gallery</span>
+      </h1>
+
+      <p class="description">
+        이미지와 작업물을 한곳에 모아두는<br>
+        개인 갤러리입니다.
+      </p>
+    </section>
+
+
+    <section class="gallery-section">
+
+      <div class="section-title">
+        <h2>ALL WORKS</h2>
+        <span id="image-count">LOADING...</span>
+      </div>
+
+      <!-- 이미지가 자동으로 들어오는 곳 -->
+      <div class="gallery" id="gallery"></div>
+
+    </section>
+
+  </main>
+
+
+  <footer>
+    <span>© C.T. Gallery</span>
+    <span>IMAGE ARCHIVE</span>
+  </footer>
+
+
+  <script>
+
+    const gallery = document.getElementById("gallery");
+    const imageCount = document.getElementById("image-count");
+
+    // GitHub 저장소 정보
+    const owner = "monana670-create";
+    const repo = "C.T.-Gallery";
+    const folder = "images";
+
+
+    // GitHub에서 images 폴더의 파일 목록 가져오기
+    fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${folder}`)
+
+      .then(response => response.json())
+
+      .then(files => {
+
+        // 이미지 파일만 골라내기
+        const imageFiles = files.filter(file =>
+          /\.(jpg|jpeg|png|gif|webp)$/i.test(file.name)
+        );
+
+
+        // 이미지 개수 표시
+        imageCount.textContent =
+          String(imageFiles.length).padStart(2, "0") + " IMAGES";
+
+
+        // 이미지 출력
+        imageFiles.forEach(file => {
+
+          const item = document.createElement("div");
+          item.className = "gallery-item";
+
+
+          const img = document.createElement("img");
+
+          img.src = file.download_url;
+          img.alt = file.name;
+          img.loading = "lazy";
+
+
+          item.appendChild(img);
+          gallery.appendChild(item);
+
+        });
+
+      })
+
+
+      .catch(error => {
+
+        console.error("이미지를 불러오지 못했습니다.", error);
+
+        imageCount.textContent = "ERROR";
+
+        gallery.innerHTML = `
+          <p class="error">
+            이미지를 불러오지 못했습니다.
+          </p>
+        `;
+
+      });
+
+  </script>
+
 </body>
 </html>
