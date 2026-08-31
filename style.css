@@ -179,13 +179,13 @@ main {
 
 
 /* =========================
-   GALLERY
+   GALLERY (3열 배치 수정)
 ========================= */
 
 .gallery {
   display: grid;
 
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(3, 1fr);
 
   gap: 18px;
 }
@@ -219,6 +219,73 @@ main {
   transform: scale(1.025);
 
   filter: brightness(0.85);
+}
+
+
+/* =========================
+   PAGINATION (페이지 버튼 추가)
+========================= */
+
+.pagination {
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  gap: 8px;
+
+  margin-top: 60px;
+}
+
+
+.pagination button {
+  background: transparent;
+
+  color: #777;
+
+  border: 1px solid #29292d;
+
+  border-radius: 3px;
+
+  padding: 8px 14px;
+
+  font-size: 11px;
+
+  font-family: inherit;
+
+  letter-spacing: 0.1em;
+
+  cursor: pointer;
+
+  transition: all 0.2s ease;
+}
+
+
+.pagination button:hover:not(:disabled) {
+  color: #f5f5f5;
+
+  border-color: #555;
+
+  background: #151519;
+}
+
+
+.pagination button.active {
+  color: #0b0b0d;
+
+  background: #f5f5f5;
+
+  border-color: #f5f5f5;
+
+  font-weight: 600;
+}
+
+
+.pagination button:disabled {
+  opacity: 0.25;
+
+  cursor: not-allowed;
 }
 
 
@@ -321,3 +388,4 @@ footer {
   }
 
 }
+
