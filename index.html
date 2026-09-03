@@ -5,10 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>C.T. Gallery</title>
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800;900&family=Montserrat:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+  <meta name="description" content="C.T. Gallery Creative Archive">
 
   <link rel="stylesheet" href="style.css">
 </head>
@@ -16,76 +13,96 @@
 <body>
 
   <!-- 배경 장식 -->
-  <div class="bg-decoration deco-one"></div>
-  <div class="bg-decoration deco-two"></div>
-  <div class="bg-decoration deco-three"></div>
+  <div class="background-decoration" aria-hidden="true">
+    <span class="deco-circle deco-circle-1"></span>
+    <span class="deco-circle deco-circle-2"></span>
+    <span class="deco-line deco-line-1"></span>
+    <span class="deco-line deco-line-2"></span>
+  </div>
 
   <!-- HEADER -->
-  <header class="top-header">
+  <header class="header">
+    <button class="logo" type="button" data-target="home-section" aria-label="C.T. Gallery 홈">
+      <strong>C.T.</strong>
+      <span>GALLERY</span>
+    </button>
 
-    <div class="brand" onclick="showSection('home')">
-      <span class="brand-small">CREATIVE ARCHIVE</span>
-      <span class="brand-main">C.T. GALLERY</span>
-    </div>
-
-    <button class="menu-button" id="menuButton" onclick="toggleMenu()" aria-label="메뉴">
+    <!-- 오른쪽 위 삼선 메뉴 -->
+    <button
+      class="menu-toggle"
+      id="menuToggle"
+      type="button"
+      aria-label="메뉴 열기"
+      aria-expanded="false"
+    >
       <span></span>
       <span></span>
       <span></span>
     </button>
-
   </header>
 
 
-  <!-- SIDE MENU -->
-  <div class="menu-overlay" id="menuOverlay" onclick="closeMenu()"></div>
+  <!-- MENU -->
+  <div class="menu-backdrop" id="menuBackdrop"></div>
 
-  <aside class="side-menu" id="sideMenu">
+  <aside class="menu-panel" id="menuPanel" aria-hidden="true">
 
     <div class="menu-top">
-      <span>MENU</span>
-      <button onclick="closeMenu()">×</button>
+      <div>
+        <span class="menu-label">C.T. GALLERY</span>
+        <strong>MENU</strong>
+      </div>
+
+      <span class="menu-index">2026</span>
     </div>
 
-    <div class="menu-line"></div>
+    <nav class="menu-nav">
 
-    <nav>
-      <button onclick="navigateTo('home')">
+      <button
+        class="menu-item active"
+        type="button"
+        data-target="home-section"
+      >
         <span class="menu-number">01</span>
-        <span>
-          <b>HOME</b>
-          <small>MAIN PAGE</small>
-        </span>
+        <span class="menu-name">HOME</span>
+        <span class="menu-arrow">↗</span>
       </button>
 
-      <button onclick="navigateTo('works')">
+      <button
+        class="menu-item"
+        type="button"
+        data-target="gallery-section"
+      >
         <span class="menu-number">02</span>
-        <span>
-          <b>WORKS</b>
-          <small>ILLUSTRATIONS</small>
-        </span>
+        <span class="menu-name">WORKS</span>
+        <span class="menu-arrow">↗</span>
       </button>
 
-      <button onclick="navigateTo('character')">
+      <button
+        class="menu-item"
+        type="button"
+        data-target="character-section"
+      >
         <span class="menu-number">03</span>
-        <span>
-          <b>CHARACTER</b>
-          <small>CHARACTER ARCHIVE</small>
-        </span>
+        <span class="menu-name">CHARACTER</span>
+        <span class="menu-arrow">↗</span>
       </button>
 
-      <button onclick="navigateTo('worldview')">
+      <button
+        class="menu-item"
+        type="button"
+        data-target="worldview-section"
+      >
         <span class="menu-number">04</span>
-        <span>
-          <b>WORLDVIEW</b>
-          <small>WORLD ARCHIVE</small>
-        </span>
+        <span class="menu-name">WORLDVIEW</span>
+        <span class="menu-arrow">↗</span>
       </button>
+
     </nav>
 
     <div class="menu-bottom">
-      <span>C.T. GALLERY</span>
-      <span>EST. 2026</span>
+      <span>CREATIVE ARCHIVE</span>
+      <span>C.T.</span>
     </div>
 
   </aside>
@@ -94,45 +111,63 @@
   <main>
 
     <!-- ==================== HOME ==================== -->
-    <section id="home" class="page-section active">
+    <section
+      id="home-section"
+      class="page-section active"
+    >
 
-      <!-- HERO -->
-      <div class="hero">
+      <!-- MAIN VISUAL -->
+      <div class="home-hero">
 
-        <img src="hero/main.gif" alt="C.T. Gallery Main" class="hero-image">
+        <div class="hero-copy">
 
-        <div class="hero-overlay"></div>
-
-        <div class="hero-grid"></div>
-
-        <div class="hero-content">
-
-          <div class="hero-tag">
-            <span></span>
-            CREATIVE ARCHIVE
-          </div>
+          <span class="eyebrow">
+            CREATIVE ARCHIVE / 2026
+          </span>
 
           <h1>
-            C.T.<br>
+            <span>C.T.</span>
             <strong>GALLERY</strong>
           </h1>
 
           <p>
-            CHARACTER · WORLD · STORY<br>
-            A PERSONAL CREATIVE ARCHIVE
+            Characters, worlds and illustrations<br>
+            collected in one creative archive.
           </p>
 
-          <button class="hero-button" onclick="navigateTo('works')">
-            <span>EXPLORE WORKS</span>
+          <button
+            class="hero-button"
+            type="button"
+            data-target="gallery-section"
+          >
+            <span>VIEW WORKS</span>
             <b>↗</b>
           </button>
 
         </div>
 
-        <div class="hero-corner hero-corner-tl"></div>
-        <div class="hero-corner hero-corner-br"></div>
 
-        <div class="hero-scroll">
+        <div class="hero-visual">
+
+          <div class="hero-shape hero-shape-1"></div>
+          <div class="hero-shape hero-shape-2"></div>
+
+          <div class="hero-image-frame">
+            <img
+              src="hero/main.gif"
+              alt="C.T. Gallery Main Visual"
+              draggable="false"
+            >
+          </div>
+
+          <div class="hero-caption">
+            <span>01</span>
+            <span>VISUAL ARCHIVE</span>
+          </div>
+
+        </div>
+
+        <div class="scroll-guide">
           <span>SCROLL</span>
           <i></i>
         </div>
@@ -141,771 +176,1191 @@
 
 
       <!-- DM BANNER -->
-      <div class="dm-section">
+      <section
+        class="dm-banner"
+        id="dmBanner"
+        aria-label="Featured banner"
+      >
 
-        <div class="section-mini-title">
-          <span>01</span>
-          FEATURED
+        <div class="dm-banner-media">
+          <img
+            src="DM/main.jpg"
+            alt=""
+            draggable="false"
+          >
         </div>
 
-        <div class="dm-banner">
-          <img src="DM/main.jpg" alt="Featured">
+        <div class="dm-banner-overlay"></div>
 
-          <div class="dm-glass">
-            <span>CREATIVE WORKS</span>
-            <b>VISUAL ARCHIVE</b>
-          </div>
-
-          <div class="dm-deco-circle"></div>
+        <div class="dm-banner-content">
+          <span>FEATURED</span>
+          <strong>CREATIVE ARCHIVE</strong>
         </div>
 
-      </div>
+        <div class="dm-banner-corner">
+          <span>SCROLL TO EXPLORE</span>
+          <b>↓</b>
+        </div>
+
+      </section>
 
 
       <!-- TODAY'S CHARACTER -->
-      <div class="today-section">
+      <section class="today-character">
 
         <div class="section-heading">
 
           <div>
-            <span class="section-label">TODAY'S</span>
-            <h2>CHARACTER</h2>
+            <span class="section-eyebrow">DAILY RECOMMENDATION</span>
+            <h2>TODAY'S <em>CHARACTER</em></h2>
           </div>
 
-          <p>
-            Every day, a different story.<br>
-            Meet today's featured character.
-          </p>
+          <span class="section-count">01 — 03</span>
 
         </div>
 
-        <div id="todayCharacters" class="today-grid"></div>
+        <div
+          class="today-character-grid"
+          id="todayCharacterList"
+        ></div>
 
-      </div>
+      </section>
 
     </section>
 
 
     <!-- ==================== WORKS ==================== -->
-    <section id="works" class="page-section">
+    <section
+      id="gallery-section"
+      class="page-section"
+    >
 
-      <div class="inner-page">
+      <div class="page-heading">
 
-        <div class="page-title">
-
-          <div>
-            <span class="page-number">02 / ARCHIVE</span>
-            <h2>WORKS</h2>
-          </div>
-
-          <p>
-            Illustrations &amp; visual works<br>
-            collected in C.T. Gallery.
-          </p>
-
+        <div>
+          <span class="section-eyebrow">02 / ARCHIVE</span>
+          <h2>ALL <em>WORKS</em></h2>
         </div>
 
-        <div class="title-decoration">
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
-
-        <div id="worksGrid" class="works-grid"></div>
-
-        <div id="pagination" class="pagination"></div>
+        <span
+          class="item-count"
+          id="imageCount"
+        >
+          0 WORKS
+        </span>
 
       </div>
+
+
+      <div
+        class="gallery"
+        id="gallery"
+      ></div>
+
+
+      <div
+        class="pagination"
+        id="pagination"
+      ></div>
 
     </section>
 
 
     <!-- ==================== CHARACTER ==================== -->
-    <section id="character" class="page-section">
+    <section
+      id="character-section"
+      class="page-section"
+    >
 
-      <div class="inner-page">
+      <div class="page-heading">
 
-        <div class="page-title">
-
-          <div>
-            <span class="page-number">03 / ARCHIVE</span>
-            <h2>CHARACTER</h2>
-          </div>
-
-          <p>
-            Characters created for<br>
-            stories and worlds.
-          </p>
-
+        <div>
+          <span class="section-eyebrow">03 / ARCHIVE</span>
+          <h2>CHARACTER <em>ARCHIVE</em></h2>
         </div>
 
-        <div class="title-decoration">
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
-
-        <div id="characterGrid" class="archive-grid"></div>
+        <span
+          class="item-count"
+          id="characterCount"
+        >
+          0 CHARACTERS
+        </span>
 
       </div>
+
+
+      <div
+        class="archive-list"
+        id="characterList"
+      ></div>
 
     </section>
 
 
     <!-- ==================== WORLDVIEW ==================== -->
-    <section id="worldview" class="page-section">
+    <section
+      id="worldview-section"
+      class="page-section"
+    >
 
-      <div class="inner-page">
+      <div class="page-heading">
 
-        <div class="page-title">
-
-          <div>
-            <span class="page-number">04 / ARCHIVE</span>
-            <h2>WORLDVIEW</h2>
-          </div>
-
-          <p>
-            Stories, settings and worlds<br>
-            beyond the characters.
-          </p>
-
+        <div>
+          <span class="section-eyebrow">04 / ARCHIVE</span>
+          <h2>WORLD <em>VIEW</em></h2>
         </div>
 
-        <div class="title-decoration">
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
-
-        <div id="worldviewGrid" class="archive-grid"></div>
+        <span
+          class="item-count"
+          id="worldviewCount"
+        >
+          0 WORLDS
+        </span>
 
       </div>
+
+
+      <div
+        class="archive-list"
+        id="worldviewList"
+      ></div>
 
     </section>
 
   </main>
 
 
+  <!-- FOOTER
+       HOME에서는 숨겨짐 -->
+  <footer>
+    <span>C.T. GALLERY</span>
+    <span>CREATIVE ARCHIVE / 2026</span>
+  </footer>
+
+
   <!-- LIGHTBOX -->
-  <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <div
+    class="lightbox"
+    id="lightbox"
+    aria-hidden="true"
+  >
 
-    <button class="lightbox-close" onclick="closeLightbox()">×</button>
+    <button
+      class="lightbox-close"
+      id="lightboxClose"
+      type="button"
+      aria-label="이미지 닫기"
+    >
+      ×
+    </button>
 
-    <div class="lightbox-frame" onclick="event.stopPropagation()">
-      <img id="lightboxImage" src="" alt="">
-    </div>
+    <img
+      id="lightboxImage"
+      src=""
+      alt=""
+      draggable="false"
+    >
 
   </div>
 
 
-<script>
+  <script>
 
-const owner = "monana670-create";
-const repo = "C.T.-Gallery";
-const folder = "images";
+    /* =========================================================
+       기본 설정
+    ========================================================= */
 
-const ITEMS_PER_PAGE = 9;
+    const owner = "monana670-create";
+    const repo = "C.T.-Gallery";
+    const folder = "images";
 
-let allWorks = [];
-let currentPage = 1;
-
-
-/* =========================
-   CHARACTER DATA
-========================= */
-
-const characters = [
-  {
-    title: "김유담",
-    description:
-      "메아리의 종착지. 한 사람만을 바라보며 자신의 세계를 잃어버린 여자.",
-    image:
-      "characters/images/yudam.png",
-    link:
-      "characters/yudam.html"
-  }
-
-  // 새 캐릭터는 여기에 추가
-];
+    const ITEMS_PER_PAGE = 9;
 
 
-/* =========================
-   WORLDVIEW DATA
-========================= */
+    /* =========================================================
+       CHARACTER
+       여기만 추가하면 캐릭터가 계속 늘어남
+    ========================================================= */
 
-const worldviews = [
-  {
-    title: "은색 공방의 키메토리아",
-    description:
-      "153명의 키메라 학생들이 살아가는 하늘섬 알테리아의 이야기.",
-    image:
-      "worldviews/images/chimatoria.png",
-    link:
-      "worldviews/chimatoria.html"
-  }
+    const characters = [
 
-  // 새 세계관은 여기에 추가
-];
+      {
+        title: "김유담",
+        description:
+          "메아리의 종착지. 한 사람만을 바라보며 자신의 세계를 잃어버린 여자.",
+        image: "characters/images/yudam.png",
+        link: "characters/yudam.html"
+      }
 
+      /*
+      ,
+      {
+        title: "다음 캐릭터",
+        description: "캐릭터 설명.",
+        image: "characters/images/example.png",
+        link: "characters/example.html"
+      }
+      */
 
-/* =========================
-   MENU
-========================= */
-
-const menuButton = document.getElementById("menuButton");
-const sideMenu = document.getElementById("sideMenu");
-const menuOverlay = document.getElementById("menuOverlay");
-
-function toggleMenu() {
-
-  const opened = sideMenu.classList.contains("open");
-
-  if (opened) {
-    closeMenu();
-  } else {
-    sideMenu.classList.add("open");
-    menuOverlay.classList.add("show");
-    menuButton.classList.add("active");
-    document.body.classList.add("menu-open");
-  }
-
-}
+    ];
 
 
-function closeMenu() {
+    /* =========================================================
+       WORLDVIEW
+       여기만 추가하면 세계관이 계속 늘어남
+    ========================================================= */
 
-  sideMenu.classList.remove("open");
-  menuOverlay.classList.remove("show");
-  menuButton.classList.remove("active");
-  document.body.classList.remove("menu-open");
+    const worldviews = [
 
-}
+      {
+        title: "은색 공방의 키메토리아",
+        description:
+          "153명의 키메라 학생들이 살아가는 하늘섬 알테리아의 이야기.",
+        image: "worldviews/images/chimatoria.png",
+        link: "worldviews/chimatoria.html"
+      }
 
+      /*
+      ,
+      {
+        title: "다음 세계관",
+        description: "세계관 설명.",
+        image: "worldviews/images/example.png",
+        link: "worldviews/example.html"
+      }
+      */
 
-function navigateTo(section) {
-
-  closeMenu();
-  showSection(section);
-
-}
-
-
-function showSection(section) {
-
-  document.querySelectorAll(".page-section").forEach(el => {
-    el.classList.remove("active");
-  });
-
-  const target = document.getElementById(section);
-
-  if (!target) return;
-
-  target.classList.add("active");
-
-  window.scrollTo({
-    top: 0,
-    behavior: "smooth"
-  });
-
-  if (section === "works") {
-    renderWorks();
-  }
-
-}
+    ];
 
 
-/* =========================
-   WORKS
-========================= */
+    /* =========================================================
+       ELEMENT
+    ========================================================= */
 
-async function loadWorks() {
+    const menuToggle =
+      document.getElementById("menuToggle");
 
-  const grid = document.getElementById("worksGrid");
+    const menuPanel =
+      document.getElementById("menuPanel");
 
-  grid.innerHTML = `
-    <div class="loading">
-      <div class="loading-spinner"></div>
-      <span>LOADING WORKS...</span>
-    </div>
-  `;
+    const menuBackdrop =
+      document.getElementById("menuBackdrop");
 
-  try {
+    const menuItems =
+      document.querySelectorAll(".menu-item");
 
-    const response =
-      await fetch(
-        `https://api.github.com/repos/${owner}/${repo}/contents/${folder}`
+    const pageSections =
+      document.querySelectorAll(".page-section");
+
+    const logo =
+      document.querySelector(".logo");
+
+    const lightbox =
+      document.getElementById("lightbox");
+
+    const lightboxImage =
+      document.getElementById("lightboxImage");
+
+    const lightboxClose =
+      document.getElementById("lightboxClose");
+
+
+    /* =========================================================
+       MENU
+    ========================================================= */
+
+    function openMenu() {
+
+      menuToggle.classList.add("open");
+      menuPanel.classList.add("open");
+      menuBackdrop.classList.add("open");
+
+      menuToggle.setAttribute(
+        "aria-expanded",
+        "true"
       );
 
-    if (!response.ok) {
-      throw new Error("GitHub API error");
+      menuPanel.setAttribute(
+        "aria-hidden",
+        "false"
+      );
+
+      document.body.classList.add("menu-open");
+
     }
 
-    const files = await response.json();
 
-    allWorks = files.filter(file => {
+    function closeMenu() {
 
-      const name = file.name.toLowerCase();
+      menuToggle.classList.remove("open");
+      menuPanel.classList.remove("open");
+      menuBackdrop.classList.remove("open");
 
-      return (
-        file.type === "file" &&
-        (
-          name.endsWith(".jpg") ||
-          name.endsWith(".jpeg") ||
-          name.endsWith(".png") ||
-          name.endsWith(".gif") ||
-          name.endsWith(".webp")
-        )
+      menuToggle.setAttribute(
+        "aria-expanded",
+        "false"
       );
 
-    });
+      menuPanel.setAttribute(
+        "aria-hidden",
+        "true"
+      );
 
-    allWorks.sort((a, b) =>
-      a.name.localeCompare(b.name, undefined, {
-        numeric: true
-      })
+      document.body.classList.remove("menu-open");
+
+    }
+
+
+    menuToggle.addEventListener(
+      "click",
+      () => {
+
+        if (
+          menuPanel.classList.contains("open")
+        ) {
+          closeMenu();
+        } else {
+          openMenu();
+        }
+
+      }
     );
 
-    renderWorks();
 
-  } catch (error) {
-
-    grid.innerHTML = `
-      <div class="error-box">
-        <b>WORKS를 불러오지 못했습니다.</b>
-        <span>GitHub 저장소를 확인해주세요.</span>
-      </div>
-    `;
-
-  }
-
-}
+    menuBackdrop.addEventListener(
+      "click",
+      closeMenu
+    );
 
 
-function renderWorks() {
+    /* =========================================================
+       PAGE SWITCH
+    ========================================================= */
 
-  const grid = document.getElementById("worksGrid");
-  const pagination = document.getElementById("pagination");
+    function switchPage(targetId) {
 
-  if (!allWorks.length) {
+      pageSections.forEach(section => {
 
-    grid.innerHTML = `
-      <div class="empty-box">
-        아직 등록된 작품이 없습니다.
-      </div>
-    `;
+        section.classList.toggle(
+          "active",
+          section.id === targetId
+        );
 
-    pagination.innerHTML = "";
-    return;
-
-  }
-
-  const start =
-    (currentPage - 1) * ITEMS_PER_PAGE;
-
-  const end =
-    start + ITEMS_PER_PAGE;
-
-  const pageItems =
-    allWorks.slice(start, end);
-
-  grid.innerHTML = "";
-
-  pageItems.forEach((file, index) => {
-
-    const item = document.createElement("article");
-
-    item.className = "work-card";
-
-    item.style.animationDelay =
-      `${index * 0.05}s`;
-
-    item.innerHTML = `
-
-      <button class="work-image"
-        onclick="openLightbox('${file.download_url}', '${escapeHtml(file.name)}')">
-
-        <img
-          src="${file.download_url}"
-          alt="${escapeHtml(file.name)}"
-          loading="lazy"
-        >
-
-        <span class="work-hover">
-          VIEW
-          <b>↗</b>
-        </span>
-
-      </button>
-
-      <div class="work-info">
-        <span>NO.${String(start + index + 1).padStart(2, "0")}</span>
-        <b>${escapeHtml(file.name)}</b>
-      </div>
-
-    `;
-
-    grid.appendChild(item);
-
-  });
-
-  renderPagination();
-
-}
+      });
 
 
-function renderPagination() {
+      menuItems.forEach(item => {
 
-  const pagination =
-    document.getElementById("pagination");
+        item.classList.toggle(
+          "active",
+          item.dataset.target === targetId
+        );
 
-  const totalPages =
-    Math.ceil(allWorks.length / ITEMS_PER_PAGE);
+      });
 
-  pagination.innerHTML = "";
 
-  if (totalPages <= 1) return;
+      document.body.classList.toggle(
+        "is-home",
+        targetId === "home-section"
+      );
 
-  for (let i = 1; i <= totalPages; i++) {
 
-    const button =
-      document.createElement("button");
-
-    button.textContent =
-      String(i).padStart(2, "0");
-
-    if (i === currentPage) {
-      button.classList.add("active");
-    }
-
-    button.onclick = () => {
-
-      currentPage = i;
-      renderWorks();
+      closeMenu();
 
       window.scrollTo({
         top: 0,
         behavior: "smooth"
       });
 
-    };
-
-    pagination.appendChild(button);
-
-  }
-
-}
-
-
-/* =========================
-   CHARACTER
-========================= */
-
-function renderCharacters() {
-
-  const grid =
-    document.getElementById("characterGrid");
-
-  grid.innerHTML = "";
-
-  characters.forEach((character, index) => {
-
-    const card =
-      document.createElement("article");
-
-    card.className = "archive-card";
-
-    card.innerHTML = `
-
-      <a href="${character.link}" class="archive-image">
-
-        <img
-          src="${character.image}"
-          alt="${escapeHtml(character.title)}"
-          loading="lazy"
-        >
-
-        <div class="archive-number">
-          ${String(index + 1).padStart(2, "0")}
-        </div>
-
-        <div class="archive-arrow">↗</div>
-
-      </a>
-
-      <div class="archive-content">
-
-        <span>CHARACTER / ${String(index + 1).padStart(2, "0")}</span>
-
-        <h3>${escapeHtml(character.title)}</h3>
-
-        <p>${escapeHtml(character.description)}</p>
-
-        <a href="${character.link}" class="detail-button">
-          VIEW PROFILE <b>→</b>
-        </a>
-
-      </div>
-
-    `;
-
-    grid.appendChild(card);
-
-  });
-
-}
-
-
-/* =========================
-   WORLDVIEW
-========================= */
-
-function renderWorldviews() {
-
-  const grid =
-    document.getElementById("worldviewGrid");
-
-  grid.innerHTML = "";
-
-  worldviews.forEach((world, index) => {
-
-    const card =
-      document.createElement("article");
-
-    card.className = "archive-card";
-
-    card.innerHTML = `
-
-      <a href="${world.link}" class="archive-image">
-
-        <img
-          src="${world.image}"
-          alt="${escapeHtml(world.title)}"
-          loading="lazy"
-        >
-
-        <div class="archive-number">
-          ${String(index + 1).padStart(2, "0")}
-        </div>
-
-        <div class="archive-arrow">↗</div>
-
-      </a>
-
-      <div class="archive-content">
-
-        <span>WORLDVIEW / ${String(index + 1).padStart(2, "0")}</span>
-
-        <h3>${escapeHtml(world.title)}</h3>
-
-        <p>${escapeHtml(world.description)}</p>
-
-        <a href="${world.link}" class="detail-button">
-          ENTER WORLD <b>→</b>
-        </a>
-
-      </div>
-
-    `;
-
-    grid.appendChild(card);
-
-  });
-
-}
-
-
-/* =========================
-   TODAY CHARACTER
-========================= */
-
-function renderTodayCharacters() {
-
-  const container =
-    document.getElementById("todayCharacters");
-
-  if (!characters.length) {
-    container.innerHTML = "";
-    return;
-  }
-
-  const today =
-    new Date();
-
-  const seed =
-    today.getFullYear() * 10000 +
-    (today.getMonth() + 1) * 100 +
-    today.getDate();
-
-  const selected = [];
-
-  for (
-    let i = 0;
-    i < Math.min(3, characters.length);
-    i++
-  ) {
-
-    const index =
-      (seed + i * 17) % characters.length;
-
-    if (!selected.includes(index)) {
-      selected.push(index);
     }
 
-  }
 
-  container.innerHTML = "";
+    document
+      .querySelectorAll("[data-target]")
+      .forEach(button => {
 
-  selected.forEach((index, position) => {
+        button.addEventListener(
+          "click",
+          () => {
 
-    const character =
-      characters[index];
+            const target =
+              button.dataset.target;
 
-    const card =
-      document.createElement("a");
+            if (target) {
+              switchPage(target);
+            }
 
-    card.href =
-      character.link;
+          }
+        );
 
-    card.className =
-      "today-card";
-
-    card.innerHTML = `
-
-      <div class="today-image">
-
-        <img
-          src="${character.image}"
-          alt="${escapeHtml(character.title)}"
-          loading="lazy"
-        >
-
-        <span class="today-view">VIEW ↗</span>
-
-      </div>
-
-      <div class="today-info">
-
-        <span>FEATURED CHARACTER / 0${position + 1}</span>
-
-        <h3>${escapeHtml(character.title)}</h3>
-
-        <p>${escapeHtml(character.description)}</p>
-
-      </div>
-
-      <div class="today-line"></div>
-
-    `;
-
-    container.appendChild(card);
-
-  });
-
-}
+      });
 
 
-/* =========================
-   LIGHTBOX
-========================= */
-
-function openLightbox(url, name) {
-
-  const lightbox =
-    document.getElementById("lightbox");
-
-  const image =
-    document.getElementById("lightboxImage");
-
-  image.src = url;
-  image.alt = name;
-
-  lightbox.classList.add("show");
-
-  document.body.classList.add("lightbox-open");
-
-}
+    /* HOME 기본 상태 */
+    document.body.classList.add("is-home");
 
 
-function closeLightbox() {
+    /* =========================================================
+       TODAY'S CHARACTER
+       날짜에 따라 최대 3명이 자동으로 추천됨
+    ========================================================= */
 
-  const lightbox =
-    document.getElementById("lightbox");
+    function getDayOfYear() {
 
-  lightbox.classList.remove("show");
+      const now = new Date();
 
-  document.body.classList.remove("lightbox-open");
+      const start =
+        new Date(now.getFullYear(), 0, 0);
 
-}
+      const diff =
+        now - start;
 
+      const oneDay =
+        1000 * 60 * 60 * 24;
 
-/* =========================
-   UTIL
-========================= */
+      return Math.floor(diff / oneDay);
 
-function escapeHtml(value) {
-
-  return String(value)
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#039;");
-
-}
+    }
 
 
-/* =========================
-   PARALLAX
-========================= */
+    function getTodayCharacters() {
 
-window.addEventListener("scroll", () => {
+      if (characters.length === 0) {
+        return [];
+      }
 
-  const banner =
-    document.querySelector(".dm-banner img");
+      const amount =
+        Math.min(3, characters.length);
 
-  if (!banner) return;
+      const startIndex =
+        getDayOfYear() % characters.length;
 
-  const rect =
-    banner.parentElement.getBoundingClientRect();
+      const result = [];
 
-  const center =
-    window.innerHeight / 2;
+      for (
+        let i = 0;
+        i < amount;
+        i++
+      ) {
 
-  const offset =
-    (rect.top - center) * 0.035;
+        result.push(
+          characters[
+            (startIndex + i) %
+            characters.length
+          ]
+        );
 
-  banner.style.transform =
-    `translateY(${offset}px) scale(1.08)`;
+      }
 
-});
+      return result;
 
-
-/* =========================
-   ESC KEY
-========================= */
-
-document.addEventListener("keydown", event => {
-
-  if (event.key === "Escape") {
-
-    closeLightbox();
-    closeMenu();
-
-  }
-
-});
+    }
 
 
-/* =========================
-   INITIALIZE
-========================= */
+    function renderTodayCharacters() {
 
-renderCharacters();
-renderWorldviews();
-renderTodayCharacters();
-loadWorks();
+      const container =
+        document.getElementById(
+          "todayCharacterList"
+        );
 
-</script>
+      const todayCharacters =
+        getTodayCharacters();
+
+
+      if (todayCharacters.length === 0) {
+
+        container.innerHTML = `
+          <div class="empty-message">
+            아직 등록된 캐릭터가 없습니다.
+          </div>
+        `;
+
+        return;
+      }
+
+
+      container.innerHTML =
+        todayCharacters
+          .map((character, index) => {
+
+            return `
+              <a
+                class="today-card"
+                href="${character.link}"
+              >
+
+                <div class="today-card-image">
+
+                  <img
+                    src="${character.image}"
+                    alt="${character.title}"
+                    loading="lazy"
+                  >
+
+                  <span class="today-card-number">
+                    0${index + 1}
+                  </span>
+
+                  <span class="today-card-arrow">
+                    ↗
+                  </span>
+
+                </div>
+
+                <div class="today-card-info">
+
+                  <span>
+                    TODAY'S CHARACTER
+                  </span>
+
+                  <h3>
+                    ${character.title}
+                  </h3>
+
+                  <p>
+                    ${character.description}
+                  </p>
+
+                </div>
+
+              </a>
+            `;
+
+          })
+          .join("");
+
+    }
+
+
+    renderTodayCharacters();
+
+
+    /* =========================================================
+       CHARACTER / WORLDVIEW LIST
+    ========================================================= */
+
+    function renderArchiveList(
+      containerId,
+      data,
+      countId
+    ) {
+
+      const container =
+        document.getElementById(
+          containerId
+        );
+
+      const count =
+        document.getElementById(
+          countId
+        );
+
+
+      count.textContent =
+        `${data.length} ${
+          containerId === "characterList"
+            ? "CHARACTERS"
+            : "WORLDS"
+        }`;
+
+
+      if (data.length === 0) {
+
+        container.innerHTML = `
+          <div class="empty-message">
+            아직 등록된 항목이 없습니다.
+          </div>
+        `;
+
+        return;
+      }
+
+
+      container.innerHTML =
+        data
+          .map((item, index) => {
+
+            return `
+              <a
+                class="archive-item"
+                href="${item.link}"
+              >
+
+                <div class="archive-image">
+
+                  ${
+                    item.image
+                      ? `
+                        <img
+                          src="${item.image}"
+                          alt="${item.title}"
+                          loading="lazy"
+                        >
+                      `
+                      : `
+                        <div class="archive-image-empty">
+                          NO IMAGE
+                        </div>
+                      `
+                  }
+
+                </div>
+
+                <div class="archive-info">
+
+                  <span class="archive-number">
+                    ${String(index + 1).padStart(2, "0")}
+                  </span>
+
+                  <div>
+
+                    <h3>
+                      ${item.title}
+                    </h3>
+
+                    <p>
+                      ${item.description}
+                    </p>
+
+                  </div>
+
+                </div>
+
+                <span class="archive-arrow">
+                  ↗
+                </span>
+
+              </a>
+            `;
+
+          })
+          .join("");
+
+    }
+
+
+    renderArchiveList(
+      "characterList",
+      characters,
+      "characterCount"
+    );
+
+
+    renderArchiveList(
+      "worldviewList",
+      worldviews,
+      "worldviewCount"
+    );
+
+
+    /* =========================================================
+       GITHUB WORKS
+    ========================================================= */
+
+    let allImages = [];
+    let currentPage = 1;
+
+
+    async function loadGallery() {
+
+      const gallery =
+        document.getElementById("gallery");
+
+      const imageCount =
+        document.getElementById("imageCount");
+
+
+      gallery.innerHTML = `
+        <div class="loading">
+          <span></span>
+          LOADING WORKS
+        </div>
+      `;
+
+
+      try {
+
+        const response =
+          await fetch(
+            `https://api.github.com/repos/${owner}/${repo}/contents/${folder}`
+          );
+
+
+        if (!response.ok) {
+          throw new Error(
+            "GitHub API request failed."
+          );
+        }
+
+
+        const files =
+          await response.json();
+
+
+        allImages =
+          files
+            .filter(file => {
+
+              if (
+                file.type !== "file"
+              ) {
+                return false;
+              }
+
+              return /\.(jpg|jpeg|png|gif|webp)$/i
+                .test(file.name);
+
+            })
+            .sort((a, b) =>
+              a.name.localeCompare(
+                b.name,
+                undefined,
+                {
+                  numeric: true,
+                  sensitivity: "base"
+                }
+              )
+            );
+
+
+        imageCount.textContent =
+          `${allImages.length} WORKS`;
+
+
+        currentPage = 1;
+
+        renderGallery();
+
+      } catch (error) {
+
+        console.error(error);
+
+        gallery.innerHTML = `
+          <div class="gallery-error">
+            <strong>GALLERY LOAD FAILED</strong>
+            <span>
+              이미지를 불러오지 못했습니다.
+            </span>
+          </div>
+        `;
+
+      }
+
+    }
+
+
+    function renderGallery() {
+
+      const gallery =
+        document.getElementById("gallery");
+
+      const pagination =
+        document.getElementById("pagination");
+
+
+      const start =
+        (currentPage - 1) *
+        ITEMS_PER_PAGE;
+
+      const end =
+        start + ITEMS_PER_PAGE;
+
+
+      const pageImages =
+        allImages.slice(start, end);
+
+
+      gallery.innerHTML = "";
+
+
+      pageImages.forEach(
+        (file, index) => {
+
+          const item =
+            document.createElement("button");
+
+          item.type = "button";
+
+          item.className =
+            "gallery-item";
+
+          item.setAttribute(
+            "aria-label",
+            `${file.name} 크게 보기`
+          );
+
+
+          const number =
+            document.createElement("span");
+
+          number.className =
+            "gallery-number";
+
+          number.textContent =
+            String(start + index + 1)
+              .padStart(2, "0");
+
+
+          const image =
+            document.createElement("img");
+
+          image.src =
+            file.download_url;
+
+          image.alt =
+            file.name;
+
+          image.loading =
+            "lazy";
+
+          image.draggable =
+            false;
+
+
+          const overlay =
+            document.createElement("span");
+
+          overlay.className =
+            "gallery-overlay";
+
+
+          item.appendChild(image);
+          item.appendChild(overlay);
+          item.appendChild(number);
+
+          item.addEventListener(
+            "click",
+            () => {
+
+              openLightbox(
+                file.download_url,
+                file.name
+              );
+
+            }
+          );
+
+
+          gallery.appendChild(item);
+
+        }
+      );
+
+
+      renderPagination();
+
+    }
+
+
+    function renderPagination() {
+
+      const pagination =
+        document.getElementById(
+          "pagination"
+        );
+
+
+      const totalPages =
+        Math.ceil(
+          allImages.length /
+          ITEMS_PER_PAGE
+        );
+
+
+      pagination.innerHTML = "";
+
+
+      if (totalPages <= 1) {
+        return;
+      }
+
+
+      for (
+        let page = 1;
+        page <= totalPages;
+        page++
+      ) {
+
+        const button =
+          document.createElement("button");
+
+        button.type = "button";
+
+        button.textContent =
+          String(page).padStart(2, "0");
+
+
+        if (page === currentPage) {
+          button.classList.add("active");
+        }
+
+
+        button.addEventListener(
+          "click",
+          () => {
+
+            currentPage =
+              page;
+
+            renderGallery();
+
+            document
+              .getElementById(
+                "gallery-section"
+              )
+              .scrollIntoView({
+                behavior: "smooth",
+                block: "start"
+              });
+
+          }
+        );
+
+
+        pagination.appendChild(button);
+
+      }
+
+    }
+
+
+    loadGallery();
+
+
+    /* =========================================================
+       LIGHTBOX
+    ========================================================= */
+
+    function openLightbox(
+      src,
+      alt
+    ) {
+
+      lightboxImage.src =
+        src;
+
+      lightboxImage.alt =
+        alt;
+
+
+      lightbox.classList.add(
+        "open"
+      );
+
+
+      lightbox.setAttribute(
+        "aria-hidden",
+        "false"
+      );
+
+
+      document.body.classList.add(
+        "lightbox-open"
+      );
+
+    }
+
+
+    function closeLightbox() {
+
+      lightbox.classList.remove(
+        "open"
+      );
+
+
+      lightbox.setAttribute(
+        "aria-hidden",
+        "true"
+      );
+
+
+      document.body.classList.remove(
+        "lightbox-open"
+      );
+
+
+      setTimeout(() => {
+
+        lightboxImage.src = "";
+
+      }, 250);
+
+    }
+
+
+    lightboxClose.addEventListener(
+      "click",
+      closeLightbox
+    );
+
+
+    lightbox.addEventListener(
+      "click",
+      event => {
+
+        if (
+          event.target === lightbox
+        ) {
+          closeLightbox();
+        }
+
+      }
+    );
+
+
+    document.addEventListener(
+      "keydown",
+      event => {
+
+        if (
+          event.key === "Escape"
+        ) {
+
+          if (
+            lightbox.classList.contains(
+              "open"
+            )
+          ) {
+
+            closeLightbox();
+
+          } else if (
+            menuPanel.classList.contains(
+              "open"
+            )
+          ) {
+
+            closeMenu();
+
+          }
+
+        }
+
+      }
+    );
+
+
+    /* =========================================================
+       DM BANNER SCROLL EFFECT
+    ========================================================= */
+
+    const dmBanner =
+      document.getElementById(
+        "dmBanner"
+      );
+
+    let bannerTicking =
+      false;
+
+
+    function updateBannerEffect() {
+
+      if (!dmBanner) {
+        return;
+      }
+
+
+      const rect =
+        dmBanner.getBoundingClientRect();
+
+      const viewportHeight =
+        window.innerHeight;
+
+
+      const center =
+        rect.top +
+        rect.height / 2;
+
+
+      const distance =
+        center -
+        viewportHeight / 2;
+
+
+      const progress =
+        Math.max(
+          -1,
+          Math.min(
+            1,
+            distance /
+            (viewportHeight + rect.height)
+          )
+        );
+
+
+      const move =
+        progress * -42;
+
+
+      const scale =
+        1.04 -
+        Math.abs(progress) * 0.025;
+
+
+      const rotate =
+        progress * 0.7;
+
+
+      dmBanner.style.setProperty(
+        "--banner-y",
+        `${move}px`
+      );
+
+
+      dmBanner.style.setProperty(
+        "--banner-scale",
+        scale
+      );
+
+
+      dmBanner.style.setProperty(
+        "--banner-rotate",
+        `${rotate}deg`
+      );
+
+
+      bannerTicking =
+        false;
+
+    }
+
+
+    function requestBannerUpdate() {
+
+      if (!bannerTicking) {
+
+        window.requestAnimationFrame(
+          updateBannerEffect
+        );
+
+        bannerTicking =
+          true;
+
+      }
+
+    }
+
+
+    window.addEventListener(
+      "scroll",
+      requestBannerUpdate,
+      {
+        passive: true
+      }
+    );
+
+
+    window.addEventListener(
+      "resize",
+      requestBannerUpdate
+    );
+
+
+    updateBannerEffect();
+
+
+  </script>
 
 </body>
 </html>
