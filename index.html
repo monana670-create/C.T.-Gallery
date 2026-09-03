@@ -1,496 +1,227 @@
 <!DOCTYPE html>
 <html lang="ko">
-
 <head>
-
   <meta charset="UTF-8">
-
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
-
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>C.T. Gallery</title>
-
-  <meta
-    name="description"
-    content="C.T. Gallery - Creative Archive"
-  >
-
-  <link
-    rel="preconnect"
-    href="https://fonts.googleapis.com"
-  >
-
-  <link
-    rel="preconnect"
-    href="https://fonts.googleapis.com"
-    crossorigin
-  >
-
-  <link
-    href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+KR:wght@400;500;600;700&display=swap"
-    rel="stylesheet"
-  >
-
-  <link
-    rel="stylesheet"
-    href="style.css"
-  >
-
+  <link rel="stylesheet" href="style.css">
 </head>
-
 
 <body>
 
-
-  <!-- BACKGROUND -->
-
-  <div class="background-glow glow-1"></div>
-  <div class="background-glow glow-2"></div>
-
-
   <!-- HEADER -->
+  <header class="site-header">
+    <div class="header-inner">
 
-  <header class="header">
+      <a href="#" class="logo" data-page="home">
+        C.T. Gallery
+      </a>
 
-    <div class="logo">
+      <nav class="main-nav">
+        <button class="nav-button active" data-page="home">
+          HOME
+        </button>
 
-      <span>C.T.</span>
+        <button class="nav-button" data-page="works">
+          WORKS
+        </button>
 
-      <small>GALLERY</small>
+        <button class="nav-button" data-page="character">
+          CHARACTER
+        </button>
+
+        <button class="nav-button" data-page="worldview">
+          WORLDVIEW
+        </button>
+      </nav>
+
+      <button
+        class="menu-button"
+        id="menu-button"
+        aria-label="메뉴"
+      >
+        ☰
+      </button>
 
     </div>
 
-
-    <!-- DESKTOP NAV -->
-
-    <nav class="header-nav">
-
-      <button
-        class="nav-btn active"
-        data-target="home-section"
-      >
-        HOME
-      </button>
-
-      <button
-        class="nav-btn"
-        data-target="gallery-section"
-      >
-        WORKS
-      </button>
-
-      <button
-        class="nav-btn"
-        data-target="character-section"
-      >
-        CHARACTER
-      </button>
-
-      <button
-        class="nav-btn"
-        data-target="worldview-section"
-      >
-        WORLDVIEW
-      </button>
-
-    </nav>
-
-
-    <!-- HAMBURGER -->
-
-    <button
-      class="menu-toggle"
-      id="menu-toggle"
-      aria-label="Open menu"
-      aria-expanded="false"
-    >
-      ☰
-    </button>
-
-
+    <!-- MOBILE MENU -->
+    <div class="mobile-menu" id="mobile-menu">
+      <button data-page="home">HOME</button>
+      <button data-page="works">WORKS</button>
+      <button data-page="character">CHARACTER</button>
+      <button data-page="worldview">WORLDVIEW</button>
+    </div>
   </header>
 
 
-  <!-- MOBILE MENU -->
-
-  <div
-    class="mobile-menu"
-    id="mobile-menu"
-  >
-
-    <button
-      class="mobile-nav-btn active"
-      data-target="home-section"
-    >
-      HOME
-    </button>
-
-    <button
-      class="mobile-nav-btn"
-      data-target="gallery-section"
-    >
-      WORKS
-    </button>
-
-    <button
-      class="mobile-nav-btn"
-      data-target="character-section"
-    >
-      CHARACTER
-    </button>
-
-    <button
-      class="mobile-nav-btn"
-      data-target="worldview-section"
-    >
-      WORLDVIEW
-    </button>
-
-  </div>
-
-
-
   <main>
-
 
     <!-- =========================
          HOME
     ========================== -->
 
-    <section
-      id="home-section"
-      class="content-section active"
-    >
-
+    <section class="page active" id="page-home">
 
       <!-- HERO -->
-
       <section class="hero">
+        <img
+          src="hero/main.gif"
+          alt="C.T. Gallery Main Visual"
+        >
+      </section>
 
-        <div class="hero-text">
 
-          <p class="eyebrow">
-            CREATIVE ARCHIVE / 2026
+      <!-- EXPLORED WORKS -->
+      <section class="home-section explored-section">
+
+        <div class="section-heading">
+          <span class="section-label">ARCHIVE</span>
+
+          <h2>EXPLORED WORKS</h2>
+
+          <p>
+            Recent works from C.T. Gallery
           </p>
+        </div>
 
-          <h1>
-            C.T.<br>
-            <span>Gallery</span>
-          </h1>
+        <div
+          class="explored-list"
+          id="explored-list"
+        >
+          <!-- JS -->
+        </div>
 
-          <p class="description">
-            이미지와 세계관, 그리고 캐릭터를 기록하는<br>
-            개인 크리에이티브 아카이브입니다.
+      </section>
+
+
+      <!-- TODAY'S CHARACTER -->
+      <section class="home-section today-section">
+
+        <div class="section-heading">
+          <span class="section-label">
+            DAILY ARCHIVE
+          </span>
+
+          <h2>TODAY'S CHARACTER</h2>
+
+          <p>
+            A character selected from the archive.
           </p>
-
-          <button
-            class="explore-btn"
-            data-target="gallery-section"
-          >
-            EXPLORE WORKS
-            <span>→</span>
-          </button>
-
         </div>
-
-
-        <div class="hero-visual">
-
-          <div class="hero-image-frame">
-
-            <img
-              src="hero/main.gif"
-              alt="C.T. Gallery Main Visual"
-              draggable="false"
-            >
-
-          </div>
-
-          <div class="hero-number">
-            001
-          </div>
-
-          <div class="hero-label">
-            FEATURED VISUAL
-          </div>
-
-        </div>
-
-      </section>
-
-
-
-      <!-- =========================
-           DM BANNER
-      ========================== -->
-
-      <section class="dm-section">
-
-        <div class="section-title">
-
-          <div>
-
-            <h2>
-              DM
-            </h2>
-
-            <p>
-              ARCHIVE BANNER
-            </p>
-
-          </div>
-
-          <span>
-            01
-          </span>
-
-        </div>
-
 
         <div
-          class="dm-banner"
-          id="dm-banner"
+          class="today-character-list"
+          id="today-character-list"
         >
-
-          <img
-            src="DM/main.jpg"
-            alt="C.T. Gallery Banner"
-            draggable="false"
-          >
-
+          <!-- JS -->
         </div>
 
       </section>
-
-
-
-      <!-- =========================
-           TODAY'S CHARACTER
-      ========================== -->
-
-      <section class="today-section">
-
-        <div class="section-title">
-
-          <div>
-
-            <h2>
-              TODAY'S CHARACTER
-            </h2>
-
-            <p>
-              DAILY RECOMMENDATION
-            </p>
-
-          </div>
-
-          <span id="today-date">
-            TODAY
-          </span>
-
-        </div>
-
-
-        <div
-          class="today-grid"
-          id="today-character"
-        >
-        </div>
-
-      </section>
-
-
-
-      <!-- =========================
-           FEATURED WORKS
-      ========================== -->
-
-      <section class="featured-section">
-
-        <div class="section-title">
-
-          <div>
-
-            <h2>
-              FEATURED WORKS
-            </h2>
-
-            <p>
-              SELECTED ARCHIVE
-            </p>
-
-          </div>
-
-          <span>
-            01 / 03
-          </span>
-
-        </div>
-
-
-        <div
-          class="featured-grid"
-          id="featured-list"
-        >
-        </div>
-
-      </section>
-
 
     </section>
-
 
 
     <!-- =========================
          WORKS
     ========================== -->
 
-    <section
-      id="gallery-section"
-      class="content-section"
-    >
+    <section class="page" id="page-works">
 
       <div class="page-header">
 
-        <p class="eyebrow">
-          VISUAL ARCHIVE
-        </p>
-
-        <h1 class="page-main-title">
-          ALL WORKS
-        </h1>
-
-      </div>
-
-
-      <div class="section-title">
-
-        <h2>
-          IMAGE ARCHIVE
-        </h2>
-
-        <span id="image-count">
-          LOADING...
+        <span class="section-label">
+          ARCHIVE
         </span>
 
-      </div>
+        <h1>WORKS</h1>
 
+        <p>
+          Illustrations and artworks collected in C.T. Gallery.
+        </p>
+
+      </div>
 
       <div
         class="gallery"
         id="gallery"
       >
+        <!-- JS -->
       </div>
-
 
       <div
         class="pagination"
         id="pagination"
       >
+        <!-- JS -->
       </div>
 
     </section>
-
 
 
     <!-- =========================
          CHARACTER
     ========================== -->
 
-    <section
-      id="character-section"
-      class="content-section"
-    >
+    <section class="page" id="page-character">
 
       <div class="page-header">
 
-        <p class="eyebrow">
-          CHARACTER DATABASE
-        </p>
-
-        <h1 class="page-main-title">
-          CHARACTER
-        </h1>
-
-      </div>
-
-
-      <div class="section-title">
-
-        <h2>
-          CHARACTER ARCHIVE
-        </h2>
-
-        <span>
+        <span class="section-label">
           ARCHIVE
         </span>
 
-      </div>
+        <h1>CHARACTER</h1>
 
+        <p>
+          Characters and their stories.
+        </p>
+
+      </div>
 
       <div
         class="archive-grid"
         id="character-list"
       >
+        <!-- JS -->
       </div>
 
     </section>
-
 
 
     <!-- =========================
          WORLDVIEW
     ========================== -->
 
-    <section
-      id="worldview-section"
-      class="content-section"
-    >
+    <section class="page" id="page-worldview">
 
       <div class="page-header">
 
-        <p class="eyebrow">
-          WORLD DATABASE
-        </p>
-
-        <h1 class="page-main-title">
-          WORLDVIEW
-        </h1>
-
-      </div>
-
-
-      <div class="section-title">
-
-        <h2>
-          WORLD ARCHIVE
-        </h2>
-
-        <span>
+        <span class="section-label">
           ARCHIVE
         </span>
 
-      </div>
+        <h1>WORLDVIEW</h1>
 
+        <p>
+          Worlds, settings and stories.
+        </p>
+
+      </div>
 
       <div
         class="archive-grid"
         id="worldview-list"
       >
+        <!-- JS -->
       </div>
 
     </section>
 
-
   </main>
 
 
-
-  <!-- =========================
-       LIGHTBOX
-  ========================== -->
+  <!-- LIGHTBOX -->
 
   <div
     class="lightbox"
@@ -501,272 +232,114 @@
     <button
       class="lightbox-close"
       id="lightbox-close"
-      aria-label="Close image"
+      aria-label="닫기"
     >
       ×
     </button>
 
-
-    <div class="lightbox-content">
-
-      <img
-        id="lightbox-image"
-        src=""
-        alt=""
-      >
-
-    </div>
+    <img
+      id="lightbox-image"
+      src=""
+      alt=""
+    >
 
   </div>
 
 
-
   <!-- FOOTER -->
 
-  <footer>
-
-    <span>
-      © C.T. Gallery
-    </span>
-
-    <span>
-      CREATIVE ARCHIVE
-    </span>
-
+  <footer class="site-footer">
+    <p>© C.T. Gallery</p>
   </footer>
-
 
 
   <script>
 
-
     /* =========================
-       DATA
+       GITHUB CONFIG
     ========================== */
 
-    const owner =
-      "monana670-create";
+    const owner = "monana670-create";
+    const repo = "C.T.-Gallery";
+    const folder = "images";
 
-    const repo =
-      "C.T.-Gallery";
-
-    const folder =
-      "images";
-
-    const ITEMS_PER_PAGE =
-      9;
+    const ITEMS_PER_PAGE = 9;
 
 
-    /*
-      캐릭터를 추가하고 싶으면
-      이 배열에 하나씩 추가하면 됩니다.
-    */
+    /* =========================
+       CHARACTER DATA
+    ========================== */
 
     const characters = [
-
       {
         title: "김유담",
-
-        description:
-          "메아리의 종착지",
-
-        image:
-          "characters/images/yudam.png",
-
-        link:
-          "characters/yudam.html"
-
+        description: "메아리의 종착지",
+        image: "characters/images/yudam.png",
+        link: "characters/yudam.html"
       }
-
     ];
 
 
-    /*
-      세계관을 추가하고 싶으면
-      이 배열에 하나씩 추가하면 됩니다.
-    */
+    /* =========================
+       WORLDVIEW DATA
+    ========================== */
 
     const worldviews = [
-
       {
-        title:
-          "은색 공방의 키메토리아",
-
-        description:
-          "알테리아와 키메라 아카데미의 기록",
-
-        image:
-          "worldviews/images/chimatoria.png",
-
-        link:
-          "worldviews/chimatoria.html"
-
+        title: "은색 공방의 키메토리아",
+        description: "알테리아와 키메라 아카데미의 기록",
+        image: "worldviews/images/chimatoria.png",
+        link: "worldviews/chimatoria.html"
       }
-
     ];
-
-
-    /*
-      FEATURED WORKS
-
-      src는 images 폴더 안의 실제 이미지 이름입니다.
-      예:
-      images/1.jpg
-      images/2.jpg
-      images/3.jpg
-    */
-
-    const featuredWorks = [
-
-      {
-        label: "FEATURED / 01",
-        title: "FEATURED WORK",
-        src: "images/1.jpg"
-      },
-
-      {
-        label: "FEATURED / 02",
-        title: "FEATURED WORK",
-        src: "images/2.jpg"
-      },
-
-      {
-        label: "FEATURED / 03",
-        title: "FEATURED WORK",
-        src: "images/3.jpg"
-      }
-
-    ];
-
 
 
     /* =========================
-       ELEMENTS
+       PAGE NAVIGATION
     ========================== */
+
+    const pages =
+      document.querySelectorAll(".page");
 
     const navButtons =
-      document.querySelectorAll(".nav-btn");
-
-    const mobileNavButtons =
-      document.querySelectorAll(".mobile-nav-btn");
-
-    const contentSections =
-      document.querySelectorAll(".content-section");
-
-    const menuToggle =
-      document.getElementById("menu-toggle");
-
-    const mobileMenu =
-      document.getElementById("mobile-menu");
-
-
-
-    /* =========================
-       MOBILE MENU
-    ========================== */
-
-    function closeMobileMenu() {
-
-      mobileMenu.classList.remove("open");
-
-      menuToggle.classList.remove("open");
-
-      menuToggle.setAttribute(
-        "aria-expanded",
-        "false"
-      );
-
-    }
-
-
-    menuToggle.addEventListener(
-      "click",
-      () => {
-
-        const isOpen =
-          mobileMenu.classList.toggle("open");
-
-        menuToggle.classList.toggle(
-          "open",
-          isOpen
-        );
-
-        menuToggle.setAttribute(
-          "aria-expanded",
-          String(isOpen)
-        );
-
-      }
-    );
-
-
-
-    /* =========================
-       SECTION SWITCH
-    ========================== */
-
-    function switchSection(targetId) {
-
-      const targetSection =
-        document.getElementById(targetId);
-
-      const currentSection =
-        document.querySelector(
-          ".content-section.active"
-        );
-
-
-      if (!targetSection) {
-        return;
-      }
-
-
-      if (
-        targetSection === currentSection
-      ) {
-
-        closeMobileMenu();
-
-        return;
-
-      }
-
-
-      navButtons.forEach(btn => {
-
-        btn.classList.toggle(
-          "active",
-          btn.dataset.target === targetId
-        );
-
-      });
-
-
-      mobileNavButtons.forEach(btn => {
-
-        btn.classList.toggle(
-          "active",
-          btn.dataset.target === targetId
-        );
-
-      });
-
-
-      if (currentSection) {
-
-        currentSection.classList.remove(
-          "active"
-        );
-
-      }
-
-
-      targetSection.classList.add(
-        "active"
+      document.querySelectorAll(
+        ".nav-button, .mobile-menu button, .logo"
       );
 
 
-      closeMobileMenu();
+    function showPage(pageName) {
+
+      pages.forEach(page => {
+        page.classList.remove("active");
+      });
+
+
+      const target =
+        document.getElementById(
+          `page-${pageName}`
+        );
+
+
+      if (target) {
+        target.classList.add("active");
+      }
+
+
+      document
+        .querySelectorAll(".nav-button")
+        .forEach(button => {
+
+          button.classList.toggle(
+            "active",
+            button.dataset.page === pageName
+          );
+
+        });
+
+
+      document
+        .getElementById("mobile-menu")
+        .classList.remove("open");
 
 
       window.scrollTo({
@@ -777,394 +350,318 @@
     }
 
 
+    navButtons.forEach(button => {
 
-    navButtons.forEach(btn => {
-
-      btn.addEventListener(
+      button.addEventListener(
         "click",
-        () => {
+        event => {
 
-          switchSection(
-            btn.dataset.target
-          );
+          event.preventDefault();
+
+          const pageName =
+            button.dataset.page;
+
+          if (pageName) {
+            showPage(pageName);
+          }
 
         }
       );
 
     });
-
-
-    mobileNavButtons.forEach(btn => {
-
-      btn.addEventListener(
-        "click",
-        () => {
-
-          switchSection(
-            btn.dataset.target
-          );
-
-        }
-      );
-
-    });
-
 
 
     /* =========================
-       EXPLORE
+       MOBILE MENU
     ========================== */
 
-    document
-      .querySelectorAll(".explore-btn")
-      .forEach(btn => {
+    const menuButton =
+      document.getElementById(
+        "menu-button"
+      );
 
-        btn.addEventListener(
-          "click",
-          () => {
+    const mobileMenu =
+      document.getElementById(
+        "mobile-menu"
+      );
 
-            switchSection(
-              btn.dataset.target
-            );
 
-          }
+    menuButton.addEventListener(
+      "click",
+      () => {
+
+        mobileMenu.classList.toggle(
+          "open"
         );
 
-      });
-
+      }
+    );
 
 
     /* =========================
        TODAY'S CHARACTER
     ========================== */
 
-    const todayCharacter =
-      document.getElementById(
-        "today-character"
-      );
-
-    const todayDate =
-      document.getElementById(
-        "today-date"
-      );
-
-
     function renderTodayCharacter() {
 
-      todayCharacter.innerHTML = "";
+      const container =
+        document.getElementById(
+          "today-character-list"
+        );
 
 
       if (
+        !container ||
         characters.length === 0
       ) {
-
-        todayCharacter.innerHTML =
-          `<p class="error">등록된 캐릭터가 없습니다.</p>`;
-
         return;
-
       }
 
 
-      const now =
+      const today =
         new Date();
 
-      const dayNumber =
+
+      const dayIndex =
         Math.floor(
-          new Date(
-            now.getFullYear(),
-            now.getMonth(),
-            now.getDate()
-          ).getTime()
-          /
-          86400000
+          Date.UTC(
+            today.getFullYear(),
+            today.getMonth(),
+            today.getDate()
+          ) / 86400000
         );
 
 
-      const count =
-        Math.min(
-          3,
+      const character =
+        characters[
+          Math.abs(dayIndex) %
           characters.length
+        ];
+
+
+      container.innerHTML = "";
+
+
+      const card =
+        document.createElement("a");
+
+
+      card.className =
+        "today-character-card";
+
+
+      card.href =
+        character.link;
+
+
+      card.innerHTML = `
+
+        <div class="today-character-image">
+
+          <img
+            src="${character.image}"
+            alt="${character.title}"
+          >
+
+        </div>
+
+
+        <div class="today-character-info">
+
+          <span class="section-label">
+            TODAY'S PICK
+          </span>
+
+          <h3>
+            ${character.title}
+          </h3>
+
+          <p>
+            ${character.description}
+          </p>
+
+          <span class="card-link">
+            VIEW CHARACTER →
+          </span>
+
+        </div>
+
+      `;
+
+
+      container.appendChild(card);
+
+    }
+
+
+    /* =========================
+       ARCHIVE CARDS
+    ========================== */
+
+    function renderArchiveCards(
+      data,
+      containerId
+    ) {
+
+      const container =
+        document.getElementById(
+          containerId
         );
 
 
-      for (
-        let i = 0;
-        i < count;
-        i++
-      ) {
+      if (!container) {
+        return;
+      }
 
-        const character =
-          characters[
-            (dayNumber + i)
-            %
-            characters.length
-          ];
 
+      container.innerHTML = "";
+
+
+      data.forEach(item => {
 
         const card =
           document.createElement("a");
 
 
         card.className =
-          "today-card";
+          "archive-card";
 
 
         card.href =
-          character.link;
+          item.link;
 
 
         card.innerHTML = `
 
-          <div class="today-image">
+          <div class="archive-card-image">
 
             <img
-              src="${character.image}"
-              alt="${character.title}"
-              loading="lazy"
+              src="${item.image}"
+              alt="${item.title}"
             >
 
           </div>
 
-          <div class="today-info">
 
-            <span>
-              TODAY'S CHARACTER
-            </span>
+          <div class="archive-card-info">
 
             <h3>
-              ${character.title}
+              ${item.title}
             </h3>
 
             <p>
-              ${character.description}
+              ${item.description}
             </p>
 
-            <div class="today-view">
-              VIEW ARCHIVE
-              <b>→</b>
-            </div>
+            <span class="card-link">
+              VIEW →
+            </span>
 
           </div>
 
         `;
 
 
-        todayCharacter.appendChild(
-          card
+        container.appendChild(card);
+
+      });
+
+    }
+
+
+    /* =========================
+       GITHUB WORKS
+    ========================== */
+
+    let allImageFiles = [];
+
+    let currentPage = 1;
+
+
+    async function loadWorks() {
+
+      const gallery =
+        document.getElementById(
+          "gallery"
         );
 
+
+      if (!gallery) {
+        return;
       }
 
 
-      const month =
-        String(
-          now.getMonth() + 1
-        ).padStart(2, "0");
-
-      const day =
-        String(
-          now.getDate()
-        ).padStart(2, "0");
+      gallery.innerHTML = `
+        <p class="loading">
+          LOADING ARCHIVE...
+        </p>
+      `;
 
 
-      todayDate.textContent =
-        `${month}.${day}`;
+      try {
 
-    }
-
-
-    renderTodayCharacter();
+        const apiURL =
+          `https://api.github.com/repos/${owner}/${repo}/contents/${folder}`;
 
 
+        const response =
+          await fetch(apiURL);
 
-    /* =========================
-       FEATURED WORKS
-    ========================== */
-
-    const featuredList =
-      document.getElementById(
-        "featured-list"
-      );
-
-
-    function renderFeaturedWorks() {
-
-      featuredList.innerHTML = "";
-
-
-      featuredWorks.forEach(
-        (work, index) => {
-
-          const card =
-            document.createElement("button");
-
-
-          card.className =
-            "featured-card";
-
-
-          card.type =
-            "button";
-
-
-          card.dataset.lightbox =
-            work.src;
-
-
-          card.innerHTML = `
-
-            <img
-              src="${work.src}"
-              alt="${work.title}"
-              loading="lazy"
-              draggable="false"
-            >
-
-            <div class="featured-overlay">
-
-              <span>
-                ${work.label}
-              </span>
-
-              <h3>
-                ${work.title}
-              </h3>
-
-              <div class="view-text">
-                VIEW
-                <b>→</b>
-              </div>
-
-            </div>
-
-          `;
-
-
-          card.addEventListener(
-            "click",
-            () => {
-
-              openLightbox(
-                work.src,
-                work.title
-              );
-
-            }
-          );
-
-
-          featuredList.appendChild(
-            card
-          );
-
-        }
-      );
-
-    }
-
-
-    renderFeaturedWorks();
-
-
-
-    /* =========================
-       GITHUB GALLERY
-    ========================== */
-
-    const gallery =
-      document.getElementById(
-        "gallery"
-      );
-
-    const imageCount =
-      document.getElementById(
-        "image-count"
-      );
-
-    const pagination =
-      document.getElementById(
-        "pagination"
-      );
-
-
-    let currentPage =
-      1;
-
-    let allImageFiles =
-      [];
-
-
-    fetch(
-      `https://api.github.com/repos/${owner}/${repo}/contents/${folder}`
-    )
-
-      .then(response => {
 
         if (!response.ok) {
 
           throw new Error(
-            "GitHub API error"
+            `GitHub API Error: ${response.status}`
           );
 
         }
 
-        return response.json();
 
-      })
-
-      .then(files => {
-
-        if (!Array.isArray(files)) {
-
-          throw new Error(
-            "Invalid GitHub response"
-          );
-
-        }
+        const files =
+          await response.json();
 
 
         allImageFiles =
-          files.filter(file =>
+          files.filter(file => {
 
-            file.type === "file"
-
-            &&
-
-            /\.(jpg|jpeg|png|gif|webp)$/i
-              .test(file.name)
-
-          );
+            const extension =
+              file.name
+                .split(".")
+                .pop()
+                .toLowerCase();
 
 
-        /*
-          1.jpg, 2.jpg, 10.jpg처럼
-          숫자로 된 파일명을 숫자 순서대로 정렬
-        */
+            return [
+              "jpg",
+              "jpeg",
+              "png",
+              "gif",
+              "webp"
+            ].includes(extension);
+
+          });
+
+
+        /* 숫자 파일명 기준 정렬 */
 
         allImageFiles.sort(
           (a, b) => {
 
             const aNumber =
-              parseInt(
-                a.name,
-                10
-              );
+              parseInt(a.name, 10);
 
             const bNumber =
-              parseInt(
-                b.name,
-                10
-              );
+              parseInt(b.name, 10);
 
 
             if (
-              !isNaN(aNumber)
-              &&
+              !isNaN(aNumber) &&
               !isNaN(bNumber)
             ) {
 
-              return aNumber - bNumber;
+              return (
+                aNumber - bNumber
+              );
 
             }
 
@@ -1177,87 +674,64 @@
         );
 
 
-        imageCount.textContent =
-          `${String(allImageFiles.length).padStart(2, "0")} IMAGES`;
+        currentPage = 1;
+
+        renderGallery();
+
+      } catch (error) {
+
+        console.error(error);
 
 
-        if (
-          allImageFiles.length === 0
-        ) {
+        gallery.innerHTML = `
+          <p class="error">
+            ARCHIVE COULD NOT BE LOADED.
+          </p>
+        `;
 
-          gallery.innerHTML =
-            `
-              <p class="error">
-                등록된 이미지가 없습니다.
-              </p>
-            `;
+      }
 
-          return;
-
-        }
-
-
-        renderPage(
-          currentPage
-        );
-
-      })
-
-      .catch(error => {
-
-        console.error(
-          error
-        );
-
-
-        imageCount.textContent =
-          "00 IMAGES";
-
-
-        gallery.innerHTML =
-          `
-            <p class="error">
-              등록된 이미지가 없거나
-              불러오지 못했습니다.
-            </p>
-          `;
-
-      });
-
+    }
 
 
     /* =========================
-       IMAGE RENDER
+       GALLERY
     ========================== */
 
-    function renderPage(page) {
+    function renderGallery() {
+
+      const gallery =
+        document.getElementById(
+          "gallery"
+        );
+
 
       gallery.innerHTML = "";
 
 
-      const startIndex =
-        (page - 1)
-        *
-        ITEMS_PER_PAGE;
+      const start =
+        (
+          currentPage - 1
+        ) * ITEMS_PER_PAGE;
 
 
-      const endIndex =
-        startIndex
-        +
-        ITEMS_PER_PAGE;
+      const end =
+        start + ITEMS_PER_PAGE;
 
 
       const pageFiles =
         allImageFiles.slice(
-          startIndex,
-          endIndex
+          start,
+          end
         );
 
 
       pageFiles.forEach(file => {
 
         const item =
-          document.createElement("button");
+          document.createElement(
+            "button"
+          );
 
 
         item.className =
@@ -1268,52 +742,15 @@
           "button";
 
 
-        const img =
-          document.createElement("img");
+        item.innerHTML = `
 
-
-        img.src =
-          file.download_url;
-
-
-        img.alt =
-          file.name;
-
-
-        img.loading =
-          "lazy";
-
-
-        img.draggable =
-          false;
-
-
-        const overlay =
-          document.createElement("div");
-
-
-        overlay.className =
-          "gallery-overlay";
-
-
-        overlay.innerHTML = `
-
-          <span>
-            VIEW IMAGE
-          </span>
-
-          <b>
-            →
-          </b>
+          <img
+            src="${file.download_url}"
+            alt="${file.name}"
+            loading="lazy"
+          >
 
         `;
-
-
-        item.appendChild(img);
-
-        item.appendChild(overlay);
-
-        gallery.appendChild(item);
 
 
         item.addEventListener(
@@ -1328,69 +765,67 @@
           }
         );
 
+
+        gallery.appendChild(item);
+
       });
 
 
-      renderPaginationButtons();
+      renderPagination();
 
     }
-
 
 
     /* =========================
        PAGINATION
     ========================== */
 
-    function renderPaginationButtons() {
+    function renderPagination() {
 
-      pagination.innerHTML =
-        "";
+      const pagination =
+        document.getElementById(
+          "pagination"
+        );
+
+
+      pagination.innerHTML = "";
 
 
       const totalPages =
         Math.ceil(
-          allImageFiles.length
-          /
+          allImageFiles.length /
           ITEMS_PER_PAGE
         );
 
 
-      if (
-        totalPages <= 1
-      ) {
-
+      if (totalPages <= 1) {
         return;
-
       }
 
 
-      const prevBtn =
+      const previous =
         document.createElement(
           "button"
         );
 
 
-      prevBtn.textContent =
+      previous.textContent =
         "←";
 
 
-      prevBtn.disabled =
+      previous.disabled =
         currentPage === 1;
 
 
-      prevBtn.addEventListener(
+      previous.addEventListener(
         "click",
         () => {
 
-          if (
-            currentPage > 1
-          ) {
+          if (currentPage > 1) {
 
             currentPage--;
 
-            renderPage(
-              currentPage
-            );
+            renderGallery();
 
             window.scrollTo({
               top: 0,
@@ -1404,7 +839,7 @@
 
 
       pagination.appendChild(
-        prevBtn
+        previous
       );
 
 
@@ -1414,37 +849,29 @@
         i++
       ) {
 
-        const pageBtn =
+        const button =
           document.createElement(
             "button"
           );
 
 
-        pageBtn.textContent =
+        button.textContent =
           i;
 
 
-        if (
+        button.classList.toggle(
+          "active",
           i === currentPage
-        ) {
-
-          pageBtn.classList.add(
-            "active"
-          );
-
-        }
+        );
 
 
-        pageBtn.addEventListener(
+        button.addEventListener(
           "click",
           () => {
 
-            currentPage =
-              i;
+            currentPage = i;
 
-            renderPage(
-              currentPage
-            );
+            renderGallery();
 
             window.scrollTo({
               top: 0,
@@ -1456,27 +883,27 @@
 
 
         pagination.appendChild(
-          pageBtn
+          button
         );
 
       }
 
 
-      const nextBtn =
+      const next =
         document.createElement(
           "button"
         );
 
 
-      nextBtn.textContent =
+      next.textContent =
         "→";
 
 
-      nextBtn.disabled =
+      next.disabled =
         currentPage === totalPages;
 
 
-      nextBtn.addEventListener(
+      next.addEventListener(
         "click",
         () => {
 
@@ -1487,9 +914,7 @@
 
             currentPage++;
 
-            renderPage(
-              currentPage
-            );
+            renderGallery();
 
             window.scrollTo({
               top: 0,
@@ -1503,141 +928,10 @@
 
 
       pagination.appendChild(
-        nextBtn
+        next
       );
 
     }
-
-
-
-    /* =========================
-       CHARACTER RENDER
-    ========================== */
-
-    const characterList =
-      document.getElementById(
-        "character-list"
-      );
-
-
-    characters.forEach(
-      (character, index) => {
-
-        characterList.innerHTML += `
-
-          <a
-            href="${character.link}"
-            class="archive-card"
-          >
-
-            <div class="archive-image">
-
-              <img
-                src="${character.image}"
-                alt="${character.title}"
-                loading="lazy"
-              >
-
-              <span class="archive-number">
-                ${String(index + 1).padStart(2, "0")}
-              </span>
-
-            </div>
-
-
-            <div class="archive-info">
-
-              <span class="archive-type">
-                CHARACTER
-              </span>
-
-              <h3>
-                ${character.title}
-              </h3>
-
-              <p>
-                ${character.description}
-              </p>
-
-              <div class="archive-view">
-                VIEW ARCHIVE
-                <b>→</b>
-              </div>
-
-            </div>
-
-          </a>
-
-        `;
-
-      }
-    );
-
-
-
-    /* =========================
-       WORLDVIEW RENDER
-    ========================== */
-
-    const worldviewList =
-      document.getElementById(
-        "worldview-list"
-      );
-
-
-    worldviews.forEach(
-      (worldview, index) => {
-
-        worldviewList.innerHTML += `
-
-          <a
-            href="${worldview.link}"
-            class="archive-card worldview-card"
-          >
-
-            <div class="archive-image">
-
-              <img
-                src="${worldview.image}"
-                alt="${worldview.title}"
-                loading="lazy"
-              >
-
-              <span class="archive-number">
-                ${String(index + 1).padStart(2, "0")}
-              </span>
-
-            </div>
-
-
-            <div class="archive-info">
-
-              <span class="archive-type">
-                WORLDVIEW
-              </span>
-
-              <h3>
-                ${worldview.title}
-              </h3>
-
-              <p>
-                ${worldview.description}
-              </p>
-
-              <div class="archive-view">
-                VIEW ARCHIVE
-                <b>→</b>
-              </div>
-
-            </div>
-
-          </a>
-
-        `;
-
-      }
-    );
-
 
 
     /* =========================
@@ -1649,10 +943,12 @@
         "lightbox"
       );
 
+
     const lightboxImage =
       document.getElementById(
         "lightbox-image"
       );
+
 
     const lightboxClose =
       document.getElementById(
@@ -1671,14 +967,17 @@
       lightboxImage.alt =
         alt;
 
+
       lightbox.classList.add(
         "open"
       );
+
 
       lightbox.setAttribute(
         "aria-hidden",
         "false"
       );
+
 
       document.body.classList.add(
         "lightbox-open"
@@ -1693,25 +992,19 @@
         "open"
       );
 
+
       lightbox.setAttribute(
         "aria-hidden",
         "true"
       );
+
 
       document.body.classList.remove(
         "lightbox-open"
       );
 
 
-      setTimeout(
-        () => {
-
-          lightboxImage.src =
-            "";
-
-        },
-        250
-      );
+      lightboxImage.src = "";
 
     }
 
@@ -1754,109 +1047,28 @@
     );
 
 
-
     /* =========================
-       DM PARALLAX
+       INITIALIZE
     ========================== */
 
-    const dmBanner =
-      document.getElementById(
-        "dm-banner"
-      );
+    renderTodayCharacter();
 
 
-    function updateParallax() {
-
-      if (
-        !dmBanner
-      ) {
-
-        return;
-
-      }
-
-
-      const rect =
-        dmBanner.getBoundingClientRect();
-
-
-      const viewportCenter =
-        window.innerHeight / 2;
-
-
-      const distance =
-        rect.top
-        +
-        rect.height / 2
-        -
-        viewportCenter;
-
-
-      const movement =
-        Math.max(
-          -28,
-          Math.min(
-            28,
-            distance * -0.08
-          )
-        );
-
-
-      dmBanner.style.setProperty(
-        "--parallax-y",
-        `${movement}px`
-      );
-
-    }
-
-
-    let parallaxTick =
-      false;
-
-
-    window.addEventListener(
-      "scroll",
-      () => {
-
-        if (
-          !parallaxTick
-        ) {
-
-          window.requestAnimationFrame(
-            () => {
-
-              updateParallax();
-
-              parallaxTick =
-                false;
-
-            }
-          );
-
-          parallaxTick =
-            true;
-
-        }
-
-      },
-      {
-        passive: true
-      }
+    renderArchiveCards(
+      characters,
+      "character-list"
     );
 
 
-    window.addEventListener(
-      "resize",
-      updateParallax
+    renderArchiveCards(
+      worldviews,
+      "worldview-list"
     );
 
 
-    updateParallax();
-
+    loadWorks();
 
   </script>
 
-
 </body>
-
 </html>
