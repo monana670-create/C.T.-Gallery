@@ -1,462 +1,396 @@
-<!DOCTYPE html>
-<html lang="ko">
+<!DOCTYPE html><html lang="ko"><head>  <meta charset="UTF-8"><meta
+name="viewport"
+content="width=device-width, initial-scale=1.0"
 
-<head>
+«»
 
-  <meta charset="UTF-8">
+  <title>C.T. Gallery</title><meta
+name="description"
+content="C.T. Gallery - Creative Archive"
 
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
-
-  <title>C.T. Gallery</title>
-
-  <meta
-    name="description"
-    content="C.T. Gallery - Creative Archive"
-  >
+«»
 
   <link
     rel="preconnect"
     href="https://fonts.googleapis.com"
-  >
-
-  <link
+  >  <link
     rel="preconnect"
     href="https://fonts.googleapis.com"
     crossorigin
-  >
-
-  <link
+  >  <link
     href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+KR:wght@400;500;600;700&display=swap"
     rel="stylesheet"
-  >
-
-  <link
+  >  <link
     rel="stylesheet"
     href="style.css"
+  ></head><body>  <!-- BACKGROUND -->  <div class="background-glow glow-1"></div>
+  <div class="background-glow glow-2"></div>  <!-- HEADER -->  <header class="header"><div class="logo">
+
+  <span>C.T.</span>
+
+  <small>GALLERY</small>
+
+</div>
+
+
+<!-- DESKTOP NAV -->
+
+<nav class="header-nav">
+
+  <button
+    class="nav-btn active"
+    data-target="home-section"
   >
+    HOME
+  </button>
 
-</head>
+  <button
+    class="nav-btn"
+    data-target="gallery-section"
+  >
+    WORKS
+  </button>
+
+  <button
+    class="nav-btn"
+    data-target="character-section"
+  >
+    CHARACTER
+  </button>
+
+  <button
+    class="nav-btn"
+    data-target="worldview-section"
+  >
+    WORLDVIEW
+  </button>
+
+</nav>
 
 
-<body>
+<!-- HAMBURGER -->
+
+<button
+  class="menu-toggle"
+  id="menu-toggle"
+  aria-label="Open menu"
+  aria-expanded="false"
+>
+  ☰
+</button>
+
+  </header>  <!-- MOBILE MENU -->  <div
+    class="mobile-menu"
+    id="mobile-menu"
+  ><button
+  class="mobile-nav-btn active"
+  data-target="home-section"
+>
+  HOME
+</button>
+
+<button
+  class="mobile-nav-btn"
+  data-target="gallery-section"
+>
+  WORKS
+</button>
+
+<button
+  class="mobile-nav-btn"
+  data-target="character-section"
+>
+  CHARACTER
+</button>
+
+<button
+  class="mobile-nav-btn"
+  data-target="worldview-section"
+>
+  WORLDVIEW
+</button>
+
+  </div>  <main><!-- =========================
+     HOME
+========================== -->
+
+<section
+  id="home-section"
+  class="content-section active"
+>
 
 
-  <!-- BACKGROUND -->
+  <!-- HERO -->
 
-  <div class="background-glow glow-1"></div>
-  <div class="background-glow glow-2"></div>
+  <section class="hero">
 
+    <div class="hero-text">
 
-  <!-- HEADER -->
+      <p class="eyebrow">
+        CREATIVE ARCHIVE / 2026
+      </p>
 
-  <header class="header">
+      <h1>
+        C.T.<br>
+        <span>Gallery</span>
+      </h1>
 
-    <div class="logo">
+      <p class="description">
+        이미지와 세계관, 그리고 캐릭터를 기록하는<br>
+        개인 크리에이티브 아카이브입니다.
+      </p>
 
-      <span>C.T.</span>
-
-      <small>GALLERY</small>
+      <button
+        class="explore-btn"
+        data-target="gallery-section"
+      >
+        EXPLORE WORKS
+        <span>→</span>
+      </button>
 
     </div>
 
 
-    <!-- DESKTOP NAV -->
+    <div class="hero-visual">
 
-    <nav class="header-nav">
+      <div class="hero-image-frame">
 
-      <button
-        class="nav-btn active"
-        data-target="home-section"
-      >
-        HOME
-      </button>
-
-      <button
-        class="nav-btn"
-        data-target="gallery-section"
-      >
-        WORKS
-      </button>
-
-      <button
-        class="nav-btn"
-        data-target="character-section"
-      >
-        CHARACTER
-      </button>
-
-      <button
-        class="nav-btn"
-        data-target="worldview-section"
-      >
-        WORLDVIEW
-      </button>
-
-    </nav>
-
-
-    <!-- HAMBURGER -->
-
-    <button
-      class="menu-toggle"
-      id="menu-toggle"
-      aria-label="Open menu"
-      aria-expanded="false"
-    >
-      ☰
-    </button>
-
-
-  </header>
-
-
-  <!-- MOBILE MENU -->
-
-  <div
-    class="mobile-menu"
-    id="mobile-menu"
-  >
-
-    <button
-      class="mobile-nav-btn active"
-      data-target="home-section"
-    >
-      HOME
-    </button>
-
-    <button
-      class="mobile-nav-btn"
-      data-target="gallery-section"
-    >
-      WORKS
-    </button>
-
-    <button
-      class="mobile-nav-btn"
-      data-target="character-section"
-    >
-      CHARACTER
-    </button>
-
-    <button
-      class="mobile-nav-btn"
-      data-target="worldview-section"
-    >
-      WORLDVIEW
-    </button>
-
-  </div>
-
-
-
-  <main>
-
-
-    <!-- =========================
-         HOME
-    ========================== -->
-
-    <section
-      id="home-section"
-      class="content-section active"
-    >
-
-
-      <!-- HERO -->
-
-      <section class="hero">
-
-        <div class="hero-text">
-
-          <p class="eyebrow">
-            CREATIVE ARCHIVE / 2026
-          </p>
-
-          <h1>
-            C.T.<br>
-            <span>Gallery</span>
-          </h1>
-
-          <p class="description">
-            이미지와 세계관, 그리고 캐릭터를 기록하는<br>
-            개인 크리에이티브 아카이브입니다.
-          </p>
-
-          <button
-            class="explore-btn"
-            data-target="gallery-section"
-          >
-            EXPLORE WORKS
-            <span>→</span>
-          </button>
-
-        </div>
-
-
-        <div class="hero-visual">
-
-          <div class="hero-image-frame">
-
-            <img
-              src="hero/main.gif"
-              alt="C.T. Gallery Main Visual"
-              draggable="false"
-            >
-
-          </div>
-
-          <div class="hero-number">
-            001
-          </div>
-
-          <div class="hero-label">
-            FEATURED VISUAL
-          </div>
-
-        </div>
-
-      </section>
-
-
-
-      <!-- =========================
-           TODAY'S CHARACTER
-      ========================== -->
-
-      <section class="today-section">
-
-        <div class="section-title">
-
-          <div>
-
-            <h2>
-              TODAY'S CHARACTER
-            </h2>
-
-            <p>
-              DAILY RECOMMENDATION
-            </p>
-
-          </div>
-
-          <span id="today-date">
-            TODAY
-          </span>
-
-        </div>
-
-
-        <div
-          class="today-grid"
-          id="today-character"
+        <img
+          src="hero/main.jpg"
+          alt="C.T. Gallery Main Visual"
+          draggable="false"
         >
-        </div>
-
-      </section>
-
-
-    </section>
-
-
-
-    <!-- =========================
-         WORKS
-    ========================== -->
-
-    <section
-      id="gallery-section"
-      class="content-section"
-    >
-
-      <div class="page-header">
-
-        <p class="eyebrow">
-          VISUAL ARCHIVE
-        </p>
-
-        <h1 class="page-main-title">
-          ALL WORKS
-        </h1>
 
       </div>
 
-
-      <div class="section-title">
-
-        <h2>
-          IMAGE ARCHIVE
-        </h2>
-
-        <span id="image-count">
-          LOADING...
-        </span>
-
+      <div class="hero-number">
+        001
       </div>
 
-
-      <div
-        class="gallery"
-        id="gallery"
-      >
+      <div class="hero-label">
+        FEATURED VISUAL
       </div>
 
+    </div>
 
-      <div
-        class="pagination"
-        id="pagination"
-      >
-      </div>
-
-    </section>
-
-
-
-    <!-- =========================
-         CHARACTER
-    ========================== -->
-
-    <section
-      id="character-section"
-      class="content-section"
-    >
-
-      <div class="page-header">
-
-        <p class="eyebrow">
-          CHARACTER DATABASE
-        </p>
-
-        <h1 class="page-main-title">
-          CHARACTER
-        </h1>
-
-      </div>
-
-
-      <div class="section-title">
-
-        <h2>
-          CHARACTER ARCHIVE
-        </h2>
-
-        <span>
-          ARCHIVE
-        </span>
-
-      </div>
-
-
-      <div
-        class="archive-grid"
-        id="character-list"
-      >
-      </div>
-
-    </section>
-
-
-
-    <!-- =========================
-         WORLDVIEW
-    ========================== -->
-
-    <section
-      id="worldview-section"
-      class="content-section"
-    >
-
-      <div class="page-header">
-
-        <p class="eyebrow">
-          WORLD DATABASE
-        </p>
-
-        <h1 class="page-main-title">
-          WORLDVIEW
-        </h1>
-
-      </div>
-
-
-      <div class="section-title">
-
-        <h2>
-          WORLD ARCHIVE
-        </h2>
-
-        <span>
-          ARCHIVE
-        </span>
-
-      </div>
-
-
-      <div
-        class="archive-grid"
-        id="worldview-list"
-      >
-      </div>
-
-    </section>
-
-
-  </main>
+  </section>
 
 
 
   <!-- =========================
-       LIGHTBOX
+       TODAY'S CHARACTER
   ========================== -->
 
-  <div
-    class="lightbox"
-    id="lightbox"
-    aria-hidden="true"
-  >
+  <section class="today-section">
 
-    <button
-      class="lightbox-close"
-      id="lightbox-close"
-      aria-label="Close image"
-    >
-      ×
-    </button>
+    <div class="section-title">
 
+      <div>
 
-    <div class="lightbox-content">
+        <h2>
+          TODAY'S CHARACTER
+        </h2>
 
-      <img
-        id="lightbox-image"
-        src=""
-        alt=""
-      >
+        <p>
+          DAILY RECOMMENDATION
+        </p>
+
+      </div>
+
+      <span id="today-date">
+        TODAY
+      </span>
 
     </div>
+
+
+    <div
+      class="today-grid"
+      id="today-character"
+    >
+    </div>
+
+  </section>
+
+
+</section>
+
+
+
+<!-- =========================
+     WORKS
+========================== -->
+
+<section
+  id="gallery-section"
+  class="content-section"
+>
+
+  <div class="page-header">
+
+    <p class="eyebrow">
+      VISUAL ARCHIVE
+    </p>
+
+    <h1 class="page-main-title">
+      ALL WORKS
+    </h1>
 
   </div>
 
 
+  <div class="section-title">
 
-  <!-- FOOTER -->
+    <h2>
+      IMAGE ARCHIVE
+    </h2>
 
-  <footer>
-
-    <span>
-      © C.T. Gallery
+    <span id="image-count">
+      LOADING...
     </span>
 
+  </div>
+
+
+  <div
+    class="gallery"
+    id="gallery"
+  >
+  </div>
+
+
+  <div
+    class="pagination"
+    id="pagination"
+  >
+  </div>
+
+</section>
+
+
+
+<!-- =========================
+     CHARACTER
+========================== -->
+
+<section
+  id="character-section"
+  class="content-section"
+>
+
+  <div class="page-header">
+
+    <p class="eyebrow">
+      CHARACTER DATABASE
+    </p>
+
+    <h1 class="page-main-title">
+      CHARACTER
+    </h1>
+
+  </div>
+
+
+  <div class="section-title">
+
+    <h2>
+      CHARACTER ARCHIVE
+    </h2>
+
     <span>
-      CREATIVE ARCHIVE
+      ARCHIVE
     </span>
 
-  </footer>
+  </div>
+
+
+  <div
+    class="archive-grid"
+    id="character-list"
+  >
+  </div>
+
+</section>
 
 
 
-  <script>
+<!-- =========================
+     WORLDVIEW
+========================== -->
+
+<section
+  id="worldview-section"
+  class="content-section"
+>
+
+  <div class="page-header">
+
+    <p class="eyebrow">
+      WORLD DATABASE
+    </p>
+
+    <h1 class="page-main-title">
+      WORLDVIEW
+    </h1>
+
+  </div>
+
+
+  <div class="section-title">
+
+    <h2>
+      WORLD ARCHIVE
+    </h2>
+
+    <span>
+      ARCHIVE
+    </span>
+
+  </div>
+
+
+  <div
+    class="archive-grid"
+    id="worldview-list"
+  >
+  </div>
+
+</section>
+
+  </main>  <!-- =========================
+       LIGHTBOX
+  ========================== -->  <div
+    class="lightbox"
+    id="lightbox"
+    aria-hidden="true"
+  ><button
+  class="lightbox-close"
+  id="lightbox-close"
+  aria-label="Close image"
+>
+  ×
+</button>
+
+
+<div class="lightbox-content">
+
+  <img
+    id="lightbox-image"
+    src=""
+    alt=""
+  >
+
+</div>
+
+  </div>  <!-- FOOTER -->  <footer><span>
+  © C.T. Gallery
+</span>
+
+<span>
+  CREATIVE ARCHIVE
+</span>
+
+  </footer>  <script>
 
 
     /* =========================
@@ -1550,9 +1484,4 @@
     );
 
 
-  </script>
-
-
-</body>
-
-</html>
+  </script></body></html>
