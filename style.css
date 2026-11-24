@@ -1,381 +1,208 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>C.T. Gallery</title>
-  <meta name="description" content="C.T. Gallery - Creative Archive">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Gowun+Batang:wght@400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
-</head>
-<body class="lock">
+:root{
+  --sky:#eaf1ff; --blush:#fff0f5; --paper:#fffdf8;
+  --ink:#2d2a5c; --muted:#6f6c93; --violet:#8b7cf0; --gold:#c9a24b; --line:#e3dcf3;
+  --serif:'Cormorant Garamond','Gowun Batang',serif;
+  --body:'Gowun Batang','Noto Serif KR',serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;min-height:100vh;color:var(--ink);font-family:var(--body);line-height:1.7;
+  background:
+    radial-gradient(900px 500px at 85% -10%,#e0d9ff 0%,transparent 60%),
+    radial-gradient(800px 500px at -10% 30%,#d6ecff 0%,transparent 60%),
+    linear-gradient(180deg,var(--sky),var(--blush) 70%,#fff7ea);
+  background-attachment:fixed;
+}
+body.lock{overflow:hidden}
+button,a{-webkit-tap-highlight-color:transparent}
+button{font-family:inherit}
+:focus-visible{outline:2px solid var(--violet);outline-offset:3px}
+img{max-width:100%}
 
-  <div class="sparkles" id="sparkles" aria-hidden="true"></div>
+/* sparkles */
+.sparkles{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.sparkles i{position:absolute;width:6px;height:6px;border-radius:50%;
+  background:radial-gradient(circle,#fff 0%,var(--gold) 60%,transparent 70%);
+  opacity:0;animation:float 9s ease-in-out infinite}
+@keyframes float{0%{opacity:0;transform:translateY(20px) scale(.6)}
+  30%{opacity:.9}70%{opacity:.6}100%{opacity:0;transform:translateY(-90px) scale(1.2)}}
 
-  <!-- 책 표지 인트로 -->
-  <div class="intro" id="intro">
-    <button class="book" id="book" aria-label="책 열기">
-      <div class="book-pages"></div>
-      <div class="cover">
-        <div class="face front">
-          <span class="gem"></span>
-          <b>C.T.</b>
-          <em>GALLERY</em>
-          <small>표지를 눌러 책을 열어보세요</small>
-        </div>
-        <div class="face back"></div>
-      </div>
-    </button>
-  </div>
+/* ===== book intro ===== */
+.intro{position:fixed;inset:0;z-index:6000;display:grid;place-items:center;
+  background:radial-gradient(circle at 50% 40%,#f3edff,#d9e6ff 70%);
+  transition:opacity .9s ease,visibility .9s;perspective:1600px}
+.intro.done{opacity:0;visibility:hidden;pointer-events:none}
+.book{position:relative;width:min(300px,68vw);aspect-ratio:3/4.1;cursor:pointer;
+  transform-style:preserve-3d;transition:transform 1.6s cubic-bezier(.5,0,.2,1);
+  border:0;padding:0;background:none;display:block}
+.book-pages{position:absolute;inset:0;border-radius:4px 10px 10px 4px;
+  background:repeating-linear-gradient(90deg,#fffdf8 0 6px,#f1ead9 6px 7px);
+  box-shadow:0 30px 60px rgba(60,50,130,.25)}
+.book-pages::after{content:"";position:absolute;inset:14%;border:1px solid var(--line);border-radius:4px;
+  background:radial-gradient(circle,rgba(201,162,75,.18),transparent 65%)}
+.cover{position:absolute;inset:0;transform-origin:left center;transform-style:preserve-3d;
+  transition:transform 1.5s cubic-bezier(.6,0,.2,1)}
+.book.open .cover{transform:rotateY(-172deg)}
+.book.open{transform:translateX(50%)}
+.face{position:absolute;inset:0;backface-visibility:hidden;border-radius:4px 12px 12px 4px}
+.face.front{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;
+  text-align:center;color:#fff7dc;
+  background:linear-gradient(145deg,#4a3f9e,#2d2a5c 70%);
+  border:2px solid var(--gold);box-shadow:inset 0 0 0 8px #2d2a5c,inset 0 0 0 9px rgba(201,162,75,.7)}
+.face.front b{font-family:var(--serif);font-size:clamp(40px,12vw,54px);line-height:1;font-weight:600;letter-spacing:.04em}
+.face.front em{font-family:var(--serif);font-size:20px;letter-spacing:.3em;color:var(--gold)}
+.face.front small{font-size:12px;color:#cfc8ff;margin-top:18px;animation:pulse 2s ease-in-out infinite}
+.face.front .gem{width:14px;height:14px;transform:rotate(45deg);background:var(--gold);box-shadow:0 0 18px var(--gold)}
+.face.back{transform:rotateY(180deg);background:linear-gradient(90deg,#f1ead9,var(--paper))}
+@keyframes pulse{50%{opacity:.4}}
 
-  <!-- 페이지 넘김 연출 -->
-  <div class="turn" id="turn"><div class="leaf" id="leaf"></div></div>
+/* ===== page-turn transition ===== */
+.turn{position:fixed;inset:0;z-index:4000;pointer-events:none;perspective:2000px;visibility:hidden}
+.leaf{position:absolute;inset:0;transform-origin:left center;transform:rotateY(90deg);
+  background:linear-gradient(90deg,#f0e8d4,var(--paper) 18%,#fffaf0);
+  box-shadow:-20px 0 60px rgba(45,42,92,.25)}
 
-  <header class="header">
-    <div class="logo"><span>C.T.</span><small>Gallery</small></div>
-    <nav class="header-nav">
-      <button class="nav-btn active" data-target="home-section">홈</button>
-      <button class="nav-btn" data-target="gallery-section">작품</button>
-      <button class="nav-btn" data-target="character-section">캐릭터</button>
-      <button class="nav-btn" data-target="worldview-section">세계관</button>
-    </nav>
-    <button class="menu-toggle" id="menu-toggle" aria-label="메뉴 열기" aria-expanded="false">☰</button>
-  </header>
+/* ===== header ===== */
+.header{position:sticky;top:0;z-index:1000;height:84px;padding:0 5vw;display:flex;align-items:center;
+  justify-content:space-between;background:rgba(255,253,248,.72);backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--line)}
+.logo{display:flex;align-items:baseline;gap:10px;color:var(--ink)}
+.logo span{font-family:var(--serif);font-size:32px;font-weight:600;letter-spacing:.05em}
+.logo small{font-family:var(--serif);font-style:italic;font-size:16px;color:var(--gold)}
+.header-nav{display:flex;gap:6px}
+.nav-btn{background:none;border:0;padding:10px 18px;font-size:15px;color:var(--muted);cursor:pointer;
+  border-radius:99px;transition:color .25s,background .25s}
+.nav-btn:hover{color:var(--ink);background:rgba(139,124,240,.1)}
+.nav-btn.active{color:#fff;background:linear-gradient(135deg,#8b7cf0,#a98bf5);
+  box-shadow:0 6px 18px rgba(139,124,240,.35)}
+.menu-toggle{display:none;width:44px;height:44px;border:1px solid var(--line);border-radius:50%;
+  background:#fff;color:var(--ink);font-size:20px;cursor:pointer}
+.mobile-menu{display:none}
 
-  <div class="mobile-menu" id="mobile-menu">
-    <button class="mobile-nav-btn active" data-target="home-section">홈</button>
-    <button class="mobile-nav-btn" data-target="gallery-section">작품</button>
-    <button class="mobile-nav-btn" data-target="character-section">캐릭터</button>
-    <button class="mobile-nav-btn" data-target="worldview-section">세계관</button>
-  </div>
+/* ===== layout ===== */
+main{position:relative;z-index:1;width:min(1200px,90%);margin:0 auto;min-height:70vh}
+.content-section{display:none;padding-bottom:100px}
+.content-section.active{display:block}
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .8s ease,transform .8s ease}
+.reveal.in{opacity:1;transform:none}
 
-  <main>
-    <!-- 홈 -->
-    <section id="home-section" class="content-section active">
-      <section class="hero">
-        <div class="hero-text">
-          <p class="eyebrow">Creative Archive, 2026</p>
-          <h1>C.T.<span>Gallery</span></h1>
-          <p class="description">이미지와 세계관, 그리고 캐릭터를 기록하는<br>개인 크리에이티브 아카이브입니다.</p>
-          <button class="explore-btn" data-target="gallery-section">작품 둘러보기</button>
-        </div>
-        <div class="hero-visual">
-          <div class="hero-image-frame">
-            <img src="hero/main.jpg" alt="C.T. Gallery 메인 비주얼" draggable="false">
-          </div>
-          <div class="hero-label">오늘의 한 장면</div>
-        </div>
-      </section>
+/* ===== hero ===== */
+.hero{min-height:calc(100vh - 84px);padding:60px 0;display:grid;grid-template-columns:1fr 1fr;
+  align-items:center;gap:6%}
+.eyebrow{margin:0 0 18px;font-family:var(--serif);font-style:italic;font-size:19px;color:var(--gold)}
+.hero h1{margin:0;font-family:var(--serif);font-weight:500;line-height:.95;font-size:clamp(68px,10vw,138px);
+  color:var(--ink)}
+.hero h1 span{display:block;font-style:italic;font-weight:400;color:var(--violet)}
+.description{margin:32px 0 0;color:var(--muted);font-size:16px}
+.explore-btn{margin-top:32px;padding:14px 30px;border:1px solid var(--gold);border-radius:99px;cursor:pointer;
+  background:#fff;color:var(--ink);font-size:15px;transition:all .3s;box-shadow:0 6px 20px rgba(201,162,75,.18)}
+.explore-btn:hover{background:var(--gold);color:#fff;transform:translateY(-3px)}
+.hero-visual{position:relative;justify-self:center;width:min(100%,460px)}
+.hero-image-frame{position:relative;border-radius:999px 999px 18px 18px;overflow:hidden;
+  padding:10px;background:linear-gradient(160deg,var(--gold),#fff3c9 40%,var(--gold));
+  box-shadow:0 30px 70px rgba(80,60,170,.25)}
+.hero-image-frame img{display:block;width:100%;aspect-ratio:3/4;object-fit:cover;
+  border-radius:999px 999px 10px 10px;background:#e9e4fb}
+.hero-label{position:absolute;left:50%;bottom:-16px;transform:translateX(-50%);white-space:nowrap;
+  padding:7px 20px;border-radius:99px;background:#fff;border:1px solid var(--gold);
+  font-family:var(--serif);font-style:italic;font-size:15px;color:var(--ink)}
 
-      <section class="today-section">
-        <div class="section-title">
-          <div>
-            <h2>오늘의 캐릭터</h2>
-            <p>하루에 한 번 바뀌는 추천</p>
-          </div>
-          <span id="today-date">today</span>
-        </div>
-        <div class="today-grid" id="today-character"></div>
-      </section>
-    </section>
+/* ===== section titles ===== */
+.section-title{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:26px;
+  padding-bottom:14px;border-bottom:1px solid var(--line);position:relative}
+.section-title::after{content:"";position:absolute;left:0;bottom:-1px;width:70px;height:2px;background:var(--gold)}
+.section-title h2{margin:0;font-family:var(--serif);font-size:34px;font-weight:600}
+.section-title p{margin:0;font-size:13px;color:var(--muted)}
+.section-title>span{font-family:var(--serif);font-style:italic;font-size:17px;color:var(--violet)}
+.today-section{margin-top:30px}
+.page-header{padding:80px 0 44px}
+.page-main-title{margin:0;font-family:var(--serif);font-weight:500;font-size:clamp(56px,10vw,110px);line-height:1}
 
-    <!-- 작품 -->
-    <section id="gallery-section" class="content-section">
-      <div class="page-header">
-        <p class="eyebrow">Visual Archive</p>
-        <h1 class="page-main-title">작품</h1>
-      </div>
-      <div class="section-title">
-        <h2>이미지 아카이브</h2>
-        <span id="image-count">불러오는 중...</span>
-      </div>
-      <div class="gallery" id="gallery"></div>
-      <div class="pagination" id="pagination"></div>
-    </section>
+/* ===== today / archive cards ===== */
+.today-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.today-card{display:flex;flex-direction:column;text-decoration:none;color:inherit;background:#fff;
+  border:1px solid var(--line);border-radius:18px;overflow:hidden;transition:transform .4s,box-shadow .4s}
+.today-card:hover{transform:translateY(-6px);box-shadow:0 24px 50px rgba(110,90,200,.2)}
+.today-image{aspect-ratio:1;overflow:hidden;background:#eee9fb}
+.today-image img,.archive-image img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .6s}
+.today-card:hover img,.archive-card:hover img{transform:scale(1.05)}
+.today-info{padding:18px 20px 22px}
+.today-info>span,.archive-type{font-family:var(--serif);font-style:italic;font-size:15px;color:var(--gold)}
+.today-info h3{margin:4px 0;font-size:21px}
+.today-info p,.archive-info p{margin:0;color:var(--muted);font-size:14px}
+.today-view,.archive-view{margin-top:14px;font-size:13px;color:var(--violet)}
 
-    <!-- 캐릭터 -->
-    <section id="character-section" class="content-section">
-      <div class="page-header">
-        <p class="eyebrow">Character Database</p>
-        <h1 class="page-main-title">캐릭터</h1>
-      </div>
-      <div class="section-title"><h2>캐릭터 도감</h2></div>
-      <div class="archive-grid" id="character-list"></div>
-    </section>
+/* ===== works gallery ===== */
+.gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.gallery-item{position:relative;aspect-ratio:1;padding:8px;border:1px solid var(--line);border-radius:14px;
+  background:#fff;cursor:pointer;overflow:hidden;box-shadow:0 8px 24px rgba(110,90,200,.08);
+  transition:transform .4s,box-shadow .4s}
+.gallery-item img{display:block;width:100%;height:100%;object-fit:cover;border-radius:8px;transition:transform .6s}
+.gallery-item:hover{transform:translateY(-6px) rotate(-.6deg);box-shadow:0 22px 44px rgba(110,90,200,.22)}
+.gallery-item:hover img{transform:scale(1.04)}
+.gallery-overlay{position:absolute;left:8px;right:8px;bottom:8px;padding:30px 14px 12px;border-radius:0 0 8px 8px;
+  background:linear-gradient(to top,rgba(45,42,92,.7),transparent);color:#fff;font-size:13px;
+  text-align:left;opacity:0;transition:opacity .3s}
+.gallery-item:hover .gallery-overlay{opacity:1}
+.pagination{display:flex;justify-content:center;flex-wrap:wrap;gap:8px;margin-top:56px}
+.pagination button{min-width:42px;height:42px;padding:0 12px;border:1px solid var(--line);border-radius:50%;
+  background:#fff;color:var(--muted);font-family:var(--serif);font-size:18px;cursor:pointer;transition:all .25s}
+.pagination button:hover:not(:disabled){color:var(--ink);border-color:var(--violet)}
+.pagination button.active{color:#fff;background:var(--violet);border-color:var(--violet)}
+.pagination button:disabled{opacity:.3;cursor:not-allowed}
 
-    <!-- 세계관 -->
-    <section id="worldview-section" class="content-section">
-      <div class="page-header">
-        <p class="eyebrow">World Database</p>
-        <h1 class="page-main-title">세계관</h1>
-      </div>
-      <div class="section-title"><h2>세계의 기록</h2></div>
-      <div class="archive-grid" id="worldview-list"></div>
-    </section>
-  </main>
+/* ===== archive list ===== */
+.archive-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+.archive-card{display:flex;align-items:center;gap:22px;padding:16px;text-decoration:none;color:inherit;
+  background:rgba(255,255,255,.85);border:1px solid var(--line);border-radius:18px;
+  transition:transform .3s,box-shadow .3s,border-color .3s}
+.archive-card:hover{transform:translateY(-4px);border-color:var(--gold);box-shadow:0 18px 40px rgba(110,90,200,.16)}
+.archive-image{width:130px;height:160px;flex-shrink:0;overflow:hidden;border-radius:999px 999px 10px 10px;
+  border:2px solid var(--gold);background:#eee9fb}
+.archive-info{flex:1;min-width:0}
+.archive-info h3{margin:4px 0 6px;font-size:21px}
 
-  <div class="lightbox" id="lightbox" aria-hidden="true">
-    <button class="lightbox-close" id="lightbox-close" aria-label="닫기">×</button>
-    <img id="lightbox-image" src="" alt="">
-  </div>
+/* ===== lightbox / misc ===== */
+.lightbox{position:fixed;inset:0;z-index:5000;display:flex;align-items:center;justify-content:center;
+  padding:30px;background:rgba(35,30,80,.82);backdrop-filter:blur(10px);opacity:0;visibility:hidden;
+  transition:opacity .3s,visibility .3s}
+.lightbox.open{opacity:1;visibility:visible}
+.lightbox img{display:block;max-width:94vw;max-height:88vh;border:8px solid #fffdf8;border-radius:6px;
+  box-shadow:0 30px 90px rgba(0,0,0,.4);transform:scale(.94);transition:transform .35s}
+.lightbox.open img{transform:none}
+.lightbox-close{position:fixed;top:20px;right:20px;width:46px;height:46px;border:0;border-radius:50%;
+  background:#fff;color:var(--ink);font-size:26px;cursor:pointer}
+.error{grid-column:1/-1;padding:60px 20px;text-align:center;color:var(--muted)}
+footer{position:relative;z-index:1;width:min(1200px,90%);margin:0 auto;padding:28px 0 40px;display:flex;
+  justify-content:space-between;border-top:1px solid var(--line);color:var(--muted);font-size:13px}
 
-  <footer>
-    <span>© C.T. Gallery</span>
-    <span>Creative Archive</span>
-  </footer>
-
-  <script>
-    /* ===== 데이터 (여기만 수정하면 됩니다) ===== */
-    const owner = "monana670-create";
-    const repo = "C.T.-Gallery";
-    const folder = "images";
-    const ITEMS_PER_PAGE = 9;
-
-    // 캐릭터 추가: 아래 배열에 { } 한 덩어리씩 추가
-    const characters = [
-      {
-        title: "김유담",
-        description: "메아리의 종착지",
-        image: "characters/images/yudam.png",
-        link: "characters/yudam.html"
-      }
-    ];
-
-    // 세계관 추가: 아래 배열에 { } 한 덩어리씩 추가
-    const worldviews = [
-      {
-        title: "은색 공방의 키메토리아",
-        description: "알테리아와 키메라 아카데미의 기록",
-        image: "worldviews/images/chimatoria.png",
-        link: "worldviews/chimatoria.html"
-      }
-    ];
-
-    /* ===== 공통 요소 ===== */
-    const $ = id => document.getElementById(id);
-    const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const navButtons = document.querySelectorAll(".nav-btn, .mobile-nav-btn");
-    const menuToggle = $("menu-toggle"), mobileMenu = $("mobile-menu");
-
-    /* 스크롤 등장 효과 */
-    const io = new IntersectionObserver(entries => {
-      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } });
-    }, { threshold: 0.1 });
-    function reveal(el, delay = 0) {
-      el.classList.add("reveal");
-      el.style.transitionDelay = delay + "ms";
-      io.observe(el);
-    }
-
-    /* 반짝이 */
-    (function () {
-      const box = $("sparkles");
-      for (let i = 0; i < 16; i++) {
-        const s = document.createElement("i");
-        s.style.left = Math.random() * 100 + "%";
-        s.style.top = Math.random() * 100 + "%";
-        s.style.animationDelay = (Math.random() * 9).toFixed(1) + "s";
-        s.style.animationDuration = (7 + Math.random() * 6).toFixed(1) + "s";
-        box.appendChild(s);
-      }
-    })();
-
-    /* ===== 책 열기 인트로 ===== */
-    const intro = $("intro"), book = $("book");
-    let introOpened = false;
-    function openBook() {
-      if (introOpened) return;
-      introOpened = true;
-      book.classList.add("open");
-      setTimeout(() => intro.classList.add("done"), reduceMotion ? 0 : 1700);
-      setTimeout(() => document.body.classList.remove("lock"), reduceMotion ? 0 : 1700);
-    }
-    book.addEventListener("click", openBook);
-    try {
-      if (sessionStorage.getItem("seenIntro")) {
-        intro.classList.add("done");
-        document.body.classList.remove("lock");
-      } else {
-        sessionStorage.setItem("seenIntro", "1");
-      }
-    } catch (e) {}
-
-    /* ===== 페이지 넘김 전환 ===== */
-    const turn = $("turn"), leaf = $("leaf");
-    let turning = false;
-
-    function showSection(id) {
-      document.querySelectorAll(".content-section").forEach(s => s.classList.toggle("active", s.id === id));
-      navButtons.forEach(b => b.classList.toggle("active", b.dataset.target === id));
-      window.scrollTo(0, 0);
-      document.querySelectorAll("#" + id + " .reveal:not(.in)").forEach(el => io.observe(el));
-    }
-
-    async function switchSection(id) {
-      const next = $(id), current = document.querySelector(".content-section.active");
-      closeMobileMenu();
-      if (!next || next === current || turning) return;
-      if (reduceMotion || !leaf.animate) { showSection(id); return; }
-
-      turning = true;
-      turn.style.visibility = "visible";
-      await leaf.animate(
-        [{ transform: "rotateY(90deg)" }, { transform: "rotateY(0deg)" }],
-        { duration: 450, easing: "ease-in", fill: "forwards" }
-      ).finished;
-      showSection(id);
-      await leaf.animate(
-        [{ transform: "rotateY(0deg)" }, { transform: "rotateY(-90deg)" }],
-        { duration: 550, easing: "ease-out", fill: "forwards" }
-      ).finished;
-      turn.style.visibility = "hidden";
-      turning = false;
-    }
-
-    navButtons.forEach(b => b.addEventListener("click", () => switchSection(b.dataset.target)));
-    document.querySelectorAll(".explore-btn").forEach(b =>
-      b.addEventListener("click", () => switchSection(b.dataset.target)));
-
-    /* 모바일 메뉴 */
-    function closeMobileMenu() {
-      mobileMenu.classList.remove("open");
-      menuToggle.setAttribute("aria-expanded", "false");
-    }
-    menuToggle.addEventListener("click", () => {
-      const open = mobileMenu.classList.toggle("open");
-      menuToggle.setAttribute("aria-expanded", String(open));
-    });
-
-    /* ===== 오늘의 캐릭터 ===== */
-    function renderToday() {
-      const box = $("today-character");
-      if (!characters.length) { box.innerHTML = `<p class="error">등록된 캐릭터가 없습니다.</p>`; return; }
-      const now = new Date();
-      const day = Math.floor(new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime() / 86400000);
-      const count = Math.min(3, characters.length);
-      for (let i = 0; i < count; i++) {
-        const c = characters[(day + i) % characters.length];
-        const a = document.createElement("a");
-        a.className = "today-card";
-        a.href = c.link;
-        a.innerHTML = `
-          <div class="today-image"><img src="${c.image}" alt="${c.title}" loading="lazy"></div>
-          <div class="today-info">
-            <span>오늘의 캐릭터</span>
-            <h3>${c.title}</h3>
-            <p>${c.description}</p>
-            <div class="today-view">기록 보러가기</div>
-          </div>`;
-        box.appendChild(a);
-        reveal(a, i * 120);
-      }
-      $("today-date").textContent =
-        `${String(now.getMonth() + 1).padStart(2, "0")}.${String(now.getDate()).padStart(2, "0")}`;
-    }
-    renderToday();
-
-    /* ===== 깃허브 갤러리 ===== */
-    const gallery = $("gallery"), pagination = $("pagination"), imageCount = $("image-count");
-    let currentPage = 1, allImageFiles = [];
-
-    fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${folder}`)
-      .then(r => { if (!r.ok) throw new Error("GitHub API error"); return r.json(); })
-      .then(files => {
-        if (!Array.isArray(files)) throw new Error("Invalid GitHub response");
-        allImageFiles = files
-          .filter(f => f.type === "file" && /\.(jpg|jpeg|png|gif|webp)$/i.test(f.name))
-          .sort((a, b) => {
-            const an = parseInt(a.name, 10), bn = parseInt(b.name, 10);
-            return (!isNaN(an) && !isNaN(bn)) ? an - bn : a.name.localeCompare(b.name);
-          });
-        imageCount.textContent = `${allImageFiles.length}점의 이미지`;
-        if (!allImageFiles.length) { gallery.innerHTML = `<p class="error">등록된 이미지가 없습니다.</p>`; return; }
-        renderPage(currentPage);
-      })
-      .catch(err => {
-        console.error(err);
-        imageCount.textContent = "0점의 이미지";
-        gallery.innerHTML = `<p class="error">이미지를 불러오지 못했습니다. 잠시 후 다시 시도해 주세요.</p>`;
-      });
-
-    function renderPage(page) {
-      gallery.innerHTML = "";
-      const start = (page - 1) * ITEMS_PER_PAGE;
-      allImageFiles.slice(start, start + ITEMS_PER_PAGE).forEach((file, i) => {
-        const item = document.createElement("button");
-        item.className = "gallery-item";
-        item.type = "button";
-        item.innerHTML = `<img src="${file.download_url}" alt="${file.name}" loading="lazy" draggable="false">
-                          <div class="gallery-overlay">크게 보기</div>`;
-        item.addEventListener("click", () => openLightbox(file.download_url, file.name));
-        gallery.appendChild(item);
-        reveal(item, (i % 3) * 90);
-      });
-      renderPagination();
-    }
-
-    function goPage(p) { currentPage = p; renderPage(p); window.scrollTo({ top: 0, behavior: "smooth" }); }
-
-    function renderPagination() {
-      pagination.innerHTML = "";
-      const total = Math.ceil(allImageFiles.length / ITEMS_PER_PAGE);
-      if (total <= 1) return;
-      const mk = (label, onClick, disabled, active) => {
-        const b = document.createElement("button");
-        b.textContent = label;
-        b.disabled = !!disabled;
-        if (active) b.classList.add("active");
-        b.addEventListener("click", onClick);
-        pagination.appendChild(b);
-      };
-      mk("←", () => goPage(currentPage - 1), currentPage === 1);
-      for (let i = 1; i <= total; i++) mk(i, () => goPage(i), false, i === currentPage);
-      mk("→", () => goPage(currentPage + 1), currentPage === total);
-    }
-
-    /* ===== 캐릭터 / 세계관 목록 ===== */
-    function renderArchive(list, targetId, type) {
-      const box = $(targetId);
-      box.innerHTML = "";
-      list.forEach((item, i) => {
-        const a = document.createElement("a");
-        a.href = item.link;
-        a.className = "archive-card";
-        a.innerHTML = `
-          <div class="archive-image"><img src="${item.image}" alt="${item.title}" loading="lazy"></div>
-          <div class="archive-info">
-            <span class="archive-type">${type}</span>
-            <h3>${item.title}</h3>
-            <p>${item.description}</p>
-            <div class="archive-view">기록 보러가기</div>
-          </div>`;
-        box.appendChild(a);
-        reveal(a, i * 100);
-      });
-    }
-    renderArchive(characters, "character-list", "캐릭터");
-    renderArchive(worldviews, "worldview-list", "세계관");
-
-    /* ===== 라이트박스 ===== */
-    const lightbox = $("lightbox"), lightboxImage = $("lightbox-image");
-    function openLightbox(src, alt = "") {
-      lightboxImage.src = src;
-      lightboxImage.alt = alt;
-      lightbox.classList.add("open");
-      lightbox.setAttribute("aria-hidden", "false");
-      document.body.classList.add("lock");
-    }
-    function closeLightbox() {
-      lightbox.classList.remove("open");
-      lightbox.setAttribute("aria-hidden", "true");
-      document.body.classList.remove("lock");
-      setTimeout(() => { lightboxImage.src = ""; }, 300);
-    }
-    $("lightbox-close").addEventListener("click", closeLightbox);
-    lightbox.addEventListener("click", e => { if (e.target === lightbox) closeLightbox(); });
-    document.addEventListener("keydown", e => { if (e.key === "Escape") closeLightbox(); });
-  </script>
-</body>
-</html>
+/* ===== mobile ===== */
+@media (max-width:820px){
+  .hero{grid-template-columns:1fr;gap:56px;min-height:auto;padding:44px 0}
+  .today-grid,.archive-grid{grid-template-columns:1fr}
+  .gallery{grid-template-columns:repeat(2,1fr);gap:12px}
+  .gallery-overlay{opacity:1}
+}
+@media (max-width:700px){
+  .header{height:72px;padding:0 20px}
+  .header-nav{display:none}
+  .menu-toggle{display:block}
+  .mobile-menu{display:flex;position:fixed;top:72px;left:0;right:0;z-index:999;flex-direction:column;gap:6px;
+    padding:12px 20px 18px;background:rgba(255,253,248,.97);backdrop-filter:blur(16px);
+    border-bottom:1px solid var(--line);opacity:0;visibility:hidden;transform:translateY(-12px);
+    transition:all .25s}
+  .mobile-menu.open{opacity:1;visibility:visible;transform:none}
+  .mobile-nav-btn{padding:13px 16px;border:1px solid var(--line);border-radius:12px;background:#fff;
+    color:var(--muted);font-size:15px;text-align:left;cursor:pointer}
+  .mobile-nav-btn.active{color:#fff;background:linear-gradient(135deg,#8b7cf0,#a98bf5);border-color:transparent}
+  main{width:calc(100% - 40px)}
+  .page-header{padding:56px 0 36px}
+  .archive-image{width:96px;height:120px}
+  footer{width:calc(100% - 40px);font-size:12px}
+}
+@media (max-width:420px){.gallery{grid-template-columns:1fr}}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition-duration:.01s!important}
+  .reveal{opacity:1;transform:none}
+  }
