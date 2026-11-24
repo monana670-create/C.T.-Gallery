@@ -58,10 +58,31 @@ img{max-width:100%}
 @keyframes pulse{50%{opacity:.4}}
 
 /* ===== page-turn transition ===== */
-.turn{position:fixed;inset:0;z-index:4000;pointer-events:none;perspective:2000px;visibility:hidden}
-.leaf{position:absolute;inset:0;transform-origin:left center;transform:rotateY(90deg);
-  background:linear-gradient(90deg,#f0e8d4,var(--paper) 18%,#fffaf0);
-  box-shadow:-20px 0 60px rgba(45,42,92,.25)}
+.turn{position:fixed;inset:0;z-index:4000;pointer-events:none;perspective:2200px;
+  visibility:hidden;opacity:0;background:#efe7d3}
+.spread-left,.spread-right{position:absolute;top:0;bottom:0;width:50%;
+  background:
+    repeating-linear-gradient(180deg,transparent 0 31px,rgba(139,124,240,.1) 31px 32px),
+    linear-gradient(90deg,#fffaf0,#fffdf8)}
+.spread-left{left:0;
+  background:
+    repeating-linear-gradient(180deg,transparent 0 31px,rgba(139,124,240,.1) 31px 32px),
+    linear-gradient(270deg,#e6dcc2,#fffaf0 22%,#fffdf8)}
+.spread-right{right:0;
+  background:
+    repeating-linear-gradient(180deg,transparent 0 31px,rgba(139,124,240,.1) 31px 32px),
+    linear-gradient(90deg,#e6dcc2,#fffaf0 22%,#fffdf8)}
+.leaf{position:absolute;top:0;bottom:0;left:50%;width:50%;
+  transform-origin:left center;transform-style:preserve-3d}
+.leaf-front,.leaf-back{position:absolute;inset:0;backface-visibility:hidden;
+  background:
+    repeating-linear-gradient(180deg,transparent 0 31px,rgba(139,124,240,.1) 31px 32px),
+    linear-gradient(90deg,#e6dcc2,#fffaf0 22%,#fffdf8)}
+.leaf-front{box-shadow:-18px 0 50px rgba(45,42,92,.28)}
+.leaf-back{transform:rotateY(180deg);
+  background:
+    repeating-linear-gradient(180deg,transparent 0 31px,rgba(139,124,240,.1) 31px 32px),
+    linear-gradient(270deg,#e6dcc2,#fffaf0 22%,#fffdf8)}
 
 /* ===== header ===== */
 .header{position:sticky;top:0;z-index:1000;height:84px;padding:0 5vw;display:flex;align-items:center;
@@ -205,4 +226,4 @@ footer{position:relative;z-index:1;width:min(1200px,90%);margin:0 auto;padding:2
 @media (prefers-reduced-motion:reduce){
   *{animation:none!important;transition-duration:.01s!important}
   .reveal{opacity:1;transform:none}
-  }
+}
