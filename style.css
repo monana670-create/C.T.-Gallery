@@ -1,2450 +1,381 @@
-@import url(
-'https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+KR:wght@400;500;600;700&display=swap'
-);
-
-/* =========================
-BASIC
-========================= */
-
-* {
-  box-sizing: border-box;
-  }
-
-html {
-scroll-behavior: smooth;
-}
-
-body {
-
-margin: 0;
-
-min-height: 100vh;
-
-background:
-radial-gradient(
-circle at top right,
-#18142a 0%,
-#0b0b0f 45%,
-#08080a 100%
-);
-
-color: #f2f2f5;
-
-font-family:
-'Noto Sans KR',
-sans-serif;
-
-}
-
-body.lightbox-open {
-overflow: hidden;
-}
-
-button,
-a {
--webkit-tap-highlight-color:
-transparent;
-}
-
-button {
-font-family: inherit;
-}
-
-.background-glow {
-
-position: fixed;
-
-width: 400px;
-
-height: 400px;
-
-border-radius: 50%;
-
-pointer-events: none;
-
-filter: blur(100px);
-
-opacity: 0.08;
-
-z-index: -1;
-
-}
-
-.glow-1 {
-
-top: 5%;
-
-right: -150px;
-
-background: #8a68ff;
-
-}
-
-.glow-2 {
-
-bottom: 10%;
-
-left: -180px;
-
-background: #a84cff;
-
-}
-
-/* =========================
-HEADER
-========================= */
-
-.header {
-
-height: 95px;
-
-padding: 0 5vw;
-
-display: flex;
-
-align-items: center;
-
-justify-content: space-between;
-
-position: sticky;
-
-top: 0;
-
-z-index: 1000;
-
-border-bottom:
-1px solid #292634;
-
-background:
-rgba(10, 10, 15, 0.82);
-
-backdrop-filter:
-blur(16px);
-
-}
-
-.logo {
-
-display: flex;
-
-align-items: baseline;
-
-gap: 12px;
-
-}
-
-.logo span {
-
-font-family:
-'Bebas Neue',
-sans-serif;
-
-font-size: 34px;
-
-letter-spacing:
-0.08em;
-
-color:
-#ffffff;
-
-}
-
-.logo small {
-
-font-size: 10px;
-
-font-weight: 700;
-
-color:
-#9b7bff;
-
-letter-spacing:
-0.25em;
-
-}
-
-/* =========================
-NAVIGATION
-========================= */
-
-.header-nav {
-
-display: flex;
-
-align-items: center;
-
-gap: 10px;
-
-}
-
-.nav-btn {
-
-position: relative;
-
-background:
-transparent;
-
-border:
-1px solid transparent;
-
-border-radius:
-6px;
-
-padding:
-13px 20px;
-
-font-family:
-'Bebas Neue',
-sans-serif;
-
-font-size:
-18px;
-
-letter-spacing:
-0.08em;
-
-color:
-#777583;
-
-cursor:
-pointer;
-
-transition:
-all 0.25s ease;
-
-}
-
-.nav-btn:hover {
-
-color:
-#ffffff;
-
-border-color:
-#514b66;
-
-background:
-rgba(155, 123, 255, 0.08);
-
-transform:
-translateY(-2px);
-
-}
-
-.nav-btn.active {
-
-color:
-#ffffff;
-
-background:
-linear-gradient(
-135deg,
-#6e4cff,
-#a84cff
-);
-
-border-color:
-#9b7bff;
-
-box-shadow:
-0 0 20px
-rgba(
-120,
-76,
-255,
-0.28
-);
-
-}
-
-/* =========================
-HAMBURGER
-========================= */
-
-.menu-toggle {
-
-display: none;
-
-width: 44px;
-
-height: 44px;
-
-padding: 0;
-
-background:
-transparent;
-
-color:
-#ffffff;
-
-border:
-1px solid #302d38;
-
-border-radius:
-6px;
-
-font-size: 23px;
-
-line-height: 1;
-
-cursor:
-pointer;
-
-transition:
-all 0.25s ease;
-
-}
-
-.menu-toggle:hover,
-.menu-toggle.open {
-
-background:
-rgba(155, 123, 255, 0.12);
-
-border-color:
-#8a68ff;
-
-}
-
-.mobile-menu {
-
-display: none;
-
-}
-
-/* =========================
-MAIN
-========================= */
-
-main {
-
-width:
-min(
-1400px,
-90%
-);
-
-margin:
-0 auto;
-
-min-height:
-70vh;
-
-}
-
-/* =========================
-CONTENT SECTION
-========================= */
-
-.content-section {
-
-display:
-none;
-
-padding-bottom:
-120px;
-
-}
-
-.content-section.active {
-
-display:
-block;
-
-animation:
-sectionEnter
-0.55s
-cubic-bezier(
-.2,
-.8,
-.2,
-1
-)
-forwards;
-
-}
-
-@keyframes sectionEnter {
-
-from {
-
-opacity:
-  0;
-
-transform:
-  translateY(30px);
-
-filter:
-  blur(5px);
-
-}
-
-to {
-
-opacity:
-  1;
-
-transform:
-  translateY(0);
-
-filter:
-  blur(0);
-
-}
-
-}
-
-/* =========================
-HERO
-========================= */
-
-.hero {
-
-min-height:
-calc(100vh - 95px);
-
-padding:
-80px 0;
-
-display:
-grid;
-
-grid-template-columns:
-0.9fr 1.1fr;
-
-align-items:
-center;
-
-gap:
-8%;
-
-}
-
-.hero-text {
-
-position:
-relative;
-
-z-index:
-2;
-
-}
-
-.eyebrow {
-
-margin:
-0 0 28px;
-
-color:
-#9b7bff;
-
-font-size:
-11px;
-
-font-weight:
-700;
-
-letter-spacing:
-0.25em;
-
-}
-
-.hero h1 {
-
-margin:
-0;
-
-font-family:
-'Bebas Neue',
-sans-serif;
-
-font-size:
-clamp(
-100px,
-16vw,
-230px
-);
-
-font-weight:
-400;
-
-line-height:
-0.74;
-
-letter-spacing:
-0.02em;
-
-color:
-#ffffff;
-
-}
-
-.hero h1 span {
-
-background:
-linear-gradient(
-90deg,
-#8f72ff,
-#b64cff
-);
-
--webkit-background-clip:
-text;
-
-background-clip:
-text;
-
-color:
-transparent;
-
-}
-
-.description {
-
-margin:
-65px 0 0;
-
-color:
-#9996a6;
-
-font-size:
-14px;
-
-line-height:
-1.9;
-
-}
-
-.explore-btn {
-
-margin-top:
-35px;
-
-padding:
-14px 20px;
-
-display:
-inline-flex;
-
-align-items:
-center;
-
-gap:
-20px;
-
-color:
-#ffffff;
-
-background:
-transparent;
-
-border:
-1px solid #403b4d;
-
-border-radius:
-5px;
-
-font-family:
-'Bebas Neue',
-sans-serif;
-
-font-size:
-17px;
-
-letter-spacing:
-0.08em;
-
-cursor:
-pointer;
-
-transition:
-all 0.3s ease;
-
-}
-
-.explore-btn span {
-
-color:
-#9b7bff;
-
-transition:
-transform 0.3s ease;
-
-}
-
-.explore-btn:hover {
-
-border-color:
-#9b7bff;
-
-background:
-rgba(
-155,
-123,
-255,
-0.08
-);
-
-}
-
-.explore-btn:hover span {
-
-transform:
-translateX(5px);
-
-}
-
-/* =========================
-HERO VISUAL
-========================= */
-
-.hero-visual {
-
-position:
-relative;
-
-}
-
-.hero-image-frame {
-
-position:
-relative;
-
-width:
-100%;
-
-overflow:
-hidden;
-
-border:
-1px solid #383343;
-
-background:
-#111116;
-
-}
-
-.hero-image-frame::before {
-
-content:
-"";
-
-position:
-absolute;
-
-inset:
-0;
-
-border:
-1px solid
-rgba(
-155,
-123,
-255,
-0.2
-);
-
-pointer-events:
-none;
-
-z-index:
-2;
-
-}
-
-/* HERO IMAGE BOTTOM BLUR */
-
-.hero-image-frame::after {
-
-content:
-"";
-
-position:
-absolute;
-
-left:
-8%;
-
-right:
-8%;
-
-bottom:
--25px;
-
-height:
-45px;
-
-background:
-rgba(
-155,
-123,
-255,
-0.22
-);
-
-filter:
-blur(28px);
-
-opacity:
-0.55;
-
-pointer-events:
-none;
-
-z-index:
--1;
-
-}
-
-.hero-image-frame img {
-
-display:
-block;
-
-width:
-100%;
-
-height:
-auto;
-
-max-height:
-70vh;
-
-object-fit:
-contain;
-
-}
-
-.hero-number {
-
-position:
-absolute;
-
-bottom:
--18px;
-
-left:
--25px;
-
-font-family:
-'Bebas Neue',
-sans-serif;
-
-font-size:
-70px;
-
-line-height:
-1;
-
-color:
-#292533;
-
-z-index:
--1;
-
-}
-
-.hero-label {
-
-position:
-absolute;
-
-right:
-18px;
-
-bottom:
-18px;
-
-padding:
-7px 10px;
-
-background:
-rgba(
-10,
-10,
-15,
-0.78
-);
-
-border:
-1px solid #403b4d;
-
-color:
-#b2adbe;
-
-font-size:
-9px;
-
-font-weight:
-700;
-
-letter-spacing:
-0.18em;
-
-}
-
-/* =========================
-SECTION TITLE
-========================= */
-
-.section-title {
-
-display:
-flex;
-
-align-items:
-center;
-
-justify-content:
-space-between;
-
-margin-bottom:
-30px;
-
-padding-bottom:
-18px;
-
-border-bottom:
-1px solid #302d38;
-
-}
-
-.section-title h2 {
-
-margin:
-0;
-
-font-family:
-'Bebas Neue',
-sans-serif;
-
-font-size:
-32px;
-
-font-weight:
-400;
-
-letter-spacing:
-0.08em;
-
-color:
-#ffffff;
-
-}
-
-.section-title p {
-
-margin:
-4px 0 0;
-
-color:
-#696572;
-
-font-size:
-9px;
-
-font-weight:
-600;
-
-letter-spacing:
-0.18em;
-
-}
-
-.section-title > span {
-
-color:
-#9b7bff;
-
-font-size:
-10px;
-
-font-weight:
-700;
-
-letter-spacing:
-0.18em;
-
-}
-
-/* =========================
-TODAY'S CHARACTER
-========================= */
-
-.today-section {
-
-margin-top:
-45px;
-
-}
-
-.today-grid {
-
-display:
-grid;
-
-grid-template-columns:
-repeat(
-3,
-1fr
-);
-
-gap:
-18px;
-
-}
-
-.today-card {
-
-display:
-flex;
-
-flex-direction:
-column;
-
-min-width:
-0;
-
-text-decoration:
-none;
-
-color:
-inherit;
-
-background:
-#15151b;
-
-border:
-1px solid #302d38;
-
-border-radius:
-7px;
-
-overflow:
-hidden;
-
-transition:
-transform 0.35s ease,
-border-color 0.35s ease,
-box-shadow 0.35s ease;
-
-}
-
-.today-card:hover {
-
-transform:
-translateY(-7px);
-
-border-color:
-#8a68ff;
-
-box-shadow:
-0 18px 40px
-rgba(
-70,
-40,
-150,
-0.2
-);
-
-}
-
-.today-image {
-
-width:
-100%;
-
-aspect-ratio:
-1 / 1;
-
-overflow:
-hidden;
-
-background:
-#111116;
-
-}
-
-.today-image img {
-
-display:
-block;
-
-width:
-100%;
-
-height:
-100%;
-
-object-fit:
-cover;
-
-transition:
-transform 0.5s ease;
-
-}
-
-.today-card:hover
-.today-image img {
-
-transform:
-scale(1.04);
-
-}
-
-.today-info {
-
-padding:
-20px;
-
-}
-
-.today-info > span {
-
-color:
-#8f72ff;
-
-font-size:
-9px;
-
-font-weight:
-700;
-
-letter-spacing:
-0.18em;
-
-}
-
-.today-info h3 {
-
-margin:
-9px 0 5px;
-
-color:
-#ffffff;
-
-font-size:
-20px;
-
-}
-
-.today-info p {
-
-margin:
-0;
-
-color:
-#898593;
-
-font-size:
-12px;
-
-}
-
-.today-view {
-
-margin-top:
-20px;
-
-display:
-flex;
-
-justify-content:
-space-between;
-
-color:
-#777281;
-
-font-family:
-'Bebas Neue',
-sans-serif;
-
-font-size:
-14px;
-
-letter-spacing:
-0.08em;
-
-}
-
-.today-view b {
-
-color:
-#9b7bff;
-
-transition:
-transform 0.3s ease;
-
-}
-
-.today-card:hover
-.today-view b {
-
-transform:
-translateX(5px);
-
-}
-
-/* =========================
-PAGE HEADER
-========================= */
-
-.page-header {
-
-padding:
-100px 0 60px;
-
-}
-
-.page-main-title {
-
-margin:
-0;
-
-font-family:
-'Bebas Neue',
-sans-serif;
-
-font-size:
-clamp(
-70px,
-12vw,
-160px
-);
-
-font-weight:
-400;
-
-line-height:
-0.8;
-
-letter-spacing:
-0.02em;
-
-color:
-#ffffff;
-
-}
-
-/* =========================
-WORKS GALLERY
-========================= */
-
-.gallery {
-
-display:
-grid;
-
-grid-template-columns:
-repeat(
-3,
-1fr
-);
-
-gap:
-20px;
-
-}
-
-.gallery-item {
-
-position:
-relative;
-
-display:
-block;
-
-width:
-100%;
-
-aspect-ratio:
-1 / 1;
-
-padding:
-0;
-
-overflow:
-hidden;
-
-background:
-#15151b;
-
-border:
-1px solid #282631;
-
-border-radius:
-6px;
-
-cursor:
-pointer;
-
-transition:
-transform 0.4s
-cubic-bezier(
-.2,
-.8,
-.2,
-1
-),
-
-box-shadow 0.4s ease,
-
-border-color 0.4s ease;
-
-}
-
-.gallery-item img {
-
-display:
-block;
-
-width:
-100%;
-
-height:
-100%;
-
-object-fit:
-contain;
-
-background:
-#111116;
-
-transition:
-transform 0.6s
-cubic-bezier(
-.2,
-.8,
-.2,
-1
-),
-
-filter 0.4s ease;
-
-}
-
-.gallery-item:hover {
-
-transform:
-translateY(-8px);
-
-border-color:
-#8a68ff;
-
-box-shadow:
-0 15px 40px
-rgba(
-70,
-40,
-150,
-0.25
-);
-
-}
-
-.gallery-item:hover img {
-
-transform:
-scale(1.04);
-
-filter:
-brightness(0.78)
-saturate(1.1);
-
-}
-
-.gallery-overlay {
-
-position:
-absolute;
-
-left:
-0;
-
-right:
-0;
-
-bottom:
-0;
-
-padding:
-20px;
-
-display:
-flex;
-
-align-items:
-center;
-
-justify-content:
-space-between;
-
-background:
-linear-gradient(
-to top,
-rgba(
-5,
-5,
-9,
-0.88
-),
-transparent
-);
-
-color:
-#b5b1bc;
-
-font-family:
-'Bebas Neue',
-sans-serif;
-
-font-size:
-13px;
-
-letter-spacing:
-0.08em;
-
-opacity:
-0;
-
-transform:
-translateY(8px);
-
-transition:
-all 0.3s ease;
-
-}
-
-.gallery-item:hover
-.gallery-overlay {
-
-opacity:
-1;
-
-transform:
-translateY(0);
-
-}
-
-.gallery-overlay b {
-
-color:
-#9b7bff;
-
-}
-
-/* =========================
-ARCHIVE
-========================= */
-
-.archive-grid {
-
-display:
-flex;
-
-flex-direction:
-column;
-
-gap:
-14px;
-
-}
-
-.archive-card {
-
-width:
-100%;
-
-min-height:
-160px;
-
-display:
-flex;
-
-align-items:
-center;
-
-gap:
-24px;
-
-padding:
-18px;
-
-text-decoration:
-none;
-
-color:
-inherit;
-
-background:
-rgba(
-21,
-21,
-27,
-0.72
-);
-
-border:
-1px solid #302d38;
-
-border-radius:
-8px;
-
-transition:
-transform 0.3s ease,
-border-color 0.3s ease,
-background 0.3s ease,
-box-shadow 0.3s ease;
-
-}
-
-.archive-card:hover {
-
-transform:
-translateX(10px);
-
-border-color:
-#8a68ff;
-
-background:
-rgba(
-32,
-28,
-47,
-0.9
-);
-
-box-shadow:
--8px 0 25px
-rgba(
-110,
-76,
-255,
-0.12
-);
-
-}
-
-.archive-image {
-
-position:
-relative;
-
-width:
-120px;
-
-height:
-120px;
-
-flex-shrink:
-0;
-
-overflow:
-hidden;
-
-display:
-flex;
-
-align-items:
-center;
-
-justify-content:
-center;
-
-background:
-#15151b;
-
-border:
-1px solid #403b4d;
-
-border-radius:
-5px;
-
-}
-
-.archive-image img {
-
-width:
-100%;
-
-height:
-100%;
-
-object-fit:
-cover;
-
-transition:
-transform 0.5s ease;
-
-}
-
-.archive-card:hover
-.archive-image img {
-
-transform:
-scale(1.04);
-
-}
-
-.archive-number {
-
-position:
-absolute;
-
-top:
-8px;
-
-left:
-9px;
-
-color:
-#9b7bff;
-
-font-size:
-9px;
-
-font-weight:
-700;
-
-letter-spacing:
-0.18em;
-
-text-shadow:
-0 1px 8px #000;
-
-}
-
-.archive-info {
-
-flex:
-1;
-
-min-width:
-0;
-
-}
-
-.archive-type {
-
-color:
-#8f72ff;
-
-font-size:
-9px;
-
-font-weight:
-700;
-
-letter-spacing:
-0.18em;
-
-}
-
-.archive-info h3 {
-
-margin:
-9px 0 7px;
-
-font-size:
-21px;
-
-font-weight:
-700;
-
-color:
-#f5f3fa;
-
-}
-
-.archive-info p {
-
-margin:
-0;
-
-color:
-#898593;
-
-font-size:
-13px;
-
-}
-
-.archive-view {
-
-margin-top:
-20px;
-
-display:
-flex;
-
-align-items:
-center;
-
-justify-content:
-space-between;
-
-max-width:
-170px;
-
-color:
-#777281;
-
-font-family:
-'Bebas Neue',
-sans-serif;
-
-font-size:
-13px;
-
-letter-spacing:
-0.08em;
-
-}
-
-.archive-view b {
-
-color:
-#9b7bff;
-
-transition:
-transform 0.3s ease;
-
-}
-
-.archive-card:hover
-.archive-view b {
-
-transform:
-translateX(6px);
-
-}
-
-/* =========================
-PAGINATION
-========================= */
-
-.pagination {
-
-display:
-flex;
-
-justify-content:
-center;
-
-align-items:
-center;
-
-flex-wrap:
-wrap;
-
-gap:
-9px;
-
-margin-top:
-70px;
-
-}
-
-.pagination button {
-
-min-width:
-42px;
-
-height:
-42px;
-
-background:
-#15151b;
-
-color:
-#85818f;
-
-border:
-1px solid #302d38;
-
-border-radius:
-6px;
-
-padding:
-0 14px;
-
-font-family:
-'Bebas Neue',
-sans-serif;
-
-font-size:
-17px;
-
-cursor:
-pointer;
-
-transition:
-all 0.25s ease;
-
-}
-
-.pagination button:hover:not(:disabled) {
-
-color:
-#ffffff;
-
-border-color:
-#8564ff;
-
-background:
-#211d32;
-
-transform:
-translateY(-3px);
-
-}
-
-.pagination button.active {
-
-color:
-#ffffff;
-
-background:
-linear-gradient(
-135deg,
-#704dff,
-#a84cff
-);
-
-border-color:
-#9b7bff;
-
-}
-
-.pagination button:disabled {
-
-opacity:
-0.25;
-
-cursor:
-not-allowed;
-
-}
-
-/* =========================
-LIGHTBOX
-========================= */
-
-.lightbox {
-
-position:
-fixed;
-
-inset:
-0;
-
-z-index:
-5000;
-
-display:
-flex;
-
-align-items:
-center;
-
-justify-content:
-center;
-
-padding:
-30px;
-
-background:
-rgba(
-5,
-5,
-9,
-0.94
-);
-
-backdrop-filter:
-blur(12px);
-
-opacity:
-0;
-
-visibility:
-hidden;
-
-transition:
-opacity 0.25s ease,
-visibility 0.25s ease;
-
-}
-
-.lightbox.open {
-
-opacity:
-1;
-
-visibility:
-visible;
-
-}
-
-.lightbox-content {
-
-max-width:
-95vw;
-
-max-height:
-95vh;
-
-display:
-flex;
-
-align-items:
-center;
-
-justify-content:
-center;
-
-}
-
-.lightbox-content img {
-
-display:
-block;
-
-width:
-auto;
-
-height:
-auto;
-
-max-width:
-95vw;
-
-max-height:
-90vh;
-
-object-fit:
-contain;
-
-user-select:
-none;
-
--webkit-user-drag:
-none;
-
-box-shadow:
-0 20px 80px
-rgba(
-0,
-0,
-0,
-0.5
-);
-
-}
-
-.lightbox-close {
-
-position:
-fixed;
-
-top:
-22px;
-
-right:
-25px;
-
-width:
-45px;
-
-height:
-45px;
-
-padding:
-0;
-
-background:
-rgba(
-15,
-15,
-21,
-0.8
-);
-
-border:
-1px solid #403b4d;
-
-border-radius:
-50%;
-
-color:
-#ffffff;
-
-font-size:
-28px;
-
-line-height:
-1;
-
-cursor:
-pointer;
-
-z-index:
-2;
-
-transition:
-all 0.25s ease;
-
-}
-
-.lightbox-close:hover {
-
-border-color:
-#9b7bff;
-
-background:
-rgba(
-110,
-76,
-255,
-0.2
-);
-
-transform:
-rotate(90deg);
-
-}
-
-/* =========================
-ERROR
-========================= */
-
-.error {
-
-width:
-100%;
-
-padding:
-70px 20px;
-
-color:
-#777583;
-
-text-align:
-center;
-
-font-size:
-14px;
-
-}
-
-/* =========================
-FOOTER
-========================= */
-
-footer {
-
-width:
-90%;
-
-max-width:
-1400px;
-
-margin:
-0 auto;
-
-padding:
-30px 0 45px;
-
-display:
-flex;
-
-justify-content:
-space-between;
-
-border-top:
-1px solid #292634;
-
-color:
-#625f6b;
-
-font-size:
-10px;
-
-letter-spacing:
-0.14em;
-
-}
-
-/* =========================
-MOBILE
-========================= */
-
-@media (max-width: 700px) {
-
-.header {
-
-height:
-  78px;
-
-padding:
-  0 20px;
-
-flex-direction:
-  row;
-
-align-items:
-  center;
-
-}
-
-.logo span {
-
-font-size:
-  30px;
-
-}
-
-.logo small {
-
-font-size:
-  8px;
-
-}
-
-.header-nav {
-
-display:
-  none;
-
-}
-
-.menu-toggle {
-
-display:
-  block;
-
-}
-
-.mobile-menu {
-
-position:
-  fixed;
-
-top:
-  78px;
-
-left:
-  0;
-
-right:
-  0;
-
-z-index:
-  999;
-
-padding:
-  14px 20px 20px;
-
-display:
-  flex;
-
-flex-direction:
-  column;
-
-gap:
-  7px;
-
-background:
-  rgba(
-    10,
-    10,
-    15,
-    0.96
-  );
-
-backdrop-filter:
-  blur(18px);
-
-border-bottom:
-  1px solid #302d38;
-
-transform:
-  translateY(-15px);
-
-opacity:
-  0;
-
-visibility:
-  hidden;
-
-pointer-events:
-  none;
-
-transition:
-  all 0.25s ease;
-
-}
-
-.mobile-menu.open {
-
-transform:
-  translateY(0);
-
-opacity:
-  1;
-
-visibility:
-  visible;
-
-pointer-events:
-  auto;
-
-}
-
-.mobile-nav-btn {
-
-width:
-  100%;
-
-padding:
-  14px;
-
-background:
-  transparent;
-
-border:
-  1px solid #302d38;
-
-border-radius:
-  5px;
-
-color:
-  #777583;
-
-font-family:
-  'Bebas Neue',
-  sans-serif;
-
-font-size:
-  17px;
-
-letter-spacing:
-  0.08em;
-
-text-align:
-  left;
-
-cursor:
-  pointer;
-
-}
-
-.mobile-nav-btn.active {
-
-color:
-  #ffffff;
-
-background:
-  linear-gradient(
-    135deg,
-    #6e4cff,
-    #a84cff
-  );
-
-border-color:
-  #9b7bff;
-
-}
-
-main {
-
-width:
-  calc(
-    100% - 40px
-  );
-
-}
-
-.content-section {
-
-padding-bottom:
-  80px;
-
-}
-
-.hero {
-
-min-height:
-  auto;
-
-padding:
-  70px 0;
-
-display:
-  flex;
-
-flex-direction:
-  column;
-
-align-items:
-  stretch;
-
-gap:
-  60px;
-
-}
-
-.hero h1 {
-
-font-size:
-  clamp(
-    85px,
-    24vw,
-    150px
-  );
-
-}
-
-.description {
-
-margin-top:
-  45px;
-
-font-size:
-  13px;
-
-}
-
-.hero-visual {
-
-width:
-  100%;
-
-}
-
-.hero-image-frame img {
-
-max-height:
-  65vh;
-
-}
-
-.hero-number {
-
-left:
-  -5px;
-
-bottom:
-  -14px;
-
-font-size:
-  55px;
-
-}
-
-.section-title {
-
-margin-bottom:
-  22px;
-
-}
-
-.section-title h2 {
-
-font-size:
-  27px;
-
-}
-
-.section-title p {
-
-font-size:
-  8px;
-
-}
-
-.today-section {
-
-margin-top:
-  45px;
-
-}
-
-.today-grid {
-
-grid-template-columns:
-  1fr;
-
-}
-
-.page-header {
-
-padding:
-  70px 0 45px;
-
-}
-
-.page-main-title {
-
-font-size:
-  clamp(
-    70px,
-    20vw,
-    120px
-  );
-
-}
-
-.gallery {
-
-grid-template-columns:
-  repeat(
-    2,
-    1fr
-  );
-
-gap:
-  12px;
-
-}
-
-.gallery-item:hover {
-
-transform:
-  translateY(-4px);
-
-}
-
-.gallery-overlay {
-
-padding:
-  12px;
-
-font-size:
-  10px;
-
-opacity:
-  1;
-
-transform:
-  none;
-
-}
-
-.archive-card {
-
-min-height:
-  110px;
-
-gap:
-  14px;
-
-padding:
-  12px;
-
-}
-
-.archive-card:hover {
-
-transform:
-  translateX(4px);
-
-}
-
-.archive-image {
-
-width:
-  82px;
-
-height:
-  82px;
-
-}
-
-.archive-info h3 {
-
-font-size:
-  16px;
-
-}
-
-.archive-info p {
-
-font-size:
-  11px;
-
-}
-
-.archive-view {
-
-margin-top:
-  12px;
-
-max-width:
-  130px;
-
-font-size:
-  11px;
-
-}
-
-.lightbox {
-
-padding:
-  15px;
-
-}
-
-.lightbox-content img {
-
-max-width:
-  94vw;
-
-max-height:
-  86vh;
-
-}
-
-.lightbox-close {
-
-top:
-  15px;
-
-right:
-  15px;
-
-}
-
-footer {
-
-width:
-  calc(
-    100% - 40px
-  );
-
-font-size:
-  8px;
-
-}
-
-}
-
-@media (max-width: 420px) {
-
-.gallery {
-
-grid-template-columns:
-  1fr;
-
-}
-
-.archive-image {
-
-width:
-  75px;
-
-height:
-  75px;
-
-}
-
-  }
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>C.T. Gallery</title>
+  <meta name="description" content="C.T. Gallery - Creative Archive">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Gowun+Batang:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="lock">
+
+  <div class="sparkles" id="sparkles" aria-hidden="true"></div>
+
+  <!-- 책 표지 인트로 -->
+  <div class="intro" id="intro">
+    <button class="book" id="book" aria-label="책 열기">
+      <div class="book-pages"></div>
+      <div class="cover">
+        <div class="face front">
+          <span class="gem"></span>
+          <b>C.T.</b>
+          <em>GALLERY</em>
+          <small>표지를 눌러 책을 열어보세요</small>
+        </div>
+        <div class="face back"></div>
+      </div>
+    </button>
+  </div>
+
+  <!-- 페이지 넘김 연출 -->
+  <div class="turn" id="turn"><div class="leaf" id="leaf"></div></div>
+
+  <header class="header">
+    <div class="logo"><span>C.T.</span><small>Gallery</small></div>
+    <nav class="header-nav">
+      <button class="nav-btn active" data-target="home-section">홈</button>
+      <button class="nav-btn" data-target="gallery-section">작품</button>
+      <button class="nav-btn" data-target="character-section">캐릭터</button>
+      <button class="nav-btn" data-target="worldview-section">세계관</button>
+    </nav>
+    <button class="menu-toggle" id="menu-toggle" aria-label="메뉴 열기" aria-expanded="false">☰</button>
+  </header>
+
+  <div class="mobile-menu" id="mobile-menu">
+    <button class="mobile-nav-btn active" data-target="home-section">홈</button>
+    <button class="mobile-nav-btn" data-target="gallery-section">작품</button>
+    <button class="mobile-nav-btn" data-target="character-section">캐릭터</button>
+    <button class="mobile-nav-btn" data-target="worldview-section">세계관</button>
+  </div>
+
+  <main>
+    <!-- 홈 -->
+    <section id="home-section" class="content-section active">
+      <section class="hero">
+        <div class="hero-text">
+          <p class="eyebrow">Creative Archive, 2026</p>
+          <h1>C.T.<span>Gallery</span></h1>
+          <p class="description">이미지와 세계관, 그리고 캐릭터를 기록하는<br>개인 크리에이티브 아카이브입니다.</p>
+          <button class="explore-btn" data-target="gallery-section">작품 둘러보기</button>
+        </div>
+        <div class="hero-visual">
+          <div class="hero-image-frame">
+            <img src="hero/main.jpg" alt="C.T. Gallery 메인 비주얼" draggable="false">
+          </div>
+          <div class="hero-label">오늘의 한 장면</div>
+        </div>
+      </section>
+
+      <section class="today-section">
+        <div class="section-title">
+          <div>
+            <h2>오늘의 캐릭터</h2>
+            <p>하루에 한 번 바뀌는 추천</p>
+          </div>
+          <span id="today-date">today</span>
+        </div>
+        <div class="today-grid" id="today-character"></div>
+      </section>
+    </section>
+
+    <!-- 작품 -->
+    <section id="gallery-section" class="content-section">
+      <div class="page-header">
+        <p class="eyebrow">Visual Archive</p>
+        <h1 class="page-main-title">작품</h1>
+      </div>
+      <div class="section-title">
+        <h2>이미지 아카이브</h2>
+        <span id="image-count">불러오는 중...</span>
+      </div>
+      <div class="gallery" id="gallery"></div>
+      <div class="pagination" id="pagination"></div>
+    </section>
+
+    <!-- 캐릭터 -->
+    <section id="character-section" class="content-section">
+      <div class="page-header">
+        <p class="eyebrow">Character Database</p>
+        <h1 class="page-main-title">캐릭터</h1>
+      </div>
+      <div class="section-title"><h2>캐릭터 도감</h2></div>
+      <div class="archive-grid" id="character-list"></div>
+    </section>
+
+    <!-- 세계관 -->
+    <section id="worldview-section" class="content-section">
+      <div class="page-header">
+        <p class="eyebrow">World Database</p>
+        <h1 class="page-main-title">세계관</h1>
+      </div>
+      <div class="section-title"><h2>세계의 기록</h2></div>
+      <div class="archive-grid" id="worldview-list"></div>
+    </section>
+  </main>
+
+  <div class="lightbox" id="lightbox" aria-hidden="true">
+    <button class="lightbox-close" id="lightbox-close" aria-label="닫기">×</button>
+    <img id="lightbox-image" src="" alt="">
+  </div>
+
+  <footer>
+    <span>© C.T. Gallery</span>
+    <span>Creative Archive</span>
+  </footer>
+
+  <script>
+    /* ===== 데이터 (여기만 수정하면 됩니다) ===== */
+    const owner = "monana670-create";
+    const repo = "C.T.-Gallery";
+    const folder = "images";
+    const ITEMS_PER_PAGE = 9;
+
+    // 캐릭터 추가: 아래 배열에 { } 한 덩어리씩 추가
+    const characters = [
+      {
+        title: "김유담",
+        description: "메아리의 종착지",
+        image: "characters/images/yudam.png",
+        link: "characters/yudam.html"
+      }
+    ];
+
+    // 세계관 추가: 아래 배열에 { } 한 덩어리씩 추가
+    const worldviews = [
+      {
+        title: "은색 공방의 키메토리아",
+        description: "알테리아와 키메라 아카데미의 기록",
+        image: "worldviews/images/chimatoria.png",
+        link: "worldviews/chimatoria.html"
+      }
+    ];
+
+    /* ===== 공통 요소 ===== */
+    const $ = id => document.getElementById(id);
+    const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const navButtons = document.querySelectorAll(".nav-btn, .mobile-nav-btn");
+    const menuToggle = $("menu-toggle"), mobileMenu = $("mobile-menu");
+
+    /* 스크롤 등장 효과 */
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } });
+    }, { threshold: 0.1 });
+    function reveal(el, delay = 0) {
+      el.classList.add("reveal");
+      el.style.transitionDelay = delay + "ms";
+      io.observe(el);
+    }
+
+    /* 반짝이 */
+    (function () {
+      const box = $("sparkles");
+      for (let i = 0; i < 16; i++) {
+        const s = document.createElement("i");
+        s.style.left = Math.random() * 100 + "%";
+        s.style.top = Math.random() * 100 + "%";
+        s.style.animationDelay = (Math.random() * 9).toFixed(1) + "s";
+        s.style.animationDuration = (7 + Math.random() * 6).toFixed(1) + "s";
+        box.appendChild(s);
+      }
+    })();
+
+    /* ===== 책 열기 인트로 ===== */
+    const intro = $("intro"), book = $("book");
+    let introOpened = false;
+    function openBook() {
+      if (introOpened) return;
+      introOpened = true;
+      book.classList.add("open");
+      setTimeout(() => intro.classList.add("done"), reduceMotion ? 0 : 1700);
+      setTimeout(() => document.body.classList.remove("lock"), reduceMotion ? 0 : 1700);
+    }
+    book.addEventListener("click", openBook);
+    try {
+      if (sessionStorage.getItem("seenIntro")) {
+        intro.classList.add("done");
+        document.body.classList.remove("lock");
+      } else {
+        sessionStorage.setItem("seenIntro", "1");
+      }
+    } catch (e) {}
+
+    /* ===== 페이지 넘김 전환 ===== */
+    const turn = $("turn"), leaf = $("leaf");
+    let turning = false;
+
+    function showSection(id) {
+      document.querySelectorAll(".content-section").forEach(s => s.classList.toggle("active", s.id === id));
+      navButtons.forEach(b => b.classList.toggle("active", b.dataset.target === id));
+      window.scrollTo(0, 0);
+      document.querySelectorAll("#" + id + " .reveal:not(.in)").forEach(el => io.observe(el));
+    }
+
+    async function switchSection(id) {
+      const next = $(id), current = document.querySelector(".content-section.active");
+      closeMobileMenu();
+      if (!next || next === current || turning) return;
+      if (reduceMotion || !leaf.animate) { showSection(id); return; }
+
+      turning = true;
+      turn.style.visibility = "visible";
+      await leaf.animate(
+        [{ transform: "rotateY(90deg)" }, { transform: "rotateY(0deg)" }],
+        { duration: 450, easing: "ease-in", fill: "forwards" }
+      ).finished;
+      showSection(id);
+      await leaf.animate(
+        [{ transform: "rotateY(0deg)" }, { transform: "rotateY(-90deg)" }],
+        { duration: 550, easing: "ease-out", fill: "forwards" }
+      ).finished;
+      turn.style.visibility = "hidden";
+      turning = false;
+    }
+
+    navButtons.forEach(b => b.addEventListener("click", () => switchSection(b.dataset.target)));
+    document.querySelectorAll(".explore-btn").forEach(b =>
+      b.addEventListener("click", () => switchSection(b.dataset.target)));
+
+    /* 모바일 메뉴 */
+    function closeMobileMenu() {
+      mobileMenu.classList.remove("open");
+      menuToggle.setAttribute("aria-expanded", "false");
+    }
+    menuToggle.addEventListener("click", () => {
+      const open = mobileMenu.classList.toggle("open");
+      menuToggle.setAttribute("aria-expanded", String(open));
+    });
+
+    /* ===== 오늘의 캐릭터 ===== */
+    function renderToday() {
+      const box = $("today-character");
+      if (!characters.length) { box.innerHTML = `<p class="error">등록된 캐릭터가 없습니다.</p>`; return; }
+      const now = new Date();
+      const day = Math.floor(new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime() / 86400000);
+      const count = Math.min(3, characters.length);
+      for (let i = 0; i < count; i++) {
+        const c = characters[(day + i) % characters.length];
+        const a = document.createElement("a");
+        a.className = "today-card";
+        a.href = c.link;
+        a.innerHTML = `
+          <div class="today-image"><img src="${c.image}" alt="${c.title}" loading="lazy"></div>
+          <div class="today-info">
+            <span>오늘의 캐릭터</span>
+            <h3>${c.title}</h3>
+            <p>${c.description}</p>
+            <div class="today-view">기록 보러가기</div>
+          </div>`;
+        box.appendChild(a);
+        reveal(a, i * 120);
+      }
+      $("today-date").textContent =
+        `${String(now.getMonth() + 1).padStart(2, "0")}.${String(now.getDate()).padStart(2, "0")}`;
+    }
+    renderToday();
+
+    /* ===== 깃허브 갤러리 ===== */
+    const gallery = $("gallery"), pagination = $("pagination"), imageCount = $("image-count");
+    let currentPage = 1, allImageFiles = [];
+
+    fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${folder}`)
+      .then(r => { if (!r.ok) throw new Error("GitHub API error"); return r.json(); })
+      .then(files => {
+        if (!Array.isArray(files)) throw new Error("Invalid GitHub response");
+        allImageFiles = files
+          .filter(f => f.type === "file" && /\.(jpg|jpeg|png|gif|webp)$/i.test(f.name))
+          .sort((a, b) => {
+            const an = parseInt(a.name, 10), bn = parseInt(b.name, 10);
+            return (!isNaN(an) && !isNaN(bn)) ? an - bn : a.name.localeCompare(b.name);
+          });
+        imageCount.textContent = `${allImageFiles.length}점의 이미지`;
+        if (!allImageFiles.length) { gallery.innerHTML = `<p class="error">등록된 이미지가 없습니다.</p>`; return; }
+        renderPage(currentPage);
+      })
+      .catch(err => {
+        console.error(err);
+        imageCount.textContent = "0점의 이미지";
+        gallery.innerHTML = `<p class="error">이미지를 불러오지 못했습니다. 잠시 후 다시 시도해 주세요.</p>`;
+      });
+
+    function renderPage(page) {
+      gallery.innerHTML = "";
+      const start = (page - 1) * ITEMS_PER_PAGE;
+      allImageFiles.slice(start, start + ITEMS_PER_PAGE).forEach((file, i) => {
+        const item = document.createElement("button");
+        item.className = "gallery-item";
+        item.type = "button";
+        item.innerHTML = `<img src="${file.download_url}" alt="${file.name}" loading="lazy" draggable="false">
+                          <div class="gallery-overlay">크게 보기</div>`;
+        item.addEventListener("click", () => openLightbox(file.download_url, file.name));
+        gallery.appendChild(item);
+        reveal(item, (i % 3) * 90);
+      });
+      renderPagination();
+    }
+
+    function goPage(p) { currentPage = p; renderPage(p); window.scrollTo({ top: 0, behavior: "smooth" }); }
+
+    function renderPagination() {
+      pagination.innerHTML = "";
+      const total = Math.ceil(allImageFiles.length / ITEMS_PER_PAGE);
+      if (total <= 1) return;
+      const mk = (label, onClick, disabled, active) => {
+        const b = document.createElement("button");
+        b.textContent = label;
+        b.disabled = !!disabled;
+        if (active) b.classList.add("active");
+        b.addEventListener("click", onClick);
+        pagination.appendChild(b);
+      };
+      mk("←", () => goPage(currentPage - 1), currentPage === 1);
+      for (let i = 1; i <= total; i++) mk(i, () => goPage(i), false, i === currentPage);
+      mk("→", () => goPage(currentPage + 1), currentPage === total);
+    }
+
+    /* ===== 캐릭터 / 세계관 목록 ===== */
+    function renderArchive(list, targetId, type) {
+      const box = $(targetId);
+      box.innerHTML = "";
+      list.forEach((item, i) => {
+        const a = document.createElement("a");
+        a.href = item.link;
+        a.className = "archive-card";
+        a.innerHTML = `
+          <div class="archive-image"><img src="${item.image}" alt="${item.title}" loading="lazy"></div>
+          <div class="archive-info">
+            <span class="archive-type">${type}</span>
+            <h3>${item.title}</h3>
+            <p>${item.description}</p>
+            <div class="archive-view">기록 보러가기</div>
+          </div>`;
+        box.appendChild(a);
+        reveal(a, i * 100);
+      });
+    }
+    renderArchive(characters, "character-list", "캐릭터");
+    renderArchive(worldviews, "worldview-list", "세계관");
+
+    /* ===== 라이트박스 ===== */
+    const lightbox = $("lightbox"), lightboxImage = $("lightbox-image");
+    function openLightbox(src, alt = "") {
+      lightboxImage.src = src;
+      lightboxImage.alt = alt;
+      lightbox.classList.add("open");
+      lightbox.setAttribute("aria-hidden", "false");
+      document.body.classList.add("lock");
+    }
+    function closeLightbox() {
+      lightbox.classList.remove("open");
+      lightbox.setAttribute("aria-hidden", "true");
+      document.body.classList.remove("lock");
+      setTimeout(() => { lightboxImage.src = ""; }, 300);
+    }
+    $("lightbox-close").addEventListener("click", closeLightbox);
+    lightbox.addEventListener("click", e => { if (e.target === lightbox) closeLightbox(); });
+    document.addEventListener("keydown", e => { if (e.key === "Escape") closeLightbox(); });
+  </script>
+</body>
+</html>
