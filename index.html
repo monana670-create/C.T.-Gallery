@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>C.T. Gallery</title>
   <meta name="description" content="C.T. Gallery - Creative Archive">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -11,66 +11,85 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body class="lock">
-
   <div class="petals" id="petals" aria-hidden="true"></div>
 
   <div class="intro" id="intro">
-    <div class="i-halo"></div>
+    <div class="i-halo" aria-hidden="true"></div>
     <h1 class="i-title">C.T.<span>Gallery</span></h1>
-    <button class="i-btn" id="start">TAP TO START</button>
+    <button class="i-btn" id="start" type="button">TAP TO START</button>
   </div>
 
   <div class="wipe" id="wipe" aria-hidden="true">
-    <i class="b b1"></i><i class="b b2"></i><i class="b b3"></i>
-    <div class="ring"></div>
+    <i class="b b1"></i>
+    <i class="b b2"></i>
+    <i class="b b3"></i>
   </div>
 
   <header class="header">
-    <a class="logo" href="index.html"><span>C.T.</span><small>Gallery</small></a>
-    <nav class="header-nav">
+    <a class="logo" href="index.html" aria-label="C.T. Gallery 홈">
+      <span>C.T.</span><small>Gallery</small>
+    </a>
+    <nav class="header-nav" aria-label="주 메뉴">
       <button class="nav-btn active" data-target="home-section">홈</button>
       <button class="nav-btn" data-target="gallery-section">작품</button>
       <button class="nav-btn" data-target="character-section">캐릭터</button>
       <button class="nav-btn" data-target="worldview-section">세계관</button>
       <button class="nav-btn" data-target="notice-section">공지</button>
     </nav>
-    <button class="menu-toggle" id="menu-toggle" aria-label="메뉴 열기" aria-expanded="false">☰</button>
+    <button class="menu-toggle" id="menu-toggle" type="button"
+      aria-controls="mobile-menu" aria-label="메뉴 열기" aria-expanded="false">☰</button>
   </header>
 
-  <div class="mobile-menu" id="mobile-menu">
+  <nav class="mobile-menu" id="mobile-menu" aria-label="모바일 메뉴">
     <button class="mobile-nav-btn active" data-target="home-section">홈</button>
     <button class="mobile-nav-btn" data-target="gallery-section">작품</button>
     <button class="mobile-nav-btn" data-target="character-section">캐릭터</button>
     <button class="mobile-nav-btn" data-target="worldview-section">세계관</button>
     <button class="mobile-nav-btn" data-target="notice-section">공지</button>
-  </div>
+  </nav>
 
   <main>
     <section id="home-section" class="content-section active">
       <section class="hero">
-        <div class="hero-art" id="hero-art"></div>
-        <div class="hero-shade"></div>
-        <div class="halo"></div>
-        <p class="vtag">작은 기적을<br>기록하는 아카이브</p>
+        <div class="hero-art" id="hero-art" aria-hidden="true"></div>
+        <div class="hero-shade" aria-hidden="true"></div>
+        <div class="halo" aria-hidden="true"></div>
+
+        <p class="vtag" aria-label="작은 기적을 기록하는 아카이브">
+          <span aria-hidden="true">작은 <strong>기적</strong>을</span>
+          <span aria-hidden="true">기록하는 아카이브</span>
+        </p>
 
         <div class="hero-left">
           <span class="tag">CREATIVE ARCHIVE · 2026</span>
           <h1 class="logo-big"><b>C.T.</b><em>Gallery</em></h1>
           <div class="hero-btns">
-            <button class="hb" data-target="gallery-section"><i>✦</i><span><small>VISUAL ARCHIVE</small>작품 보기</span><b data-stat="works">00</b></button>
-            <button class="hb" data-target="character-section"><i>✦</i><span><small>CHARACTER</small>캐릭터 도감</span><b data-stat="chars">00</b></button>
-            <button class="hb" data-target="worldview-section"><i>✦</i><span><small>WORLDVIEW</small>세계관 기록</span><b data-stat="worlds">00</b></button>
+            <button class="hb" data-target="gallery-section">
+              <i>✦</i><span><small>VISUAL ARCHIVE</small>작품 보기</span><b data-stat="works">00</b>
+            </button>
+            <button class="hb" data-target="character-section">
+              <i>✦</i><span><small>CHARACTER</small>캐릭터 도감</span><b data-stat="chars">00</b>
+            </button>
+            <button class="hb" data-target="worldview-section">
+              <i>✦</i><span><small>WORLDVIEW</small>세계관 기록</span><b data-stat="worlds">00</b>
+            </button>
           </div>
         </div>
 
         <div class="hero-right">
           <button class="stk" id="stk-work" type="button">
             <span class="stk-t">NEW WORKS</span>
-            <span class="stk-b"><img id="stk-img" alt="" hidden><span class="stk-c">작품 <b data-stat="works">00</b>점 ▶</span></span>
+            <span class="stk-b">
+              <img id="stk-img" alt="" hidden>
+              <span class="stk-c">작품 <b data-stat="works">00</b>점 ▶</span>
+            </span>
           </button>
           <button class="stk" data-target="notice-section" type="button">
             <span class="stk-t">NOTICE</span>
-            <span class="stk-b"><span class="stk-n" id="stk-n">공지를 불러오는 중...</span><span class="stk-c">공지 <b data-stat="notes">00</b>건 ▶</span></span>
+            <span class="stk-b">
+              <span class="stk-n" id="stk-n">공지를 불러오는 중...</span>
+              <span class="stk-c">공지 <b data-stat="notes">00</b>건 ▶</span>
+            </span>
           </button>
         </div>
       </section>
@@ -85,8 +104,7 @@
     <section id="gallery-section" class="content-section">
       <div class="page-header">
         <span class="tag">VISUAL ARCHIVE</span>
-        <h1 class="page-main-title st">작품</h1>
-        <div class="hazard"></div>
+        <h1 class="page-main-title">작품</h1><div class="hazard"></div>
       </div>
       <div class="section-title">
         <h2>이미지 아카이브</h2>
@@ -102,8 +120,7 @@
     <section id="character-section" class="content-section">
       <div class="page-header">
         <span class="tag">CHARACTER DATABASE</span>
-        <h1 class="page-main-title st">캐릭터</h1>
-        <div class="hazard"></div>
+        <h1 class="page-main-title">캐릭터</h1><div class="hazard"></div>
       </div>
       <div class="section-title">
         <h2>캐릭터 도감</h2>
@@ -115,8 +132,7 @@
     <section id="worldview-section" class="content-section">
       <div class="page-header">
         <span class="tag">WORLD DATABASE</span>
-        <h1 class="page-main-title st">세계관</h1>
-        <div class="hazard"></div>
+        <h1 class="page-main-title">세계관</h1><div class="hazard"></div>
       </div>
       <div class="section-title">
         <h2>세계의 기록</h2>
@@ -128,8 +144,7 @@
     <section id="notice-section" class="content-section">
       <div class="page-header">
         <span class="tag">OFFICIAL NEWS</span>
-        <h1 class="page-main-title st">공지</h1>
-        <div class="hazard"></div>
+        <h1 class="page-main-title">공지</h1><div class="hazard"></div>
       </div>
       <div class="section-title">
         <h2>공지사항</h2>
@@ -142,34 +157,52 @@
     </section>
   </main>
 
-  <div class="viewer" id="viewer" aria-hidden="true">
-    <div class="v-bg"></div>
+  <div class="viewer" id="viewer" role="dialog" aria-modal="true"
+    aria-labelledby="v-name" aria-hidden="true" inert>
     <div class="v-stage">
-      <h2 class="v-big" id="v-big"></h2>
-      <div class="v-stand"><img id="v-img" alt="" draggable="false"></div>
-      <div class="v-head"><h2 id="v-head-t"></h2><button type="button" id="v-back"></button></div>
-      <div class="v-info">
-        <div class="v-kind"><i class="v-ico"></i><span id="v-kind"></span></div>
-        <div class="v-name" id="v-name"></div>
-        <div class="v-sub" id="v-sub"></div>
-        <div class="v-desc" id="v-desc"></div>
-        <a class="v-web" id="v-web" target="_blank" rel="noopener noreferrer" hidden><img id="v-web-img" alt=""><span>웹툰 바로가기 ▶</span></a>
+      <header class="v-head">
+        <div>
+          <h2 id="v-head-t"></h2>
+          <button type="button" id="v-back"></button>
+        </div>
+        <button class="v-close" id="v-close" type="button" aria-label="닫기">✕</button>
+      </header>
+
+      <div class="v-scene">
+        <div class="v-big" id="v-big" aria-hidden="true"></div>
+        <div class="v-stand"><img id="v-img" alt="" draggable="false"></div>
+        <div class="v-id">
+          <div class="v-kind"><i aria-hidden="true"></i><span id="v-kind"></span></div>
+          <h3 class="v-name" id="v-name"></h3>
+        </div>
       </div>
+
+      <div class="v-info">
+        <p class="v-sub" id="v-sub" hidden></p>
+        <div class="v-desc" id="v-desc" hidden></div>
+        <a class="v-web" id="v-web" target="_blank" rel="noopener noreferrer" hidden>
+          <img id="v-web-img" alt="" hidden><span>웹툰 바로가기 ▶</span>
+        </a>
+      </div>
+
       <div class="v-strip">
         <button class="v-arr" id="v-prev" type="button" aria-label="이전">«</button>
         <div class="v-thumbs" id="v-thumbs"></div>
         <button class="v-arr" id="v-next" type="button" aria-label="다음">»</button>
       </div>
     </div>
-    <button class="v-close" id="v-close" type="button" aria-label="닫기">✕</button>
   </div>
 
-  <div class="lightbox" id="lightbox" aria-hidden="true">
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true"
+    aria-label="작품 크게 보기" aria-hidden="true" inert>
     <button class="lightbox-close" id="lightbox-close" aria-label="닫기">×</button>
-    <img id="lightbox-image" src="" alt="">
+    <img id="lightbox-image" alt="">
   </div>
 
-  <div class="modal" id="modal" aria-hidden="true"><div class="modal-box" id="modal-box"></div></div>
+  <div class="modal" id="modal" role="dialog" aria-modal="true"
+    aria-label="관리" aria-hidden="true" inert>
+    <div class="modal-box" id="modal-box"></div>
+  </div>
 
   <footer>
     <span>© C.T. GALLERY</span>
@@ -182,383 +215,542 @@
     const repo = "C.T.-Gallery";
     const folder = "images";
     const ITEMS_PER_PAGE = 9;
-
+    const repoContents = `https://api.github.com/repos/${owner}/${repo}/contents`;
     const $ = id => document.getElementById(id);
-    const esc = s => String(s ?? "").replace(/[&<>"']/g,
-      c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
-    const okColor = c => /^#[0-9a-f]{6}$/i.test(c || "") ? c : "";
-    const sleep = ms => new Promise(r => setTimeout(r, ms));
-    const fmtDate = s => { const d = new Date(s); return `${d.getFullYear()}.${String(d.getMonth() + 1).padStart(2, "0")}.${String(d.getDate()).padStart(2, "0")}`; };
-    const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const esc = value => String(value ?? "").replace(/[&<>"']/g, c => ({
+      "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+    })[c]);
+    const okColor = value => /^#[0-9a-f]{6}$/i.test(value || "") ? value : "";
+    const effects = ["glow", "pulse", "spin"];
+    const motion = matchMedia("(prefers-reduced-motion: reduce)");
+    const fmtDate = value => {
+      const d = new Date(value);
+      return `${d.getFullYear()}.${String(d.getMonth() + 1).padStart(2, "0")}.${String(d.getDate()).padStart(2, "0")}`;
+    };
+
+    let characters = [], worldviews = [], notices = [], allImageFiles = [];
+    let currentPage = 1, noticeState = "loading";
     const navButtons = document.querySelectorAll(".nav-btn, .mobile-nav-btn");
-    const menuToggle = $("menu-toggle"), mobileMenu = $("mobile-menu");
-    const gallery = $("gallery"), pagination = $("pagination"), imageCount = $("image-count");
-    let characters = [], worldviews = [], notices = [], allImageFiles = [], currentPage = 1;
+    const intro = $("intro"), viewer = $("viewer"), modal = $("modal"), lightbox = $("lightbox");
+    const gallery = $("gallery"), pagination = $("pagination"), noticesBox = $("notices");
 
     function updateStats() {
-      const n = { works: allImageFiles.length, chars: characters.length, worlds: worldviews.length, notes: notices.length };
-      document.querySelectorAll("[data-stat]").forEach(el => { el.textContent = String(n[el.dataset.stat] ?? 0).padStart(2, "0"); });
+      const counts = {
+        works: allImageFiles.length, chars: characters.length,
+        worlds: worldviews.length, notes: notices.length
+      };
+      document.querySelectorAll("[data-stat]").forEach(el => {
+        el.textContent = String(counts[el.dataset.stat] ?? 0).padStart(2, "0");
+      });
     }
 
     function updateStickers() {
-      const im = $("stk-img"), last = allImageFiles[allImageFiles.length - 1];
-      if (last) { im.src = last.download_url; im.hidden = false; } else im.hidden = true;
-      $("stk-n").textContent = notices.length ? notices[0].title : "새 공지가 아직 없어요";
+      const last = allImageFiles[allImageFiles.length - 1];
+      const img = $("stk-img");
+      img.hidden = !last;
+      if (last) img.src = last.download_url;
+      if (noticeState === "ready") {
+        $("stk-n").textContent = notices[0]?.title || "새 공지가 아직 없어요";
+      } else if (noticeState === "error") {
+        $("stk-n").textContent = "공지를 불러오지 못했어요";
+      }
     }
 
     async function loadJSON(path) {
-      const t = Date.now();
-      try {
-        const r = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${path}?t=${t}`,
-          { headers: { Accept: "application/vnd.github.raw+json" } });
-        if (r.ok) return await r.json();
-      } catch (e) {}
-      try {
-        const r = await fetch(`${path}?t=${t}`);
-        if (r.ok) return await r.json();
-      } catch (e) {}
+      const query = `?t=${Date.now()}`;
+      const sources = [
+        [`${repoContents}/${path}${query}`, { headers: { Accept: "application/vnd.github.raw+json" } }],
+        [`${path}${query}`, {}]
+      ];
+      for (const [url, options] of sources) {
+        try {
+          const response = await fetch(url, options);
+          if (!response.ok) continue;
+          const data = await response.json();
+          if (Array.isArray(data)) return data;
+        } catch {}
+      }
       return [];
     }
 
     async function loadData() {
-      [characters, worldviews] = await Promise.all([loadJSON("data/characters.json"), loadJSON("data/worldviews.json")]);
+      [characters, worldviews] = await Promise.all([
+        loadJSON("data/characters.json"), loadJSON("data/worldviews.json")
+      ]);
       renderArchive(characters, "character-list", "character", "CHARACTER");
       renderArchive(worldviews, "worldview-list", "worldview", "WORLDVIEW");
       updateStats();
     }
 
-    const io = new IntersectionObserver(entries => {
-      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } });
-    }, { threshold: 0.1 });
-    function reveal(el, delay = 0) { el.classList.add("reveal"); el.style.transitionDelay = delay + "ms"; io.observe(el); }
+    const observer = "IntersectionObserver" in window
+      ? new IntersectionObserver(entries => {
+          for (const entry of entries) {
+            if (!entry.isIntersecting) continue;
+            entry.target.classList.add("in");
+            observer.unobserve(entry.target);
+          }
+        }, { threshold: .05 })
+      : null;
 
-    /* 입자 */
-    (function () {
-      const box = $("petals");
-      for (let i = 0; i < 14; i++) {
-        const p = document.createElement("i"), s = 5 + Math.random() * 7;
-        p.style.cssText = `left:${Math.random() * 100}%;width:${s}px;height:${s}px;--dx:${Math.random() * 160 - 40}px;` +
-          `animation-duration:${10 + Math.random() * 9}s;animation-delay:-${Math.random() * 14}s`;
-        box.appendChild(p);
-      }
-    })();
+    function reveal(el, delay = 0) {
+      if (!observer || motion.matches) return;
+      el.classList.add("reveal");
+      el.style.transitionDelay = `${Math.min(delay, 300)}ms`;
+      observer.observe(el);
+    }
 
-    /* 시작 화면 */
-    const intro = $("intro");
-    function finishIntro() { intro.classList.add("done"); document.body.classList.remove("lock"); }
+    for (let i = 0; i < 14; i++) {
+      const p = document.createElement("i");
+      const size = 5 + Math.random() * 7;
+      p.style.cssText = `left:${Math.random() * 100}%;width:${size}px;height:${size}px;` +
+        `--dx:${Math.random() * 160 - 40}px;animation-duration:${10 + Math.random() * 9}s;` +
+        `animation-delay:-${Math.random() * 14}s`;
+      $("petals").appendChild(p);
+    }
+
+    function syncLock() {
+      const locked = !intro.classList.contains("done") ||
+        [viewer, modal, lightbox].some(el => el.classList.contains("open"));
+      document.body.classList.toggle("lock", locked);
+    }
+
+    function finishIntro() {
+      intro.classList.add("done");
+      syncLock();
+    }
     $("start").addEventListener("click", () => {
       intro.classList.add("go");
-      setTimeout(finishIntro, reduceMotion ? 0 : 1100);
-    });
-    try {
-      if (sessionStorage.getItem("seenIntro")) finishIntro(); else sessionStorage.setItem("seenIntro", "1");
-    } catch (e) {}
+      try { sessionStorage.setItem("seenIntro", "1"); } catch {}
+      setTimeout(finishIntro, motion.matches ? 0 : 650);
+    }, { once: true });
+    try { if (sessionStorage.getItem("seenIntro")) finishIntro(); } catch {}
 
-    /* 홈 키비주얼: 작품이 서서히 바뀜 */
-    let heroTimer = null, heroIdx = 0;
+    let heroTimer;
     function startHero() {
-      const box = $("hero-art");
       clearInterval(heroTimer);
-      box.innerHTML = "";
+      const box = $("hero-art");
+      box.replaceChildren();
       const srcs = allImageFiles.length
         ? [...allImageFiles].sort(() => Math.random() - .5).slice(0, 8).map(f => f.download_url)
         : ["hero/main.jpg"];
-      srcs.forEach((s, i) => {
-        const im = new Image();
-        im.src = s; im.alt = ""; im.draggable = false;
-        if (i === 0) im.className = "on";
-        im.onerror = () => im.remove();
-        box.appendChild(im);
+      for (const src of srcs) {
+        const img = new Image();
+        img.alt = "";
+        img.draggable = false;
+        if (!box.children.length) img.classList.add("on");
+        img.onerror = () => {
+          const wasActive = img.classList.contains("on");
+          img.remove();
+          if (wasActive) box.firstElementChild?.classList.add("on");
+        };
+        box.appendChild(img);
+        img.src = src;
+      }
+      if (srcs.length < 2 || motion.matches) return;
+      heroTimer = setInterval(() => {
+        if (document.hidden || motion.matches) return;
+        const current = box.querySelector(".on");
+        const next = current?.nextElementSibling || box.firstElementChild;
+        if (!next || current === next) return;
+        current?.classList.remove("on");
+        next.classList.add("on");
+      }, 6000);
+    }
+
+    function closeMobileMenu() {
+      $("mobile-menu").classList.remove("open");
+      $("menu-toggle").setAttribute("aria-expanded", "false");
+      $("menu-toggle").setAttribute("aria-label", "메뉴 열기");
+    }
+    $("menu-toggle").addEventListener("click", () => {
+      const open = $("mobile-menu").classList.toggle("open");
+      $("menu-toggle").setAttribute("aria-expanded", String(open));
+      $("menu-toggle").setAttribute("aria-label", open ? "메뉴 닫기" : "메뉴 열기");
+    });
+
+    function showSection(id) {
+      document.querySelectorAll(".content-section").forEach(s => {
+        s.classList.toggle("active", s.id === id);
       });
-      heroIdx = 0;
-      if (srcs.length > 1 && !reduceMotion) {
-        heroTimer = setInterval(() => {
-          if (document.hidden) return;
-          const list = [...box.children];
-          if (list.length < 2) return;
-          heroIdx = (heroIdx + 1) % list.length;
-          list.forEach((im, i) => im.classList.toggle("on", i === heroIdx));
-        }, 6000);
+      navButtons.forEach(b => b.classList.toggle("active", b.dataset.target === id));
+      window.scrollTo({ top: 0, behavior: "instant" });
+    }
+
+    const wipe = $("wipe");
+    const bands = [...wipe.querySelectorAll(".b")];
+    let turning = false, pendingSection = null;
+
+    async function switchSection(id) {
+      if (!$(id)?.classList.contains("content-section")) return;
+      closeMobileMenu();
+      if (turning) {
+        pendingSection = id;
+        return;
+      }
+      if ($(id).classList.contains("active")) return;
+      if (motion.matches || typeof wipe.animate !== "function") {
+        showSection(id);
+        return;
+      }
+
+      turning = true;
+      wipe.style.visibility = "visible";
+      const animations = [];
+      async function moveBands(from, to, reverse) {
+        const group = bands.map((band, i) => band.animate([
+          { transform: `translateX(${from}%) skewX(-12deg)` },
+          { transform: `translateX(${to}%) skewX(-12deg)` }
+        ], {
+          duration: 270, delay: (reverse ? bands.length - 1 - i : i) * 55,
+          easing: "cubic-bezier(.7,0,.2,1)", fill: "forwards"
+        }));
+        animations.push(...group);
+        await Promise.all(group.map(a => a.finished));
+      }
+
+      try {
+        await moveBands(-100, 0, false);
+        id = pendingSection || id;
+        pendingSection = null;
+        showSection(id);
+        await moveBands(0, 100, true);
+      } catch {
+        showSection(id);
+      } finally {
+        wipe.style.visibility = "hidden";
+        animations.forEach(a => a.cancel());
+        turning = false;
+        const next = pendingSection;
+        pendingSection = null;
+        if (next) switchSection(next);
       }
     }
 
-    /* 화면 전환: 사선 띠 와이프 */
-    const wipe = $("wipe"), bands = [...wipe.querySelectorAll(".b")], ring = wipe.querySelector(".ring");
-    let turning = false;
-    const SK = "skewX(-12deg)";
-
-    function showSection(id) {
-      document.querySelectorAll(".content-section").forEach(s => s.classList.toggle("active", s.id === id));
-      navButtons.forEach(b => b.classList.toggle("active", b.dataset.target === id));
-      window.scrollTo(0, 0);
-      document.querySelectorAll("#" + id + " .reveal:not(.in)").forEach(el => io.observe(el));
-    }
-
-    async function switchSection(id) {
-      const next = $(id), current = document.querySelector(".content-section.active");
-      closeMobileMenu();
-      if (!next || next === current || turning) return;
-      if (reduceMotion || !wipe.animate) { showSection(id); return; }
-      turning = true;
-      wipe.style.visibility = "visible";
-      const ease = "cubic-bezier(.7,0,.2,1)";
-      const ins = bands.map((b, i) => b.animate(
-        [{ transform: `translateX(-100%) ${SK}` }, { transform: `translateX(0) ${SK}` }],
-        { duration: 420, delay: i * 110, easing: ease, fill: "forwards" }));
-      ring.animate([{ opacity: 0, transform: "translate(-50%,-50%) rotate(-14deg) scale(.2)" },
-        { opacity: 1, transform: "translate(-50%,-50%) rotate(-14deg) scale(1.1)" }],
-        { duration: 500, delay: 300, fill: "forwards" });
-      await Promise.all(ins.map(a => a.finished));
-      await sleep(120);
-      showSection(id);
-      const outs = bands.map((b, i) => b.animate(
-        [{ transform: `translateX(0) ${SK}` }, { transform: `translateX(100%) ${SK}` }],
-        { duration: 420, delay: (2 - i) * 110, easing: ease, fill: "forwards" }));
-      ring.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 300, fill: "forwards" });
-      await Promise.all(outs.map(a => a.finished));
-      wipe.style.visibility = "hidden";
-      [...bands, ring].forEach(el => el.getAnimations().forEach(a => a.cancel()));
-      turning = false;
-    }
-
-    document.querySelectorAll("[data-target]").forEach(b => b.addEventListener("click", () => switchSection(b.dataset.target)));
+    document.querySelectorAll("[data-target]").forEach(b => {
+      b.addEventListener("click", () => switchSection(b.dataset.target));
+    });
     $("stk-work").addEventListener("click", () => {
-      if (allImageFiles.length) { currentPage = Math.ceil(allImageFiles.length / ITEMS_PER_PAGE); renderPage(currentPage); }
+      if (allImageFiles.length) {
+        currentPage = Math.ceil(allImageFiles.length / ITEMS_PER_PAGE);
+        renderPage(currentPage);
+      }
       switchSection("gallery-section");
     });
-    function closeMobileMenu() { mobileMenu.classList.remove("open"); menuToggle.setAttribute("aria-expanded", "false"); }
-    menuToggle.addEventListener("click", () => {
-      const open = mobileMenu.classList.toggle("open");
-      menuToggle.setAttribute("aria-expanded", String(open));
-    });
 
-    /* 홈: 흐르는 작품 */
     function buildMarquee() {
-      const box = $("marquee"), track = $("track");
-      track.innerHTML = "";
-      $("m-head").hidden = box.hidden = !allImageFiles.length;
+      const track = $("track");
+      track.replaceChildren();
+      $("m-head").hidden = $("marquee").hidden = !allImageFiles.length;
       if (!allImageFiles.length) return;
       let list = [...allImageFiles];
       while (list.length < 8) list = list.concat(allImageFiles);
-      const make = f => {
+      const repeated = list.concat(list);
+      repeated.forEach((file, i) => {
         const b = document.createElement("button");
-        b.className = "m-item"; b.type = "button"; b.setAttribute("aria-label", "작품 크게 보기");
-        const im = document.createElement("img");
-        im.src = f.download_url; im.alt = ""; im.draggable = false;
-        b.appendChild(im);
-        b.addEventListener("click", () => openLightbox(f.download_url, f.name));
-        return b;
-      };
-      list.forEach(f => track.appendChild(make(f)));
-      list.forEach(f => track.appendChild(make(f)));
-      track.style.setProperty("--dur", list.length * 6 + "s");
+        b.className = "m-item";
+        b.type = "button";
+        b.setAttribute("aria-label", `${file.name} 크게 보기`);
+        if (i >= allImageFiles.length) b.tabIndex = -1;
+        const img = new Image();
+        img.src = file.download_url;
+        img.alt = "";
+        img.draggable = false;
+        b.appendChild(img);
+        b.addEventListener("click", () => openLightbox(file.download_url, file.name));
+        track.appendChild(b);
+      });
+      track.style.setProperty("--dur", `${list.length * 6}s`);
     }
 
-    /* 작품 갤러리 */
-    function loadGallery(goLast) {
-      return fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${folder}?t=${Date.now()}`)
-        .then(r => { if (!r.ok) throw new Error("GitHub API error"); return r.json(); })
-        .then(files => {
-          if (!Array.isArray(files)) throw new Error("Invalid GitHub response");
-          allImageFiles = files
-            .filter(f => f.type === "file" && /\.(jpg|jpeg|png|gif|webp)$/i.test(f.name))
-            .sort((a, b) => {
-              const an = parseInt(a.name, 10), bn = parseInt(b.name, 10);
-              return (!isNaN(an) && !isNaN(bn)) ? an - bn : a.name.localeCompare(b.name);
-            });
-          imageCount.textContent = `${String(allImageFiles.length).padStart(2, "0")} IMAGES`;
-          buildMarquee(); updateStats(); updateStickers(); startHero();
-          if (!allImageFiles.length) { gallery.innerHTML = `<p class="error">등록된 이미지가 없습니다.</p>`; pagination.innerHTML = ""; return; }
-          const total = Math.ceil(allImageFiles.length / ITEMS_PER_PAGE);
-          currentPage = goLast ? total : Math.min(currentPage, total);
-          renderPage(currentPage);
-        })
-        .catch(err => {
-          console.error(err);
-          imageCount.textContent = "00 IMAGES";
-          gallery.innerHTML = `<p class="error">이미지를 불러오지 못했습니다. 잠시 후 다시 시도해 주세요.</p>`;
-          startHero();
-        });
+    async function loadGallery(goLast = false) {
+      try {
+        const response = await fetch(`${repoContents}/${folder}?t=${Date.now()}`);
+        if (!response.ok) throw new Error();
+        const files = await response.json();
+        if (!Array.isArray(files)) throw new Error();
+        allImageFiles = files
+          .filter(f => f.type === "file" && /\.(jpe?g|png|gif|webp)$/i.test(f.name))
+          .sort((a, b) => a.name.localeCompare(b.name, "ko", { numeric: true }));
+        $("image-count").textContent = `${String(allImageFiles.length).padStart(2, "0")} IMAGES`;
+        buildMarquee();
+        updateStats();
+        updateStickers();
+        startHero();
+        if (!allImageFiles.length) {
+          gallery.innerHTML = '<p class="error">등록된 이미지가 없습니다.</p>';
+          pagination.replaceChildren();
+          return;
+        }
+        const total = Math.ceil(allImageFiles.length / ITEMS_PER_PAGE);
+        currentPage = goLast ? total : Math.min(currentPage, total);
+        renderPage(currentPage);
+      } catch {
+        $("image-count").textContent = "—";
+        gallery.innerHTML = '<p class="error">이미지를 불러오지 못했습니다. 잠시 후 다시 시도해 주세요.</p>';
+        if (!$("hero-art").children.length) startHero();
+      }
     }
 
     function renderPage(page) {
-      gallery.innerHTML = "";
+      gallery.replaceChildren();
       const start = (page - 1) * ITEMS_PER_PAGE;
       allImageFiles.slice(start, start + ITEMS_PER_PAGE).forEach((file, i) => {
         const wrap = document.createElement("div");
         wrap.className = "gi";
-        wrap.innerHTML = `<button class="gallery-item" type="button"><img src="${esc(file.download_url)}" alt="${esc(file.name)}" loading="lazy" draggable="false"><div class="gallery-overlay">VIEW ▶</div></button>
-          <button class="del" type="button" aria-label="삭제">✕</button>`;
-        wrap.querySelector(".gallery-item").addEventListener("click", () => openLightbox(file.download_url, file.name));
-        wrap.querySelector(".del").addEventListener("click", () => removeImage(file));
+        wrap.innerHTML = `
+          <button class="gallery-item" type="button">
+            <img src="${esc(file.download_url)}" alt="${esc(file.name)}" loading="lazy" draggable="false">
+            <span class="gallery-overlay">VIEW ▶</span>
+          </button>
+          <button class="del" type="button" aria-label="작품 삭제">✕</button>`;
+        wrap.querySelector(".gallery-item").onclick = () => openLightbox(file.download_url, file.name);
+        wrap.querySelector(".del").onclick = () => removeImage(file);
         gallery.appendChild(wrap);
-        reveal(wrap, (i % 3) * 90);
+        reveal(wrap, (i % 3) * 65);
       });
       renderPagination();
     }
-    function goPage(p) { currentPage = p; renderPage(p); window.scrollTo({ top: 0, behavior: "smooth" }); }
+
     function renderPagination() {
-      pagination.innerHTML = "";
+      pagination.replaceChildren();
       const total = Math.ceil(allImageFiles.length / ITEMS_PER_PAGE);
       if (total <= 1) return;
-      const mk = (label, onClick, disabled, active) => {
+      function add(label, page, disabled = false, active = false) {
         const b = document.createElement("button");
-        b.textContent = label; b.disabled = !!disabled;
-        if (active) b.classList.add("active");
-        b.addEventListener("click", onClick);
+        b.textContent = label;
+        b.disabled = disabled;
+        b.classList.toggle("active", active);
+        if (active) b.setAttribute("aria-current", "page");
+        b.onclick = () => {
+          currentPage = page;
+          renderPage(page);
+          window.scrollTo({ top: 0, behavior: motion.matches ? "instant" : "smooth" });
+        };
         pagination.appendChild(b);
-      };
-      mk("◀", () => goPage(currentPage - 1), currentPage === 1);
-      for (let i = 1; i <= total; i++) mk(i, () => goPage(i), false, i === currentPage);
-      mk("▶", () => goPage(currentPage + 1), currentPage === total);
+      }
+      add("◀", currentPage - 1, currentPage === 1);
+      for (let i = 1; i <= total; i++) add(i, i, false, i === currentPage);
+      add("▶", currentPage + 1, currentPage === total);
     }
 
-    /* 캐릭터 / 세계관 목록 */
     function renderArchive(list, targetId, type, label) {
       const box = $(targetId);
-      box.innerHTML = "";
-      if (!list.length) { box.innerHTML = `<p class="error">아직 등록된 기록이 없습니다.</p>`; return; }
+      box.replaceChildren();
+      if (!list.length) {
+        box.innerHTML = '<p class="error">아직 등록된 기록이 없습니다.</p>';
+        return;
+      }
       list.forEach((item, i) => {
         const w = document.createElement("div");
-        w.className = "fxw" + (["glow", "pulse", "spin"].includes(item.effect) ? " fx-" + item.effect : "");
+        w.className = "fxw";
+        if (effects.includes(item.effect)) w.classList.add(`fx-${item.effect}`);
         if (okColor(item.color)) w.style.setProperty("--c", item.color);
-        w.innerHTML = `<button class="archive-card" type="button"><div class="card-in">
-            <div class="archive-image"><img src="${esc(item.image)}" alt="${esc(item.title)}" loading="lazy"></div>
-            <div class="archive-info"><span class="archive-type">${label}</span>
-              <h3>${esc(item.title)}${item.webtoonUrl ? '<span class="chip">WEBTOON</span>' : ""}</h3>
-              <p>${esc(item.description)}</p><div class="archive-view">VIEW ARCHIVE ▶</div></div>
-          </div></button><button class="del" type="button" aria-label="삭제">✕</button>`;
-        w.querySelector(".archive-card").addEventListener("click", () => openViewer(type, i));
-        w.querySelector(".del").addEventListener("click", () => removeEntry(type, item));
+        w.innerHTML = `
+          <button class="archive-card" type="button">
+            <span class="card-in">
+              <span class="archive-image"><img src="${esc(item.image)}" alt="" loading="lazy"></span>
+              <span class="archive-info">
+                <span class="archive-type">${label}</span>
+                <strong class="archive-title">${esc(item.title)}
+                  ${item.webtoonUrl ? '<span class="chip">WEBTOON</span>' : ""}
+                </strong>
+                <span class="archive-desc">${esc(item.description)}</span>
+                <span class="archive-view">VIEW ARCHIVE ▶</span>
+              </span>
+            </span>
+          </button>
+          <button class="del" type="button" aria-label="항목 삭제">✕</button>`;
+        w.querySelector(".archive-card").onclick = () => openViewer(type, i);
+        w.querySelector(".del").onclick = () => removeEntry(type, item);
         box.appendChild(w);
-        reveal(w, i * 100);
+        reveal(w, i * 65);
       });
     }
 
     async function removeImage(file) {
       if (!confirm("이 작품을 삭제할까요?\n삭제하면 되돌릴 수 없어요.")) return;
-      try { await api({ action: "deleteImage", name: file.name }); await loadGallery(); } catch (err) { alert(err.message); }
+      try {
+        await api({ action: "deleteImage", name: file.name });
+        await loadGallery();
+      } catch (err) { alert(err.message); }
     }
+
     async function removeEntry(kind, item) {
       if (!item.id) { alert("이 항목은 관리 화면에서 삭제할 수 없어요."); return; }
       if (!confirm(`'${item.title}'을(를) 삭제할까요?\n이미지도 함께 지워지며 되돌릴 수 없어요.`)) return;
-      try { await api({ action: "deleteEntry", kind, id: item.id }); await loadData(); } catch (err) { alert(err.message); }
+      try {
+        await api({ action: "deleteEntry", kind, id: item.id });
+        await loadData();
+      } catch (err) { alert(err.message); }
     }
 
-    /* ===== 캐릭터 / 세계관 뷰어 ===== */
-    const viewer = $("viewer");
-    let vKind = "character", vList = [], vIdx = 0, vOpen = false;
+    const returnFocus = new Map();
+    function openOverlay(el, focusTarget) {
+      returnFocus.set(el, document.activeElement);
+      el.inert = false;
+      el.classList.add("open");
+      el.setAttribute("aria-hidden", "false");
+      syncLock();
+      focusTarget?.focus({ preventScroll: true });
+    }
+    function closeOverlay(el) {
+      const previous = returnFocus.get(el);
+      el.classList.remove("open");
+      el.inert = true;
+      previous?.focus({ preventScroll: true });
+      el.setAttribute("aria-hidden", "true");
+      returnFocus.delete(el);
+      syncLock();
+    }
 
-    function renderViewer(replay) {
-      const it = vList[vIdx];
-      if (!it) return;
-      viewer.style.setProperty("--c", okColor(it.color) || "#3fa9ff");
-      viewer.dataset.fx = ["glow", "pulse", "spin"].includes(it.effect) ? it.effect : "none";
-      const isW = vKind === "worldview";
-      $("v-kind").textContent = isW ? "WORLDVIEW" : "CHARACTER";
-      $("v-head-t").textContent = isW ? "세계관" : "캐릭터";
-      $("v-back").textContent = isW ? "세계관 목록으로 ▶" : "캐릭터 목록으로 ▶";
-      const big = $("v-big");
-      big.textContent = it.title;
-      const vw = Math.min(innerWidth, 1100), len = Math.max([...it.title].length, 2);
-      big.style.fontSize = Math.min(vw * 0.3, (vw * 0.9) / len) + "px";
-      $("v-name").textContent = it.title;
-      const sub = $("v-sub"); sub.textContent = it.description || ""; sub.hidden = !it.description;
-      const desc = $("v-desc"); desc.textContent = it.body || ""; desc.hidden = !it.body; desc.scrollTop = 0;
-      const img = $("v-img"); img.src = it.image; img.alt = it.title;
-      const web = $("v-web");
-      if (/^https?:\/\//i.test(it.webtoonUrl || "")) {
-        web.hidden = false; web.href = it.webtoonUrl;
-        const wi = $("v-web-img");
-        wi.hidden = !it.webtoonImage;
-        if (it.webtoonImage) wi.src = it.webtoonImage;
-      } else web.hidden = true;
+    let vList = [], vIdx = 0, vKind = "character", viewerHistory = false;
+    function renderViewer() {
+      const item = vList[vIdx];
+      if (!item) return;
+      const world = vKind === "worldview";
+      const title = String(item.title || "");
+      viewer.dataset.kind = vKind;
+      viewer.dataset.fx = effects.includes(item.effect) ? item.effect : "none";
+      viewer.style.setProperty("--c", okColor(item.color) || "#3fa9ff");
+      $("v-kind").textContent = world ? "WORLDVIEW" : "CHARACTER";
+      $("v-head-t").textContent = world ? "세계관" : "캐릭터";
+      $("v-back").textContent = world ? "세계관 목록으로 ▶" : "캐릭터 목록으로 ▶";
+      $("v-name").textContent = title;
+      $("v-big").textContent = title;
+      $("v-img").src = item.image;
+      $("v-img").alt = title;
+      $("v-sub").textContent = item.description || "";
+      $("v-sub").hidden = !item.description;
+      $("v-desc").textContent = item.body || "";
+      $("v-desc").hidden = !item.body;
+      const web = $("v-web"), webImg = $("v-web-img");
+      web.hidden = !/^https?:\/\//i.test(item.webtoonUrl || "");
+      if (web.hidden) web.removeAttribute("href");
+      else web.href = item.webtoonUrl;
+      webImg.hidden = !item.webtoonImage;
+      if (item.webtoonImage) webImg.src = item.webtoonImage;
+      else webImg.removeAttribute("src");
+      viewer.querySelector(".v-info").hidden = !item.description && !item.body && web.hidden;
+
       const th = $("v-thumbs");
-      th.innerHTML = "";
-      vList.forEach((x, i) => {
+      const thumbFocused = th.contains(document.activeElement);
+      th.replaceChildren();
+      vList.forEach((entry, i) => {
         const b = document.createElement("button");
-        b.type = "button"; b.className = "v-th" + (i === vIdx ? " on" : ""); b.setAttribute("aria-label", x.title);
-        const im = document.createElement("img"); im.src = x.image; im.alt = ""; b.appendChild(im);
-        b.addEventListener("click", () => { if (i !== vIdx) { vIdx = i; renderViewer(true); } });
+        b.type = "button";
+        b.className = "v-th";
+        b.classList.toggle("on", i === vIdx);
+        b.setAttribute("aria-label", entry.title);
+        b.setAttribute("aria-pressed", String(i === vIdx));
+        const im = new Image();
+        im.src = entry.image;
+        im.alt = "";
+        b.appendChild(im);
+        b.onclick = () => {
+          if (vIdx === i) return;
+          vIdx = i;
+          renderViewer();
+        };
         th.appendChild(b);
       });
-      const on = th.querySelector(".on");
-      if (on) th.scrollLeft = on.offsetLeft - th.clientWidth / 2 + on.offsetWidth / 2;
-      if (replay) { viewer.classList.remove("play"); void viewer.offsetWidth; viewer.classList.add("play"); }
+      $("v-prev").disabled = $("v-next").disabled = vList.length < 2;
+      const active = th.querySelector(".on");
+      if (active) {
+        th.scrollLeft = active.offsetLeft - th.clientWidth / 2 + active.offsetWidth / 2;
+        if (thumbFocused) active.focus({ preventScroll: true });
+      }
+      viewer.scrollTop = 0;
+      if (!motion.matches && typeof viewer.animate === "function") {
+        $("v-img").animate([{ opacity: .35 }, { opacity: 1 }], { duration: 240 });
+      }
     }
-    function openViewer(kind, idx) {
-      vKind = kind; vList = kind === "worldview" ? worldviews : characters; vIdx = idx;
-      viewer.classList.add("open"); viewer.setAttribute("aria-hidden", "false");
-      document.body.classList.add("lock");
-      if (!vOpen) { try { history.pushState({ v: 1 }, ""); } catch (e) {} }
-      vOpen = true;
-      renderViewer(true);
-    }
-    function closeViewer(fromPop) {
-      if (!vOpen) return;
-      vOpen = false;
-      viewer.classList.remove("open", "play"); viewer.setAttribute("aria-hidden", "true");
-      document.body.classList.remove("lock");
-      if (!fromPop) { try { history.back(); } catch (e) {} }
-    }
-    function stepViewer(d) {
-      if (vList.length < 2) return;
-      vIdx = (vIdx + d + vList.length) % vList.length;
-      renderViewer(true);
-    }
-    window.addEventListener("popstate", () => { if (vOpen) closeViewer(true); });
-    $("v-close").addEventListener("click", () => closeViewer());
-    $("v-back").addEventListener("click", () => closeViewer());
-    $("v-prev").addEventListener("click", () => stepViewer(-1));
-    $("v-next").addEventListener("click", () => stepViewer(1));
 
-    /* ===== 공지 + 댓글 ===== */
-    const noticesBox = $("notices");
+    function openViewer(kind, idx) {
+      vKind = kind;
+      vList = kind === "worldview" ? worldviews : characters;
+      vIdx = idx;
+      if (!vList[idx]) return;
+      openOverlay(viewer, $("v-close"));
+      renderViewer();
+      viewerHistory = false;
+      try {
+        history.pushState({ ctViewer: true }, "");
+        viewerHistory = true;
+      } catch {}
+    }
+    function closeViewer(fromPop = false) {
+      if (!viewer.classList.contains("open")) return;
+      closeOverlay(viewer);
+      if (!fromPop && viewerHistory && history.state?.ctViewer) history.back();
+      viewerHistory = false;
+    }
+    function stepViewer(delta) {
+      if (vList.length < 2) return;
+      vIdx = (vIdx + delta + vList.length) % vList.length;
+      renderViewer();
+    }
+    window.addEventListener("popstate", () => closeViewer(true));
+    $("v-close").onclick = $("v-back").onclick = () => closeViewer();
+    $("v-prev").onclick = () => stepViewer(-1);
+    $("v-next").onclick = () => stepViewer(1);
 
     async function loadNotices() {
       try {
         const r = await fetch("/api/board");
-        const d = await r.json().catch(() => ({}));
-        if (!r.ok) throw new Error(d.error || "공지를 불러오지 못했어요.");
-        notices = d.notices;
-      } catch (e) {
-        noticesBox.innerHTML = `<p class="error">${esc(e.message)}</p>`;
+        const data = await r.json();
+        if (!r.ok || !Array.isArray(data.notices)) {
+          throw new Error(data.error || "공지를 불러오지 못했어요.");
+        }
+        notices = data.notices;
+        noticeState = "ready";
+        renderNotices();
+        updateStats();
+      } catch (err) {
+        noticeState = "error";
+        noticesBox.innerHTML = `<p class="error">${esc(err.message)}</p>`;
         $("notice-count").textContent = "";
-        $("stk-n").textContent = "공지를 불러오지 못했어요";
-        return;
       }
-      renderNotices(); updateStats(); updateStickers();
+      updateStickers();
     }
 
     function renderNotices() {
-      noticesBox.innerHTML = "";
+      noticesBox.replaceChildren();
       $("notice-count").textContent = `${notices.length}건`;
-      if (!notices.length) { noticesBox.innerHTML = `<p class="error">등록된 공지가 없습니다.</p>`; return; }
+      if (!notices.length) {
+        noticesBox.innerHTML = '<p class="error">등록된 공지가 없습니다.</p>';
+        return;
+      }
       notices.forEach((nt, i) => {
         const el = document.createElement("article");
         el.className = "nt";
-        el.innerHTML = `<button class="nt-head" type="button" aria-expanded="false"><span class="nt-badge">공지</span><span class="nt-title"></span><span class="nt-meta"></span></button>
+        el.innerHTML = `
+          <button class="nt-head" type="button" aria-expanded="false">
+            <span class="nt-badge">공지</span><span class="nt-title"></span><span class="nt-meta"></span>
+          </button>
           <button class="del" type="button" aria-label="공지 삭제">✕</button>
           <div class="nt-body" hidden><p class="nt-text"></p><div class="cm"></div></div>`;
         el.querySelector(".nt-title").textContent = nt.title;
         el.querySelector(".nt-meta").textContent = `${fmtDate(nt.at)} · 댓글 ${nt.count}`;
         el.querySelector(".nt-text").textContent = nt.body;
         const head = el.querySelector(".nt-head"), body = el.querySelector(".nt-body");
-        head.addEventListener("click", () => {
+        head.onclick = () => {
           const open = body.hidden;
           body.hidden = !open;
           head.setAttribute("aria-expanded", String(open));
-          if (open && !body.dataset.loaded) { body.dataset.loaded = "1"; openComments(nt, el); }
-        });
-        el.querySelector(".del").addEventListener("click", () => removeNotice(nt));
+          if (open && !body.dataset.loaded) {
+            body.dataset.loaded = "1";
+            openComments(nt, el);
+          }
+        };
+        el.querySelector(".del").onclick = () => removeNotice(nt);
         noticesBox.appendChild(el);
-        reveal(el, i * 80);
+        reveal(el, i * 60);
       });
     }
 
     async function openComments(nt, el) {
       const box = el.querySelector(".cm");
-      box.innerHTML = `<h4>댓글 <b>0</b></h4><ul class="cm-list"><li class="cm-empty">불러오는 중...</li></ul>`;
+      box.innerHTML = '<h4>댓글 <b>0</b></h4><ul class="cm-list"><li>불러오는 중...</li></ul>';
       box.appendChild(makeForm(nt, el, 0, false));
       await refreshComments(nt, el);
     }
@@ -566,70 +758,92 @@
     async function refreshComments(nt, el) {
       const list = el.querySelector(".cm-list");
       try {
-        const r = await fetch(`/api/board?n=${nt.n}`);
-        const d = await r.json().catch(() => ({}));
-        if (!r.ok) throw new Error(d.error || "댓글을 불러오지 못했어요.");
-        const cs = d.comments, top = cs.filter(c => !c.parent);
-        nt.count = cs.length;
-        el.querySelector(".nt-meta").textContent = `${fmtDate(nt.at)} · 댓글 ${cs.length}`;
-        el.querySelector(".cm h4 b").textContent = cs.length;
-        list.innerHTML = "";
-        if (!top.length) { list.innerHTML = `<li class="cm-empty">첫 댓글을 남겨보세요!</li>`; return; }
+        const r = await fetch(`/api/board?n=${encodeURIComponent(nt.n)}`);
+        const data = await r.json();
+        if (!r.ok || !Array.isArray(data.comments)) {
+          throw new Error(data.error || "댓글을 불러오지 못했어요.");
+        }
+        const comments = data.comments;
+        const top = comments.filter(c => !c.parent);
+        nt.count = comments.length;
+        el.querySelector(".nt-meta").textContent = `${fmtDate(nt.at)} · 댓글 ${nt.count}`;
+        el.querySelector(".cm h4 b").textContent = nt.count;
+        list.replaceChildren();
+        if (!top.length) {
+          list.innerHTML = '<li class="cm-empty">첫 댓글을 남겨보세요!</li>';
+          return;
+        }
         top.forEach(c => {
           const li = document.createElement("li");
           li.className = "cm-item";
           li.appendChild(commentNode(c, nt, el, true));
-          const reps = cs.filter(x => x.parent === c.id);
-          if (reps.length) {
+          const replies = comments.filter(x => x.parent === c.id);
+          if (replies.length) {
             const ul = document.createElement("ul");
             ul.className = "cm-reps";
-            reps.forEach(x => {
-              const r2 = document.createElement("li");
-              r2.className = "cm-item";
-              r2.appendChild(commentNode(x, nt, el, false));
-              ul.appendChild(r2);
+            replies.forEach(reply => {
+              const child = document.createElement("li");
+              child.className = "cm-item";
+              child.appendChild(commentNode(reply, nt, el, false));
+              ul.appendChild(child);
             });
             li.appendChild(ul);
           }
           list.appendChild(li);
         });
-      } catch (e) { list.innerHTML = `<li class="cm-empty">${esc(e.message)}</li>`; }
+      } catch (err) {
+        list.innerHTML = `<li class="cm-empty">${esc(err.message)}</li>`;
+        delete el.querySelector(".nt-body").dataset.loaded;
+      }
     }
 
     function commentNode(c, nt, el, canReply) {
-      const d = document.createElement("div");
-      d.innerHTML = `<span class="who"></span><time></time><button class="cdel" type="button" title="삭제">✕</button><p></p>${canReply ? '<button class="reply-btn" type="button">↳ 답글</button>' : ""}<div class="slot"></div>`;
-      d.querySelector(".who").textContent = c.name;
-      d.querySelector("time").textContent = fmtDate(c.at);
-      d.querySelector("p").textContent = c.text;
-      d.querySelector(".cdel").addEventListener("click", () => removeComment(c, nt, el));
+      const node = document.createElement("div");
+      node.innerHTML = `
+        <span class="who"></span><time></time>
+        <button class="cdel" type="button" aria-label="댓글 삭제">✕</button><p></p>
+        ${canReply ? '<button class="reply-btn" type="button">↳ 답글</button>' : ""}
+        <div class="slot"></div>`;
+      node.querySelector(".who").textContent = c.name;
+      node.querySelector("time").textContent = fmtDate(c.at);
+      node.querySelector("p").textContent = c.text;
+      node.querySelector(".cdel").onclick = () => removeComment(c, nt, el);
       if (canReply) {
-        const slot = d.querySelector(".slot");
-        d.querySelector(".reply-btn").addEventListener("click", () => {
-          if (slot.firstChild) { slot.innerHTML = ""; return; }
+        const slot = node.querySelector(".slot");
+        node.querySelector(".reply-btn").onclick = () => {
+          if (slot.firstChild) { slot.replaceChildren(); return; }
           slot.appendChild(makeForm(nt, el, c.id, true));
           slot.querySelector("textarea").focus();
-        });
+        };
       }
-      return d;
+      return node;
     }
 
     function makeForm(nt, el, parent, isReply) {
       const f = document.createElement("form");
       f.className = "cm-form";
-      f.innerHTML = `<input class="hp" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
-        <input name="nick" maxlength="20" placeholder="닉네임" required>
-        <textarea name="text" rows="${isReply ? 2 : 3}" maxlength="500" placeholder="${isReply ? "답글을 입력하세요" : "댓글을 입력하세요"}" required></textarea>
-        <div class="cm-row"><small class="cm-msg"></small><button class="primary-btn">${isReply ? "답글 등록" : "댓글 등록"}</button></div>`;
-      try { f.nick.value = localStorage.getItem("ctName") || ""; } catch (e) {}
+      f.innerHTML = `
+        <input class="hp" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <input name="nick" maxlength="20" placeholder="닉네임" aria-label="닉네임" required>
+        <textarea name="text" rows="${isReply ? 2 : 3}" maxlength="500"
+          placeholder="${isReply ? "답글을 입력하세요" : "댓글을 입력하세요"}" aria-label="내용" required></textarea>
+        <div class="cm-row"><small class="cm-msg" role="status"></small>
+          <button class="primary-btn">${isReply ? "답글 등록" : "댓글 등록"}</button></div>`;
+      const fields = f.elements;
+      try { fields.nick.value = localStorage.getItem("ctName") || ""; } catch {}
       f.onsubmit = async e => {
         e.preventDefault();
         const btn = f.querySelector("button"), msg = f.querySelector(".cm-msg");
-        btn.disabled = true; msg.textContent = "등록 중...";
+        btn.disabled = true;
+        msg.textContent = "등록 중...";
         try {
-          await board({ action: "comment", n: nt.n, name: f.nick.value, text: f.text.value, parent, website: f.website.value });
-          try { localStorage.setItem("ctName", f.nick.value); } catch (er) {}
-          f.text.value = ""; msg.textContent = "";
+          await board({
+            action: "comment", n: nt.n, name: fields.nick.value,
+            text: fields.text.value, parent, website: fields.website.value
+          });
+          try { localStorage.setItem("ctName", fields.nick.value); } catch {}
+          fields.text.value = "";
+          msg.textContent = "";
           if (isReply) f.remove();
           await refreshComments(nt, el);
         } catch (err) { msg.textContent = err.message; }
@@ -640,128 +854,142 @@
 
     async function removeComment(c, nt, el) {
       if (!confirm("이 댓글을 삭제할까요?\n답글도 함께 지워져요.")) return;
-      try { await board({ action: "delComment", id: c.id, n: nt.n }); await refreshComments(nt, el); } catch (err) { alert(err.message); }
+      try {
+        await board({ action: "delComment", id: c.id, n: nt.n });
+        await refreshComments(nt, el);
+      } catch (err) { alert(err.message); }
     }
     async function removeNotice(nt) {
       if (!confirm(`'${nt.title}' 공지를 삭제할까요?`)) return;
-      try { await board({ action: "delNotice", n: nt.n }); await loadNotices(); } catch (err) { alert(err.message); }
+      try {
+        await board({ action: "delNotice", n: nt.n });
+        await loadNotices();
+      } catch (err) { alert(err.message); }
     }
 
-    /* 라이트박스 */
-    const lightbox = $("lightbox"), lightboxImage = $("lightbox-image");
-    const unlockIfIdle = () => { if (intro.classList.contains("done") && !vOpen) document.body.classList.remove("lock"); };
     function openLightbox(src, alt = "") {
-      lightboxImage.src = src; lightboxImage.alt = alt;
-      lightbox.classList.add("open"); lightbox.setAttribute("aria-hidden", "false");
-      document.body.classList.add("lock");
+      $("lightbox-image").src = src;
+      $("lightbox-image").alt = alt;
+      openOverlay(lightbox, $("lightbox-close"));
     }
-    function closeLightbox() {
-      lightbox.classList.remove("open"); lightbox.setAttribute("aria-hidden", "true");
-      unlockIfIdle();
-      setTimeout(() => { lightboxImage.src = ""; }, 300);
-    }
-    $("lightbox-close").addEventListener("click", closeLightbox);
-    lightbox.addEventListener("click", e => { if (e.target === lightbox) closeLightbox(); });
-    document.addEventListener("keydown", e => {
-      if (e.key === "Escape") {
-        if (lightbox.classList.contains("open")) closeLightbox();
-        else if (modal.classList.contains("open")) closeModal();
-        else closeViewer();
-      }
-      if (vOpen && e.key === "ArrowLeft") stepViewer(-1);
-      if (vOpen && e.key === "ArrowRight") stepViewer(1);
-    });
+    function closeLightbox() { closeOverlay(lightbox); }
+    $("lightbox-close").onclick = closeLightbox;
+    lightbox.onclick = e => { if (e.target === lightbox) closeLightbox(); };
 
-    /* 관리자 */
-    const modal = $("modal");
     let adminPw = "";
-    try { adminPw = sessionStorage.getItem("adminPw") || ""; } catch (e) {}
-
+    try { adminPw = sessionStorage.getItem("adminPw") || ""; } catch {}
     function setAdmin(on) {
       document.body.classList.toggle("admin", on);
       $("admin-toggle").textContent = on ? "로그아웃" : "관리";
     }
     async function post(url, payload) {
-      const r = await fetch(url, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ password: adminPw, ...payload }) });
-      const d = await r.json().catch(() => ({}));
-      if (!r.ok) throw new Error(d.error || "요청에 실패했어요.");
-      return d;
+      const response = await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ password: adminPw, ...payload })
+      });
+      const data = await response.json().catch(() => ({}));
+      if (!response.ok) throw new Error(data.error || "요청에 실패했어요.");
+      return data;
     }
-    const api = p => post("/api/admin", p);
-    const board = p => post("/api/board", p);
+    const api = payload => post("/api/admin", payload);
+    const board = payload => post("/api/board", payload);
 
     function openModal(html) {
       $("modal-box").innerHTML = html;
-      modal.classList.add("open"); modal.setAttribute("aria-hidden", "false");
-      document.body.classList.add("lock");
+      openOverlay(modal, $("modal-box").querySelector("input, textarea, button"));
     }
-    function closeModal() {
-      modal.classList.remove("open"); modal.setAttribute("aria-hidden", "true");
-      if (!lightbox.classList.contains("open")) unlockIfIdle();
+    function closeModal() { closeOverlay(modal); }
+    modal.onclick = e => {
+      if (e.target === modal || e.target.hasAttribute("data-close")) closeModal();
+    };
+    function setMsg(text) {
+      if ($("msg")) $("msg").textContent = text;
     }
-    modal.addEventListener("click", e => { if (e.target === modal || e.target.hasAttribute("data-close")) closeModal(); });
-    const setMsg = t => { const m = $("msg"); if (m) m.textContent = t; };
-
     function openLogin() {
       openModal(`<h3>관리자 로그인</h3><form id="f">
         <label>비밀번호<input type="password" id="pw" autocomplete="current-password" required></label>
-        <p class="msg" id="msg"></p>
-        <div class="row"><button type="button" data-close>취소</button><button class="primary" id="f-ok">로그인</button></div></form>`);
+        <p class="msg" id="msg" role="status"></p>
+        <div class="row"><button type="button" data-close>취소</button>
+          <button class="primary" id="f-ok">로그인</button></div></form>`);
       $("f").onsubmit = async e => {
         e.preventDefault();
+        const btn = $("f-ok");
+        btn.disabled = true;
+        setMsg("확인 중...");
         adminPw = $("pw").value;
-        $("f-ok").disabled = true; setMsg("확인 중...");
         try {
           await api({ action: "verify" });
-          try { sessionStorage.setItem("adminPw", adminPw); } catch (er) {}
-          setAdmin(true); closeModal();
-        } catch (err) { adminPw = ""; setMsg(err.message); $("f-ok").disabled = false; }
+          try { sessionStorage.setItem("adminPw", adminPw); } catch {}
+          setAdmin(true);
+          closeModal();
+        } catch (err) {
+          adminPw = "";
+          setMsg(err.message);
+          btn.disabled = false;
+        }
       };
     }
-    $("admin-toggle").addEventListener("click", () => {
-      if (document.body.classList.contains("admin")) {
+
+    $("admin-toggle").onclick = () => {
+      if (!document.body.classList.contains("admin")) { openLogin(); return; }
+      adminPw = "";
+      try { sessionStorage.removeItem("adminPw"); } catch {}
+      setAdmin(false);
+    };
+    if (adminPw) {
+      api({ action: "verify" }).then(() => setAdmin(true)).catch(() => {
         adminPw = "";
-        try { sessionStorage.removeItem("adminPw"); } catch (e) {}
-        setAdmin(false);
-      } else openLogin();
-    });
-    if (adminPw) api({ action: "verify" }).then(() => setAdmin(true)).catch(() => {
-      adminPw = ""; try { sessionStorage.removeItem("adminPw"); } catch (e) {}
-    });
+        try { sessionStorage.removeItem("adminPw"); } catch {}
+      });
+    }
 
     async function prepareImage(file) {
       let bmp;
       try { bmp = await createImageBitmap(file); }
-      catch (e) { throw new Error("이 이미지는 읽을 수 없어요. JPG, PNG, WEBP로 올려주세요."); }
+      catch { throw new Error("이 이미지는 읽을 수 없어요. JPG, PNG, WEBP로 올려주세요."); }
       const scale = Math.min(1, 1600 / Math.max(bmp.width, bmp.height));
-      const c = document.createElement("canvas");
-      c.width = Math.round(bmp.width * scale); c.height = Math.round(bmp.height * scale);
-      const ctx = c.getContext("2d");
-      ctx.drawImage(bmp, 0, 0, c.width, c.height);
-      let blob = await new Promise(r => c.toBlob(r, "image/webp", 0.85));
+      const canvas = document.createElement("canvas");
+      canvas.width = Math.max(1, Math.round(bmp.width * scale));
+      canvas.height = Math.max(1, Math.round(bmp.height * scale));
+      const ctx = canvas.getContext("2d");
+      ctx.drawImage(bmp, 0, 0, canvas.width, canvas.height);
+      bmp.close();
+      let blob = await new Promise(resolve => canvas.toBlob(resolve, "image/webp", .85));
       if (!blob || blob.type !== "image/webp") {
         ctx.globalCompositeOperation = "destination-over";
-        ctx.fillStyle = "#fff"; ctx.fillRect(0, 0, c.width, c.height);
-        blob = await new Promise(r => c.toBlob(r, "image/jpeg", 0.85));
+        ctx.fillStyle = "#fff";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        blob = await new Promise(resolve => canvas.toBlob(resolve, "image/jpeg", .85));
       }
-      const b64 = await new Promise(r => { const fr = new FileReader(); fr.onload = () => r(fr.result.split(",")[1]); fr.readAsDataURL(blob); });
-      if (b64.length > 3400000) throw new Error("이미지가 너무 커요. 더 작은 이미지로 올려주세요.");
-      return { image: b64, imageType: blob.type };
+      if (!blob) throw new Error("이미지를 변환할 수 없어요.");
+      const image = await new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(String(reader.result).split(",")[1]);
+        reader.onerror = () => reject(new Error("이미지를 읽을 수 없어요."));
+        reader.readAsDataURL(blob);
+      });
+      if (image.length > 3400000) throw new Error("이미지가 너무 커요. 더 작은 이미지로 올려주세요.");
+      return { image, imageType: blob.type };
     }
 
     function openNoticeForm() {
       openModal(`<h3>공지 쓰기</h3><form id="f">
         <label>제목<input id="f-title" maxlength="80" required></label>
         <label>내용<textarea id="f-body" rows="8" maxlength="3000" required></textarea></label>
-        <p class="msg" id="msg"></p>
-        <div class="row"><button type="button" data-close>취소</button><button class="primary" id="f-ok">등록</button></div></form>`);
+        <p class="msg" id="msg" role="status"></p>
+        <div class="row"><button type="button" data-close>취소</button>
+          <button class="primary" id="f-ok">등록</button></div></form>`);
       $("f").onsubmit = async e => {
         e.preventDefault();
-        $("f-ok").disabled = true; setMsg("등록 중...");
+        const btn = $("f-ok");
+        btn.disabled = true;
+        setMsg("등록 중...");
         try {
           await board({ action: "notice", title: $("f-title").value, body: $("f-body").value });
-          closeModal(); await loadNotices();
-        } catch (err) { setMsg(err.message); $("f-ok").disabled = false; }
+          closeModal();
+          await loadNotices();
+        } catch (err) { setMsg(err.message); btn.disabled = false; }
       };
     }
 
@@ -773,13 +1001,20 @@
         <label>한 줄 소개<input id="f-desc" maxlength="120"></label>
         <label>자세한 설명<textarea id="f-body" rows="5" maxlength="5000"></textarea></label>
         <label>포인트 색<input type="color" id="f-color" value="#3fa9ff"></label>
-        <label>효과<select id="f-fx"><option value="none">없음</option><option value="glow">은은한 빛</option><option value="pulse">숨쉬는 빛</option><option value="spin">회전하는 빛줄기</option></select></label>
+        <label>효과<select id="f-fx">
+          <option value="none">없음</option><option value="glow">은은한 빛</option>
+          <option value="pulse">숨쉬는 빛</option><option value="spin">회전하는 빛줄기</option>
+        </select></label>
         <label>웹툰 링크 (선택)<input type="url" id="f-wurl" placeholder="https://"></label>
         <label>웹툰 이미지 (선택)<input type="file" id="f-wimg" accept="image/*"></label>`;
+      const fileLabel = isImage ? "이미지 (여러 장 선택 가능)"
+        : kind === "worldview" ? "세계관 대표 이미지" : "캐릭터 대표 이미지 (투명 PNG 권장)";
       openModal(`<h3>${FORM_TITLE[kind]}</h3><form id="f">${fields}
-        <label>${isImage ? "이미지 (여러 장 선택 가능)" : "대표 이미지 (스탠딩용 · 배경이 투명한 PNG를 추천해요)"}<input type="file" id="f-file" accept="image/*" ${isImage ? "multiple" : ""} required></label>
-        <p class="msg" id="msg"></p>
-        <div class="row"><button type="button" data-close>취소</button><button class="primary" id="f-ok">올리기</button></div></form>`);
+        <label>${fileLabel}<input type="file" id="f-file" accept="image/*"
+          ${isImage ? "multiple" : ""} required></label>
+        <p class="msg" id="msg" role="status"></p>
+        <div class="row"><button type="button" data-close>취소</button>
+          <button class="primary" id="f-ok">올리기</button></div></form>`);
       $("f").onsubmit = async e => {
         e.preventDefault();
         const btn = $("f-ok");
@@ -791,34 +1026,65 @@
               setMsg(`올리는 중... (${i + 1}/${files.length})`);
               await api({ action: "addImage", ...(await prepareImage(files[i])) });
             }
-            closeModal(); await loadGallery(true);
+            closeModal();
+            await loadGallery(true);
           } else {
-            let webtoonImage = "";
-            const wf = $("f-wimg").files[0];
-            if (wf) { setMsg("웹툰 이미지 올리는 중..."); webtoonImage = (await api({ action: "addAsset", ...(await prepareImage(wf)) })).url; }
-            setMsg("올리는 중...");
-            await api({
-              action: "addEntry", kind,
-              title: $("f-title").value, description: $("f-desc").value, body: $("f-body").value,
+            const entry = {
+              action: "addEntry", kind, title: $("f-title").value,
+              description: $("f-desc").value, body: $("f-body").value,
               color: $("f-color").value, effect: $("f-fx").value,
-              webtoonUrl: $("f-wurl").value, webtoonImage,
-              ...(await prepareImage(files[0]))
-            });
-            closeModal(); await loadData();
+              webtoonUrl: $("f-wurl").value, webtoonImage: ""
+            };
+            const webFile = $("f-wimg").files[0];
+            const imageData = await prepareImage(files[0]);
+            if (webFile) {
+              setMsg("웹툰 이미지 올리는 중...");
+              const asset = await api({ action: "addAsset", ...(await prepareImage(webFile)) });
+              entry.webtoonImage = asset.url;
+            }
+            setMsg("올리는 중...");
+            await api({ ...entry, ...imageData });
+            closeModal();
+            await loadData();
           }
         } catch (err) { setMsg(err.message); btn.disabled = false; }
       };
     }
-    document.querySelectorAll(".add-btn").forEach(b =>
-      b.addEventListener("click", () => b.dataset.kind === "notice" ? openNoticeForm() : openForm(b.dataset.kind)));
 
-    /* 시작 */
+    document.querySelectorAll(".add-btn").forEach(b => {
+      b.onclick = () => b.dataset.kind === "notice" ? openNoticeForm() : openForm(b.dataset.kind);
+    });
+
+    document.addEventListener("keydown", e => {
+      const overlay = [modal, lightbox, viewer].find(el => el.classList.contains("open"));
+      if (e.key === "Escape") {
+        if (overlay === modal) closeModal();
+        else if (overlay === lightbox) closeLightbox();
+        else if (overlay === viewer) closeViewer();
+        else closeMobileMenu();
+        return;
+      }
+      if (overlay === viewer && ["ArrowLeft", "ArrowRight"].includes(e.key)) {
+        e.preventDefault();
+        stepViewer(e.key === "ArrowLeft" ? -1 : 1);
+      }
+      if (overlay && e.key === "Tab") {
+        const targets = [...overlay.querySelectorAll("button:not(:disabled), a[href], input, textarea, select")]
+          .filter(el => el.tabIndex >= 0 && el.getClientRects().length);
+        const first = targets[0], last = targets[targets.length - 1];
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault(); last?.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault(); first?.focus();
+        }
+      }
+    });
+
     loadGallery();
     loadNotices();
-    loadData().then(() => {
-      const h = location.hash.slice(1);
-      if (/-section$/.test(h) && $(h)) showSection(h);
-    });
+    loadData();
+    const initialSection = $(location.hash.slice(1));
+    if (initialSection?.classList.contains("content-section")) showSection(initialSection.id);
   </script>
 </body>
 </html>
