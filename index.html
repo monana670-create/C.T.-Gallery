@@ -7,7 +7,7 @@
   <meta name="description" content="C.T. Gallery - Creative Archive">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Jua&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Black+Han+Sans&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body class="lock">
@@ -16,18 +16,18 @@
 
   <div class="intro" id="intro">
     <div class="i-halo"></div>
-    <h1 class="i-title st">C.T.<span>GALLERY</span></h1>
-    <button class="i-btn" id="start">TAP TO START ★</button>
+    <h1 class="i-title">C.T.<span>GALLERY</span></h1>
+    <button class="i-btn" id="start">TAP TO START</button>
   </div>
 
   <div class="wipe" id="wipe" aria-hidden="true">
     <i class="b b1"></i><i class="b b2"></i><i class="b b3"></i>
     <div class="ring"></div>
-    <p class="wtx st" id="wtx"></p>
+    <p class="wtx" id="wtx"></p>
   </div>
 
   <header class="header">
-    <a class="logo" href="index.html"><span class="st">C.T.</span><small>Gallery ★</small></a>
+    <a class="logo" href="index.html"><span>C.T.</span><small>GALLERY</small></a>
     <nav class="header-nav">
       <button class="nav-btn active" data-target="home-section">홈</button>
       <button class="nav-btn" data-target="gallery-section">작품</button>
@@ -50,20 +50,19 @@
     <section id="home-section" class="content-section active">
       <section class="hero">
         <div class="halo"></div>
-        <div class="vtext">작은 기적을 기록하는 아카이브</div>
-        <span class="tag">CREATIVE ARCHIVE ★ 2026</span>
-        <h1 class="title"><span class="t1 st w">C.T.</span><span class="t2 st">GALLERY</span></h1>
+        <span class="tag">CREATIVE ARCHIVE // 2026</span>
+        <h1 class="title"><span class="t1">C.T.</span><span class="t2">GALLERY</span></h1>
         <p class="description">이미지와 세계관, 그리고 캐릭터를 기록하는<br>개인 크리에이티브 아카이브입니다.</p>
-        <button class="explore-btn" data-target="gallery-section">작품 둘러보기 ★</button>
+        <button class="explore-btn" data-target="gallery-section">작품 둘러보기 ▶</button>
       </section>
 
       <div class="marquee" id="marquee" hidden><div class="track" id="track"></div></div>
 
       <div class="quick">
-        <button class="q-card" data-target="gallery-section" style="--a:#2f9bff"><small>VISUAL ARCHIVE</small><b>작품</b><em data-stat="works">00</em></button>
-        <button class="q-card" data-target="character-section" style="--a:#ff6fae"><small>CHARACTER</small><b>캐릭터</b><em data-stat="chars">00</em></button>
-        <button class="q-card" data-target="worldview-section" style="--a:#f2b100"><small>WORLDVIEW</small><b>세계관</b><em data-stat="worlds">00</em></button>
-        <button class="q-card" data-target="notice-section" style="--a:#2bc4a8"><small>NOTICE</small><b>공지</b><em data-stat="notes">00</em></button>
+        <button class="q-card" data-target="gallery-section" style="--a:#3fa9ff"><small>VISUAL ARCHIVE</small><b>작품</b><em data-stat="works">00</em></button>
+        <button class="q-card" data-target="character-section" style="--a:#e5484d"><small>CHARACTER</small><b>캐릭터</b><em data-stat="chars">00</em></button>
+        <button class="q-card" data-target="worldview-section" style="--a:#23262d"><small>WORLDVIEW</small><b>세계관</b><em data-stat="worlds">00</em></button>
+        <button class="q-card" data-target="notice-section" style="--a:#7a8699"><small>NOTICE</small><b>공지</b><em data-stat="notes">00</em></button>
       </div>
     </section>
 
@@ -127,6 +126,29 @@
     </section>
   </main>
 
+  <!-- 캐릭터 / 세계관 뷰어 -->
+  <div class="viewer" id="viewer" aria-hidden="true">
+    <div class="v-bg"></div>
+    <div class="v-stage">
+      <h2 class="v-big" id="v-big"></h2>
+      <div class="v-stand"><img id="v-img" alt="" draggable="false"></div>
+      <div class="v-head"><h2 id="v-head-t"></h2><button type="button" id="v-back"></button></div>
+      <div class="v-info">
+        <div class="v-kind"><i class="v-ico"></i><span id="v-kind"></span></div>
+        <div class="v-name" id="v-name"></div>
+        <div class="v-sub" id="v-sub"></div>
+        <div class="v-desc" id="v-desc"></div>
+        <a class="v-web" id="v-web" target="_blank" rel="noopener noreferrer" hidden><img id="v-web-img" alt=""><span>웹툰 바로가기 ▶</span></a>
+      </div>
+      <div class="v-strip">
+        <button class="v-arr" id="v-prev" type="button" aria-label="이전">«</button>
+        <div class="v-thumbs" id="v-thumbs"></div>
+        <button class="v-arr" id="v-next" type="button" aria-label="다음">»</button>
+      </div>
+    </div>
+    <button class="v-close" id="v-close" type="button" aria-label="닫기">✕</button>
+  </div>
+
   <div class="lightbox" id="lightbox" aria-hidden="true">
     <button class="lightbox-close" id="lightbox-close" aria-label="닫기">×</button>
     <img id="lightbox-image" src="" alt="">
@@ -159,8 +181,6 @@
     const gallery = $("gallery"), pagination = $("pagination"), imageCount = $("image-count");
     let characters = [], worldviews = [], notices = [], allImageFiles = [], currentPage = 1;
 
-    const linkOf = (it, type) => it.link || `detail.html?type=${type}&id=${encodeURIComponent(it.id || "")}`;
-
     function updateStats() {
       const n = { works: allImageFiles.length, chars: characters.length, worlds: worldviews.length, notes: notices.length };
       document.querySelectorAll("[data-stat]").forEach(el => { el.textContent = String(n[el.dataset.stat] ?? 0).padStart(2, "0"); });
@@ -192,13 +212,13 @@
     }, { threshold: 0.1 });
     function reveal(el, delay = 0) { el.classList.add("reveal"); el.style.transitionDelay = delay + "ms"; io.observe(el); }
 
-    /* 꽃잎 */
+    /* 입자 */
     (function () {
       const box = $("petals");
-      for (let i = 0; i < 16; i++) {
-        const p = document.createElement("i"), s = 8 + Math.random() * 10;
+      for (let i = 0; i < 14; i++) {
+        const p = document.createElement("i"), s = 5 + Math.random() * 7;
         p.style.cssText = `left:${Math.random() * 100}%;width:${s}px;height:${s}px;--dx:${Math.random() * 160 - 40}px;` +
-          `animation-duration:${9 + Math.random() * 9}s;animation-delay:-${Math.random() * 14}s`;
+          `animation-duration:${10 + Math.random() * 9}s;animation-delay:-${Math.random() * 14}s`;
         box.appendChild(p);
       }
     })();
@@ -319,7 +339,7 @@
       allImageFiles.slice(start, start + ITEMS_PER_PAGE).forEach((file, i) => {
         const wrap = document.createElement("div");
         wrap.className = "gi";
-        wrap.innerHTML = `<button class="gallery-item" type="button"><img src="${esc(file.download_url)}" alt="${esc(file.name)}" loading="lazy" draggable="false"><div class="gallery-overlay">크게 보기 ★</div></button>
+        wrap.innerHTML = `<button class="gallery-item" type="button"><img src="${esc(file.download_url)}" alt="${esc(file.name)}" loading="lazy" draggable="false"><div class="gallery-overlay">VIEW ▶</div></button>
           <button class="del" type="button" aria-label="삭제">✕</button>`;
         wrap.querySelector(".gallery-item").addEventListener("click", () => openLightbox(file.download_url, file.name));
         wrap.querySelector(".del").addEventListener("click", () => removeImage(file));
@@ -345,7 +365,7 @@
       mk("▶", () => goPage(currentPage + 1), currentPage === total);
     }
 
-    /* 캐릭터 / 세계관 */
+    /* 캐릭터 / 세계관 목록 */
     function renderArchive(list, targetId, type, label) {
       const box = $(targetId);
       box.innerHTML = "";
@@ -354,12 +374,13 @@
         const w = document.createElement("div");
         w.className = "fxw" + (["glow", "pulse", "spin"].includes(item.effect) ? " fx-" + item.effect : "");
         if (okColor(item.color)) w.style.setProperty("--c", item.color);
-        w.innerHTML = `<a class="archive-card" href="${esc(linkOf(item, type))}"><div class="card-in">
+        w.innerHTML = `<button class="archive-card" type="button"><div class="card-in">
             <div class="archive-image"><img src="${esc(item.image)}" alt="${esc(item.title)}" loading="lazy"></div>
             <div class="archive-info"><span class="archive-type">${label}</span>
-              <h3>${esc(item.title)}${item.webtoonUrl ? '<span class="chip">웹툰</span>' : ""}</h3>
-              <p>${esc(item.description)}</p><div class="archive-view">기록 보러가기 ★</div></div>
-          </div></a><button class="del" type="button" aria-label="삭제">✕</button>`;
+              <h3>${esc(item.title)}${item.webtoonUrl ? '<span class="chip">WEBTOON</span>' : ""}</h3>
+              <p>${esc(item.description)}</p><div class="archive-view">VIEW ARCHIVE ▶</div></div>
+          </div></button><button class="del" type="button" aria-label="삭제">✕</button>`;
+        w.querySelector(".archive-card").addEventListener("click", () => openViewer(type, i));
         w.querySelector(".del").addEventListener("click", () => removeEntry(type, item));
         box.appendChild(w);
         reveal(w, i * 100);
@@ -375,6 +396,73 @@
       if (!confirm(`'${item.title}'을(를) 삭제할까요?\n이미지도 함께 지워지며 되돌릴 수 없어요.`)) return;
       try { await api({ action: "deleteEntry", kind, id: item.id }); await loadData(); } catch (err) { alert(err.message); }
     }
+
+    /* ===== 캐릭터 / 세계관 뷰어 ===== */
+    const viewer = $("viewer");
+    let vKind = "character", vList = [], vIdx = 0, vOpen = false;
+
+    function renderViewer(replay) {
+      const it = vList[vIdx];
+      if (!it) return;
+      viewer.style.setProperty("--c", okColor(it.color) || "#3fa9ff");
+      viewer.dataset.fx = ["glow", "pulse", "spin"].includes(it.effect) ? it.effect : "none";
+      const isW = vKind === "worldview";
+      $("v-kind").textContent = isW ? "WORLDVIEW" : "CHARACTER";
+      $("v-head-t").textContent = isW ? "세계관" : "캐릭터";
+      $("v-back").textContent = isW ? "세계관 목록으로 ▶" : "캐릭터 목록으로 ▶";
+      const big = $("v-big");
+      big.textContent = it.title;
+      const vw = Math.min(innerWidth, 1100), len = Math.max([...it.title].length, 2);
+      big.style.fontSize = Math.min(vw * 0.3, (vw * 0.9) / len) + "px";
+      $("v-name").textContent = it.title;
+      const sub = $("v-sub"); sub.textContent = it.description || ""; sub.hidden = !it.description;
+      const desc = $("v-desc"); desc.textContent = it.body || ""; desc.hidden = !it.body; desc.scrollTop = 0;
+      const img = $("v-img"); img.src = it.image; img.alt = it.title;
+      const web = $("v-web");
+      if (/^https?:\/\//i.test(it.webtoonUrl || "")) {
+        web.hidden = false; web.href = it.webtoonUrl;
+        const wi = $("v-web-img");
+        wi.hidden = !it.webtoonImage;
+        if (it.webtoonImage) wi.src = it.webtoonImage;
+      } else web.hidden = true;
+      const th = $("v-thumbs");
+      th.innerHTML = "";
+      vList.forEach((x, i) => {
+        const b = document.createElement("button");
+        b.type = "button"; b.className = "v-th" + (i === vIdx ? " on" : ""); b.setAttribute("aria-label", x.title);
+        const im = document.createElement("img"); im.src = x.image; im.alt = ""; b.appendChild(im);
+        b.addEventListener("click", () => { if (i !== vIdx) { vIdx = i; renderViewer(true); } });
+        th.appendChild(b);
+      });
+      const on = th.querySelector(".on");
+      if (on) th.scrollLeft = on.offsetLeft - th.clientWidth / 2 + on.offsetWidth / 2;
+      if (replay) { viewer.classList.remove("play"); void viewer.offsetWidth; viewer.classList.add("play"); }
+    }
+    function openViewer(kind, idx) {
+      vKind = kind; vList = kind === "worldview" ? worldviews : characters; vIdx = idx;
+      viewer.classList.add("open"); viewer.setAttribute("aria-hidden", "false");
+      document.body.classList.add("lock");
+      if (!vOpen) { try { history.pushState({ v: 1 }, ""); } catch (e) {} }
+      vOpen = true;
+      renderViewer(true);
+    }
+    function closeViewer(fromPop) {
+      if (!vOpen) return;
+      vOpen = false;
+      viewer.classList.remove("open", "play"); viewer.setAttribute("aria-hidden", "true");
+      document.body.classList.remove("lock");
+      if (!fromPop) { try { history.back(); } catch (e) {} }
+    }
+    function stepViewer(d) {
+      if (vList.length < 2) return;
+      vIdx = (vIdx + d + vList.length) % vList.length;
+      renderViewer(true);
+    }
+    window.addEventListener("popstate", () => { if (vOpen) closeViewer(true); });
+    $("v-close").addEventListener("click", () => closeViewer());
+    $("v-back").addEventListener("click", () => closeViewer());
+    $("v-prev").addEventListener("click", () => stepViewer(-1));
+    $("v-next").addEventListener("click", () => stepViewer(1));
 
     /* ===== 공지 + 댓글 ===== */
     const noticesBox = $("notices");
@@ -512,6 +600,7 @@
 
     /* 라이트박스 */
     const lightbox = $("lightbox"), lightboxImage = $("lightbox-image");
+    const unlockIfIdle = () => { if (intro.classList.contains("done") && !vOpen) document.body.classList.remove("lock"); };
     function openLightbox(src, alt = "") {
       lightboxImage.src = src; lightboxImage.alt = alt;
       lightbox.classList.add("open"); lightbox.setAttribute("aria-hidden", "false");
@@ -519,12 +608,20 @@
     }
     function closeLightbox() {
       lightbox.classList.remove("open"); lightbox.setAttribute("aria-hidden", "true");
-      if (intro.classList.contains("done")) document.body.classList.remove("lock");
+      unlockIfIdle();
       setTimeout(() => { lightboxImage.src = ""; }, 300);
     }
     $("lightbox-close").addEventListener("click", closeLightbox);
     lightbox.addEventListener("click", e => { if (e.target === lightbox) closeLightbox(); });
-    document.addEventListener("keydown", e => { if (e.key === "Escape") { closeLightbox(); closeModal(); } });
+    document.addEventListener("keydown", e => {
+      if (e.key === "Escape") {
+        if (lightbox.classList.contains("open")) closeLightbox();
+        else if (modal.classList.contains("open")) closeModal();
+        else closeViewer();
+      }
+      if (vOpen && e.key === "ArrowLeft") stepViewer(-1);
+      if (vOpen && e.key === "ArrowRight") stepViewer(1);
+    });
 
     /* 관리자 */
     const modal = $("modal");
@@ -551,7 +648,7 @@
     }
     function closeModal() {
       modal.classList.remove("open"); modal.setAttribute("aria-hidden", "true");
-      if (!lightbox.classList.contains("open") && intro.classList.contains("done")) document.body.classList.remove("lock");
+      if (!lightbox.classList.contains("open")) unlockIfIdle();
     }
     modal.addEventListener("click", e => { if (e.target === modal || e.target.hasAttribute("data-close")) closeModal(); });
     const setMsg = t => { const m = $("msg"); if (m) m.textContent = t; };
@@ -626,12 +723,12 @@
         <label>이름<input id="f-title" maxlength="60" required></label>
         <label>한 줄 소개<input id="f-desc" maxlength="120"></label>
         <label>자세한 설명<textarea id="f-body" rows="5" maxlength="5000"></textarea></label>
-        <label>테두리 색<input type="color" id="f-color" value="#2f9bff"></label>
-        <label>테두리 효과<select id="f-fx"><option value="none">없음</option><option value="glow">은은한 빛</option><option value="pulse">숨쉬는 빛</option><option value="spin">회전하는 빛줄기</option></select></label>
+        <label>포인트 색<input type="color" id="f-color" value="#3fa9ff"></label>
+        <label>효과<select id="f-fx"><option value="none">없음</option><option value="glow">은은한 빛</option><option value="pulse">숨쉬는 빛</option><option value="spin">회전하는 빛줄기</option></select></label>
         <label>웹툰 링크 (선택)<input type="url" id="f-wurl" placeholder="https://"></label>
         <label>웹툰 이미지 (선택)<input type="file" id="f-wimg" accept="image/*"></label>`;
       openModal(`<h3>${FORM_TITLE[kind]}</h3><form id="f">${fields}
-        <label>${isImage ? "이미지 (여러 장 선택 가능)" : "대표 이미지"}<input type="file" id="f-file" accept="image/*" ${isImage ? "multiple" : ""} required></label>
+        <label>${isImage ? "이미지 (여러 장 선택 가능)" : "대표 이미지 (스탠딩용 · 배경이 투명한 PNG를 추천해요)"}<input type="file" id="f-file" accept="image/*" ${isImage ? "multiple" : ""} required></label>
         <p class="msg" id="msg"></p>
         <div class="row"><button type="button" data-close>취소</button><button class="primary" id="f-ok">올리기</button></div></form>`);
       $("f").onsubmit = async e => {
