@@ -7,7 +7,7 @@
   <meta name="description" content="C.T. Gallery - Creative Archive">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Black+Han+Sans&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600;1,700&family=Gowun+Batang:wght@400;700&family=Gowun+Dodum&family=Hahmlet:wght@500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body class="lock">
@@ -16,18 +16,17 @@
 
   <div class="intro" id="intro">
     <div class="i-halo"></div>
-    <h1 class="i-title">C.T.<span>GALLERY</span></h1>
+    <h1 class="i-title">C.T.<span>Gallery</span></h1>
     <button class="i-btn" id="start">TAP TO START</button>
   </div>
 
   <div class="wipe" id="wipe" aria-hidden="true">
     <i class="b b1"></i><i class="b b2"></i><i class="b b3"></i>
     <div class="ring"></div>
-    <p class="wtx" id="wtx"></p>
   </div>
 
   <header class="header">
-    <a class="logo" href="index.html"><span>C.T.</span><small>GALLERY</small></a>
+    <a class="logo" href="index.html"><span>C.T.</span><small>Gallery</small></a>
     <nav class="header-nav">
       <button class="nav-btn active" data-target="home-section">홈</button>
       <button class="nav-btn" data-target="gallery-section">작품</button>
@@ -49,21 +48,38 @@
   <main>
     <section id="home-section" class="content-section active">
       <section class="hero">
+        <div class="hero-art" id="hero-art"></div>
+        <div class="hero-shade"></div>
         <div class="halo"></div>
-        <span class="tag">CREATIVE ARCHIVE // 2026</span>
-        <h1 class="title"><span class="t1">C.T.</span><span class="t2">GALLERY</span></h1>
-        <p class="description">이미지와 세계관, 그리고 캐릭터를 기록하는<br>개인 크리에이티브 아카이브입니다.</p>
-        <button class="explore-btn" data-target="gallery-section">작품 둘러보기 ▶</button>
+        <p class="vtag">작은 기적을<br>기록하는 아카이브</p>
+
+        <div class="hero-left">
+          <span class="tag">CREATIVE ARCHIVE · 2026</span>
+          <h1 class="logo-big"><b>C.T.</b><em>Gallery</em></h1>
+          <div class="hero-btns">
+            <button class="hb" data-target="gallery-section"><i>✦</i><span><small>VISUAL ARCHIVE</small>작품 보기</span><b data-stat="works">00</b></button>
+            <button class="hb" data-target="character-section"><i>✦</i><span><small>CHARACTER</small>캐릭터 도감</span><b data-stat="chars">00</b></button>
+            <button class="hb" data-target="worldview-section"><i>✦</i><span><small>WORLDVIEW</small>세계관 기록</span><b data-stat="worlds">00</b></button>
+          </div>
+        </div>
+
+        <div class="hero-right">
+          <button class="stk" id="stk-work" type="button">
+            <span class="stk-t">NEW WORKS</span>
+            <span class="stk-b"><img id="stk-img" alt="" hidden><span class="stk-c">작품 <b data-stat="works">00</b>점 ▶</span></span>
+          </button>
+          <button class="stk" data-target="notice-section" type="button">
+            <span class="stk-t">NOTICE</span>
+            <span class="stk-b"><span class="stk-n" id="stk-n">공지를 불러오는 중...</span><span class="stk-c">공지 <b data-stat="notes">00</b>건 ▶</span></span>
+          </button>
+        </div>
       </section>
 
-      <div class="marquee" id="marquee" hidden><div class="track" id="track"></div></div>
-
-      <div class="quick">
-        <button class="q-card" data-target="gallery-section" style="--a:#3fa9ff"><small>VISUAL ARCHIVE</small><b>작품</b><em data-stat="works">00</em></button>
-        <button class="q-card" data-target="character-section" style="--a:#e5484d"><small>CHARACTER</small><b>캐릭터</b><em data-stat="chars">00</em></button>
-        <button class="q-card" data-target="worldview-section" style="--a:#23262d"><small>WORLDVIEW</small><b>세계관</b><em data-stat="worlds">00</em></button>
-        <button class="q-card" data-target="notice-section" style="--a:#7a8699"><small>NOTICE</small><b>공지</b><em data-stat="notes">00</em></button>
+      <div class="section-title m-head" id="m-head" hidden>
+        <h2>작품 미리보기</h2>
+        <button class="more" data-target="gallery-section">전체 보기 ▶</button>
       </div>
+      <div class="marquee" id="marquee" hidden><div class="track" id="track"></div></div>
     </section>
 
     <section id="gallery-section" class="content-section">
@@ -126,7 +142,6 @@
     </section>
   </main>
 
-  <!-- 캐릭터 / 세계관 뷰어 -->
   <div class="viewer" id="viewer" aria-hidden="true">
     <div class="v-bg"></div>
     <div class="v-stage">
@@ -167,7 +182,6 @@
     const repo = "C.T.-Gallery";
     const folder = "images";
     const ITEMS_PER_PAGE = 9;
-    const LABEL = { "home-section": "HOME", "gallery-section": "작품", "character-section": "캐릭터", "worldview-section": "세계관", "notice-section": "공지" };
 
     const $ = id => document.getElementById(id);
     const esc = s => String(s ?? "").replace(/[&<>"']/g,
@@ -184,6 +198,12 @@
     function updateStats() {
       const n = { works: allImageFiles.length, chars: characters.length, worlds: worldviews.length, notes: notices.length };
       document.querySelectorAll("[data-stat]").forEach(el => { el.textContent = String(n[el.dataset.stat] ?? 0).padStart(2, "0"); });
+    }
+
+    function updateStickers() {
+      const im = $("stk-img"), last = allImageFiles[allImageFiles.length - 1];
+      if (last) { im.src = last.download_url; im.hidden = false; } else im.hidden = true;
+      $("stk-n").textContent = notices.length ? notices[0].title : "새 공지가 아직 없어요";
     }
 
     async function loadJSON(path) {
@@ -234,8 +254,36 @@
       if (sessionStorage.getItem("seenIntro")) finishIntro(); else sessionStorage.setItem("seenIntro", "1");
     } catch (e) {}
 
+    /* 홈 키비주얼: 작품이 서서히 바뀜 */
+    let heroTimer = null, heroIdx = 0;
+    function startHero() {
+      const box = $("hero-art");
+      clearInterval(heroTimer);
+      box.innerHTML = "";
+      const srcs = allImageFiles.length
+        ? [...allImageFiles].sort(() => Math.random() - .5).slice(0, 8).map(f => f.download_url)
+        : ["hero/main.jpg"];
+      srcs.forEach((s, i) => {
+        const im = new Image();
+        im.src = s; im.alt = ""; im.draggable = false;
+        if (i === 0) im.className = "on";
+        im.onerror = () => im.remove();
+        box.appendChild(im);
+      });
+      heroIdx = 0;
+      if (srcs.length > 1 && !reduceMotion) {
+        heroTimer = setInterval(() => {
+          if (document.hidden) return;
+          const list = [...box.children];
+          if (list.length < 2) return;
+          heroIdx = (heroIdx + 1) % list.length;
+          list.forEach((im, i) => im.classList.toggle("on", i === heroIdx));
+        }, 6000);
+      }
+    }
+
     /* 화면 전환: 사선 띠 와이프 */
-    const wipe = $("wipe"), bands = [...wipe.querySelectorAll(".b")], wtx = $("wtx"), ring = wipe.querySelector(".ring");
+    const wipe = $("wipe"), bands = [...wipe.querySelectorAll(".b")], ring = wipe.querySelector(".ring");
     let turning = false;
     const SK = "skewX(-12deg)";
 
@@ -252,7 +300,6 @@
       if (!next || next === current || turning) return;
       if (reduceMotion || !wipe.animate) { showSection(id); return; }
       turning = true;
-      wtx.textContent = LABEL[id] || "";
       wipe.style.visibility = "visible";
       const ease = "cubic-bezier(.7,0,.2,1)";
       const ins = bands.map((b, i) => b.animate(
@@ -262,23 +309,23 @@
         { opacity: 1, transform: "translate(-50%,-50%) rotate(-14deg) scale(1.1)" }],
         { duration: 500, delay: 300, fill: "forwards" });
       await Promise.all(ins.map(a => a.finished));
-      wtx.animate([{ opacity: 0, transform: "translate(-50%,-50%) rotate(-6deg) scale(.5)" },
-        { opacity: 1, transform: "translate(-50%,-50%) rotate(-6deg) scale(1)" }],
-        { duration: 260, easing: "cubic-bezier(.3,1.6,.5,1)", fill: "forwards" });
-      await sleep(340);
+      await sleep(120);
       showSection(id);
       const outs = bands.map((b, i) => b.animate(
         [{ transform: `translateX(0) ${SK}` }, { transform: `translateX(100%) ${SK}` }],
         { duration: 420, delay: (2 - i) * 110, easing: ease, fill: "forwards" }));
-      wtx.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 220, fill: "forwards" });
       ring.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 300, fill: "forwards" });
       await Promise.all(outs.map(a => a.finished));
       wipe.style.visibility = "hidden";
-      [...bands, wtx, ring].forEach(el => el.getAnimations().forEach(a => a.cancel()));
+      [...bands, ring].forEach(el => el.getAnimations().forEach(a => a.cancel()));
       turning = false;
     }
 
     document.querySelectorAll("[data-target]").forEach(b => b.addEventListener("click", () => switchSection(b.dataset.target)));
+    $("stk-work").addEventListener("click", () => {
+      if (allImageFiles.length) { currentPage = Math.ceil(allImageFiles.length / ITEMS_PER_PAGE); renderPage(currentPage); }
+      switchSection("gallery-section");
+    });
     function closeMobileMenu() { mobileMenu.classList.remove("open"); menuToggle.setAttribute("aria-expanded", "false"); }
     menuToggle.addEventListener("click", () => {
       const open = mobileMenu.classList.toggle("open");
@@ -289,8 +336,8 @@
     function buildMarquee() {
       const box = $("marquee"), track = $("track");
       track.innerHTML = "";
-      if (!allImageFiles.length) { box.hidden = true; return; }
-      box.hidden = false;
+      $("m-head").hidden = box.hidden = !allImageFiles.length;
+      if (!allImageFiles.length) return;
       let list = [...allImageFiles];
       while (list.length < 8) list = list.concat(allImageFiles);
       const make = f => {
@@ -320,7 +367,7 @@
               return (!isNaN(an) && !isNaN(bn)) ? an - bn : a.name.localeCompare(b.name);
             });
           imageCount.textContent = `${String(allImageFiles.length).padStart(2, "0")} IMAGES`;
-          buildMarquee(); updateStats();
+          buildMarquee(); updateStats(); updateStickers(); startHero();
           if (!allImageFiles.length) { gallery.innerHTML = `<p class="error">등록된 이미지가 없습니다.</p>`; pagination.innerHTML = ""; return; }
           const total = Math.ceil(allImageFiles.length / ITEMS_PER_PAGE);
           currentPage = goLast ? total : Math.min(currentPage, total);
@@ -330,6 +377,7 @@
           console.error(err);
           imageCount.textContent = "00 IMAGES";
           gallery.innerHTML = `<p class="error">이미지를 불러오지 못했습니다. 잠시 후 다시 시도해 주세요.</p>`;
+          startHero();
         });
     }
 
@@ -476,9 +524,10 @@
       } catch (e) {
         noticesBox.innerHTML = `<p class="error">${esc(e.message)}</p>`;
         $("notice-count").textContent = "";
+        $("stk-n").textContent = "공지를 불러오지 못했어요";
         return;
       }
-      renderNotices(); updateStats();
+      renderNotices(); updateStats(); updateStickers();
     }
 
     function renderNotices() {
