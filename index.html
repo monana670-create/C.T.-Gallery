@@ -9,7 +9,307 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600;1,700&family=Gowun+Batang:wght@400;700&family=Gowun+Dodum&family=Hahmlet:wght@500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
+
+  <style>
+    /* ========================================
+       C.T. GALLERY
+       SIGNATURE START SCREEN
+    ======================================== */
+
+    #intro {
+      isolation: isolate;
+      overflow: hidden;
+      gap: 1.8rem;
+      padding: 2rem;
+      color: #172c45;
+      background: linear-gradient(
+        180deg,
+        #f5fbff 0%,
+        #dcefff 42%,
+        #94cbee 100%
+      );
+    }
+
+    #intro .i-halo {
+      display: none !important;
+    }
+
+    #intro::before {
+      content: "";
+      position: absolute;
+      inset: clamp(16px, 4vw, 48px);
+      border: 1px solid rgba(255,255,255,.95);
+      box-shadow:
+        0 0 0 5px rgba(255,255,255,.15),
+        inset 0 0 50px rgba(255,255,255,.2);
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    #intro::after {
+      content: "C.T. GALLERY / CREATIVE ARCHIVE / 2026";
+      position: absolute;
+      bottom: clamp(30px, 6vh, 75px);
+      left: 50%;
+      width: 90%;
+      transform: translateX(-50%);
+      text-align: center;
+      font-family: var(--latin, serif);
+      font-size: clamp(.6rem, 1.8vw, .85rem);
+      font-weight: 700;
+      letter-spacing: .2em;
+      color: #285b80;
+      pointer-events: none;
+    }
+
+    #intro .i-title {
+      position: relative;
+      margin: 0;
+      text-align: center;
+      color: #172c45;
+      font-family: var(--latin, serif);
+      font-size: clamp(5rem, 17vw, 10rem);
+      font-weight: 700;
+      line-height: .85;
+      letter-spacing: -.055em;
+      text-shadow:
+        0 2px 0 #ffffff,
+        0 10px 35px rgba(36,105,156,.16);
+      animation: ctIntroTitle 1.1s
+        cubic-bezier(.16,1,.3,1) both;
+    }
+
+    #intro .i-title::before {
+      content: "VISUAL & CREATIVE ARCHIVE";
+      display: block;
+      margin-bottom: 2.2rem;
+      color: #397ba8;
+      font-size: clamp(.65rem, 2vw, .9rem);
+      font-weight: 700;
+      letter-spacing: .25em;
+      line-height: 1.5;
+    }
+
+    #intro .i-title span {
+      display: block;
+      margin-top: .12em;
+      color: #267fbd;
+      font-family: var(--latin, serif);
+      font-size: .56em;
+      font-style: italic;
+      font-weight: 600;
+      letter-spacing: -.025em;
+    }
+
+    #intro .i-title::after {
+      content: "작은 기적을 기록하는 아카이브";
+      display: block;
+      margin-top: 1.8rem;
+      color: #47718e;
+      font-family: "Gowun Batang", serif;
+      font-size: clamp(.85rem, 2.6vw, 1.05rem);
+      font-weight: 700;
+      letter-spacing: .08em;
+      line-height: 1.6;
+    }
+
+    #intro #start {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      width: min(290px, 76vw);
+      min-height: 64px;
+      padding: 1.1rem 1.3rem;
+      margin-top: .6rem;
+      border: 1px solid rgba(255,255,255,.9);
+      border-radius: 5px;
+      background: linear-gradient(
+        110deg,
+        #172c45,
+        #204968
+      );
+      color: #ffffff;
+      font-family: var(--latin, serif);
+      font-size: 1.15rem;
+      font-weight: 700;
+      letter-spacing: .18em;
+      box-shadow:
+        inset 0 -3px 0 #68caff,
+        0 6px 24px rgba(23,44,69,.18);
+      transition:
+        background .25s,
+        transform .25s,
+        box-shadow .25s;
+      animation: ctIntroButton .9s .25s
+        cubic-bezier(.16,1,.3,1) both;
+      touch-action: manipulation;
+    }
+
+    #intro #start::before {
+      content: "✦";
+      display: grid;
+      place-items: center;
+      width: 27px;
+      height: 27px;
+      background: #367fae;
+      color: #ffffff;
+      font-size: .85rem;
+      letter-spacing: 0;
+    }
+
+    #intro #start::after {
+      content: "▶";
+      color: #a9dcff;
+      font-size: .65rem;
+      letter-spacing: 0;
+    }
+
+    @media (hover: hover) and (pointer: fine) {
+      #intro #start:hover {
+        background: #245e86;
+        transform: translateY(-3px);
+        box-shadow:
+          inset 0 -3px 0 #a5e5ff,
+          0 0 24px rgba(71,180,255,.38);
+      }
+    }
+
+    #intro #start:active {
+      transform: scale(.97);
+      background: #327eac;
+    }
+
+    @keyframes ctIntroTitle {
+      from {
+        opacity: 0;
+        transform: translateY(18px);
+        filter: blur(7px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+        filter: blur(0);
+      }
+    }
+
+    @keyframes ctIntroButton {
+      from {
+        opacity: 0;
+        translate: 0 14px;
+      }
+      to {
+        opacity: 1;
+        translate: 0 0;
+      }
+    }
+
+    /* ========================================
+       HOME WORKS PREVIEW
+    ======================================== */
+
+    @media (prefers-reduced-motion: no-preference) {
+      #marquee #track,
+      #marquee:hover #track,
+      #marquee:focus-within #track,
+      #marquee:active #track {
+        animation-play-state: running !important;
+      }
+    }
+
+    #marquee {
+      -webkit-mask-image: linear-gradient(
+        to right,
+        transparent 0%,
+        #000 6%,
+        #000 94%,
+        transparent 100%
+      );
+      mask-image: linear-gradient(
+        to right,
+        transparent 0%,
+        #000 6%,
+        #000 94%,
+        transparent 100%
+      );
+    }
+
+    #marquee .m-item {
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    #marquee .m-item img {
+      filter:
+        blur(.65px)
+        brightness(.97)
+        saturate(.98);
+      transition:
+        filter .35s ease,
+        transform .35s ease;
+      transform-origin: center;
+    }
+
+    @media (hover: hover) and (pointer: fine) {
+      #marquee .m-item:hover img {
+        filter: blur(0) brightness(1.04) saturate(1.05);
+        transform: scale(1.035);
+      }
+    }
+
+    #marquee .m-item:active img,
+    #marquee .m-item:focus-visible img {
+      filter: blur(0) brightness(1.04);
+      transform: scale(1.025);
+    }
+
+    #lightbox-image {
+      filter: none !important;
+    }
+
+    @media (max-width: 600px) {
+      #intro {
+        gap: 1.3rem;
+        padding: 1.5rem;
+      }
+
+      #intro .i-title::before {
+        margin-bottom: 1.7rem;
+      }
+
+      #intro .i-title::after {
+        margin-top: 1.5rem;
+      }
+
+      #intro #start {
+        min-height: 58px;
+        font-size: 1rem;
+      }
+
+      #marquee .m-item img {
+        filter: blur(.45px);
+      }
+
+      #marquee .m-item:active img,
+      #marquee .m-item:focus-visible img {
+        filter: blur(0) brightness(1.04);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      #intro .i-title,
+      #intro #start {
+        animation: none !important;
+      }
+
+      #marquee .m-item img {
+        transition: none;
+      }
+    }
+  </style>
 </head>
+
 <body class="lock">
   <div class="petals" id="petals" aria-hidden="true"></div>
 
@@ -29,6 +329,7 @@
     <a class="logo" href="index.html" aria-label="C.T. Gallery 홈">
       <span>C.T.</span><small>Gallery</small>
     </a>
+
     <nav class="header-nav" aria-label="주 메뉴">
       <button class="nav-btn active" data-target="home-section">홈</button>
       <button class="nav-btn" data-target="gallery-section">작품</button>
@@ -36,6 +337,7 @@
       <button class="nav-btn" data-target="worldview-section">세계관</button>
       <button class="nav-btn" data-target="notice-section">공지</button>
     </nav>
+
     <button class="menu-toggle" id="menu-toggle" type="button"
       aria-controls="mobile-menu" aria-label="메뉴 열기" aria-expanded="false">☰</button>
   </header>
@@ -50,6 +352,7 @@
 
   <main>
     <section id="home-section" class="content-section active">
+
       <section class="hero">
         <div class="hero-art" id="hero-art" aria-hidden="true"></div>
         <div class="hero-shade" aria-hidden="true"></div>
@@ -62,15 +365,24 @@
         <div class="hero-left">
           <span class="tag">CREATIVE ARCHIVE · 2026</span>
           <h1 class="logo-big"><b>C.T.</b><em>Gallery</em></h1>
+
           <div class="hero-btns">
             <button class="hb" data-target="gallery-section">
-              <i>✦</i><span><small>VISUAL ARCHIVE</small>작품 보기</span><b data-stat="works">00</b>
+              <i>✦</i>
+              <span><small>VISUAL ARCHIVE</small>작품 보기</span>
+              <b data-stat="works">00</b>
             </button>
+
             <button class="hb" data-target="character-section">
-              <i>✦</i><span><small>CHARACTER</small>캐릭터 도감</span><b data-stat="chars">00</b>
+              <i>✦</i>
+              <span><small>CHARACTER</small>캐릭터 도감</span>
+              <b data-stat="chars">00</b>
             </button>
+
             <button class="hb" data-target="worldview-section">
-              <i>✦</i><span><small>WORLDVIEW</small>세계관 기록</span><b data-stat="worlds">00</b>
+              <i>✦</i>
+              <span><small>WORLDVIEW</small>세계관 기록</span>
+              <b data-stat="worlds">00</b>
             </button>
           </div>
         </div>
@@ -83,6 +395,7 @@
               <span class="stk-c">작품 <b data-stat="works">00</b>점 ▶</span>
             </span>
           </button>
+
           <button class="stk" data-target="notice-section" type="button">
             <span class="stk-t">NOTICE</span>
             <span class="stk-b">
@@ -97,14 +410,19 @@
         <h2>작품 미리보기</h2>
         <button class="more" data-target="gallery-section">전체 보기 ▶</button>
       </div>
-      <div class="marquee" id="marquee" hidden><div class="track" id="track"></div></div>
+
+      <div class="marquee" id="marquee" hidden>
+        <div class="track" id="track"></div>
+      </div>
     </section>
 
     <section id="gallery-section" class="content-section">
       <div class="page-header">
         <span class="tag">VISUAL ARCHIVE</span>
-        <h1 class="page-main-title">작품</h1><div class="hazard"></div>
+        <h1 class="page-main-title">작품</h1>
+        <div class="hazard"></div>
       </div>
+
       <div class="section-title">
         <h2>이미지 아카이브</h2>
         <div class="title-right">
@@ -112,6 +430,7 @@
           <button class="add-btn admin-only" data-kind="image">+ 작품 올리기</button>
         </div>
       </div>
+
       <div class="gallery" id="gallery"></div>
       <div class="pagination" id="pagination"></div>
     </section>
@@ -119,32 +438,40 @@
     <section id="character-section" class="content-section">
       <div class="page-header">
         <span class="tag">CHARACTER DATABASE</span>
-        <h1 class="page-main-title">캐릭터</h1><div class="hazard"></div>
+        <h1 class="page-main-title">캐릭터</h1>
+        <div class="hazard"></div>
       </div>
+
       <div class="section-title">
         <h2>캐릭터 도감</h2>
         <button class="add-btn admin-only" data-kind="character">+ 캐릭터 추가</button>
       </div>
+
       <div class="archive-grid" id="character-list"></div>
     </section>
 
     <section id="worldview-section" class="content-section">
       <div class="page-header">
         <span class="tag">WORLD DATABASE</span>
-        <h1 class="page-main-title">세계관</h1><div class="hazard"></div>
+        <h1 class="page-main-title">세계관</h1>
+        <div class="hazard"></div>
       </div>
+
       <div class="section-title">
         <h2>세계의 기록</h2>
         <button class="add-btn admin-only" data-kind="worldview">+ 세계관 추가</button>
       </div>
+
       <div class="archive-grid" id="worldview-list"></div>
     </section>
 
     <section id="notice-section" class="content-section">
       <div class="page-header">
         <span class="tag">OFFICIAL NEWS</span>
-        <h1 class="page-main-title">공지</h1><div class="hazard"></div>
+        <h1 class="page-main-title">공지</h1>
+        <div class="hazard"></div>
       </div>
+
       <div class="section-title">
         <h2>공지사항</h2>
         <div class="title-right">
@@ -152,35 +479,50 @@
           <button class="add-btn admin-only" data-kind="notice">+ 공지 쓰기</button>
         </div>
       </div>
+
       <div class="nts" id="notices"></div>
     </section>
   </main>
 
   <div class="viewer" id="viewer" role="dialog" aria-modal="true"
     aria-labelledby="v-name" aria-hidden="true" inert>
+
     <div class="v-stage">
       <header class="v-head">
         <div>
           <h2 id="v-head-t"></h2>
           <button type="button" id="v-back"></button>
         </div>
+
         <button class="v-close" id="v-close" type="button" aria-label="닫기">✕</button>
       </header>
+
       <div class="v-scene">
         <div class="v-big" id="v-big" aria-hidden="true"></div>
-        <div class="v-stand"><img id="v-img" alt="" draggable="false"></div>
+
+        <div class="v-stand">
+          <img id="v-img" alt="" draggable="false">
+        </div>
+
         <div class="v-id">
-          <div class="v-kind"><i aria-hidden="true"></i><span id="v-kind"></span></div>
+          <div class="v-kind">
+            <i aria-hidden="true"></i>
+            <span id="v-kind"></span>
+          </div>
           <h3 class="v-name" id="v-name"></h3>
         </div>
       </div>
+
       <div class="v-info">
         <p class="v-sub" id="v-sub" hidden></p>
         <div class="v-desc" id="v-desc" hidden></div>
+
         <a class="v-web" id="v-web" target="_blank" rel="noopener noreferrer" hidden>
-          <img id="v-web-img" alt="" hidden><span>웹툰 바로가기 ▶</span>
+          <img id="v-web-img" alt="" hidden>
+          <span>웹툰 바로가기 ▶</span>
         </a>
       </div>
+
       <div class="v-strip">
         <button class="v-arr" id="v-prev" type="button" aria-label="이전">«</button>
         <div class="v-thumbs" id="v-thumbs"></div>
@@ -194,6 +536,7 @@
     <button class="lightbox-close" id="lightbox-close" aria-label="닫기">×</button>
     <img id="lightbox-image" alt="">
   </div>
+
   <div class="modal" id="modal" role="dialog" aria-modal="true"
     aria-label="관리" aria-hidden="true" inert>
     <div class="modal-box" id="modal-box"></div>
@@ -210,78 +553,281 @@
     const repo = "C.T.-Gallery";
     const folder = "images";
     const ITEMS_PER_PAGE = 9;
-    const repoContents = `https://api.github.com/repos/${owner}/${repo}/contents`;
+
+    const repoContents =
+      `https://api.github.com/repos/${owner}/${repo}/contents`;
+
     const $ = id => document.getElementById(id);
+
     const esc = value => String(value ?? "").replace(/[&<>"']/g, c => ({
-      "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      '"': "&quot;",
+      "'": "&#39;"
     })[c]);
-    const okColor = value => /^#[0-9a-f]{6}$/i.test(value || "") ? value : "";
+
+    const okColor = value =>
+      /^#[0-9a-f]{6}$/i.test(value || "") ? value : "";
+
     const effects = ["glow", "pulse", "spin"];
+
     const motion = matchMedia("(prefers-reduced-motion: reduce)");
+
     const fmtDate = value => {
       const d = new Date(value);
       return `${d.getFullYear()}.${String(d.getMonth() + 1).padStart(2, "0")}.${String(d.getDate()).padStart(2, "0")}`;
     };
 
-    let characters = [], worldviews = [], notices = [], allImageFiles = [];
-    let currentPage = 1, noticeState = "loading";
+    let characters = [];
+    let worldviews = [];
+    let notices = [];
+    let allImageFiles = [];
+
+    let currentPage = 1;
+    let noticeState = "loading";
+
     const navButtons = document.querySelectorAll(".nav-btn, .mobile-nav-btn");
-    const intro = $("intro"), viewer = $("viewer"), modal = $("modal"), lightbox = $("lightbox");
-    const gallery = $("gallery"), pagination = $("pagination"), noticesBox = $("notices");
+
+    const intro = $("intro");
+    const viewer = $("viewer");
+    const modal = $("modal");
+    const lightbox = $("lightbox");
+
+    const gallery = $("gallery");
+    const pagination = $("pagination");
+    const noticesBox = $("notices");
+
+    /* ========================================
+       SIGNATURE START SOUND
+    ======================================== */
+
+    let startSoundPlayed = false;
+
+    function playStartSound() {
+      if (startSoundPlayed) return;
+
+      startSoundPlayed = true;
+
+      try {
+        const AudioContext =
+          window.AudioContext ||
+          window.webkitAudioContext;
+
+        if (!AudioContext) return;
+
+        const ctx = new AudioContext();
+
+        function createChime() {
+          const now = ctx.currentTime;
+
+          const master = ctx.createGain();
+
+          master.gain.setValueAtTime(.38, now);
+
+          const compressor = ctx.createDynamicsCompressor();
+
+          compressor.threshold.value = -18;
+          compressor.ratio.value = 3;
+
+          master.connect(compressor);
+          compressor.connect(ctx.destination);
+
+          const notes = [
+            { freq: 587.33, delay: 0.000, amp: .15 },
+            { freq: 739.99, delay: 0.085, amp: .13 },
+            { freq: 880.00, delay: 0.170, amp: .12 },
+            { freq: 1318.51, delay: 0.275, amp: .09 },
+            { freq: 1174.66, delay: 0.390, amp: .10 }
+          ];
+
+          function bell(freq, start, volume) {
+            const partials = [
+              { ratio: 1, level: 1, decay: .64 },
+              { ratio: 2, level: .15, decay: .38 },
+              { ratio: 3, level: .035, decay: .22 }
+            ];
+
+            partials.forEach(partial => {
+              const osc = ctx.createOscillator();
+              const gain = ctx.createGain();
+
+              osc.type = "sine";
+
+              osc.frequency.setValueAtTime(
+                freq * partial.ratio,
+                start
+              );
+
+              gain.gain.setValueAtTime(
+                .0001,
+                start
+              );
+
+              gain.gain.exponentialRampToValueAtTime(
+                volume * partial.level,
+                start + .012
+              );
+
+              gain.gain.exponentialRampToValueAtTime(
+                .0001,
+                start + partial.decay
+              );
+
+              osc.connect(gain);
+              gain.connect(master);
+
+              osc.start(start);
+              osc.stop(start + partial.decay + .04);
+
+              osc.onended = () => {
+                osc.disconnect();
+                gain.disconnect();
+              };
+            });
+          }
+
+          notes.forEach(note => {
+            bell(
+              note.freq,
+              now + note.delay,
+              note.amp
+            );
+          });
+
+          bell(587.33, now + .39, .025);
+          bell(880.00, now + .39, .018);
+
+          setTimeout(() => {
+            ctx.close().catch(() => {});
+          }, 1500);
+        }
+
+        if (ctx.state === "suspended") {
+          ctx.resume()
+            .then(createChime)
+            .catch(() => {
+              ctx.close().catch(() => {});
+            });
+        } else {
+          createChime();
+        }
+
+      } catch (error) {
+        console.warn("C.T. Start Sound:", error);
+      }
+    }
+
+    /* ========================================
+       HOME STATISTICS
+    ======================================== */
 
     function updateStats() {
       const counts = {
-        works: allImageFiles.length, chars: characters.length,
-        worlds: worldviews.length, notes: notices.length
+        works: allImageFiles.length,
+        chars: characters.length,
+        worlds: worldviews.length,
+        notes: notices.length
       };
+
       document.querySelectorAll("[data-stat]").forEach(el => {
-        el.textContent = String(counts[el.dataset.stat] ?? 0).padStart(2, "0");
+        el.textContent = String(
+          counts[el.dataset.stat] ?? 0
+        ).padStart(2, "0");
       });
     }
 
     function updateStickers() {
       const last = allImageFiles[allImageFiles.length - 1];
       const img = $("stk-img");
+
       img.hidden = !last;
-      if (last) img.src = last.download_url;
+
+      if (last) {
+        img.src = last.download_url;
+      }
+
       if (noticeState === "ready") {
-        $("stk-n").textContent = notices[0]?.title || "새 공지가 아직 없어요";
+        $("stk-n").textContent =
+          notices[0]?.title || "새 공지가 아직 없어요";
       } else if (noticeState === "error") {
-        $("stk-n").textContent = "공지를 불러오지 못했어요";
+        $("stk-n").textContent =
+          "공지를 불러오지 못했어요";
       }
     }
 
+    /* ========================================
+       LOAD DATA
+    ======================================== */
+
     async function loadJSON(path) {
       const query = `?t=${Date.now()}`;
+
       const sources = [
-        [`${repoContents}/${path}${query}`, { headers: { Accept: "application/vnd.github.raw+json" } }],
-        [`${path}${query}`, {}]
+        [
+          `${repoContents}/${path}${query}`,
+          {
+            headers: {
+              Accept: "application/vnd.github.raw+json"
+            }
+          }
+        ],
+        [
+          `${path}${query}`,
+          {}
+        ]
       ];
+
       for (const [url, options] of sources) {
         try {
           const response = await fetch(url, options);
+
           if (!response.ok) continue;
+
           const data = await response.json();
+
           if (Array.isArray(data)) return data;
+
         } catch {}
       }
+
       return [];
     }
 
     async function loadData() {
       [characters, worldviews] = await Promise.all([
-        loadJSON("data/characters.json"), loadJSON("data/worldviews.json")
+        loadJSON("data/characters.json"),
+        loadJSON("data/worldviews.json")
       ]);
+
       startHero();
-      renderArchive(characters, "character-list", "character", "CHARACTER");
-      renderArchive(worldviews, "worldview-list", "worldview", "WORLDVIEW");
+
+      renderArchive(
+        characters,
+        "character-list",
+        "character",
+        "CHARACTER"
+      );
+
+      renderArchive(
+        worldviews,
+        "worldview-list",
+        "worldview",
+        "WORLDVIEW"
+      );
+
       updateStats();
     }
+
+    /* ========================================
+       REVEAL ANIMATION
+    ======================================== */
 
     const observer = "IntersectionObserver" in window
       ? new IntersectionObserver(entries => {
           for (const entry of entries) {
             if (!entry.isIntersecting) continue;
+
             entry.target.classList.add("in");
             observer.unobserve(entry.target);
           }
@@ -290,23 +836,44 @@
 
     function reveal(el, delay = 0) {
       if (!observer || motion.matches) return;
+
       el.classList.add("reveal");
-      el.style.transitionDelay = `${Math.min(delay, 300)}ms`;
+
+      el.style.transitionDelay =
+        `${Math.min(delay, 300)}ms`;
+
       observer.observe(el);
     }
+
+    /* ========================================
+       BACKGROUND PARTICLES
+    ======================================== */
 
     for (let i = 0; i < 14; i++) {
       const p = document.createElement("i");
       const size = 5 + Math.random() * 7;
-      p.style.cssText = `left:${Math.random() * 100}%;width:${size}px;height:${size}px;` +
-        `--dx:${Math.random() * 160 - 40}px;animation-duration:${10 + Math.random() * 9}s;` +
+
+      p.style.cssText =
+        `left:${Math.random() * 100}%;` +
+        `width:${size}px;height:${size}px;` +
+        `--dx:${Math.random() * 160 - 40}px;` +
+        `animation-duration:${10 + Math.random() * 9}s;` +
         `animation-delay:-${Math.random() * 14}s`;
+
       $("petals").appendChild(p);
     }
 
+    /* ========================================
+       START SCREEN
+    ======================================== */
+
     function syncLock() {
-      const locked = !intro.classList.contains("done") ||
-        [viewer, modal, lightbox].some(el => el.classList.contains("open"));
+      const locked =
+        !intro.classList.contains("done") ||
+        [viewer, modal, lightbox].some(el =>
+          el.classList.contains("open")
+        );
+
       document.body.classList.toggle("lock", locked);
     }
 
@@ -316,795 +883,2023 @@
     }
 
     $("start").addEventListener("click", () => {
+      playStartSound();
+
       intro.classList.add("go");
-      try { sessionStorage.setItem("seenIntro", "1"); } catch {}
-      setTimeout(finishIntro, motion.matches ? 0 : 650);
+
+      try {
+        sessionStorage.setItem("seenIntro", "1");
+      } catch {}
+
+      setTimeout(
+        finishIntro,
+        motion.matches ? 0 : 650
+      );
+
     }, { once: true });
 
     try {
       if (sessionStorage.getItem("seenIntro")) {
         intro.classList.add("returning");
-        setTimeout(finishIntro, motion.matches ? 0 : 720);
+
+        setTimeout(
+          finishIntro,
+          motion.matches ? 0 : 720
+        );
       }
     } catch {}
 
-    /* 홈 대형 이미지: 캐릭터 도감의 대표 이미지만 사용 */
+    /* ========================================
+       HOME HERO
+    ======================================== */
+
     let heroTimer;
+
     function startHero() {
       clearInterval(heroTimer);
+
       const box = $("hero-art");
+
       box.replaceChildren();
-      const srcs = [...new Set(characters.map(item => item?.image)
-        .filter(src => typeof src === "string" && src.trim()))];
+
+      const srcs = [...new Set(
+        characters
+          .map(item => item?.image)
+          .filter(src =>
+            typeof src === "string" && src.trim()
+          )
+      )];
 
       for (const src of srcs) {
         const img = new Image();
+
         img.alt = "";
         img.draggable = false;
-        if (!box.children.length) img.classList.add("on");
+
+        if (!box.children.length) {
+          img.classList.add("on");
+        }
+
         img.onerror = () => {
           if (img.parentNode !== box) return;
+
           const wasActive = img.classList.contains("on");
+
           img.remove();
-          if (wasActive) box.firstElementChild?.classList.add("on");
+
+          if (wasActive) {
+            box.firstElementChild?.classList.add("on");
+          }
         };
+
         box.appendChild(img);
+
         img.src = src;
       }
+
       if (srcs.length < 2 || motion.matches) return;
+
       heroTimer = setInterval(() => {
         if (document.hidden || motion.matches) return;
+
         const current = box.querySelector(".on");
-        const next = current?.nextElementSibling || box.firstElementChild;
+
+        const next =
+          current?.nextElementSibling ||
+          box.firstElementChild;
+
         if (!next || current === next) return;
+
         current?.classList.remove("on");
         next.classList.add("on");
+
       }, 6000);
     }
 
+    /* ========================================
+       MOBILE NAVIGATION
+    ======================================== */
+
     function closeMobileMenu() {
       $("mobile-menu").classList.remove("open");
-      $("menu-toggle").setAttribute("aria-expanded", "false");
-      $("menu-toggle").setAttribute("aria-label", "메뉴 열기");
+
+      $("menu-toggle").setAttribute(
+        "aria-expanded",
+        "false"
+      );
+
+      $("menu-toggle").setAttribute(
+        "aria-label",
+        "메뉴 열기"
+      );
     }
+
     $("menu-toggle").addEventListener("click", () => {
-      const open = $("mobile-menu").classList.toggle("open");
-      $("menu-toggle").setAttribute("aria-expanded", String(open));
-      $("menu-toggle").setAttribute("aria-label", open ? "메뉴 닫기" : "메뉴 열기");
+      const open =
+        $("mobile-menu").classList.toggle("open");
+
+      $("menu-toggle").setAttribute(
+        "aria-expanded",
+        String(open)
+      );
+
+      $("menu-toggle").setAttribute(
+        "aria-label",
+        open ? "메뉴 닫기" : "메뉴 열기"
+      );
     });
 
+    /* ========================================
+       SECTION TRANSITION
+    ======================================== */
+
     function showSection(id) {
-      document.querySelectorAll(".content-section").forEach(s => {
-        s.classList.toggle("active", s.id === id);
+      document.querySelectorAll(".content-section")
+        .forEach(s => {
+          s.classList.toggle(
+            "active",
+            s.id === id
+          );
+        });
+
+      navButtons.forEach(b => {
+        b.classList.toggle(
+          "active",
+          b.dataset.target === id
+        );
       });
-      navButtons.forEach(b => b.classList.toggle("active", b.dataset.target === id));
-      window.scrollTo({ top: 0, behavior: "instant" });
+
+      window.scrollTo({
+        top: 0,
+        behavior: "instant"
+      });
     }
 
     const wipe = $("wipe");
     const bands = [...wipe.querySelectorAll(".b")];
-    let turning = false, pendingSection = null;
+
+    let turning = false;
+    let pendingSection = null;
 
     async function switchSection(id) {
-      if (!$(id)?.classList.contains("content-section")) return;
+      if (!$(id)?.classList.contains("content-section")) {
+        return;
+      }
+
       closeMobileMenu();
+
       if (turning) {
         pendingSection = id;
         return;
       }
+
       if ($(id).classList.contains("active")) return;
-      if (motion.matches || typeof wipe.animate !== "function") {
+
+      if (
+        motion.matches ||
+        typeof wipe.animate !== "function"
+      ) {
         showSection(id);
         return;
       }
 
       turning = true;
       wipe.style.visibility = "visible";
+
       const animations = [];
+
       async function moveBands(from, to, reverse) {
-        const group = bands.map((band, i) => band.animate([
-          { transform: `translateX(${from}%) skewX(-12deg)` },
-          { transform: `translateX(${to}%) skewX(-12deg)` }
-        ], {
-          duration: 270, delay: (reverse ? bands.length - 1 - i : i) * 55,
-          easing: "cubic-bezier(.7,0,.2,1)", fill: "forwards"
-        }));
+        const group = bands.map((band, i) =>
+          band.animate([
+            {
+              transform:
+                `translateX(${from}%) skewX(-12deg)`
+            },
+            {
+              transform:
+                `translateX(${to}%) skewX(-12deg)`
+            }
+          ], {
+            duration: 270,
+            delay:
+              (reverse ? bands.length - 1 - i : i) * 55,
+            easing: "cubic-bezier(.7,0,.2,1)",
+            fill: "forwards"
+          })
+        );
+
         animations.push(...group);
-        await Promise.all(group.map(a => a.finished));
+
+        await Promise.all(
+          group.map(a => a.finished)
+        );
       }
 
       try {
         await moveBands(-100, 0, false);
+
         id = pendingSection || id;
         pendingSection = null;
+
         showSection(id);
+
         await moveBands(0, 100, true);
+
       } catch {
         showSection(id);
+
       } finally {
         wipe.style.visibility = "hidden";
+
         animations.forEach(a => a.cancel());
+
         turning = false;
+
         const next = pendingSection;
+
         pendingSection = null;
+
         if (next) switchSection(next);
       }
     }
 
     document.querySelectorAll("[data-target]").forEach(b => {
-      b.addEventListener("click", () => switchSection(b.dataset.target));
+      b.addEventListener("click", () => {
+        switchSection(b.dataset.target);
+      });
     });
+
     $("stk-work").addEventListener("click", () => {
       if (allImageFiles.length) {
-        currentPage = Math.ceil(allImageFiles.length / ITEMS_PER_PAGE);
+        currentPage = Math.ceil(
+          allImageFiles.length / ITEMS_PER_PAGE
+        );
+
         renderPage(currentPage);
       }
+
       switchSection("gallery-section");
     });
 
-    /* 작품 미리보기: 작품 폴더의 이미지 사용 */
+    /* ========================================
+       HOME WORKS PREVIEW
+    ======================================== */
+
     function buildMarquee() {
       const track = $("track");
+
       track.replaceChildren();
-      $("m-head").hidden = $("marquee").hidden = !allImageFiles.length;
+
+      $("m-head").hidden =
+        $("marquee").hidden =
+          !allImageFiles.length;
+
       if (!allImageFiles.length) return;
+
       let list = [...allImageFiles];
-      while (list.length < 8) list = list.concat(allImageFiles);
+
+      while (list.length < 8) {
+        list = list.concat(allImageFiles);
+      }
+
       list.concat(list).forEach((file, i) => {
         const b = document.createElement("button");
+
         b.className = "m-item";
         b.type = "button";
-        b.setAttribute("aria-label", `${file.name} 크게 보기`);
-        if (i >= allImageFiles.length) b.tabIndex = -1;
+
+        b.setAttribute(
+          "aria-label",
+          `${file.name} 크게 보기`
+        );
+
+        if (i >= allImageFiles.length) {
+          b.tabIndex = -1;
+        }
+
         const img = new Image();
+
         img.src = file.download_url;
         img.alt = "";
         img.draggable = false;
+
         b.appendChild(img);
-        b.addEventListener("click", () => openLightbox(file.download_url, file.name));
+
+        b.addEventListener("click", () => {
+          openLightbox(
+            file.download_url,
+            file.name
+          );
+        });
+
         track.appendChild(b);
       });
-      track.style.setProperty("--dur", `${list.length * 6}s`);
+
+      track.style.setProperty(
+        "--dur",
+        `${list.length * 6}s`
+      );
     }
+
+    /* ========================================
+       WORKS GALLERY
+    ======================================== */
 
     async function loadGallery(goLast = false) {
       try {
-        const response = await fetch(`${repoContents}/${folder}?t=${Date.now()}`);
+        const response = await fetch(
+          `${repoContents}/${folder}?t=${Date.now()}`
+        );
+
         if (!response.ok) throw new Error();
+
         const files = await response.json();
+
         if (!Array.isArray(files)) throw new Error();
+
         allImageFiles = files
-          .filter(f => f.type === "file" && /\.(jpe?g|png|gif|webp)$/i.test(f.name))
-          .sort((a, b) => a.name.localeCompare(b.name, "ko", { numeric: true }));
-        $("image-count").textContent = `${String(allImageFiles.length).padStart(2, "0")} IMAGES`;
+          .filter(f =>
+            f.type === "file" &&
+            /\.(jpe?g|png|gif|webp)$/i.test(f.name)
+          )
+          .sort((a, b) =>
+            a.name.localeCompare(
+              b.name,
+              "ko",
+              { numeric: true }
+            )
+          );
+
+        $("image-count").textContent =
+          `${String(allImageFiles.length).padStart(2, "0")} IMAGES`;
+
         buildMarquee();
         updateStats();
         updateStickers();
+
         if (!allImageFiles.length) {
-          gallery.innerHTML = '<p class="error">등록된 이미지가 없습니다.</p>';
+          gallery.innerHTML =
+            '<p class="error">등록된 이미지가 없습니다.</p>';
+
           pagination.replaceChildren();
+
           return;
         }
-        const total = Math.ceil(allImageFiles.length / ITEMS_PER_PAGE);
-        currentPage = goLast ? total : Math.min(currentPage, total);
+
+        const total = Math.ceil(
+          allImageFiles.length / ITEMS_PER_PAGE
+        );
+
+        currentPage = goLast
+          ? total
+          : Math.min(currentPage, total);
+
         renderPage(currentPage);
+
       } catch {
         $("image-count").textContent = "—";
-        gallery.innerHTML = '<p class="error">이미지를 불러오지 못했습니다. 잠시 후 다시 시도해 주세요.</p>';
+
+        gallery.innerHTML =
+          '<p class="error">이미지를 불러오지 못했습니다. 잠시 후 다시 시도해 주세요.</p>';
       }
     }
 
     function renderPage(page) {
       gallery.replaceChildren();
+
       const start = (page - 1) * ITEMS_PER_PAGE;
-      allImageFiles.slice(start, start + ITEMS_PER_PAGE).forEach((file, i) => {
-        const wrap = document.createElement("div");
-        wrap.className = "gi";
-        wrap.innerHTML = `
-          <button class="gallery-item" type="button">
-            <img src="${esc(file.download_url)}" alt="${esc(file.name)}" loading="lazy" draggable="false">
-            <span class="gallery-overlay">VIEW ▶</span>
-          </button>
-          <button class="del" type="button" aria-label="작품 삭제">✕</button>`;
-        wrap.querySelector(".gallery-item").onclick = () => openLightbox(file.download_url, file.name);
-        wrap.querySelector(".del").onclick = () => removeImage(file);
-        gallery.appendChild(wrap);
-        reveal(wrap, (i % 3) * 65);
-      });
+
+      allImageFiles
+        .slice(start, start + ITEMS_PER_PAGE)
+        .forEach((file, i) => {
+          const wrap = document.createElement("div");
+
+          wrap.className = "gi";
+
+          wrap.innerHTML = `
+            <button class="gallery-item" type="button">
+              <img
+                src="${esc(file.download_url)}"
+                alt="${esc(file.name)}"
+                loading="lazy"
+                draggable="false">
+              <span class="gallery-overlay">VIEW ▶</span>
+            </button>
+            <button class="del" type="button"
+              aria-label="작품 삭제">✕</button>
+          `;
+
+          wrap.querySelector(".gallery-item").onclick = () => {
+            openLightbox(
+              file.download_url,
+              file.name
+            );
+          };
+
+          wrap.querySelector(".del").onclick = () => {
+            removeImage(file);
+          };
+
+          gallery.appendChild(wrap);
+
+          reveal(wrap, (i % 3) * 65);
+        });
+
       renderPagination();
     }
 
     function renderPagination() {
       pagination.replaceChildren();
-      const total = Math.ceil(allImageFiles.length / ITEMS_PER_PAGE);
+
+      const total = Math.ceil(
+        allImageFiles.length / ITEMS_PER_PAGE
+      );
+
       if (total <= 1) return;
-      function add(label, page, disabled = false, active = false) {
+
+      function add(
+        label,
+        page,
+        disabled = false,
+        active = false
+      ) {
         const b = document.createElement("button");
+
         b.textContent = label;
         b.disabled = disabled;
+
         b.classList.toggle("active", active);
-        if (active) b.setAttribute("aria-current", "page");
+
+        if (active) {
+          b.setAttribute("aria-current", "page");
+        }
+
         b.onclick = () => {
           currentPage = page;
+
           renderPage(page);
-          window.scrollTo({ top: 0, behavior: motion.matches ? "instant" : "smooth" });
+
+          window.scrollTo({
+            top: 0,
+            behavior: motion.matches
+              ? "instant"
+              : "smooth"
+          });
         };
+
         pagination.appendChild(b);
       }
-      add("◀", currentPage - 1, currentPage === 1);
-      for (let i = 1; i <= total; i++) add(i, i, false, i === currentPage);
-      add("▶", currentPage + 1, currentPage === total);
+
+      add(
+        "◀",
+        currentPage - 1,
+        currentPage === 1
+      );
+
+      for (let i = 1; i <= total; i++) {
+        add(
+          i,
+          i,
+          false,
+          i === currentPage
+        );
+      }
+
+      add(
+        "▶",
+        currentPage + 1,
+        currentPage === total
+      );
     }
 
-    function renderArchive(list, targetId, type, label) {
+    /* ========================================
+       CHARACTER / WORLDVIEW ARCHIVE
+    ======================================== */
+
+    function renderArchive(
+      list,
+      targetId,
+      type,
+      label
+    ) {
       const box = $(targetId);
+
       box.replaceChildren();
+
       if (!list.length) {
-        box.innerHTML = '<p class="error">아직 등록된 기록이 없습니다.</p>';
+        box.innerHTML =
+          '<p class="error">아직 등록된 기록이 없습니다.</p>';
+
         return;
       }
+
       list.forEach((item, i) => {
         const w = document.createElement("div");
+
         w.className = "fxw";
-        if (effects.includes(item.effect)) w.classList.add(`fx-${item.effect}`);
-        if (okColor(item.color)) w.style.setProperty("--c", item.color);
+
+        if (effects.includes(item.effect)) {
+          w.classList.add(`fx-${item.effect}`);
+        }
+
+        if (okColor(item.color)) {
+          w.style.setProperty("--c", item.color);
+        }
+
         w.innerHTML = `
           <button class="archive-card" type="button">
             <span class="card-in">
-              <span class="archive-image"><img src="${esc(item.image)}" alt="" loading="lazy"></span>
+              <span class="archive-image">
+                <img
+                  src="${esc(item.image)}"
+                  alt=""
+                  loading="lazy">
+              </span>
+
               <span class="archive-info">
                 <span class="archive-type">${label}</span>
-                <strong class="archive-title">${esc(item.title)}
-                  ${item.webtoonUrl ? '<span class="chip">WEBTOON</span>' : ""}
+
+                <strong class="archive-title">
+                  ${esc(item.title)}
+                  ${item.webtoonUrl
+                    ? '<span class="chip">WEBTOON</span>'
+                    : ""}
                 </strong>
-                <span class="archive-desc">${esc(item.description)}</span>
-                <span class="archive-view">VIEW ARCHIVE ▶</span>
+
+                <span class="archive-desc">
+                  ${esc(item.description)}
+                </span>
+
+                <span class="archive-view">
+                  VIEW ARCHIVE ▶
+                </span>
               </span>
             </span>
           </button>
-          <button class="del" type="button" aria-label="항목 삭제">✕</button>`;
-        w.querySelector(".archive-card").onclick = () => openViewer(type, i);
-        w.querySelector(".del").onclick = () => removeEntry(type, item);
+
+          <button class="del" type="button"
+            aria-label="항목 삭제">✕</button>
+        `;
+
+        w.querySelector(".archive-card").onclick = () => {
+          openViewer(type, i);
+        };
+
+        w.querySelector(".del").onclick = () => {
+          removeEntry(type, item);
+        };
+
         box.appendChild(w);
+
         reveal(w, i * 65);
       });
     }
 
+    /* ========================================
+       REMOVE WORKS / ENTRIES
+    ======================================== */
+
     async function removeImage(file) {
-      if (!confirm("이 작품을 삭제할까요?\n삭제하면 되돌릴 수 없어요.")) return;
+      if (!confirm(
+        "이 작품을 삭제할까요?\n삭제하면 되돌릴 수 없어요."
+      )) return;
+
       try {
-        await api({ action: "deleteImage", name: file.name });
+        await api({
+          action: "deleteImage",
+          name: file.name
+        });
+
         await loadGallery();
-      } catch (err) { alert(err.message); }
+
+      } catch (err) {
+        alert(err.message);
+      }
     }
 
     async function removeEntry(kind, item) {
-      if (!item.id) { alert("이 항목은 관리 화면에서 삭제할 수 없어요."); return; }
-      if (!confirm(`'${item.title}'을(를) 삭제할까요?\n이미지도 함께 지워지며 되돌릴 수 없어요.`)) return;
+      if (!item.id) {
+        alert("이 항목은 관리 화면에서 삭제할 수 없어요.");
+        return;
+      }
+
+      if (!confirm(
+        `'${item.title}'을(를) 삭제할까요?\n이미지도 함께 지워지며 되돌릴 수 없어요.`
+      )) return;
+
       try {
-        await api({ action: "deleteEntry", kind, id: item.id });
+        await api({
+          action: "deleteEntry",
+          kind,
+          id: item.id
+        });
+
         await loadData();
-      } catch (err) { alert(err.message); }
+
+      } catch (err) {
+        alert(err.message);
+      }
     }
+
+    /* ========================================
+       OVERLAY MANAGEMENT
+    ======================================== */
 
     const returnFocus = new Map();
+
     function openOverlay(el, focusTarget) {
-      returnFocus.set(el, document.activeElement);
+      returnFocus.set(
+        el,
+        document.activeElement
+      );
+
       el.inert = false;
+
       el.classList.add("open");
-      el.setAttribute("aria-hidden", "false");
+
+      el.setAttribute(
+        "aria-hidden",
+        "false"
+      );
+
       syncLock();
-      focusTarget?.focus({ preventScroll: true });
+
+      focusTarget?.focus({
+        preventScroll: true
+      });
     }
+
     function closeOverlay(el) {
       const previous = returnFocus.get(el);
+
       el.classList.remove("open");
+
       el.inert = true;
-      previous?.focus({ preventScroll: true });
-      el.setAttribute("aria-hidden", "true");
+
+      previous?.focus({
+        preventScroll: true
+      });
+
+      el.setAttribute(
+        "aria-hidden",
+        "true"
+      );
+
       returnFocus.delete(el);
+
       syncLock();
     }
 
-    let vList = [], vIdx = 0, vKind = "character", viewerHistory = false;
+    /* ========================================
+       CHARACTER / WORLDVIEW VIEWER
+    ======================================== */
+
+    let vList = [];
+    let vIdx = 0;
+    let vKind = "character";
+    let viewerHistory = false;
+
     function renderViewer() {
       const item = vList[vIdx];
+
       if (!item) return;
+
       const world = vKind === "worldview";
       const title = String(item.title || "");
+
       viewer.dataset.kind = vKind;
-      viewer.dataset.fx = effects.includes(item.effect) ? item.effect : "none";
-      viewer.style.setProperty("--c", okColor(item.color) || "#3fa9ff");
-      $("v-kind").textContent = world ? "WORLDVIEW" : "CHARACTER";
-      $("v-head-t").textContent = world ? "세계관" : "캐릭터";
-      $("v-back").textContent = world ? "세계관 목록으로 ▶" : "캐릭터 목록으로 ▶";
+
+      viewer.dataset.fx =
+        effects.includes(item.effect)
+          ? item.effect
+          : "none";
+
+      viewer.style.setProperty(
+        "--c",
+        okColor(item.color) || "#3fa9ff"
+      );
+
+      $("v-kind").textContent =
+        world ? "WORLDVIEW" : "CHARACTER";
+
+      $("v-head-t").textContent =
+        world ? "세계관" : "캐릭터";
+
+      $("v-back").textContent =
+        world
+          ? "세계관 목록으로 ▶"
+          : "캐릭터 목록으로 ▶";
+
       $("v-name").textContent = title;
       $("v-big").textContent = title;
+
       $("v-img").src = item.image;
       $("v-img").alt = title;
+
       $("v-sub").textContent = item.description || "";
       $("v-sub").hidden = !item.description;
+
       $("v-desc").textContent = item.body || "";
       $("v-desc").hidden = !item.body;
-      const web = $("v-web"), webImg = $("v-web-img");
-      web.hidden = !/^https?:\/\//i.test(item.webtoonUrl || "");
-      if (web.hidden) web.removeAttribute("href");
-      else web.href = item.webtoonUrl;
+
+      const web = $("v-web");
+      const webImg = $("v-web-img");
+
+      web.hidden =
+        !/^https?:\/\//i.test(
+          item.webtoonUrl || ""
+        );
+
+      if (web.hidden) {
+        web.removeAttribute("href");
+      } else {
+        web.href = item.webtoonUrl;
+      }
+
       webImg.hidden = !item.webtoonImage;
-      if (item.webtoonImage) webImg.src = item.webtoonImage;
-      else webImg.removeAttribute("src");
-      viewer.querySelector(".v-info").hidden = !item.description && !item.body && web.hidden;
+
+      if (item.webtoonImage) {
+        webImg.src = item.webtoonImage;
+      } else {
+        webImg.removeAttribute("src");
+      }
+
+      viewer.querySelector(".v-info").hidden =
+        !item.description &&
+        !item.body &&
+        web.hidden;
 
       const th = $("v-thumbs");
-      const thumbFocused = th.contains(document.activeElement);
+
+      const thumbFocused =
+        th.contains(document.activeElement);
+
       th.replaceChildren();
+
       vList.forEach((entry, i) => {
         const b = document.createElement("button");
+
         b.type = "button";
         b.className = "v-th";
-        b.classList.toggle("on", i === vIdx);
-        b.setAttribute("aria-label", entry.title);
-        b.setAttribute("aria-pressed", String(i === vIdx));
+
+        b.classList.toggle(
+          "on",
+          i === vIdx
+        );
+
+        b.setAttribute(
+          "aria-label",
+          entry.title
+        );
+
+        b.setAttribute(
+          "aria-pressed",
+          String(i === vIdx)
+        );
+
         const im = new Image();
+
         im.src = entry.image;
         im.alt = "";
+
         b.appendChild(im);
+
         b.onclick = () => {
           if (vIdx === i) return;
+
           vIdx = i;
+
           renderViewer();
         };
+
         th.appendChild(b);
       });
-      $("v-prev").disabled = $("v-next").disabled = vList.length < 2;
+
+      $("v-prev").disabled =
+        $("v-next").disabled =
+          vList.length < 2;
+
       const active = th.querySelector(".on");
+
       if (active) {
-        th.scrollLeft = active.offsetLeft - th.clientWidth / 2 + active.offsetWidth / 2;
-        if (thumbFocused) active.focus({ preventScroll: true });
+        th.scrollLeft =
+          active.offsetLeft -
+          th.clientWidth / 2 +
+          active.offsetWidth / 2;
+
+        if (thumbFocused) {
+          active.focus({
+            preventScroll: true
+          });
+        }
       }
+
       viewer.scrollTop = 0;
 
-      if (!motion.matches && typeof viewer.animate === "function") {
-        const layers = [viewer.querySelector(".v-big"), viewer.querySelector(".v-id"),
-          $("v-sub"), $("v-desc"), $("v-web")].filter(el => !el.hidden);
+      if (
+        !motion.matches &&
+        typeof viewer.animate === "function"
+      ) {
+        const layers = [
+          viewer.querySelector(".v-big"),
+          viewer.querySelector(".v-id"),
+          $("v-sub"),
+          $("v-desc"),
+          $("v-web")
+        ].filter(el => !el.hidden);
+
         layers.forEach((el, index) => {
-          el.getAnimations().forEach(animation => animation.cancel());
+          el.getAnimations().forEach(animation => {
+            animation.cancel();
+          });
+
           el.animate([
-            { opacity: 0, transform: "translate(-1.8rem, 1.1rem) skewX(-7deg)" },
-            { opacity: 1, transform: "none" }
+            {
+              opacity: 0,
+              transform:
+                "translate(-1.8rem, 1.1rem) skewX(-7deg)"
+            },
+            {
+              opacity: 1,
+              transform: "none"
+            }
           ], {
-            duration: 500, delay: index * 48,
-            easing: "cubic-bezier(.18,.76,.22,1)", fill: "backwards"
+            duration: 500,
+            delay: index * 48,
+            easing: "cubic-bezier(.18,.76,.22,1)",
+            fill: "backwards"
           });
         });
-        $("v-img").animate([{ opacity: .35 }, { opacity: 1 }], { duration: 320 });
+
+        $("v-img").animate([
+          { opacity: .35 },
+          { opacity: 1 }
+        ], {
+          duration: 320
+        });
       }
     }
 
     function openViewer(kind, idx) {
       vKind = kind;
-      vList = kind === "worldview" ? worldviews : characters;
+
+      vList = kind === "worldview"
+        ? worldviews
+        : characters;
+
       vIdx = idx;
+
       if (!vList[idx]) return;
-      openOverlay(viewer, $("v-close"));
+
+      openOverlay(
+        viewer,
+        $("v-close")
+      );
+
       renderViewer();
+
       viewerHistory = false;
+
       try {
-        history.pushState({ ctViewer: true }, "");
+        history.pushState(
+          { ctViewer: true },
+          ""
+        );
+
         viewerHistory = true;
+
       } catch {}
     }
+
     function closeViewer(fromPop = false) {
       if (!viewer.classList.contains("open")) return;
+
       closeOverlay(viewer);
-      if (!fromPop && viewerHistory && history.state?.ctViewer) history.back();
+
+      if (
+        !fromPop &&
+        viewerHistory &&
+        history.state?.ctViewer
+      ) {
+        history.back();
+      }
+
       viewerHistory = false;
     }
+
     function stepViewer(delta) {
       if (vList.length < 2) return;
-      vIdx = (vIdx + delta + vList.length) % vList.length;
+
+      vIdx =
+        (vIdx + delta + vList.length) %
+        vList.length;
+
       renderViewer();
     }
-    window.addEventListener("popstate", () => closeViewer(true));
-    $("v-close").onclick = $("v-back").onclick = () => closeViewer();
-    $("v-prev").onclick = () => stepViewer(-1);
-    $("v-next").onclick = () => stepViewer(1);
+
+    window.addEventListener("popstate", () => {
+      closeViewer(true);
+    });
+
+    $("v-close").onclick =
+      $("v-back").onclick =
+        () => closeViewer();
+
+    $("v-prev").onclick =
+      () => stepViewer(-1);
+
+    $("v-next").onclick =
+      () => stepViewer(1);
+
+    /* ========================================
+       NOTICE BOARD
+    ======================================== */
 
     async function loadNotices() {
       try {
         const r = await fetch("/api/board");
         const data = await r.json();
-        if (!r.ok || !Array.isArray(data.notices)) {
-          throw new Error(data.error || "공지를 불러오지 못했어요.");
+
+        if (
+          !r.ok ||
+          !Array.isArray(data.notices)
+        ) {
+          throw new Error(
+            data.error || "공지를 불러오지 못했어요."
+          );
         }
+
         notices = data.notices;
         noticeState = "ready";
+
         renderNotices();
         updateStats();
+
       } catch (err) {
         noticeState = "error";
-        noticesBox.innerHTML = `<p class="error">${esc(err.message)}</p>`;
+
+        noticesBox.innerHTML =
+          `<p class="error">${esc(err.message)}</p>`;
+
         $("notice-count").textContent = "";
       }
+
       updateStickers();
     }
 
     function renderNotices() {
       noticesBox.replaceChildren();
-      $("notice-count").textContent = `${notices.length}건`;
+
+      $("notice-count").textContent =
+        `${notices.length}건`;
+
       if (!notices.length) {
-        noticesBox.innerHTML = '<p class="error">등록된 공지가 없습니다.</p>';
+        noticesBox.innerHTML =
+          '<p class="error">등록된 공지가 없습니다.</p>';
+
         return;
       }
+
       notices.forEach((nt, i) => {
         const el = document.createElement("article");
+
         el.className = "nt";
+
         el.innerHTML = `
-          <button class="nt-head" type="button" aria-expanded="false">
-            <span class="nt-badge">공지</span><span class="nt-title"></span><span class="nt-meta"></span>
+          <button class="nt-head"
+            type="button"
+            aria-expanded="false">
+
+            <span class="nt-badge">공지</span>
+            <span class="nt-title"></span>
+            <span class="nt-meta"></span>
           </button>
-          <button class="del" type="button" aria-label="공지 삭제">✕</button>
-          <div class="nt-body" hidden><p class="nt-text"></p><div class="cm"></div></div>`;
-        el.querySelector(".nt-title").textContent = nt.title;
-        el.querySelector(".nt-meta").textContent = `${fmtDate(nt.at)} · 댓글 ${nt.count}`;
-        el.querySelector(".nt-text").textContent = nt.body;
-        const head = el.querySelector(".nt-head"), body = el.querySelector(".nt-body");
+
+          <button class="del"
+            type="button"
+            aria-label="공지 삭제">✕</button>
+
+          <div class="nt-body" hidden>
+            <p class="nt-text"></p>
+            <div class="cm"></div>
+          </div>
+        `;
+
+        el.querySelector(".nt-title").textContent =
+          nt.title;
+
+        el.querySelector(".nt-meta").textContent =
+          `${fmtDate(nt.at)} · 댓글 ${nt.count}`;
+
+        el.querySelector(".nt-text").textContent =
+          nt.body;
+
+        const head = el.querySelector(".nt-head");
+        const body = el.querySelector(".nt-body");
+
         head.onclick = () => {
           const open = body.hidden;
+
           body.hidden = !open;
-          head.setAttribute("aria-expanded", String(open));
+
+          head.setAttribute(
+            "aria-expanded",
+            String(open)
+          );
+
           if (open && !body.dataset.loaded) {
             body.dataset.loaded = "1";
+
             openComments(nt, el);
           }
         };
-        el.querySelector(".del").onclick = () => removeNotice(nt);
+
+        el.querySelector(".del").onclick = () => {
+          removeNotice(nt);
+        };
+
         noticesBox.appendChild(el);
+
         reveal(el, i * 60);
       });
     }
 
+    /* ========================================
+       COMMENTS
+    ======================================== */
+
     async function openComments(nt, el) {
       const box = el.querySelector(".cm");
-      box.innerHTML = '<h4>댓글 <b>0</b></h4><ul class="cm-list"><li>불러오는 중...</li></ul>';
-      box.appendChild(makeForm(nt, el, 0, false));
+
+      box.innerHTML = `
+        <h4>댓글 <b>0</b></h4>
+        <ul class="cm-list">
+          <li>불러오는 중...</li>
+        </ul>
+      `;
+
+      box.appendChild(
+        makeForm(nt, el, 0, false)
+      );
+
       await refreshComments(nt, el);
     }
 
     async function refreshComments(nt, el) {
       const list = el.querySelector(".cm-list");
+
       try {
-        const r = await fetch(`/api/board?n=${encodeURIComponent(nt.n)}`);
+        const r = await fetch(
+          `/api/board?n=${encodeURIComponent(nt.n)}`
+        );
+
         const data = await r.json();
-        if (!r.ok || !Array.isArray(data.comments)) {
-          throw new Error(data.error || "댓글을 불러오지 못했어요.");
+
+        if (
+          !r.ok ||
+          !Array.isArray(data.comments)
+        ) {
+          throw new Error(
+            data.error || "댓글을 불러오지 못했어요."
+          );
         }
+
         const comments = data.comments;
+
         const top = comments.filter(c => !c.parent);
+
         nt.count = comments.length;
-        el.querySelector(".nt-meta").textContent = `${fmtDate(nt.at)} · 댓글 ${nt.count}`;
-        el.querySelector(".cm h4 b").textContent = nt.count;
+
+        el.querySelector(".nt-meta").textContent =
+          `${fmtDate(nt.at)} · 댓글 ${nt.count}`;
+
+        el.querySelector(".cm h4 b").textContent =
+          nt.count;
+
         list.replaceChildren();
+
         if (!top.length) {
-          list.innerHTML = '<li class="cm-empty">첫 댓글을 남겨보세요!</li>';
+          list.innerHTML =
+            '<li class="cm-empty">첫 댓글을 남겨보세요!</li>';
+
           return;
         }
+
         top.forEach(c => {
           const li = document.createElement("li");
+
           li.className = "cm-item";
-          li.appendChild(commentNode(c, nt, el, true));
-          const replies = comments.filter(x => x.parent === c.id);
+
+          li.appendChild(
+            commentNode(c, nt, el, true)
+          );
+
+          const replies = comments.filter(
+            x => x.parent === c.id
+          );
+
           if (replies.length) {
             const ul = document.createElement("ul");
+
             ul.className = "cm-reps";
+
             replies.forEach(reply => {
               const child = document.createElement("li");
+
               child.className = "cm-item";
-              child.appendChild(commentNode(reply, nt, el, false));
+
+              child.appendChild(
+                commentNode(
+                  reply,
+                  nt,
+                  el,
+                  false
+                )
+              );
+
               ul.appendChild(child);
             });
+
             li.appendChild(ul);
           }
+
           list.appendChild(li);
         });
+
       } catch (err) {
-        list.innerHTML = `<li class="cm-empty">${esc(err.message)}</li>`;
-        delete el.querySelector(".nt-body").dataset.loaded;
+        list.innerHTML =
+          `<li class="cm-empty">${esc(err.message)}</li>`;
+
+        delete el.querySelector(".nt-body")
+          .dataset.loaded;
       }
     }
 
     function commentNode(c, nt, el, canReply) {
       const node = document.createElement("div");
+
       node.innerHTML = `
-        <span class="who"></span><time></time>
-        <button class="cdel" type="button" aria-label="댓글 삭제">✕</button><p></p>
-        ${canReply ? '<button class="reply-btn" type="button">↳ 답글</button>' : ""}
-        <div class="slot"></div>`;
-      node.querySelector(".who").textContent = c.name;
-      node.querySelector("time").textContent = fmtDate(c.at);
-      node.querySelector("p").textContent = c.text;
-      node.querySelector(".cdel").onclick = () => removeComment(c, nt, el);
+        <span class="who"></span>
+        <time></time>
+
+        <button class="cdel"
+          type="button"
+          aria-label="댓글 삭제">✕</button>
+
+        <p></p>
+
+        ${canReply
+          ? '<button class="reply-btn" type="button">↳ 답글</button>'
+          : ""}
+
+        <div class="slot"></div>
+      `;
+
+      node.querySelector(".who").textContent =
+        c.name;
+
+      node.querySelector("time").textContent =
+        fmtDate(c.at);
+
+      node.querySelector("p").textContent =
+        c.text;
+
+      node.querySelector(".cdel").onclick = () => {
+        removeComment(c, nt, el);
+      };
+
       if (canReply) {
         const slot = node.querySelector(".slot");
+
         node.querySelector(".reply-btn").onclick = () => {
-          if (slot.firstChild) { slot.replaceChildren(); return; }
-          slot.appendChild(makeForm(nt, el, c.id, true));
+          if (slot.firstChild) {
+            slot.replaceChildren();
+            return;
+          }
+
+          slot.appendChild(
+            makeForm(nt, el, c.id, true)
+          );
+
           slot.querySelector("textarea").focus();
         };
       }
+
       return node;
     }
 
     function makeForm(nt, el, parent, isReply) {
       const f = document.createElement("form");
+
       f.className = "cm-form";
+
       f.innerHTML = `
-        <input class="hp" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
-        <input name="nick" maxlength="20" placeholder="닉네임" aria-label="닉네임" required>
-        <textarea name="text" rows="${isReply ? 2 : 3}" maxlength="500"
-          placeholder="${isReply ? "답글을 입력하세요" : "댓글을 입력하세요"}" aria-label="내용" required></textarea>
-        <div class="cm-row"><small class="cm-msg" role="status"></small>
-          <button class="primary-btn">${isReply ? "답글 등록" : "댓글 등록"}</button></div>`;
+        <input class="hp"
+          name="website"
+          tabindex="-1"
+          autocomplete="off"
+          aria-hidden="true">
+
+        <input name="nick"
+          maxlength="20"
+          placeholder="닉네임"
+          aria-label="닉네임"
+          required>
+
+        <textarea name="text"
+          rows="${isReply ? 2 : 3}"
+          maxlength="500"
+          placeholder="${isReply
+            ? "답글을 입력하세요"
+            : "댓글을 입력하세요"}"
+          aria-label="내용"
+          required></textarea>
+
+        <div class="cm-row">
+          <small class="cm-msg" role="status"></small>
+
+          <button class="primary-btn">
+            ${isReply ? "답글 등록" : "댓글 등록"}
+          </button>
+        </div>
+      `;
+
       const fields = f.elements;
-      try { fields.nick.value = localStorage.getItem("ctName") || ""; } catch {}
+
+      try {
+        fields.nick.value =
+          localStorage.getItem("ctName") || "";
+      } catch {}
+
       f.onsubmit = async e => {
         e.preventDefault();
-        const btn = f.querySelector("button"), msg = f.querySelector(".cm-msg");
+
+        const btn = f.querySelector("button");
+        const msg = f.querySelector(".cm-msg");
+
         btn.disabled = true;
         msg.textContent = "등록 중...";
+
         try {
           await board({
-            action: "comment", n: nt.n, name: fields.nick.value,
-            text: fields.text.value, parent, website: fields.website.value
+            action: "comment",
+            n: nt.n,
+            name: fields.nick.value,
+            text: fields.text.value,
+            parent,
+            website: fields.website.value
           });
-          try { localStorage.setItem("ctName", fields.nick.value); } catch {}
+
+          try {
+            localStorage.setItem(
+              "ctName",
+              fields.nick.value
+            );
+          } catch {}
+
           fields.text.value = "";
           msg.textContent = "";
+
           if (isReply) f.remove();
+
           await refreshComments(nt, el);
-        } catch (err) { msg.textContent = err.message; }
+
+        } catch (err) {
+          msg.textContent = err.message;
+        }
+
         btn.disabled = false;
       };
+
       return f;
     }
 
     async function removeComment(c, nt, el) {
-      if (!confirm("이 댓글을 삭제할까요?\n답글도 함께 지워져요.")) return;
+      if (!confirm(
+        "이 댓글을 삭제할까요?\n답글도 함께 지워져요."
+      )) return;
+
       try {
-        await board({ action: "delComment", id: c.id, n: nt.n });
+        await board({
+          action: "delComment",
+          id: c.id,
+          n: nt.n
+        });
+
         await refreshComments(nt, el);
-      } catch (err) { alert(err.message); }
+
+      } catch (err) {
+        alert(err.message);
+      }
     }
+
     async function removeNotice(nt) {
-      if (!confirm(`'${nt.title}' 공지를 삭제할까요?`)) return;
+      if (!confirm(
+        `'${nt.title}' 공지를 삭제할까요?`
+      )) return;
+
       try {
-        await board({ action: "delNotice", n: nt.n });
+        await board({
+          action: "delNotice",
+          n: nt.n
+        });
+
         await loadNotices();
-      } catch (err) { alert(err.message); }
+
+      } catch (err) {
+        alert(err.message);
+      }
     }
+
+    /* ========================================
+       IMAGE LIGHTBOX
+    ======================================== */
 
     function openLightbox(src, alt = "") {
       $("lightbox-image").src = src;
       $("lightbox-image").alt = alt;
-      openOverlay(lightbox, $("lightbox-close"));
+
+      openOverlay(
+        lightbox,
+        $("lightbox-close")
+      );
     }
-    function closeLightbox() { closeOverlay(lightbox); }
-    $("lightbox-close").onclick = closeLightbox;
-    lightbox.onclick = e => { if (e.target === lightbox) closeLightbox(); };
+
+    function closeLightbox() {
+      closeOverlay(lightbox);
+    }
+
+    $("lightbox-close").onclick =
+      closeLightbox;
+
+    lightbox.onclick = e => {
+      if (e.target === lightbox) {
+        closeLightbox();
+      }
+    };
+
+    /* ========================================
+       ADMIN / API
+    ======================================== */
 
     let adminPw = "";
-    try { adminPw = sessionStorage.getItem("adminPw") || ""; } catch {}
+
+    try {
+      adminPw =
+        sessionStorage.getItem("adminPw") || "";
+    } catch {}
+
     function setAdmin(on) {
-      document.body.classList.toggle("admin", on);
-      $("admin-toggle").textContent = on ? "로그아웃" : "관리";
+      document.body.classList.toggle(
+        "admin",
+        on
+      );
+
+      $("admin-toggle").textContent =
+        on ? "로그아웃" : "관리";
     }
+
     async function post(url, payload) {
       const response = await fetch(url, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ password: adminPw, ...payload })
+
+        headers: {
+          "Content-Type": "application/json"
+        },
+
+        body: JSON.stringify({
+          password: adminPw,
+          ...payload
+        })
       });
-      const data = await response.json().catch(() => ({}));
-      if (!response.ok) throw new Error(data.error || "요청에 실패했어요.");
+
+      const data = await response.json()
+        .catch(() => ({}));
+
+      if (!response.ok) {
+        throw new Error(
+          data.error || "요청에 실패했어요."
+        );
+      }
+
       return data;
     }
 
-    const api = payload => post("/api/admin", payload);
-    const board = payload => post("/api/board", payload);
+    const api = payload =>
+      post("/api/admin", payload);
+
+    const board = payload =>
+      post("/api/board", payload);
+
+    /* ========================================
+       ADMIN MODAL
+    ======================================== */
 
     function openModal(html) {
       $("modal-box").innerHTML = html;
-      openOverlay(modal, $("modal-box").querySelector("input, textarea, button"));
+
+      openOverlay(
+        modal,
+        $("modal-box").querySelector(
+          "input, textarea, button"
+        )
+      );
     }
-    function closeModal() { closeOverlay(modal); }
+
+    function closeModal() {
+      closeOverlay(modal);
+    }
+
     modal.onclick = e => {
-      if (e.target === modal || e.target.hasAttribute("data-close")) closeModal();
+      if (
+        e.target === modal ||
+        e.target.hasAttribute("data-close")
+      ) {
+        closeModal();
+      }
     };
 
     function setMsg(text) {
-      if ($("msg")) $("msg").textContent = text;
+      if ($("msg")) {
+        $("msg").textContent = text;
+      }
     }
 
+    /* ========================================
+       ADMIN LOGIN
+    ======================================== */
+
     function openLogin() {
-      openModal(`<h3>관리자 로그인</h3><form id="f">
-        <label>비밀번호<input type="password" id="pw" autocomplete="current-password" required></label>
-        <p class="msg" id="msg" role="status"></p>
-        <div class="row"><button type="button" data-close>취소</button>
-          <button class="primary" id="f-ok">로그인</button></div></form>`);
+      openModal(`
+        <h3>관리자 로그인</h3>
+
+        <form id="f">
+          <label>
+            비밀번호
+            <input type="password"
+              id="pw"
+              autocomplete="current-password"
+              required>
+          </label>
+
+          <p class="msg"
+            id="msg"
+            role="status"></p>
+
+          <div class="row">
+            <button type="button" data-close>
+              취소
+            </button>
+
+            <button class="primary" id="f-ok">
+              로그인
+            </button>
+          </div>
+        </form>
+      `);
+
       $("f").onsubmit = async e => {
         e.preventDefault();
+
         const btn = $("f-ok");
+
         btn.disabled = true;
+
         setMsg("확인 중...");
+
         adminPw = $("pw").value;
+
         try {
-          await api({ action: "verify" });
-          try { sessionStorage.setItem("adminPw", adminPw); } catch {}
+          await api({
+            action: "verify"
+          });
+
+          try {
+            sessionStorage.setItem(
+              "adminPw",
+              adminPw
+            );
+          } catch {}
+
           setAdmin(true);
+
           closeModal();
+
         } catch (err) {
           adminPw = "";
+
           setMsg(err.message);
+
           btn.disabled = false;
         }
       };
     }
 
     $("admin-toggle").onclick = () => {
-      if (!document.body.classList.contains("admin")) { openLogin(); return; }
+      if (!document.body.classList.contains("admin")) {
+        openLogin();
+        return;
+      }
+
       adminPw = "";
-      try { sessionStorage.removeItem("adminPw"); } catch {}
+
+      try {
+        sessionStorage.removeItem("adminPw");
+      } catch {}
+
       setAdmin(false);
     };
 
     if (adminPw) {
-      api({ action: "verify" }).then(() => setAdmin(true)).catch(() => {
-        adminPw = "";
-        try { sessionStorage.removeItem("adminPw"); } catch {}
-      });
+      api({
+        action: "verify"
+      })
+        .then(() => setAdmin(true))
+        .catch(() => {
+          adminPw = "";
+
+          try {
+            sessionStorage.removeItem("adminPw");
+          } catch {}
+        });
     }
+
+    /* ========================================
+       IMAGE PREPARATION
+    ======================================== */
 
     async function prepareImage(file) {
       let bmp;
-      try { bmp = await createImageBitmap(file); }
-      catch { throw new Error("이 이미지는 읽을 수 없어요. JPG, PNG, WEBP로 올려주세요."); }
-      const scale = Math.min(1, 1600 / Math.max(bmp.width, bmp.height));
-      const canvas = document.createElement("canvas");
-      canvas.width = Math.max(1, Math.round(bmp.width * scale));
-      canvas.height = Math.max(1, Math.round(bmp.height * scale));
-      const ctx = canvas.getContext("2d");
-      ctx.drawImage(bmp, 0, 0, canvas.width, canvas.height);
-      bmp.close();
-      let blob = await new Promise(resolve => canvas.toBlob(resolve, "image/webp", .85));
-      if (!blob || blob.type !== "image/webp") {
-        ctx.globalCompositeOperation = "destination-over";
-        ctx.fillStyle = "#fff";
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-        blob = await new Promise(resolve => canvas.toBlob(resolve, "image/jpeg", .85));
+
+      try {
+        bmp = await createImageBitmap(file);
+
+      } catch {
+        throw new Error(
+          "이 이미지는 읽을 수 없어요. JPG, PNG, WEBP로 올려주세요."
+        );
       }
-      if (!blob) throw new Error("이미지를 변환할 수 없어요.");
-      const image = await new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = () => resolve(String(reader.result).split(",")[1]);
-        reader.onerror = () => reject(new Error("이미지를 읽을 수 없어요."));
-        reader.readAsDataURL(blob);
+
+      const scale = Math.min(
+        1,
+        1600 / Math.max(
+          bmp.width,
+          bmp.height
+        )
+      );
+
+      const canvas = document.createElement("canvas");
+
+      canvas.width = Math.max(
+        1,
+        Math.round(bmp.width * scale)
+      );
+
+      canvas.height = Math.max(
+        1,
+        Math.round(bmp.height * scale)
+      );
+
+      const ctx = canvas.getContext("2d");
+
+      ctx.drawImage(
+        bmp,
+        0,
+        0,
+        canvas.width,
+        canvas.height
+      );
+
+      bmp.close();
+
+      let blob = await new Promise(resolve => {
+        canvas.toBlob(
+          resolve,
+          "image/webp",
+          .85
+        );
       });
-      if (image.length > 3400000) throw new Error("이미지가 너무 커요. 더 작은 이미지로 올려주세요.");
-      return { image, imageType: blob.type };
+
+      if (
+        !blob ||
+        blob.type !== "image/webp"
+      ) {
+        ctx.globalCompositeOperation =
+          "destination-over";
+
+        ctx.fillStyle = "#fff";
+
+        ctx.fillRect(
+          0,
+          0,
+          canvas.width,
+          canvas.height
+        );
+
+        blob = await new Promise(resolve => {
+          canvas.toBlob(
+            resolve,
+            "image/jpeg",
+            .85
+          );
+        });
+      }
+
+      if (!blob) {
+        throw new Error(
+          "이미지를 변환할 수 없어요."
+        );
+      }
+
+      const image = await new Promise(
+        (resolve, reject) => {
+          const reader = new FileReader();
+
+          reader.onload = () => {
+            resolve(
+              String(reader.result).split(",")[1]
+            );
+          };
+
+          reader.onerror = () => {
+            reject(
+              new Error("이미지를 읽을 수 없어요.")
+            );
+          };
+
+          reader.readAsDataURL(blob);
+        }
+      );
+
+      if (image.length > 3400000) {
+        throw new Error(
+          "이미지가 너무 커요. 더 작은 이미지로 올려주세요."
+        );
+      }
+
+      return {
+        image,
+        imageType: blob.type
+      };
     }
+
+    /* ========================================
+       ADD NOTICE
+    ======================================== */
 
     function openNoticeForm() {
-      openModal(`<h3>공지 쓰기</h3><form id="f">
-        <label>제목<input id="f-title" maxlength="80" required></label>
-        <label>내용<textarea id="f-body" rows="8" maxlength="3000" required></textarea></label>
-        <p class="msg" id="msg" role="status"></p>
-        <div class="row"><button type="button" data-close>취소</button>
-          <button class="primary" id="f-ok">등록</button></div></form>`);
+      openModal(`
+        <h3>공지 쓰기</h3>
+
+        <form id="f">
+          <label>
+            제목
+            <input id="f-title"
+              maxlength="80"
+              required>
+          </label>
+
+          <label>
+            내용
+            <textarea id="f-body"
+              rows="8"
+              maxlength="3000"
+              required></textarea>
+          </label>
+
+          <p class="msg"
+            id="msg"
+            role="status"></p>
+
+          <div class="row">
+            <button type="button" data-close>
+              취소
+            </button>
+
+            <button class="primary" id="f-ok">
+              등록
+            </button>
+          </div>
+        </form>
+      `);
+
       $("f").onsubmit = async e => {
         e.preventDefault();
+
         const btn = $("f-ok");
+
         btn.disabled = true;
+
         setMsg("등록 중...");
+
         try {
-          await board({ action: "notice", title: $("f-title").value, body: $("f-body").value });
+          await board({
+            action: "notice",
+            title: $("f-title").value,
+            body: $("f-body").value
+          });
+
           closeModal();
+
           await loadNotices();
-        } catch (err) { setMsg(err.message); btn.disabled = false; }
+
+        } catch (err) {
+          setMsg(err.message);
+
+          btn.disabled = false;
+        }
       };
     }
 
-    const FORM_TITLE = { image: "작품 올리기", character: "캐릭터 추가", worldview: "세계관 추가" };
+    /* ========================================
+       ADD WORK / CHARACTER / WORLDVIEW
+    ======================================== */
+
+    const FORM_TITLE = {
+      image: "작품 올리기",
+      character: "캐릭터 추가",
+      worldview: "세계관 추가"
+    };
+
     function openForm(kind) {
       const isImage = kind === "image";
+
       const fields = isImage ? "" : `
-        <label>이름<input id="f-title" maxlength="60" required></label>
-        <label>한 줄 소개<input id="f-desc" maxlength="120"></label>
-        <label>자세한 설명<textarea id="f-body" rows="5" maxlength="5000"></textarea></label>
-        <label>포인트 색<input type="color" id="f-color" value="#3fa9ff"></label>
-        <label>효과<select id="f-fx">
-          <option value="none">없음</option><option value="glow">은은한 빛</option>
-          <option value="pulse">숨쉬는 빛</option><option value="spin">회전하는 빛줄기</option>
-        </select></label>
-        <label>웹툰 링크 (선택)<input type="url" id="f-wurl" placeholder="https://"></label>
-        <label>웹툰 이미지 (선택)<input type="file" id="f-wimg" accept="image/*"></label>`;
-      const fileLabel = isImage ? "이미지 (여러 장 선택 가능)"
-        : kind === "worldview" ? "세계관 대표 이미지" : "캐릭터 대표 이미지 (투명 PNG 권장)";
-      openModal(`<h3>${FORM_TITLE[kind]}</h3><form id="f">${fields}
-        <label>${fileLabel}<input type="file" id="f-file" accept="image/*"
-          ${isImage ? "multiple" : ""} required></label>
-        <p class="msg" id="msg" role="status"></p>
-        <div class="row"><button type="button" data-close>취소</button>
-          <button class="primary" id="f-ok">올리기</button></div></form>`);
+        <label>
+          이름
+          <input id="f-title"
+            maxlength="60"
+            required>
+        </label>
+
+        <label>
+          한 줄 소개
+          <input id="f-desc"
+            maxlength="120">
+        </label>
+
+        <label>
+          자세한 설명
+          <textarea id="f-body"
+            rows="5"
+            maxlength="5000"></textarea>
+        </label>
+
+        <label>
+          포인트 색
+          <input type="color"
+            id="f-color"
+            value="#3fa9ff">
+        </label>
+
+        <label>
+          효과
+          <select id="f-fx">
+            <option value="none">없음</option>
+            <option value="glow">은은한 빛</option>
+            <option value="pulse">숨쉬는 빛</option>
+            <option value="spin">회전하는 빛줄기</option>
+          </select>
+        </label>
+
+        <label>
+          웹툰 링크 (선택)
+          <input type="url"
+            id="f-wurl"
+            placeholder="https://">
+        </label>
+
+        <label>
+          웹툰 이미지 (선택)
+          <input type="file"
+            id="f-wimg"
+            accept="image/*">
+        </label>
+      `;
+
+      const fileLabel = isImage
+        ? "이미지 (여러 장 선택 가능)"
+        : kind === "worldview"
+          ? "세계관 대표 이미지"
+          : "캐릭터 대표 이미지 (투명 PNG 권장)";
+
+      openModal(`
+        <h3>${FORM_TITLE[kind]}</h3>
+
+        <form id="f">
+          ${fields}
+
+          <label>
+            ${fileLabel}
+            <input type="file"
+              id="f-file"
+              accept="image/*"
+              ${isImage ? "multiple" : ""}
+              required>
+          </label>
+
+          <p class="msg"
+            id="msg"
+            role="status"></p>
+
+          <div class="row">
+            <button type="button" data-close>
+              취소
+            </button>
+
+            <button class="primary" id="f-ok">
+              올리기
+            </button>
+          </div>
+        </form>
+      `);
+
       $("f").onsubmit = async e => {
         e.preventDefault();
+
         const btn = $("f-ok");
+
         btn.disabled = true;
+
         try {
-          const files = [...$("f-file").files];
+          const files = [
+            ...$("f-file").files
+          ];
+
           if (isImage) {
             for (let i = 0; i < files.length; i++) {
-              setMsg(`올리는 중... (${i + 1}/${files.length})`);
-              await api({ action: "addImage", ...(await prepareImage(files[i])) });
+              setMsg(
+                `올리는 중... (${i + 1}/${files.length})`
+              );
+
+              await api({
+                action: "addImage",
+                ...(await prepareImage(files[i]))
+              });
             }
+
             closeModal();
+
             await loadGallery(true);
+
           } else {
             const entry = {
-              action: "addEntry", kind, title: $("f-title").value,
-              description: $("f-desc").value, body: $("f-body").value,
-              color: $("f-color").value, effect: $("f-fx").value,
-              webtoonUrl: $("f-wurl").value, webtoonImage: ""
+              action: "addEntry",
+              kind,
+              title: $("f-title").value,
+              description: $("f-desc").value,
+              body: $("f-body").value,
+              color: $("f-color").value,
+              effect: $("f-fx").value,
+              webtoonUrl: $("f-wurl").value,
+              webtoonImage: ""
             };
+
             const webFile = $("f-wimg").files[0];
-            const imageData = await prepareImage(files[0]);
+
+            const imageData = await prepareImage(
+              files[0]
+            );
+
             if (webFile) {
               setMsg("웹툰 이미지 올리는 중...");
-              const asset = await api({ action: "addAsset", ...(await prepareImage(webFile)) });
+
+              const asset = await api({
+                action: "addAsset",
+                ...(await prepareImage(webFile))
+              });
+
               entry.webtoonImage = asset.url;
             }
+
             setMsg("올리는 중...");
-            await api({ ...entry, ...imageData });
+
+            await api({
+              ...entry,
+              ...imageData
+            });
+
             closeModal();
+
             await loadData();
           }
-        } catch (err) { setMsg(err.message); btn.disabled = false; }
+
+        } catch (err) {
+          setMsg(err.message);
+
+          btn.disabled = false;
+        }
       };
     }
 
-    document.querySelectorAll(".add-btn").forEach(b => {
-      b.onclick = () => b.dataset.kind === "notice" ? openNoticeForm() : openForm(b.dataset.kind);
-    });
+    document.querySelectorAll(".add-btn")
+      .forEach(b => {
+        b.onclick = () => {
+          if (b.dataset.kind === "notice") {
+            openNoticeForm();
+          } else {
+            openForm(b.dataset.kind);
+          }
+        };
+      });
+
+    /* ========================================
+       KEYBOARD / ACCESSIBILITY
+    ======================================== */
 
     document.addEventListener("keydown", e => {
-      const overlay = [modal, lightbox, viewer].find(el => el.classList.contains("open"));
+      const overlay = [
+        modal,
+        lightbox,
+        viewer
+      ].find(el =>
+        el.classList.contains("open")
+      );
+
       if (e.key === "Escape") {
-        if (overlay === modal) closeModal();
-        else if (overlay === lightbox) closeLightbox();
-        else if (overlay === viewer) closeViewer();
-        else closeMobileMenu();
+        if (overlay === modal) {
+          closeModal();
+
+        } else if (overlay === lightbox) {
+          closeLightbox();
+
+        } else if (overlay === viewer) {
+          closeViewer();
+
+        } else {
+          closeMobileMenu();
+        }
+
         return;
       }
-      if (overlay === viewer && ["ArrowLeft", "ArrowRight"].includes(e.key)) {
+
+      if (
+        overlay === viewer &&
+        ["ArrowLeft", "ArrowRight"].includes(e.key)
+      ) {
         e.preventDefault();
-        stepViewer(e.key === "ArrowLeft" ? -1 : 1);
+
+        stepViewer(
+          e.key === "ArrowLeft" ? -1 : 1
+        );
       }
-      if (overlay && e.key === "Tab") {
-        const targets = [...overlay.querySelectorAll("button:not(:disabled), a[href], input, textarea, select")]
-          .filter(el => el.tabIndex >= 0 && el.getClientRects().length);
-        const first = targets[0], last = targets[targets.length - 1];
-        if (e.shiftKey && document.activeElement === first) {
-          e.preventDefault(); last?.focus();
-        } else if (!e.shiftKey && document.activeElement === last) {
-          e.preventDefault(); first?.focus();
+
+      if (
+        overlay &&
+        e.key === "Tab"
+      ) {
+        const targets = [
+          ...overlay.querySelectorAll(
+            "button:not(:disabled), a[href], input, textarea, select"
+          )
+        ].filter(el =>
+          el.tabIndex >= 0 &&
+          el.getClientRects().length
+        );
+
+        const first = targets[0];
+
+        const last =
+          targets[targets.length - 1];
+
+        if (
+          e.shiftKey &&
+          document.activeElement === first
+        ) {
+          e.preventDefault();
+
+          last?.focus();
+
+        } else if (
+          !e.shiftKey &&
+          document.activeElement === last
+        ) {
+          e.preventDefault();
+
+          first?.focus();
         }
       }
     });
 
+    /* ========================================
+       INITIALIZATION
+    ======================================== */
+
     loadGallery();
     loadNotices();
     loadData();
-    const initialSection = $(location.hash.slice(1));
-    if (initialSection?.classList.contains("content-section")) showSection(initialSection.id);
+
+    const initialSection = $(
+      location.hash.slice(1)
+    );
+
+    if (
+      initialSection?.classList.contains(
+        "content-section"
+      )
+    ) {
+      showSection(initialSection.id);
+    }
   </script>
 </body>
-</html>
+  </html>
