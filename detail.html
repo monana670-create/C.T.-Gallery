@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>C.T. Gallery</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Gowun+Batang:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="header">
+    <a class="logo" href="index.html" style="text-decoration:none"><span>C.T.</span><small>Gallery</small></a>
+  </header>
+
+  <div class="detail-wrap">
+    <a class="detail-back" id="back" href="index.html">← 돌아가기</a>
+    <div id="view"><p class="error">불러오는 중...</p></div>
+  </div>
+
+  <script>
+    const owner = "monana670-create";
+    const repo = "C.T.-Gallery";
+    const q = new URLSearchParams(location.search);
+    const type = q.get("type") === "worldview" ? "worldview" : "character";
+    const id = q.get("id");
+    const file = type === "worldview" ? "data/worldviews.json" : "data/characters.json";
+    document.getElementById("back").href = "index.html#" + type + "-section";
+
+    async function loadJSON(path) {
+      const t = Date.now();
+      try {
+        const r = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${path}?t=${t}`,
+          { headers: { Accept: "application/vnd.github.raw+json" } });
+        if (r.ok) return await r.json();
+      } catch (e) {}
+      try {
+        const r = await fetch(`${path}?t=${t}`);
+        if (r.ok) return await r.json();
+      } catch (e) {}
+      return [];
+    }
+
+    loadJSON(file).then(list => {
+      const view = document.getElementById("view");
+      const it = list.find(x => x.id === id);
+      if (!it) { view.innerHTML = '<p class="error">기록을 찾을 수 없어요.</p>'; return; }
+      document.title = it.title + " · C.T. Gallery";
+      view.className = "detail";
+      view.innerHTML = `
+        <div class="detail-img"><img alt=""></div>
+        <div>
+          <p class="eyebrow"></p>
+          <h1></h1>
+          <p class="lead"></p>
+          <div class="text"></div>
+        </div>`;
+      const img = view.querySelector("img");
+      img.src = it.image; img.alt = it.title;
+      view.querySelector(".eyebrow").textContent = type === "worldview" ? "세계관" : "캐릭터";
+      view.querySelector("h1").textContent = it.title;
+      view.querySelector(".lead").textContent = it.description || "";
+      view.querySelector(".text").textContent = it.body || "";
+    });
+  </script>
+</body>
+</html>
