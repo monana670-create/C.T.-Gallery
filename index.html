@@ -7,7 +7,7 @@
   <meta name="description" content="C.T. Gallery - Creative Archive">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Gowun+Batang:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Chakra+Petch:ital,wght@0,400;0,600;0,700;1,700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body class="lock">
@@ -35,7 +35,7 @@
   <div class="turn" id="turn"></div>
 
   <header class="header">
-    <div class="logo"><span>C.T.</span><small>Gallery</small></div>
+    <a class="logo" href="index.html"><span>C.T.</span><small>GALLERY</small></a>
     <nav class="header-nav">
       <button class="nav-btn active" data-target="home-section">홈</button>
       <button class="nav-btn" data-target="gallery-section">작품</button>
@@ -53,25 +53,42 @@
   </div>
 
   <main>
+    <!-- 홈 -->
     <section id="home-section" class="content-section active">
       <section class="hero">
-        <p class="eyebrow">Creative Archive, 2026</p>
-        <h1>C.T.<span>Gallery</span></h1>
+        <span class="tag">CREATIVE ARCHIVE // 2026</span>
+        <h1 class="title"><span class="t1">C.T.</span><span class="t2">GALLERY</span></h1>
         <p class="description">이미지와 세계관, 그리고 캐릭터를 기록하는<br>개인 크리에이티브 아카이브입니다.</p>
         <button class="explore-btn" data-target="gallery-section">작품 둘러보기</button>
+        <div class="hazard"></div>
       </section>
+
       <div class="marquee" id="marquee" hidden><div class="track" id="track"></div></div>
+
+      <div class="quick">
+        <button class="q-card" data-target="gallery-section" style="--a:var(--cy)">
+          <small>VISUAL ARCHIVE</small><b>작품</b><em data-stat="works">00</em>
+        </button>
+        <button class="q-card" data-target="character-section" style="--a:var(--pk)">
+          <small>CHARACTER DATABASE</small><b>캐릭터</b><em data-stat="chars">00</em>
+        </button>
+        <button class="q-card" data-target="worldview-section" style="--a:var(--yl)">
+          <small>WORLD DATABASE</small><b>세계관</b><em data-stat="worlds">00</em>
+        </button>
+      </div>
     </section>
 
+    <!-- 작품 -->
     <section id="gallery-section" class="content-section">
       <div class="page-header">
-        <p class="eyebrow">Visual Archive</p>
+        <span class="tag">VISUAL ARCHIVE</span>
         <h1 class="page-main-title">작품</h1>
+        <div class="hazard"></div>
       </div>
       <div class="section-title">
         <h2>이미지 아카이브</h2>
         <div class="title-right">
-          <span id="image-count">불러오는 중...</span>
+          <span id="image-count">LOADING...</span>
           <button class="add-btn admin-only" data-kind="image">+ 작품 올리기</button>
         </div>
       </div>
@@ -79,10 +96,12 @@
       <div class="pagination" id="pagination"></div>
     </section>
 
+    <!-- 캐릭터 -->
     <section id="character-section" class="content-section">
       <div class="page-header">
-        <p class="eyebrow">Character Database</p>
+        <span class="tag">CHARACTER DATABASE</span>
         <h1 class="page-main-title">캐릭터</h1>
+        <div class="hazard"></div>
       </div>
       <div class="section-title">
         <h2>캐릭터 도감</h2>
@@ -91,10 +110,12 @@
       <div class="archive-grid" id="character-list"></div>
     </section>
 
+    <!-- 세계관 -->
     <section id="worldview-section" class="content-section">
       <div class="page-header">
-        <p class="eyebrow">World Database</p>
+        <span class="tag">WORLD DATABASE</span>
         <h1 class="page-main-title">세계관</h1>
+        <div class="hazard"></div>
       </div>
       <div class="section-title">
         <h2>세계의 기록</h2>
@@ -112,9 +133,9 @@
   <div class="modal" id="modal" aria-hidden="true"><div class="modal-box" id="modal-box"></div></div>
 
   <footer>
-    <span>© C.T. Gallery</span>
+    <span>© C.T. GALLERY</span>
     <button class="admin-link" id="admin-toggle">관리</button>
-    <span>Creative Archive</span>
+    <span>CREATIVE ARCHIVE</span>
   </footer>
 
   <script>
@@ -127,14 +148,21 @@
     const esc = s => String(s ?? "").replace(/[&<>"']/g,
       c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
     const okColor = c => /^#[0-9a-f]{6}$/i.test(c || "") ? c : "";
-    const fxOf = it => ["glow", "pulse", "spin"].includes(it.effect) ? "fx-" + it.effect : "";
     const sleep = ms => new Promise(r => setTimeout(r, ms));
     const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
     const navButtons = document.querySelectorAll(".nav-btn, .mobile-nav-btn");
     const menuToggle = $("menu-toggle"), mobileMenu = $("mobile-menu");
-    let characters = [], worldviews = [];
+    const gallery = $("gallery"), pagination = $("pagination"), imageCount = $("image-count");
+    let characters = [], worldviews = [], allImageFiles = [], currentPage = 1;
 
     const linkOf = (it, type) => it.link || `detail.html?type=${type}&id=${encodeURIComponent(it.id || "")}`;
+
+    function updateStats() {
+      const n = { works: allImageFiles.length, chars: characters.length, worlds: worldviews.length };
+      document.querySelectorAll("[data-stat]").forEach(el => {
+        el.textContent = String(n[el.dataset.stat] ?? 0).padStart(2, "0");
+      });
+    }
 
     async function loadJSON(path) {
       const t = Date.now();
@@ -154,8 +182,9 @@
       [characters, worldviews] = await Promise.all([
         loadJSON("data/characters.json"), loadJSON("data/worldviews.json")
       ]);
-      renderArchive(characters, "character-list", "character", "캐릭터");
-      renderArchive(worldviews, "worldview-list", "worldview", "세계관");
+      renderArchive(characters, "character-list", "character", "CHARACTER");
+      renderArchive(worldviews, "worldview-list", "worldview", "WORLDVIEW");
+      updateStats();
     }
 
     const io = new IntersectionObserver(entries => {
@@ -170,10 +199,7 @@
     /* ===== 책 인트로 ===== */
     const intro = $("intro"), book = $("book");
     let introOpened = false;
-    function finishIntro() {
-      intro.classList.add("done");
-      document.body.classList.remove("lock");
-    }
+    function finishIntro() { intro.classList.add("done"); document.body.classList.remove("lock"); }
     function openBook() {
       if (introOpened) return;
       introOpened = true;
@@ -228,8 +254,7 @@
       turning = false;
     }
 
-    navButtons.forEach(b => b.addEventListener("click", () => switchSection(b.dataset.target)));
-    document.querySelectorAll(".explore-btn").forEach(b =>
+    document.querySelectorAll("[data-target]").forEach(b =>
       b.addEventListener("click", () => switchSection(b.dataset.target)));
 
     function closeMobileMenu() { mobileMenu.classList.remove("open"); menuToggle.setAttribute("aria-expanded", "false"); }
@@ -261,9 +286,6 @@
     }
 
     /* ===== 작품 갤러리 ===== */
-    const gallery = $("gallery"), pagination = $("pagination"), imageCount = $("image-count");
-    let currentPage = 1, allImageFiles = [];
-
     function loadGallery(goLast) {
       return fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${folder}?t=${Date.now()}`)
         .then(r => { if (!r.ok) throw new Error("GitHub API error"); return r.json(); })
@@ -275,8 +297,9 @@
               const an = parseInt(a.name, 10), bn = parseInt(b.name, 10);
               return (!isNaN(an) && !isNaN(bn)) ? an - bn : a.name.localeCompare(b.name);
             });
-          imageCount.textContent = `${allImageFiles.length}점의 이미지`;
+          imageCount.textContent = `${String(allImageFiles.length).padStart(2, "0")} IMAGES`;
           buildMarquee();
+          updateStats();
           if (!allImageFiles.length) {
             gallery.innerHTML = `<p class="error">등록된 이미지가 없습니다.</p>`;
             pagination.innerHTML = "";
@@ -288,7 +311,7 @@
         })
         .catch(err => {
           console.error(err);
-          imageCount.textContent = "0점의 이미지";
+          imageCount.textContent = "00 IMAGES";
           gallery.innerHTML = `<p class="error">이미지를 불러오지 못했습니다. 잠시 후 다시 시도해 주세요.</p>`;
         });
     }
@@ -297,13 +320,18 @@
       gallery.innerHTML = "";
       const start = (page - 1) * ITEMS_PER_PAGE;
       allImageFiles.slice(start, start + ITEMS_PER_PAGE).forEach((file, i) => {
-        const item = document.createElement("button");
-        item.className = "gallery-item"; item.type = "button";
-        item.innerHTML = `<img src="${esc(file.download_url)}" alt="${esc(file.name)}" loading="lazy" draggable="false">
-                          <div class="gallery-overlay">크게 보기</div>`;
-        item.addEventListener("click", () => openLightbox(file.download_url, file.name));
-        gallery.appendChild(item);
-        reveal(item, (i % 3) * 90);
+        const wrap = document.createElement("div");
+        wrap.className = "gi";
+        wrap.innerHTML = `
+          <button class="gallery-item" type="button">
+            <img src="${esc(file.download_url)}" alt="${esc(file.name)}" loading="lazy" draggable="false">
+            <div class="gallery-overlay">VIEW IMAGE ▶</div>
+          </button>
+          <button class="del" type="button" aria-label="삭제" title="삭제">✕</button>`;
+        wrap.querySelector(".gallery-item").addEventListener("click", () => openLightbox(file.download_url, file.name));
+        wrap.querySelector(".del").addEventListener("click", () => removeImage(file));
+        gallery.appendChild(wrap);
+        reveal(wrap, (i % 3) * 90);
       });
       renderPagination();
     }
@@ -321,9 +349,9 @@
         b.addEventListener("click", onClick);
         pagination.appendChild(b);
       };
-      mk("←", () => goPage(currentPage - 1), currentPage === 1);
+      mk("◀", () => goPage(currentPage - 1), currentPage === 1);
       for (let i = 1; i <= total; i++) mk(i, () => goPage(i), false, i === currentPage);
-      mk("→", () => goPage(currentPage + 1), currentPage === total);
+      mk("▶", () => goPage(currentPage + 1), currentPage === total);
     }
 
     /* ===== 캐릭터 / 세계관 ===== */
@@ -332,21 +360,43 @@
       box.innerHTML = "";
       if (!list.length) { box.innerHTML = `<p class="error">아직 등록된 기록이 없습니다.</p>`; return; }
       list.forEach((item, i) => {
-        const a = document.createElement("a");
-        a.href = linkOf(item, type);
-        a.className = "archive-card " + fxOf(item);
-        if (okColor(item.color)) a.style.setProperty("--c", item.color);
-        a.innerHTML = `
-          <div class="archive-image"><img src="${esc(item.image)}" alt="${esc(item.title)}" loading="lazy"></div>
-          <div class="archive-info">
-            <span class="archive-type">${label}</span>
-            <h3>${esc(item.title)}${item.webtoonUrl ? '<span class="chip">웹툰</span>' : ""}</h3>
-            <p>${esc(item.description)}</p>
-            <div class="archive-view">기록 보러가기</div>
-          </div>`;
-        box.appendChild(a);
-        reveal(a, i * 100);
+        const w = document.createElement("div");
+        w.className = "fxw" + (["glow", "pulse", "spin"].includes(item.effect) ? " fx-" + item.effect : "");
+        if (okColor(item.color)) w.style.setProperty("--c", item.color);
+        w.innerHTML = `
+          <a class="archive-card" href="${esc(linkOf(item, type))}">
+            <div class="card-in">
+              <div class="archive-image"><img src="${esc(item.image)}" alt="${esc(item.title)}" loading="lazy"></div>
+              <div class="archive-info">
+                <span class="archive-type">${label}</span>
+                <h3>${esc(item.title)}${item.webtoonUrl ? '<span class="chip">웹툰</span>' : ""}</h3>
+                <p>${esc(item.description)}</p>
+                <div class="archive-view">VIEW ARCHIVE ▶</div>
+              </div>
+            </div>
+          </a>
+          <button class="del" type="button" aria-label="삭제" title="삭제">✕</button>`;
+        w.querySelector(".del").addEventListener("click", () => removeEntry(type, item));
+        box.appendChild(w);
+        reveal(w, i * 100);
       });
+    }
+
+    /* ===== 삭제 ===== */
+    async function removeImage(file) {
+      if (!confirm("이 작품을 삭제할까요?\n삭제하면 되돌릴 수 없어요.")) return;
+      try {
+        await api({ action: "deleteImage", name: file.name });
+        await loadGallery();
+      } catch (err) { alert(err.message); }
+    }
+    async function removeEntry(kind, item) {
+      if (!item.id) { alert("이 항목은 관리 화면에서 삭제할 수 없어요."); return; }
+      if (!confirm(`'${item.title}'을(를) 삭제할까요?\n이미지도 함께 지워지며 되돌릴 수 없어요.`)) return;
+      try {
+        await api({ action: "deleteEntry", kind, id: item.id });
+        await loadData();
+      } catch (err) { alert(err.message); }
     }
 
     /* ===== 라이트박스 ===== */
@@ -358,7 +408,7 @@
     }
     function closeLightbox() {
       lightbox.classList.remove("open"); lightbox.setAttribute("aria-hidden", "true");
-      if (introOpened || document.querySelector(".intro.done")) document.body.classList.remove("lock");
+      if (introOpened || intro.classList.contains("done")) document.body.classList.remove("lock");
       setTimeout(() => { lightboxImage.src = ""; }, 300);
     }
     $("lightbox-close").addEventListener("click", closeLightbox);
@@ -461,7 +511,7 @@
         <label>이름<input id="f-title" maxlength="60" required></label>
         <label>한 줄 소개<input id="f-desc" maxlength="120"></label>
         <label>자세한 설명<textarea id="f-body" rows="5" maxlength="5000"></textarea></label>
-        <label>테두리 색<input type="color" id="f-color" value="#111111"></label>
+        <label>테두리 색<input type="color" id="f-color" value="#3df0ff"></label>
         <label>테두리 효과
           <select id="f-fx">
             <option value="none">없음</option>
@@ -528,4 +578,4 @@
     });
   </script>
 </body>
-</html>
+  </html>
