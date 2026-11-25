@@ -3,7 +3,9 @@ const crypto = require("crypto");
 const OWNER = process.env.GH_OWNER || "monana670-create";
 const REPO = process.env.GH_REPO || "C.T.-Gallery";
 const API = `https://api.github.com/repos/${OWNER}/${REPO}/contents/`;
+const RAW = `https://raw.githubusercontent.com/${OWNER}/${REPO}/`;
 const EXT = { "image/webp": "webp", "image/jpeg": "jpg", "image/png": "png" };
+const FX = ["none", "glow", "pulse", "spin"];
 
 const headers = () => ({
   Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
@@ -40,7 +42,7 @@ const clean = (s, n) => String(s || "").trim().slice(0, n);
 function checkImage(b) {
   const ext = EXT[b.imageType];
   if (!ext || !b.image) throw Object.assign(new Error("이미지를 확인할 수 없어요."), { code: 400 });
-  if (b.image.length > 4000000) throw Object.assign(new Error("이미지가 너무 커요."), { code: 413 });
+  if (b.image.length > 3500000) throw Object.assign(new Error("이미지가 너무 커요."), { code: 413 });
   return ext;
 }
 
@@ -68,6 +70,13 @@ module.exports = async (req, res) => {
       return res.json({ ok: true, name: `${next}.${ext}` });
     }
 
+    if (b.action === "addAsset") {
+      const ext = checkImage(b);
+      const path = `webtoon/w${Date.now().toString(36)}.${ext}`;
+      await ghPut(path, b.image, "Add webtoon image");
+      return res.json({ ok: true, url: `${RAW}HEAD/${path}` });
+    }
+
     if (b.action === "addEntry") {
       const isChar = b.kind !== "worldview";
       const file = isChar ? "data/characters.json" : "data/worldviews.json";
@@ -82,12 +91,17 @@ module.exports = async (req, res) => {
 
       const cur = await ghGet(file);
       const list = cur ? JSON.parse(Buffer.from(cur.content, "base64").toString("utf8")) : [];
+      const wImg = clean(b.webtoonImage, 300);
       const item = {
         id,
         title,
         description: clean(b.description, 120),
         body: clean(b.body, 5000),
-        image: `https://raw.githubusercontent.com/${OWNER}/${REPO}/HEAD/${imgPath}`,
+        image: `${RAW}HEAD/${imgPath}`,
+        color: /^#[0-9a-fA-F]{6}$/.test(b.color || "") ? b.color : "#111111",
+        effect: FX.includes(b.effect) ? b.effect : "none",
+        webtoonUrl: /^https?:\/\//i.test(b.webtoonUrl || "") ? clean(b.webtoonUrl, 300) : "",
+        webtoonImage: wImg.startsWith(RAW) ? wImg : "",
         createdAt: new Date().toISOString()
       };
       list.push(item);
