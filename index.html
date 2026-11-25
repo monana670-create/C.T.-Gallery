@@ -53,7 +53,6 @@
       <section class="hero">
         <div class="hero-art" id="hero-art" aria-hidden="true"></div>
         <div class="hero-shade" aria-hidden="true"></div>
-        <div class="hero-lines" aria-hidden="true"></div>
 
         <p class="vtag" aria-label="작은 기적을 기록하는 아카이브">
           <span aria-hidden="true">작은 <strong>기적</strong>을</span>
@@ -65,13 +64,13 @@
           <h1 class="logo-big"><b>C.T.</b><em>Gallery</em></h1>
           <div class="hero-btns">
             <button class="hb" data-target="gallery-section">
-              <i>✦</i><span><small>VISUAL ARCHIVE</small>작품 보기</span><b data-stat="works">—</b>
+              <i>✦</i><span><small>VISUAL ARCHIVE</small>작품 보기</span><b data-stat="works">00</b>
             </button>
             <button class="hb" data-target="character-section">
-              <i>✦</i><span><small>CHARACTER</small>캐릭터 도감</span><b data-stat="chars">—</b>
+              <i>✦</i><span><small>CHARACTER</small>캐릭터 도감</span><b data-stat="chars">00</b>
             </button>
             <button class="hb" data-target="worldview-section">
-              <i>✦</i><span><small>WORLDVIEW</small>세계관 기록</span><b data-stat="worlds">—</b>
+              <i>✦</i><span><small>WORLDVIEW</small>세계관 기록</span><b data-stat="worlds">00</b>
             </button>
           </div>
         </div>
@@ -81,14 +80,14 @@
             <span class="stk-t">NEW WORKS</span>
             <span class="stk-b">
               <img id="stk-img" alt="" hidden>
-              <span class="stk-c">작품 <b data-stat="works">—</b>점 ▶</span>
+              <span class="stk-c">작품 <b data-stat="works">00</b>점 ▶</span>
             </span>
           </button>
           <button class="stk" data-target="notice-section" type="button">
             <span class="stk-t">NOTICE</span>
             <span class="stk-b">
               <span class="stk-n" id="stk-n">공지를 불러오는 중...</span>
-              <span class="stk-c">공지 <b data-stat="notes">—</b>건 ▶</span>
+              <span class="stk-c">공지 <b data-stat="notes">00</b>건 ▶</span>
             </span>
           </button>
         </div>
@@ -230,17 +229,13 @@
     const intro = $("intro"), viewer = $("viewer"), modal = $("modal"), lightbox = $("lightbox");
     const gallery = $("gallery"), pagination = $("pagination"), noticesBox = $("notices");
 
-    const loadedCounts = new Set();
-
     function updateStats() {
       const counts = {
         works: allImageFiles.length, chars: characters.length,
         worlds: worldviews.length, notes: notices.length
       };
       document.querySelectorAll("[data-stat]").forEach(el => {
-        const key = el.dataset.stat;
-        el.textContent = key === "notes" ? (noticeState === "ready" ? String(counts.notes).padStart(2, "0") : "—")
-          : loadedCounts.has(key) ? String(counts[key]).padStart(2, "0") : "—";
+        el.textContent = String(counts[el.dataset.stat] ?? 0).padStart(2, "0");
       });
     }
 
@@ -264,38 +259,23 @@
       ];
       for (const [url, options] of sources) {
         try {
-          const response = await fetch(url, { ...options, signal: AbortSignal.timeout(5500) });
+          const response = await fetch(url, options);
           if (!response.ok) continue;
           const data = await response.json();
           if (Array.isArray(data)) return data;
         } catch {}
       }
-      throw new Error("목록을 불러오지 못했어요.");
+      return [];
     }
 
     async function loadData() {
-      async function loadArchive(world) {
-        const type = world ? "worldview" : "character";
-        const stat = world ? "worlds" : "chars";
-        const target = type + "-list";
-        try {
-          const list = await loadJSON("data/" + type + "s.json");
-          if (world) worldviews = list;
-          else { characters = list; startHero(); }
-          loadedCounts.add(stat);
-          renderArchive(list, target, type, type.toUpperCase());
-        } catch {
-          const box = $(target);
-          box.querySelector(".archive-retry")?.remove();
-          const retry = document.createElement("button");
-          retry.className = "archive-retry";
-          retry.textContent = "목록을 불러오지 못했어요 · 다시 시도";
-          retry.onclick = () => { retry.disabled = true; loadArchive(world); };
-          box.prepend(retry);
-        }
-        updateStats();
-      }
-      await Promise.all([loadArchive(false), loadArchive(true)]);
+      [characters, worldviews] = await Promise.all([
+        loadJSON("data/characters.json"), loadJSON("data/worldviews.json")
+      ]);
+      startHero();
+      renderArchive(characters, "character-list", "character", "CHARACTER");
+      renderArchive(worldviews, "worldview-list", "worldview", "WORLDVIEW");
+      updateStats();
     }
 
     const observer = "IntersectionObserver" in window
@@ -335,35 +315,7 @@
       syncLock();
     }
 
-    async function playEntryChime() {
-      const Audio = window.AudioContext || window.webkitAudioContext;
-      if (!Audio) return;
-      const ctx = new Audio();
-      try {
-        await ctx.resume();
-        const start = ctx.currentTime + .012;
-        const tones = [783.99, 987.77, 1174.66];
-        tones.forEach((hz, i) => {
-          const time = start + i * .094;
-          for (const [multiple, volume, decay] of [[1, .065, .7], [2, .014, .39]]) {
-            const osc = ctx.createOscillator();
-            const gain = ctx.createGain();
-            osc.frequency.value = hz * multiple;
-            gain.gain.setValueAtTime(.0001, time);
-            gain.gain.exponentialRampToValueAtTime(volume, time + .012);
-            gain.gain.exponentialRampToValueAtTime(.0001, time + decay);
-            osc.connect(gain).connect(ctx.destination);
-            osc.start(time);
-            osc.stop(time + decay + .015);
-          }
-        });
-      } finally {
-        setTimeout(() => ctx.close().catch(() => {}), 1200);
-      }
-    }
-
     $("start").addEventListener("click", () => {
-      playEntryChime().catch(() => {});
       intro.classList.add("go");
       try { sessionStorage.setItem("seenIntro", "1"); } catch {}
       setTimeout(finishIntro, motion.matches ? 0 : 650);
@@ -515,42 +467,16 @@
       track.style.setProperty("--dur", `${list.length * 6}s`);
     }
 
-    async function getWorkFiles() {
-      const controller = new AbortController();
-      const timeout = setTimeout(() => controller.abort(), 4500);
-      try {
-        const response = await fetch(`${repoContents}/${folder}`, {
-          cache: "no-cache", signal: controller.signal
-        });
-        if (!response.ok) throw new Error(`GitHub HTTP ${response.status}`);
-        const files = await response.json();
-        if (!Array.isArray(files)) throw new Error("작품 목록 형식 오류");
-        const works = files.filter(f => f.type === "file" && /\.(jpe?g|png|gif|webp)$/i.test(f.name));
-        return works;
-      } catch (error) {
-        console.warn("배포된 작품 파일로 다시 확인합니다.", error);
-        const manifest = await fetch("/data/work-files.json", {
-          cache: "no-cache", signal: AbortSignal.timeout(5500)
-        });
-        if (!manifest.ok) throw error;
-        const names = await manifest.json();
-        if (!Array.isArray(names)) throw error;
-        return names.map(name => ({
-          type: "file", name, download_url: "/images/" + encodeURIComponent(name)
-        }));
-      } finally {
-        clearTimeout(timeout);
-      }
-    }
-
     async function loadGallery(goLast = false) {
       try {
-        const files = await getWorkFiles();
+        const response = await fetch(`${repoContents}/${folder}?t=${Date.now()}`);
+        if (!response.ok) throw new Error();
+        const files = await response.json();
+        if (!Array.isArray(files)) throw new Error();
         allImageFiles = files
           .filter(f => f.type === "file" && /\.(jpe?g|png|gif|webp)$/i.test(f.name))
           .sort((a, b) => a.name.localeCompare(b.name, "ko", { numeric: true }));
         $("image-count").textContent = `${String(allImageFiles.length).padStart(2, "0")} IMAGES`;
-        loadedCounts.add("works");
         buildMarquee();
         updateStats();
         updateStickers();
@@ -978,12 +904,11 @@
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ password: adminPw, ...payload })
       });
-      const data = await response.json().catch(() => null);
-      if (!response.ok || data?.ok !== true) {
-        throw new Error(data?.error || "저장 여부를 확인하지 못했어요. 목록을 확인해 주세요.");
-      }
+      const data = await response.json().catch(() => ({}));
+      if (!response.ok) throw new Error(data.error || "요청에 실패했어요.");
       return data;
     }
+
     const api = payload => post("/api/admin", payload);
     const board = payload => post("/api/board", payload);
 
@@ -995,9 +920,11 @@
     modal.onclick = e => {
       if (e.target === modal || e.target.hasAttribute("data-close")) closeModal();
     };
+
     function setMsg(text) {
       if ($("msg")) $("msg").textContent = text;
     }
+
     function openLogin() {
       openModal(`<h3>관리자 로그인</h3><form id="f">
         <label>비밀번호<input type="password" id="pw" autocomplete="current-password" required></label>
@@ -1029,6 +956,7 @@
       try { sessionStorage.removeItem("adminPw"); } catch {}
       setAdmin(false);
     };
+
     if (adminPw) {
       api({ action: "verify" }).then(() => setAdmin(true)).catch(() => {
         adminPw = "";
@@ -1088,7 +1016,6 @@
     const FORM_TITLE = { image: "작품 올리기", character: "캐릭터 추가", worldview: "세계관 추가" };
     function openForm(kind) {
       const isImage = kind === "image";
-      const uploaded = new Set();
       const fields = isImage ? "" : `
         <label>이름<input id="f-title" maxlength="60" required></label>
         <label>한 줄 소개<input id="f-desc" maxlength="120"></label>
@@ -1116,10 +1043,8 @@
           const files = [...$("f-file").files];
           if (isImage) {
             for (let i = 0; i < files.length; i++) {
-              if (uploaded.has(files[i])) continue;
               setMsg(`올리는 중... (${i + 1}/${files.length})`);
               await api({ action: "addImage", ...(await prepareImage(files[i])) });
-              uploaded.add(files[i]);
             }
             closeModal();
             await loadGallery(true);
@@ -1183,4 +1108,3 @@
   </script>
 </body>
 </html>
-
