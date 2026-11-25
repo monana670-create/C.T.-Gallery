@@ -55,13 +55,24 @@
           <h1></h1>
           <p class="lead"></p>
           <div class="text"></div>
+          <a class="webtoon" target="_blank" rel="noopener noreferrer" hidden><img alt=""><span>웹툰 바로가기</span></a>
         </div>`;
-      const img = view.querySelector("img");
+      const frame = view.querySelector(".detail-img");
+      if (/^#[0-9a-f]{6}$/i.test(it.color || "")) frame.style.setProperty("--c", it.color);
+      if (["glow", "pulse", "spin"].includes(it.effect)) frame.classList.add("fx-" + it.effect);
+      const img = frame.querySelector("img");
       img.src = it.image; img.alt = it.title;
       view.querySelector(".eyebrow").textContent = type === "worldview" ? "세계관" : "캐릭터";
       view.querySelector("h1").textContent = it.title;
       view.querySelector(".lead").textContent = it.description || "";
       view.querySelector(".text").textContent = it.body || "";
+      if (/^https?:\/\//i.test(it.webtoonUrl || "")) {
+        const w = view.querySelector(".webtoon");
+        w.href = it.webtoonUrl;
+        w.hidden = false;
+        const wi = w.querySelector("img");
+        if (it.webtoonImage) wi.src = it.webtoonImage; else wi.remove();
+      }
     });
   </script>
 </body>
