@@ -96,7 +96,10 @@
       </div>
       <div class="section-title">
         <h2>이미지 아카이브</h2>
-        <span id="image-count">불러오는 중...</span>
+        <div class="title-right">
+          <span id="image-count">불러오는 중...</span>
+          <button class="add-btn admin-only" data-kind="image">+ 작품 올리기</button>
+        </div>
       </div>
       <div class="gallery" id="gallery"></div>
       <div class="pagination" id="pagination"></div>
@@ -108,7 +111,10 @@
         <p class="eyebrow">Character Database</p>
         <h1 class="page-main-title">캐릭터</h1>
       </div>
-      <div class="section-title"><h2>캐릭터 도감</h2></div>
+      <div class="section-title">
+        <h2>캐릭터 도감</h2>
+        <button class="add-btn admin-only" data-kind="character">+ 캐릭터 추가</button>
+      </div>
       <div class="archive-grid" id="character-list"></div>
     </section>
 
@@ -118,7 +124,10 @@
         <p class="eyebrow">World Database</p>
         <h1 class="page-main-title">세계관</h1>
       </div>
-      <div class="section-title"><h2>세계의 기록</h2></div>
+      <div class="section-title">
+        <h2>세계의 기록</h2>
+        <button class="add-btn admin-only" data-kind="worldview">+ 세계관 추가</button>
+      </div>
       <div class="archive-grid" id="worldview-list"></div>
     </section>
   </main>
@@ -128,43 +137,60 @@
     <img id="lightbox-image" src="" alt="">
   </div>
 
+  <!-- 관리자 모달 -->
+  <div class="modal" id="modal" aria-hidden="true">
+    <div class="modal-box" id="modal-box"></div>
+  </div>
+
   <footer>
     <span>© C.T. Gallery</span>
+    <button class="admin-link" id="admin-toggle">관리</button>
     <span>Creative Archive</span>
   </footer>
 
   <script>
-    /* ===== 데이터 (여기만 수정하면 됩니다) ===== */
+    /* ===== 설정 ===== */
     const owner = "monana670-create";
     const repo = "C.T.-Gallery";
     const folder = "images";
     const ITEMS_PER_PAGE = 9;
 
-    // 캐릭터 추가: 아래 배열에 { } 한 덩어리씩 추가
-    const characters = [
-      {
-        title: "김유담",
-        description: "메아리의 종착지",
-        image: "characters/images/yudam.png",
-        link: "characters/yudam.html"
-      }
-    ];
-
-    // 세계관 추가: 아래 배열에 { } 한 덩어리씩 추가
-    const worldviews = [
-      {
-        title: "은색 공방의 키메토리아",
-        description: "알테리아와 키메라 아카데미의 기록",
-        image: "worldviews/images/chimatoria.png",
-        link: "worldviews/chimatoria.html"
-      }
-    ];
-
-    /* ===== 공통 요소 ===== */
+    /* ===== 공통 ===== */
     const $ = id => document.getElementById(id);
+    const esc = s => String(s ?? "").replace(/[&<>"']/g,
+      c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
     const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
     const navButtons = document.querySelectorAll(".nav-btn, .mobile-nav-btn");
     const menuToggle = $("menu-toggle"), mobileMenu = $("mobile-menu");
+
+    let characters = [], worldviews = [];
+
+    const linkOf = (it, type) =>
+      it.link || `detail.html?type=${type}&id=${encodeURIComponent(it.id || "")}`;
+
+    async function loadJSON(path) {
+      const t = Date.now();
+      try {
+        const r = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${path}?t=${t}`,
+          { headers: { Accept: "application/vnd.github.raw+json" } });
+        if (r.ok) return await r.json();
+      } catch (e) {}
+      try {
+        const r = await fetch(`${path}?t=${t}`);
+        if (r.ok) return await r.json();
+      } catch (e) {}
+      return [];
+    }
+
+    async function loadData() {
+      [characters, worldviews] = await Promise.all([
+        loadJSON("data/characters.json"),
+        loadJSON("data/worldviews.json")
+      ]);
+      renderToday();
+      renderArchive(characters, "character-list", "character", "캐릭터");
+      renderArchive(worldviews, "worldview-list", "worldview", "세계관");
+    }
 
     /* 스크롤 등장 효과 */
     const io = new IntersectionObserver(entries => {
@@ -258,6 +284,7 @@
     /* ===== 오늘의 캐릭터 ===== */
     function renderToday() {
       const box = $("today-character");
+      box.innerHTML = "";
       if (!characters.length) { box.innerHTML = `<p class="error">등록된 캐릭터가 없습니다.</p>`; return; }
       const now = new Date();
       const day = Math.floor(new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime() / 86400000);
@@ -266,13 +293,13 @@
         const c = characters[(day + i) % characters.length];
         const a = document.createElement("a");
         a.className = "today-card";
-        a.href = c.link;
+        a.href = linkOf(c, "character");
         a.innerHTML = `
-          <div class="today-image"><img src="${c.image}" alt="${c.title}" loading="lazy"></div>
+          <div class="today-image"><img src="${esc(c.image)}" alt="${esc(c.title)}" loading="lazy"></div>
           <div class="today-info">
             <span>오늘의 캐릭터</span>
-            <h3>${c.title}</h3>
-            <p>${c.description}</p>
+            <h3>${esc(c.title)}</h3>
+            <p>${esc(c.description)}</p>
             <div class="today-view">기록 보러가기</div>
           </div>`;
         box.appendChild(a);
@@ -281,31 +308,38 @@
       $("today-date").textContent =
         `${String(now.getMonth() + 1).padStart(2, "0")}.${String(now.getDate()).padStart(2, "0")}`;
     }
-    renderToday();
 
     /* ===== 깃허브 갤러리 ===== */
     const gallery = $("gallery"), pagination = $("pagination"), imageCount = $("image-count");
     let currentPage = 1, allImageFiles = [];
 
-    fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${folder}`)
-      .then(r => { if (!r.ok) throw new Error("GitHub API error"); return r.json(); })
-      .then(files => {
-        if (!Array.isArray(files)) throw new Error("Invalid GitHub response");
-        allImageFiles = files
-          .filter(f => f.type === "file" && /\.(jpg|jpeg|png|gif|webp)$/i.test(f.name))
-          .sort((a, b) => {
-            const an = parseInt(a.name, 10), bn = parseInt(b.name, 10);
-            return (!isNaN(an) && !isNaN(bn)) ? an - bn : a.name.localeCompare(b.name);
-          });
-        imageCount.textContent = `${allImageFiles.length}점의 이미지`;
-        if (!allImageFiles.length) { gallery.innerHTML = `<p class="error">등록된 이미지가 없습니다.</p>`; return; }
-        renderPage(currentPage);
-      })
-      .catch(err => {
-        console.error(err);
-        imageCount.textContent = "0점의 이미지";
-        gallery.innerHTML = `<p class="error">이미지를 불러오지 못했습니다. 잠시 후 다시 시도해 주세요.</p>`;
-      });
+    function loadGallery(goLast) {
+      return fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${folder}?t=${Date.now()}`)
+        .then(r => { if (!r.ok) throw new Error("GitHub API error"); return r.json(); })
+        .then(files => {
+          if (!Array.isArray(files)) throw new Error("Invalid GitHub response");
+          allImageFiles = files
+            .filter(f => f.type === "file" && /\.(jpg|jpeg|png|gif|webp)$/i.test(f.name))
+            .sort((a, b) => {
+              const an = parseInt(a.name, 10), bn = parseInt(b.name, 10);
+              return (!isNaN(an) && !isNaN(bn)) ? an - bn : a.name.localeCompare(b.name);
+            });
+          imageCount.textContent = `${allImageFiles.length}점의 이미지`;
+          if (!allImageFiles.length) {
+            gallery.innerHTML = `<p class="error">등록된 이미지가 없습니다.</p>`;
+            pagination.innerHTML = "";
+            return;
+          }
+          const totalPages = Math.ceil(allImageFiles.length / ITEMS_PER_PAGE);
+          currentPage = goLast ? totalPages : Math.min(currentPage, totalPages);
+          renderPage(currentPage);
+        })
+        .catch(err => {
+          console.error(err);
+          imageCount.textContent = "0점의 이미지";
+          gallery.innerHTML = `<p class="error">이미지를 불러오지 못했습니다. 잠시 후 다시 시도해 주세요.</p>`;
+        });
+    }
 
     function renderPage(page) {
       gallery.innerHTML = "";
@@ -314,7 +348,7 @@
         const item = document.createElement("button");
         item.className = "gallery-item";
         item.type = "button";
-        item.innerHTML = `<img src="${file.download_url}" alt="${file.name}" loading="lazy" draggable="false">
+        item.innerHTML = `<img src="${esc(file.download_url)}" alt="${esc(file.name)}" loading="lazy" draggable="false">
                           <div class="gallery-overlay">크게 보기</div>`;
         item.addEventListener("click", () => openLightbox(file.download_url, file.name));
         gallery.appendChild(item);
@@ -343,27 +377,26 @@
     }
 
     /* ===== 캐릭터 / 세계관 목록 ===== */
-    function renderArchive(list, targetId, type) {
+    function renderArchive(list, targetId, type, label) {
       const box = $(targetId);
       box.innerHTML = "";
+      if (!list.length) { box.innerHTML = `<p class="error">아직 등록된 기록이 없습니다.</p>`; return; }
       list.forEach((item, i) => {
         const a = document.createElement("a");
-        a.href = item.link;
+        a.href = linkOf(item, type);
         a.className = "archive-card";
         a.innerHTML = `
-          <div class="archive-image"><img src="${item.image}" alt="${item.title}" loading="lazy"></div>
+          <div class="archive-image"><img src="${esc(item.image)}" alt="${esc(item.title)}" loading="lazy"></div>
           <div class="archive-info">
-            <span class="archive-type">${type}</span>
-            <h3>${item.title}</h3>
-            <p>${item.description}</p>
+            <span class="archive-type">${label}</span>
+            <h3>${esc(item.title)}</h3>
+            <p>${esc(item.description)}</p>
             <div class="archive-view">기록 보러가기</div>
           </div>`;
         box.appendChild(a);
         reveal(a, i * 100);
       });
     }
-    renderArchive(characters, "character-list", "캐릭터");
-    renderArchive(worldviews, "worldview-list", "세계관");
 
     /* ===== 라이트박스 ===== */
     const lightbox = $("lightbox"), lightboxImage = $("lightbox-image");
@@ -382,7 +415,181 @@
     }
     $("lightbox-close").addEventListener("click", closeLightbox);
     lightbox.addEventListener("click", e => { if (e.target === lightbox) closeLightbox(); });
-    document.addEventListener("keydown", e => { if (e.key === "Escape") closeLightbox(); });
+    document.addEventListener("keydown", e => {
+      if (e.key === "Escape") { closeLightbox(); closeModal(); }
+    });
+
+    /* ===== 관리자 (비밀번호는 서버에서 확인해요) ===== */
+    const modal = $("modal");
+    let adminPw = "";
+    try { adminPw = sessionStorage.getItem("adminPw") || ""; } catch (e) {}
+
+    function setAdmin(on) {
+      document.body.classList.toggle("admin", on);
+      $("admin-toggle").textContent = on ? "로그아웃" : "관리";
+    }
+
+    async function api(payload) {
+      const r = await fetch("/api/admin", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ password: adminPw, ...payload })
+      });
+      const d = await r.json().catch(() => ({}));
+      if (!r.ok) throw new Error(d.error || "요청에 실패했어요.");
+      return d;
+    }
+
+    function openModal(html) {
+      $("modal-box").innerHTML = html;
+      modal.classList.add("open");
+      modal.setAttribute("aria-hidden", "false");
+      document.body.classList.add("lock");
+    }
+    function closeModal() {
+      modal.classList.remove("open");
+      modal.setAttribute("aria-hidden", "true");
+      if (!lightbox.classList.contains("open")) document.body.classList.remove("lock");
+    }
+    modal.addEventListener("click", e => {
+      if (e.target === modal || e.target.hasAttribute("data-close")) closeModal();
+    });
+    const setMsg = t => { const m = $("msg"); if (m) m.textContent = t; };
+
+    function openLogin() {
+      openModal(`
+        <h3>관리자 로그인</h3>
+        <form id="f">
+          <label>비밀번호<input type="password" id="pw" autocomplete="current-password" required></label>
+          <p class="msg" id="msg"></p>
+          <div class="row">
+            <button type="button" data-close>취소</button>
+            <button class="primary" id="f-ok">로그인</button>
+          </div>
+        </form>`);
+      $("f").onsubmit = async e => {
+        e.preventDefault();
+        adminPw = $("pw").value;
+        $("f-ok").disabled = true;
+        setMsg("확인 중...");
+        try {
+          await api({ action: "verify" });
+          try { sessionStorage.setItem("adminPw", adminPw); } catch (er) {}
+          setAdmin(true);
+          closeModal();
+        } catch (err) {
+          adminPw = "";
+          setMsg(err.message);
+          $("f-ok").disabled = false;
+        }
+      };
+    }
+
+    $("admin-toggle").addEventListener("click", () => {
+      if (document.body.classList.contains("admin")) {
+        adminPw = "";
+        try { sessionStorage.removeItem("adminPw"); } catch (e) {}
+        setAdmin(false);
+      } else {
+        openLogin();
+      }
+    });
+
+    if (adminPw) {
+      api({ action: "verify" }).then(() => setAdmin(true)).catch(() => {
+        adminPw = "";
+        try { sessionStorage.removeItem("adminPw"); } catch (e) {}
+      });
+    }
+
+    /* 이미지를 줄여서 base64로 변환 */
+    async function prepareImage(file) {
+      let bmp;
+      try { bmp = await createImageBitmap(file); }
+      catch (e) { throw new Error("이 이미지는 읽을 수 없어요. JPG, PNG, WEBP로 올려주세요."); }
+      const scale = Math.min(1, 1800 / Math.max(bmp.width, bmp.height));
+      const c = document.createElement("canvas");
+      c.width = Math.round(bmp.width * scale);
+      c.height = Math.round(bmp.height * scale);
+      const ctx = c.getContext("2d");
+      ctx.drawImage(bmp, 0, 0, c.width, c.height);
+      let blob = await new Promise(r => c.toBlob(r, "image/webp", 0.9));
+      if (!blob || blob.type !== "image/webp") {
+        ctx.globalCompositeOperation = "destination-over";
+        ctx.fillStyle = "#fff";
+        ctx.fillRect(0, 0, c.width, c.height);
+        blob = await new Promise(r => c.toBlob(r, "image/jpeg", 0.9));
+      }
+      const b64 = await new Promise(r => {
+        const fr = new FileReader();
+        fr.onload = () => r(fr.result.split(",")[1]);
+        fr.readAsDataURL(blob);
+      });
+      if (b64.length > 4000000) throw new Error("이미지가 너무 커요. 더 작은 이미지로 올려주세요.");
+      return { image: b64, imageType: blob.type };
+    }
+
+    const FORM_TITLE = { image: "작품 올리기", character: "캐릭터 추가", worldview: "세계관 추가" };
+
+    function openForm(kind) {
+      const isImage = kind === "image";
+      const fields = isImage ? "" : `
+        <label>이름<input id="f-title" maxlength="60" required></label>
+        <label>한 줄 소개<input id="f-desc" maxlength="120"></label>
+        <label>자세한 설명<textarea id="f-body" rows="6" maxlength="5000"></textarea></label>`;
+      openModal(`
+        <h3>${FORM_TITLE[kind]}</h3>
+        <form id="f">
+          ${fields}
+          <label>이미지${isImage ? " (여러 장 선택 가능)" : ""}
+            <input type="file" id="f-file" accept="image/*" ${isImage ? "multiple" : ""} required>
+          </label>
+          <p class="msg" id="msg"></p>
+          <div class="row">
+            <button type="button" data-close>취소</button>
+            <button class="primary" id="f-ok">올리기</button>
+          </div>
+        </form>`);
+
+      $("f").onsubmit = async e => {
+        e.preventDefault();
+        const btn = $("f-ok");
+        btn.disabled = true;
+        try {
+          const files = [...$("f-file").files];
+          for (let i = 0; i < files.length; i++) {
+            setMsg(`올리는 중... (${i + 1}/${files.length})`);
+            const img = await prepareImage(files[i]);
+            if (isImage) {
+              await api({ action: "addImage", ...img });
+            } else {
+              await api({
+                action: "addEntry", kind,
+                title: $("f-title").value,
+                description: $("f-desc").value,
+                body: $("f-body").value,
+                ...img
+              });
+            }
+          }
+          closeModal();
+          if (isImage) await loadGallery(true); else await loadData();
+        } catch (err) {
+          setMsg(err.message);
+          btn.disabled = false;
+        }
+      };
+    }
+
+    document.querySelectorAll(".add-btn").forEach(b =>
+      b.addEventListener("click", () => openForm(b.dataset.kind)));
+
+    /* ===== 시작 ===== */
+    loadGallery();
+    loadData().then(() => {
+      const h = location.hash.slice(1);
+      if (/-section$/.test(h) && $(h)) showSection(h);
+    });
   </script>
 </body>
-  </html>
+</html>
