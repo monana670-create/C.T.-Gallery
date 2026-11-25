@@ -6,16 +6,16 @@
   <title>C.T. Gallery</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Gowun+Batang:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Chakra+Petch:ital,wght@0,400;0,600;0,700;1,700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <header class="header">
-    <a class="logo" href="index.html" style="text-decoration:none"><span>C.T.</span><small>Gallery</small></a>
+    <a class="logo" href="index.html"><span>C.T.</span><small>GALLERY</small></a>
   </header>
 
   <div class="detail-wrap">
-    <a class="detail-back" id="back" href="index.html">← 돌아가기</a>
+    <a class="detail-back" id="back" href="index.html">◀ 돌아가기</a>
     <div id="view"><p class="error">불러오는 중...</p></div>
   </div>
 
@@ -49,28 +49,28 @@
       document.title = it.title + " · C.T. Gallery";
       view.className = "detail";
       view.innerHTML = `
-        <div class="detail-img"><img alt=""></div>
+        <div class="fxw"><div class="detail-img"><img alt=""></div></div>
         <div>
-          <p class="eyebrow"></p>
+          <span class="tag"></span>
           <h1></h1>
           <p class="lead"></p>
           <div class="text"></div>
-          <a class="webtoon" target="_blank" rel="noopener noreferrer" hidden><img alt=""><span>웹툰 바로가기</span></a>
+          <a class="webtoon" target="_blank" rel="noopener noreferrer" hidden><img alt=""><span>웹툰 바로가기 ▶</span></a>
         </div>`;
-      const frame = view.querySelector(".detail-img");
-      if (/^#[0-9a-f]{6}$/i.test(it.color || "")) frame.style.setProperty("--c", it.color);
-      if (["glow", "pulse", "spin"].includes(it.effect)) frame.classList.add("fx-" + it.effect);
-      const img = frame.querySelector("img");
+      const w = view.querySelector(".fxw");
+      if (/^#[0-9a-f]{6}$/i.test(it.color || "")) w.style.setProperty("--c", it.color);
+      if (["glow", "pulse", "spin"].includes(it.effect)) w.classList.add("fx-" + it.effect);
+      const img = w.querySelector("img");
       img.src = it.image; img.alt = it.title;
-      view.querySelector(".eyebrow").textContent = type === "worldview" ? "세계관" : "캐릭터";
+      view.querySelector(".tag").textContent = type === "worldview" ? "WORLDVIEW" : "CHARACTER";
       view.querySelector("h1").textContent = it.title;
       view.querySelector(".lead").textContent = it.description || "";
       view.querySelector(".text").textContent = it.body || "";
       if (/^https?:\/\//i.test(it.webtoonUrl || "")) {
-        const w = view.querySelector(".webtoon");
-        w.href = it.webtoonUrl;
-        w.hidden = false;
-        const wi = w.querySelector("img");
+        const a = view.querySelector(".webtoon");
+        a.href = it.webtoonUrl;
+        a.hidden = false;
+        const wi = a.querySelector("img");
         if (it.webtoonImage) wi.src = it.webtoonImage; else wi.remove();
       }
     });
