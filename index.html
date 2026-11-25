@@ -226,6 +226,7 @@
         #000 94%,
         transparent 100%
       );
+
       mask-image: linear-gradient(
         to right,
         transparent 0%,
@@ -266,6 +267,22 @@
 
     #lightbox-image {
       filter: none !important;
+    }
+
+    #gallery-retry {
+      display: block;
+      margin: 1rem auto 0;
+      padding: .65rem 1.4rem;
+      border: 1px solid #a5c9e5;
+      border-radius: 4px;
+      background: #fff;
+      color: #215d87;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    #gallery-retry:hover {
+      background: #e8f5ff;
     }
 
     @media (max-width: 600px) {
@@ -339,7 +356,9 @@
     </nav>
 
     <button class="menu-toggle" id="menu-toggle" type="button"
-      aria-controls="mobile-menu" aria-label="메뉴 열기" aria-expanded="false">☰</button>
+      aria-controls="mobile-menu"
+      aria-label="메뉴 열기"
+      aria-expanded="false">☰</button>
   </header>
 
   <nav class="mobile-menu" id="mobile-menu" aria-label="모바일 메뉴">
@@ -352,7 +371,6 @@
 
   <main>
     <section id="home-section" class="content-section active">
-
       <section class="hero">
         <div class="hero-art" id="hero-art" aria-hidden="true"></div>
         <div class="hero-shade" aria-hidden="true"></div>
@@ -392,7 +410,9 @@
             <span class="stk-t">NEW WORKS</span>
             <span class="stk-b">
               <img id="stk-img" alt="" hidden>
-              <span class="stk-c">작품 <b data-stat="works">00</b>점 ▶</span>
+              <span class="stk-c">
+                작품 <b data-stat="works">00</b>점 ▶
+              </span>
             </span>
           </button>
 
@@ -400,7 +420,9 @@
             <span class="stk-t">NOTICE</span>
             <span class="stk-b">
               <span class="stk-n" id="stk-n">공지를 불러오는 중...</span>
-              <span class="stk-c">공지 <b data-stat="notes">00</b>건 ▶</span>
+              <span class="stk-c">
+                공지 <b data-stat="notes">00</b>건 ▶
+              </span>
             </span>
           </button>
         </div>
@@ -425,9 +447,12 @@
 
       <div class="section-title">
         <h2>이미지 아카이브</h2>
+
         <div class="title-right">
           <span id="image-count">LOADING...</span>
-          <button class="add-btn admin-only" data-kind="image">+ 작품 올리기</button>
+          <button class="add-btn admin-only" data-kind="image">
+            + 작품 올리기
+          </button>
         </div>
       </div>
 
@@ -444,7 +469,9 @@
 
       <div class="section-title">
         <h2>캐릭터 도감</h2>
-        <button class="add-btn admin-only" data-kind="character">+ 캐릭터 추가</button>
+        <button class="add-btn admin-only" data-kind="character">
+          + 캐릭터 추가
+        </button>
       </div>
 
       <div class="archive-grid" id="character-list"></div>
@@ -459,7 +486,9 @@
 
       <div class="section-title">
         <h2>세계의 기록</h2>
-        <button class="add-btn admin-only" data-kind="worldview">+ 세계관 추가</button>
+        <button class="add-btn admin-only" data-kind="worldview">
+          + 세계관 추가
+        </button>
       </div>
 
       <div class="archive-grid" id="worldview-list"></div>
@@ -474,9 +503,12 @@
 
       <div class="section-title">
         <h2>공지사항</h2>
+
         <div class="title-right">
           <span id="notice-count"></span>
-          <button class="add-btn admin-only" data-kind="notice">+ 공지 쓰기</button>
+          <button class="add-btn admin-only" data-kind="notice">
+            + 공지 쓰기
+          </button>
         </div>
       </div>
 
@@ -484,8 +516,11 @@
     </section>
   </main>
 
-  <div class="viewer" id="viewer" role="dialog" aria-modal="true"
-    aria-labelledby="v-name" aria-hidden="true" inert>
+  <div class="viewer" id="viewer" role="dialog"
+    aria-modal="true"
+    aria-labelledby="v-name"
+    aria-hidden="true"
+    inert>
 
     <div class="v-stage">
       <header class="v-head">
@@ -494,7 +529,8 @@
           <button type="button" id="v-back"></button>
         </div>
 
-        <button class="v-close" id="v-close" type="button" aria-label="닫기">✕</button>
+        <button class="v-close" id="v-close"
+          type="button" aria-label="닫기">✕</button>
       </header>
 
       <div class="v-scene">
@@ -509,6 +545,7 @@
             <i aria-hidden="true"></i>
             <span id="v-kind"></span>
           </div>
+
           <h3 class="v-name" id="v-name"></h3>
         </div>
       </div>
@@ -517,7 +554,10 @@
         <p class="v-sub" id="v-sub" hidden></p>
         <div class="v-desc" id="v-desc" hidden></div>
 
-        <a class="v-web" id="v-web" target="_blank" rel="noopener noreferrer" hidden>
+        <a class="v-web" id="v-web"
+          target="_blank"
+          rel="noopener noreferrer"
+          hidden>
           <img id="v-web-img" alt="" hidden>
           <span>웹툰 바로가기 ▶</span>
         </a>
@@ -531,14 +571,22 @@
     </div>
   </div>
 
-  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true"
-    aria-label="작품 크게 보기" aria-hidden="true" inert>
-    <button class="lightbox-close" id="lightbox-close" aria-label="닫기">×</button>
+  <div class="lightbox" id="lightbox" role="dialog"
+    aria-modal="true"
+    aria-label="작품 크게 보기"
+    aria-hidden="true"
+    inert>
+
+    <button class="lightbox-close" id="lightbox-close"
+      aria-label="닫기">×</button>
     <img id="lightbox-image" alt="">
   </div>
 
-  <div class="modal" id="modal" role="dialog" aria-modal="true"
-    aria-label="관리" aria-hidden="true" inert>
+  <div class="modal" id="modal" role="dialog"
+    aria-modal="true"
+    aria-label="관리"
+    aria-hidden="true"
+    inert>
     <div class="modal-box" id="modal-box"></div>
   </div>
 
@@ -549,9 +597,12 @@
   </footer>
 
   <script>
+    /* ========================================
+       BASIC SETTINGS
+    ======================================== */
+
     const owner = "monana670-create";
     const repo = "C.T.-Gallery";
-    const folder = "images";
     const ITEMS_PER_PAGE = 9;
 
     const repoContents =
@@ -587,7 +638,11 @@
     let currentPage = 1;
     let noticeState = "loading";
 
-    const navButtons = document.querySelectorAll(".nav-btn, .mobile-nav-btn");
+    let galleryRequestId = 0;
+    let galleryLoaded = false;
+
+    const navButtons =
+      document.querySelectorAll(".nav-btn, .mobile-nav-btn");
 
     const intro = $("intro");
     const viewer = $("viewer");
@@ -622,7 +677,6 @@
           const now = ctx.currentTime;
 
           const master = ctx.createGain();
-
           master.gain.setValueAtTime(.38, now);
 
           const compressor = ctx.createDynamicsCompressor();
@@ -745,6 +799,8 @@
 
       if (last) {
         img.src = last.download_url;
+      } else {
+        img.removeAttribute("src");
       }
 
       if (noticeState === "ready") {
@@ -757,7 +813,7 @@
     }
 
     /* ========================================
-       LOAD DATA
+       CHARACTER / WORLDVIEW DATA
     ======================================== */
 
     async function loadJSON(path) {
@@ -943,7 +999,8 @@
         img.onerror = () => {
           if (img.parentNode !== box) return;
 
-          const wasActive = img.classList.contains("on");
+          const wasActive =
+            img.classList.contains("on");
 
           img.remove();
 
@@ -1203,24 +1260,91 @@
 
     /* ========================================
        WORKS GALLERY
+       VERCEL AUTHENTICATED API
     ======================================== */
 
-    async function loadGallery(goLast = false) {
+    function refreshGalleryView(goLast = false) {
+      $("image-count").textContent =
+        `${String(allImageFiles.length).padStart(2, "0")} IMAGES`;
+
+      buildMarquee();
+      updateStats();
+      updateStickers();
+
+      if (!allImageFiles.length) {
+        currentPage = 1;
+
+        gallery.innerHTML =
+          '<p class="error">등록된 이미지가 없습니다.</p>';
+
+        pagination.replaceChildren();
+
+        return;
+      }
+
+      const total = Math.ceil(
+        allImageFiles.length / ITEMS_PER_PAGE
+      );
+
+      currentPage = goLast
+        ? total
+        : Math.max(
+            1,
+            Math.min(currentPage, total)
+          );
+
+      renderPage(currentPage);
+    }
+
+    async function loadGallery(
+      goLast = false,
+      forceFresh = false
+    ) {
+      const requestId = ++galleryRequestId;
+
+      const fresh = goLast || forceFresh;
+
       try {
         const response = await fetch(
-          `${repoContents}/${folder}?t=${Date.now()}`
-        );
+          "/api/gallery",
+          fresh ? {
+            method: "POST",
 
-        if (!response.ok) throw new Error();
+            headers: {
+              "Content-Type": "application/json"
+            },
+
+            body: JSON.stringify({
+              password: adminPw
+            }),
+
+            cache: "no-store"
+
+          } : {
+            method: "GET"
+          }
+        );
 
         const files = await response.json();
 
-        if (!Array.isArray(files)) throw new Error();
+        if (
+          !response.ok ||
+          !Array.isArray(files)
+        ) {
+          throw new Error(
+            files?.error || "작품 조회 실패"
+          );
+        }
+
+        if (requestId !== galleryRequestId) return;
 
         allImageFiles = files
-          .filter(f =>
-            f.type === "file" &&
-            /\.(jpe?g|png|gif|webp)$/i.test(f.name)
+          .filter(file =>
+            file &&
+            file.type === "file" &&
+            typeof file.name === "string" &&
+            typeof file.download_url === "string" &&
+            /\.(jpe?g|png|gif|webp)$/i.test(file.name)
           )
           .sort((a, b) =>
             a.name.localeCompare(
@@ -1230,37 +1354,46 @@
             )
           );
 
-        $("image-count").textContent =
-          `${String(allImageFiles.length).padStart(2, "0")} IMAGES`;
+        galleryLoaded = true;
 
-        buildMarquee();
-        updateStats();
-        updateStickers();
+        refreshGalleryView(goLast);
 
-        if (!allImageFiles.length) {
-          gallery.innerHTML =
-            '<p class="error">등록된 이미지가 없습니다.</p>';
+      } catch (err) {
+        if (requestId !== galleryRequestId) return;
 
-          pagination.replaceChildren();
+        console.warn("Gallery:", err.message);
+
+        /*
+          조회 실패 시 이미 표시된 작품들을
+          절대로 비우지 않는다.
+        */
+
+        if (galleryLoaded) {
+          $("image-count").textContent =
+            `${String(allImageFiles.length).padStart(2, "0")} IMAGES · 갱신 실패`;
 
           return;
         }
 
-        const total = Math.ceil(
-          allImageFiles.length / ITEMS_PER_PAGE
-        );
+        $("image-count").textContent = "조회 실패";
 
-        currentPage = goLast
-          ? total
-          : Math.min(currentPage, total);
+        gallery.innerHTML = `
+          <div class="error" style="grid-column:1/-1;text-align:center;">
+            <p>작품 목록을 불러오지 못했어요.</p>
 
-        renderPage(currentPage);
+            <button type="button" id="gallery-retry">
+              다시 시도
+            </button>
+          </div>
+        `;
 
-      } catch {
-        $("image-count").textContent = "—";
-
-        gallery.innerHTML =
-          '<p class="error">이미지를 불러오지 못했습니다. 잠시 후 다시 시도해 주세요.</p>';
+        $("gallery-retry").onclick = () => {
+          loadGallery(
+            false,
+            !!adminPw &&
+            document.body.classList.contains("admin")
+          );
+        };
       }
     }
 
@@ -1285,6 +1418,7 @@
                 draggable="false">
               <span class="gallery-overlay">VIEW ▶</span>
             </button>
+
             <button class="del" type="button"
               aria-label="작품 삭제">✕</button>
           `;
@@ -1409,6 +1543,7 @@
         w.innerHTML = `
           <button class="archive-card" type="button">
             <span class="card-in">
+
               <span class="archive-image">
                 <img
                   src="${esc(item.image)}"
@@ -1456,13 +1591,24 @@
     }
 
     /* ========================================
-       REMOVE WORKS / ENTRIES
+       SAFE IMAGE REMOVAL
     ======================================== */
 
+    let deletingImage = false;
+
     async function removeImage(file) {
+      if (deletingImage) return;
+
+      if (!document.body.classList.contains("admin")) {
+        alert("관리자 로그인이 필요해요.");
+        return;
+      }
+
       if (!confirm(
         "이 작품을 삭제할까요?\n삭제하면 되돌릴 수 없어요."
       )) return;
+
+      deletingImage = true;
 
       try {
         await api({
@@ -1470,10 +1616,38 @@
           name: file.name
         });
 
-        await loadGallery();
+        /*
+          이전 목록 요청이 뒤늦게 완료되어
+          삭제한 작품을 복원하는 현상을 방지한다.
+        */
+
+        ++galleryRequestId;
+
+        /*
+          삭제가 성공한 파일 하나만
+          화면에서 즉시 제거한다.
+        */
+
+        allImageFiles = allImageFiles.filter(
+          item => item.name !== file.name
+        );
+
+        galleryLoaded = true;
+
+        refreshGalleryView();
+
+        /*
+          관리자 요청으로 캐시를 우회하고
+          GitHub 최신 목록을 다시 가져온다.
+        */
+
+        await loadGallery(false, true);
 
       } catch (err) {
         alert(err.message);
+
+      } finally {
+        deletingImage = false;
       }
     }
 
@@ -1596,11 +1770,17 @@
       $("v-img").src = item.image;
       $("v-img").alt = title;
 
-      $("v-sub").textContent = item.description || "";
-      $("v-sub").hidden = !item.description;
+      $("v-sub").textContent =
+        item.description || "";
 
-      $("v-desc").textContent = item.body || "";
-      $("v-desc").hidden = !item.body;
+      $("v-sub").hidden =
+        !item.description;
+
+      $("v-desc").textContent =
+        item.body || "";
+
+      $("v-desc").hidden =
+        !item.body;
 
       const web = $("v-web");
       const webImg = $("v-web-img");
@@ -1873,6 +2053,7 @@
             <span class="nt-badge">공지</span>
             <span class="nt-title"></span>
             <span class="nt-meta"></span>
+
           </button>
 
           <button class="del"
@@ -2739,6 +2920,11 @@
             }
 
             closeModal();
+
+            /*
+              관리자 업로드 완료 후에는
+              서버 캐시를 우회하여 최신 작품을 조회한다.
+            */
 
             await loadGallery(true);
 
