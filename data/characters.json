@@ -10,5 +10,17 @@
     "webtoonUrl": "",
     "webtoonImage": "",
     "createdAt": "2026-11-25T16:21:34.278Z"
+  },
+  {
+    "id": "cmwwciqwa",
+    "title": "루루",
+    "description": "ㅇㅇ",
+    "body": "ㅇㅇㅇ",
+    "image": "https://raw.githubusercontent.com/monana670-create/C.T.-Gallery/HEAD/characters/images/cmwwciqwa.webp",
+    "color": "#ffff00",
+    "effect": "spin",
+    "webtoonUrl": "",
+    "webtoonImage": "",
+    "createdAt": "2026-11-25T16:36:34.750Z"
   }
 ]
