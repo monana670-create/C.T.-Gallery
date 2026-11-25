@@ -167,7 +167,6 @@
         </div>
         <button class="v-close" id="v-close" type="button" aria-label="닫기">✕</button>
       </header>
-
       <div class="v-scene">
         <div class="v-big" id="v-big" aria-hidden="true"></div>
         <div class="v-stand"><img id="v-img" alt="" draggable="false"></div>
@@ -176,7 +175,6 @@
           <h3 class="v-name" id="v-name"></h3>
         </div>
       </div>
-
       <div class="v-info">
         <p class="v-sub" id="v-sub" hidden></p>
         <div class="v-desc" id="v-desc" hidden></div>
@@ -184,7 +182,6 @@
           <img id="v-web-img" alt="" hidden><span>웹툰 바로가기 ▶</span>
         </a>
       </div>
-
       <div class="v-strip">
         <button class="v-arr" id="v-prev" type="button" aria-label="이전">«</button>
         <div class="v-thumbs" id="v-thumbs"></div>
@@ -198,7 +195,6 @@
     <button class="lightbox-close" id="lightbox-close" aria-label="닫기">×</button>
     <img id="lightbox-image" alt="">
   </div>
-
   <div class="modal" id="modal" role="dialog" aria-modal="true"
     aria-label="관리" aria-hidden="true" inert>
     <div class="modal-box" id="modal-box"></div>
@@ -277,6 +273,7 @@
       [characters, worldviews] = await Promise.all([
         loadJSON("data/characters.json"), loadJSON("data/worldviews.json")
       ]);
+      startHero();
       renderArchive(characters, "character-list", "character", "CHARACTER");
       renderArchive(worldviews, "worldview-list", "worldview", "WORLDVIEW");
       updateStats();
@@ -318,27 +315,36 @@
       intro.classList.add("done");
       syncLock();
     }
+
     $("start").addEventListener("click", () => {
       intro.classList.add("go");
       try { sessionStorage.setItem("seenIntro", "1"); } catch {}
       setTimeout(finishIntro, motion.matches ? 0 : 650);
     }, { once: true });
-    try { if (sessionStorage.getItem("seenIntro")) finishIntro(); } catch {}
 
+    try {
+      if (sessionStorage.getItem("seenIntro")) {
+        intro.classList.add("returning");
+        setTimeout(finishIntro, motion.matches ? 0 : 720);
+      }
+    } catch {}
+
+    /* 홈 대형 이미지: 캐릭터 도감의 대표 이미지만 사용 */
     let heroTimer;
     function startHero() {
       clearInterval(heroTimer);
       const box = $("hero-art");
       box.replaceChildren();
-      const srcs = allImageFiles.length
-        ? [...allImageFiles].sort(() => Math.random() - .5).slice(0, 8).map(f => f.download_url)
-        : ["hero/main.jpg"];
+      const srcs = [...new Set(characters.map(item => item?.image)
+        .filter(src => typeof src === "string" && src.trim()))];
+
       for (const src of srcs) {
         const img = new Image();
         img.alt = "";
         img.draggable = false;
         if (!box.children.length) img.classList.add("on");
         img.onerror = () => {
+          if (img.parentNode !== box) return;
           const wasActive = img.classList.contains("on");
           img.remove();
           if (wasActive) box.firstElementChild?.classList.add("on");
@@ -437,6 +443,7 @@
       switchSection("gallery-section");
     });
 
+    /* 작품 미리보기: 작품 폴더의 이미지 사용 */
     function buildMarquee() {
       const track = $("track");
       track.replaceChildren();
@@ -444,8 +451,7 @@
       if (!allImageFiles.length) return;
       let list = [...allImageFiles];
       while (list.length < 8) list = list.concat(allImageFiles);
-      const repeated = list.concat(list);
-      repeated.forEach((file, i) => {
+      list.concat(list).forEach((file, i) => {
         const b = document.createElement("button");
         b.className = "m-item";
         b.type = "button";
@@ -475,7 +481,6 @@
         buildMarquee();
         updateStats();
         updateStickers();
-        startHero();
         if (!allImageFiles.length) {
           gallery.innerHTML = '<p class="error">등록된 이미지가 없습니다.</p>';
           pagination.replaceChildren();
@@ -487,7 +492,6 @@
       } catch {
         $("image-count").textContent = "—";
         gallery.innerHTML = '<p class="error">이미지를 불러오지 못했습니다. 잠시 후 다시 시도해 주세요.</p>';
-        if (!$("hero-art").children.length) startHero();
       }
     }
 
@@ -660,8 +664,21 @@
         if (thumbFocused) active.focus({ preventScroll: true });
       }
       viewer.scrollTop = 0;
+
       if (!motion.matches && typeof viewer.animate === "function") {
-        $("v-img").animate([{ opacity: .35 }, { opacity: 1 }], { duration: 240 });
+        const layers = [viewer.querySelector(".v-big"), viewer.querySelector(".v-id"),
+          $("v-sub"), $("v-desc"), $("v-web")].filter(el => !el.hidden);
+        layers.forEach((el, index) => {
+          el.getAnimations().forEach(animation => animation.cancel());
+          el.animate([
+            { opacity: 0, transform: "translate(-1.8rem, 1.1rem) skewX(-7deg)" },
+            { opacity: 1, transform: "none" }
+          ], {
+            duration: 500, delay: index * 48,
+            easing: "cubic-bezier(.18,.76,.22,1)", fill: "backwards"
+          });
+        });
+        $("v-img").animate([{ opacity: .35 }, { opacity: 1 }], { duration: 320 });
       }
     }
 
