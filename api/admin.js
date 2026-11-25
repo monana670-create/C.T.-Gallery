@@ -31,6 +31,25 @@ async function ghPut(path, content, message, sha) {
   return r.json();
 }
 
+async function ghDelete(path, message) {
+  const cur = await ghGet(path);
+  if (!cur || Array.isArray(cur)) return;
+  const r = await fetch(API + path, {
+    method: "DELETE",
+    headers: headers(),
+    body: JSON.stringify({ message, sha: cur.sha })
+  });
+  if (!r.ok) throw new Error("GitHub 삭제 실패 (" + r.status + ")");
+}
+
+function pathFromUrl(u) {
+  const prefix = RAW + "HEAD/";
+  const s = String(u || "");
+  if (!s.startsWith(prefix)) return null;
+  const p = s.slice(prefix.length);
+  return /^(characters|worldviews|webtoon)\/[\w./-]+$/.test(p) && !p.includes("..") ? p : null;
+}
+
 function passwordOk(input) {
   const a = Buffer.from(String(input || ""));
   const b = Buffer.from(process.env.ADMIN_PASSWORD || "");
@@ -45,6 +64,8 @@ function checkImage(b) {
   if (b.image.length > 3500000) throw Object.assign(new Error("이미지가 너무 커요."), { code: 413 });
   return ext;
 }
+
+const fileOf = kind => (kind === "worldview" ? "data/worldviews.json" : "data/characters.json");
 
 module.exports = async (req, res) => {
   if (req.method !== "POST") return res.status(405).json({ error: "POST만 가능해요." });
@@ -70,6 +91,14 @@ module.exports = async (req, res) => {
       return res.json({ ok: true, name: `${next}.${ext}` });
     }
 
+    if (b.action === "deleteImage") {
+      const name = String(b.name || "");
+      if (!/^[\w-]+\.(jpg|jpeg|png|gif|webp)$/i.test(name))
+        return res.status(400).json({ error: "파일 이름이 올바르지 않아요." });
+      await ghDelete(`images/${name}`, `Delete image ${name}`);
+      return res.json({ ok: true });
+    }
+
     if (b.action === "addAsset") {
       const ext = checkImage(b);
       const path = `webtoon/w${Date.now().toString(36)}.${ext}`;
@@ -79,7 +108,7 @@ module.exports = async (req, res) => {
 
     if (b.action === "addEntry") {
       const isChar = b.kind !== "worldview";
-      const file = isChar ? "data/characters.json" : "data/worldviews.json";
+      const file = fileOf(b.kind);
       const dir = isChar ? "characters/images" : "worldviews/images";
       const title = clean(b.title, 60);
       if (!title) return res.status(400).json({ error: "이름을 입력해 주세요." });
@@ -98,7 +127,7 @@ module.exports = async (req, res) => {
         description: clean(b.description, 120),
         body: clean(b.body, 5000),
         image: `${RAW}HEAD/${imgPath}`,
-        color: /^#[0-9a-fA-F]{6}$/.test(b.color || "") ? b.color : "#111111",
+        color: /^#[0-9a-fA-F]{6}$/.test(b.color || "") ? b.color : "#3df0ff",
         effect: FX.includes(b.effect) ? b.effect : "none",
         webtoonUrl: /^https?:\/\//i.test(b.webtoonUrl || "") ? clean(b.webtoonUrl, 300) : "",
         webtoonImage: wImg.startsWith(RAW) ? wImg : "",
@@ -108,6 +137,24 @@ module.exports = async (req, res) => {
       await ghPut(file, Buffer.from(JSON.stringify(list, null, 2)).toString("base64"),
         `Add ${isChar ? "character" : "worldview"} ${title}`, cur && cur.sha);
       return res.json({ ok: true, item });
+    }
+
+    if (b.action === "deleteEntry") {
+      const file = fileOf(b.kind);
+      const cur = await ghGet(file);
+      if (!cur) return res.status(404).json({ error: "데이터 파일을 찾을 수 없어요." });
+      const list = JSON.parse(Buffer.from(cur.content, "base64").toString("utf8"));
+      const idx = list.findIndex(x => x.id === b.id);
+      if (idx < 0) return res.status(404).json({ error: "이미 삭제되었거나 찾을 수 없어요." });
+      const item = list[idx];
+      list.splice(idx, 1);
+      await ghPut(file, Buffer.from(JSON.stringify(list, null, 2)).toString("base64"),
+        `Delete ${item.title}`, cur.sha);
+      for (const u of [item.image, item.webtoonImage]) {
+        const p = pathFromUrl(u);
+        if (p) { try { await ghDelete(p, `Delete file ${p}`); } catch (e) {} }
+      }
+      return res.json({ ok: true });
     }
 
     return res.status(400).json({ error: "알 수 없는 요청이에요." });
