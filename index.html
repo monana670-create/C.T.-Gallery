@@ -12,15 +12,16 @@
 </head>
 <body class="lock">
 
-  <div class="sparkles" id="sparkles" aria-hidden="true"></div>
-
-  <!-- 책 표지 인트로 -->
+  <!-- 책 인트로 -->
   <div class="intro" id="intro">
     <button class="book" id="book" aria-label="책 열기">
-      <div class="book-pages"></div>
-      <div class="cover">
+      <div class="base">C.T.</div>
+      <div class="fl leaf1">
+        <div class="face paper"></div>
+        <div class="face back paper"></div>
+      </div>
+      <div class="fl cover">
         <div class="face front">
-          <span class="gem"></span>
           <b>C.T.</b>
           <em>GALLERY</em>
           <small>표지를 눌러 책을 열어보세요</small>
@@ -30,15 +31,8 @@
     </button>
   </div>
 
-  <!-- 페이지 넘김 연출 -->
-  <div class="turn" id="turn">
-    <div class="spread-left"></div>
-    <div class="spread-right"></div>
-    <div class="leaf" id="leaf">
-      <div class="leaf-front"></div>
-      <div class="leaf-back"></div>
-    </div>
-  </div>
+  <!-- 페이지 넘김 -->
+  <div class="turn" id="turn"></div>
 
   <header class="header">
     <div class="logo"><span>C.T.</span><small>Gallery</small></div>
@@ -59,36 +53,16 @@
   </div>
 
   <main>
-    <!-- 홈 -->
     <section id="home-section" class="content-section active">
       <section class="hero">
-        <div class="hero-text">
-          <p class="eyebrow">Creative Archive, 2026</p>
-          <h1>C.T.<span>Gallery</span></h1>
-          <p class="description">이미지와 세계관, 그리고 캐릭터를 기록하는<br>개인 크리에이티브 아카이브입니다.</p>
-          <button class="explore-btn" data-target="gallery-section">작품 둘러보기</button>
-        </div>
-        <div class="hero-visual">
-          <div class="hero-image-frame">
-            <img src="hero/main.jpg" alt="C.T. Gallery 메인 비주얼" draggable="false">
-          </div>
-          <div class="hero-label">오늘의 한 장면</div>
-        </div>
+        <p class="eyebrow">Creative Archive, 2026</p>
+        <h1>C.T.<span>Gallery</span></h1>
+        <p class="description">이미지와 세계관, 그리고 캐릭터를 기록하는<br>개인 크리에이티브 아카이브입니다.</p>
+        <button class="explore-btn" data-target="gallery-section">작품 둘러보기</button>
       </section>
-
-      <section class="today-section">
-        <div class="section-title">
-          <div>
-            <h2>오늘의 캐릭터</h2>
-            <p>하루에 한 번 바뀌는 추천</p>
-          </div>
-          <span id="today-date">today</span>
-        </div>
-        <div class="today-grid" id="today-character"></div>
-      </section>
+      <div class="marquee" id="marquee" hidden><div class="track" id="track"></div></div>
     </section>
 
-    <!-- 작품 -->
     <section id="gallery-section" class="content-section">
       <div class="page-header">
         <p class="eyebrow">Visual Archive</p>
@@ -105,7 +79,6 @@
       <div class="pagination" id="pagination"></div>
     </section>
 
-    <!-- 캐릭터 -->
     <section id="character-section" class="content-section">
       <div class="page-header">
         <p class="eyebrow">Character Database</p>
@@ -118,7 +91,6 @@
       <div class="archive-grid" id="character-list"></div>
     </section>
 
-    <!-- 세계관 -->
     <section id="worldview-section" class="content-section">
       <div class="page-header">
         <p class="eyebrow">World Database</p>
@@ -137,10 +109,7 @@
     <img id="lightbox-image" src="" alt="">
   </div>
 
-  <!-- 관리자 모달 -->
-  <div class="modal" id="modal" aria-hidden="true">
-    <div class="modal-box" id="modal-box"></div>
-  </div>
+  <div class="modal" id="modal" aria-hidden="true"><div class="modal-box" id="modal-box"></div></div>
 
   <footer>
     <span>© C.T. Gallery</span>
@@ -149,24 +118,23 @@
   </footer>
 
   <script>
-    /* ===== 설정 ===== */
     const owner = "monana670-create";
     const repo = "C.T.-Gallery";
     const folder = "images";
     const ITEMS_PER_PAGE = 9;
 
-    /* ===== 공통 ===== */
     const $ = id => document.getElementById(id);
     const esc = s => String(s ?? "").replace(/[&<>"']/g,
       c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+    const okColor = c => /^#[0-9a-f]{6}$/i.test(c || "") ? c : "";
+    const fxOf = it => ["glow", "pulse", "spin"].includes(it.effect) ? "fx-" + it.effect : "";
+    const sleep = ms => new Promise(r => setTimeout(r, ms));
     const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
     const navButtons = document.querySelectorAll(".nav-btn, .mobile-nav-btn");
     const menuToggle = $("menu-toggle"), mobileMenu = $("mobile-menu");
-
     let characters = [], worldviews = [];
 
-    const linkOf = (it, type) =>
-      it.link || `detail.html?type=${type}&id=${encodeURIComponent(it.id || "")}`;
+    const linkOf = (it, type) => it.link || `detail.html?type=${type}&id=${encodeURIComponent(it.id || "")}`;
 
     async function loadJSON(path) {
       const t = Date.now();
@@ -184,15 +152,12 @@
 
     async function loadData() {
       [characters, worldviews] = await Promise.all([
-        loadJSON("data/characters.json"),
-        loadJSON("data/worldviews.json")
+        loadJSON("data/characters.json"), loadJSON("data/worldviews.json")
       ]);
-      renderToday();
       renderArchive(characters, "character-list", "character", "캐릭터");
       renderArchive(worldviews, "worldview-list", "worldview", "세계관");
     }
 
-    /* 스크롤 등장 효과 */
     const io = new IntersectionObserver(entries => {
       entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } });
     }, { threshold: 0.1 });
@@ -202,41 +167,32 @@
       io.observe(el);
     }
 
-    /* 반짝이 */
-    (function () {
-      const box = $("sparkles");
-      for (let i = 0; i < 16; i++) {
-        const s = document.createElement("i");
-        s.style.left = Math.random() * 100 + "%";
-        s.style.top = Math.random() * 100 + "%";
-        s.style.animationDelay = (Math.random() * 9).toFixed(1) + "s";
-        s.style.animationDuration = (7 + Math.random() * 6).toFixed(1) + "s";
-        box.appendChild(s);
-      }
-    })();
-
-    /* ===== 책 열기 인트로 ===== */
+    /* ===== 책 인트로 ===== */
     const intro = $("intro"), book = $("book");
     let introOpened = false;
+    function finishIntro() {
+      intro.classList.add("done");
+      document.body.classList.remove("lock");
+    }
     function openBook() {
       if (introOpened) return;
       introOpened = true;
       book.classList.add("open");
-      setTimeout(() => intro.classList.add("done"), reduceMotion ? 0 : 1700);
-      setTimeout(() => document.body.classList.remove("lock"), reduceMotion ? 0 : 1700);
+      if (reduceMotion) { finishIntro(); return; }
+      setTimeout(() => intro.classList.add("zoom"), 2300);
+      setTimeout(finishIntro, 3200);
     }
     book.addEventListener("click", openBook);
     try {
-      if (sessionStorage.getItem("seenIntro")) {
-        intro.classList.add("done");
-        document.body.classList.remove("lock");
-      } else {
-        sessionStorage.setItem("seenIntro", "1");
-      }
+      if (sessionStorage.getItem("seenIntro")) { intro.classList.add("done"); document.body.classList.remove("lock"); }
+      else sessionStorage.setItem("seenIntro", "1");
     } catch (e) {}
 
-    /* ===== 페이지 넘김 전환 ===== */
-    const turn = $("turn"), leaf = $("leaf");
+    /* ===== 페이지 넘김 ===== */
+    const turn = $("turn");
+    turn.innerHTML = `<div class="pg l"></div><div class="pg r"></div>` +
+      [0, 1, 2].map(() => `<div class="leaf"><div class="lf"><i></i></div><div class="lb"><i></i></div></div>`).join("");
+    const leaves = [...turn.querySelectorAll(".leaf")];
     let turning = false;
 
     function showSection(id) {
@@ -250,20 +206,25 @@
       const next = $(id), current = document.querySelector(".content-section.active");
       closeMobileMenu();
       if (!next || next === current || turning) return;
-      if (reduceMotion || !leaf.animate) { showSection(id); return; }
-
+      if (reduceMotion || !turn.animate) { showSection(id); return; }
       turning = true;
       turn.style.visibility = "visible";
-      await turn.animate([{ opacity: 0 }, { opacity: 1 }],
-        { duration: 250, fill: "forwards" }).finished;
-      await leaf.animate([{ transform: "rotateY(0deg)" }, { transform: "rotateY(-180deg)" }],
-        { duration: 1000, easing: "cubic-bezier(.5,0,.25,1)", fill: "forwards" }).finished;
+      await turn.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 220, fill: "forwards" }).finished;
+      const flips = leaves.map((lf, i) => {
+        const opt = { duration: 900, delay: i * 120, easing: "cubic-bezier(.45,.05,.3,1)", fill: "forwards" };
+        lf.querySelectorAll("i").forEach(s =>
+          s.animate([{ opacity: 0 }, { opacity: .6, offset: .5 }, { opacity: 0 }], opt));
+        return lf.animate([{ transform: "rotateY(0deg)" }, { transform: "rotateY(-180deg)" }], opt);
+      });
+      await sleep(650);
       showSection(id);
-      await turn.animate([{ opacity: 1 }, { opacity: 0 }],
-        { duration: 350, fill: "forwards" }).finished;
+      await Promise.all(flips.map(a => a.finished));
+      await turn.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 350, fill: "forwards" }).finished;
       turn.style.visibility = "hidden";
-      leaf.getAnimations().forEach(a => a.cancel());
-      turn.getAnimations().forEach(a => a.cancel());
+      [turn, ...leaves].forEach(el => {
+        el.getAnimations().forEach(a => a.cancel());
+        el.querySelectorAll("i").forEach(s => s.getAnimations().forEach(a => a.cancel()));
+      });
       turning = false;
     }
 
@@ -271,45 +232,35 @@
     document.querySelectorAll(".explore-btn").forEach(b =>
       b.addEventListener("click", () => switchSection(b.dataset.target)));
 
-    /* 모바일 메뉴 */
-    function closeMobileMenu() {
-      mobileMenu.classList.remove("open");
-      menuToggle.setAttribute("aria-expanded", "false");
-    }
+    function closeMobileMenu() { mobileMenu.classList.remove("open"); menuToggle.setAttribute("aria-expanded", "false"); }
     menuToggle.addEventListener("click", () => {
       const open = mobileMenu.classList.toggle("open");
       menuToggle.setAttribute("aria-expanded", String(open));
     });
 
-    /* ===== 오늘의 캐릭터 ===== */
-    function renderToday() {
-      const box = $("today-character");
-      box.innerHTML = "";
-      if (!characters.length) { box.innerHTML = `<p class="error">등록된 캐릭터가 없습니다.</p>`; return; }
-      const now = new Date();
-      const day = Math.floor(new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime() / 86400000);
-      const count = Math.min(3, characters.length);
-      for (let i = 0; i < count; i++) {
-        const c = characters[(day + i) % characters.length];
-        const a = document.createElement("a");
-        a.className = "today-card";
-        a.href = linkOf(c, "character");
-        a.innerHTML = `
-          <div class="today-image"><img src="${esc(c.image)}" alt="${esc(c.title)}" loading="lazy"></div>
-          <div class="today-info">
-            <span>오늘의 캐릭터</span>
-            <h3>${esc(c.title)}</h3>
-            <p>${esc(c.description)}</p>
-            <div class="today-view">기록 보러가기</div>
-          </div>`;
-        box.appendChild(a);
-        reveal(a, i * 120);
-      }
-      $("today-date").textContent =
-        `${String(now.getMonth() + 1).padStart(2, "0")}.${String(now.getDate()).padStart(2, "0")}`;
+    /* ===== 홈: 흐르는 작품 ===== */
+    function buildMarquee() {
+      const box = $("marquee"), track = $("track");
+      track.innerHTML = "";
+      if (!allImageFiles.length) { box.hidden = true; return; }
+      box.hidden = false;
+      let list = [...allImageFiles];
+      while (list.length < 8) list = list.concat(allImageFiles);
+      const make = f => {
+        const b = document.createElement("button");
+        b.className = "m-item"; b.type = "button"; b.setAttribute("aria-label", "작품 크게 보기");
+        const im = document.createElement("img");
+        im.src = f.download_url; im.alt = ""; im.draggable = false;
+        b.appendChild(im);
+        b.addEventListener("click", () => openLightbox(f.download_url, f.name));
+        return b;
+      };
+      list.forEach(f => track.appendChild(make(f)));
+      list.forEach(f => track.appendChild(make(f)));
+      track.style.setProperty("--dur", list.length * 6 + "s");
     }
 
-    /* ===== 깃허브 갤러리 ===== */
+    /* ===== 작품 갤러리 ===== */
     const gallery = $("gallery"), pagination = $("pagination"), imageCount = $("image-count");
     let currentPage = 1, allImageFiles = [];
 
@@ -325,13 +276,14 @@
               return (!isNaN(an) && !isNaN(bn)) ? an - bn : a.name.localeCompare(b.name);
             });
           imageCount.textContent = `${allImageFiles.length}점의 이미지`;
+          buildMarquee();
           if (!allImageFiles.length) {
             gallery.innerHTML = `<p class="error">등록된 이미지가 없습니다.</p>`;
             pagination.innerHTML = "";
             return;
           }
-          const totalPages = Math.ceil(allImageFiles.length / ITEMS_PER_PAGE);
-          currentPage = goLast ? totalPages : Math.min(currentPage, totalPages);
+          const total = Math.ceil(allImageFiles.length / ITEMS_PER_PAGE);
+          currentPage = goLast ? total : Math.min(currentPage, total);
           renderPage(currentPage);
         })
         .catch(err => {
@@ -346,8 +298,7 @@
       const start = (page - 1) * ITEMS_PER_PAGE;
       allImageFiles.slice(start, start + ITEMS_PER_PAGE).forEach((file, i) => {
         const item = document.createElement("button");
-        item.className = "gallery-item";
-        item.type = "button";
+        item.className = "gallery-item"; item.type = "button";
         item.innerHTML = `<img src="${esc(file.download_url)}" alt="${esc(file.name)}" loading="lazy" draggable="false">
                           <div class="gallery-overlay">크게 보기</div>`;
         item.addEventListener("click", () => openLightbox(file.download_url, file.name));
@@ -365,8 +316,7 @@
       if (total <= 1) return;
       const mk = (label, onClick, disabled, active) => {
         const b = document.createElement("button");
-        b.textContent = label;
-        b.disabled = !!disabled;
+        b.textContent = label; b.disabled = !!disabled;
         if (active) b.classList.add("active");
         b.addEventListener("click", onClick);
         pagination.appendChild(b);
@@ -376,7 +326,7 @@
       mk("→", () => goPage(currentPage + 1), currentPage === total);
     }
 
-    /* ===== 캐릭터 / 세계관 목록 ===== */
+    /* ===== 캐릭터 / 세계관 ===== */
     function renderArchive(list, targetId, type, label) {
       const box = $(targetId);
       box.innerHTML = "";
@@ -384,12 +334,13 @@
       list.forEach((item, i) => {
         const a = document.createElement("a");
         a.href = linkOf(item, type);
-        a.className = "archive-card";
+        a.className = "archive-card " + fxOf(item);
+        if (okColor(item.color)) a.style.setProperty("--c", item.color);
         a.innerHTML = `
           <div class="archive-image"><img src="${esc(item.image)}" alt="${esc(item.title)}" loading="lazy"></div>
           <div class="archive-info">
             <span class="archive-type">${label}</span>
-            <h3>${esc(item.title)}</h3>
+            <h3>${esc(item.title)}${item.webtoonUrl ? '<span class="chip">웹툰</span>' : ""}</h3>
             <p>${esc(item.description)}</p>
             <div class="archive-view">기록 보러가기</div>
           </div>`;
@@ -401,25 +352,20 @@
     /* ===== 라이트박스 ===== */
     const lightbox = $("lightbox"), lightboxImage = $("lightbox-image");
     function openLightbox(src, alt = "") {
-      lightboxImage.src = src;
-      lightboxImage.alt = alt;
-      lightbox.classList.add("open");
-      lightbox.setAttribute("aria-hidden", "false");
+      lightboxImage.src = src; lightboxImage.alt = alt;
+      lightbox.classList.add("open"); lightbox.setAttribute("aria-hidden", "false");
       document.body.classList.add("lock");
     }
     function closeLightbox() {
-      lightbox.classList.remove("open");
-      lightbox.setAttribute("aria-hidden", "true");
-      document.body.classList.remove("lock");
+      lightbox.classList.remove("open"); lightbox.setAttribute("aria-hidden", "true");
+      if (introOpened || document.querySelector(".intro.done")) document.body.classList.remove("lock");
       setTimeout(() => { lightboxImage.src = ""; }, 300);
     }
     $("lightbox-close").addEventListener("click", closeLightbox);
     lightbox.addEventListener("click", e => { if (e.target === lightbox) closeLightbox(); });
-    document.addEventListener("keydown", e => {
-      if (e.key === "Escape") { closeLightbox(); closeModal(); }
-    });
+    document.addEventListener("keydown", e => { if (e.key === "Escape") { closeLightbox(); closeModal(); } });
 
-    /* ===== 관리자 (비밀번호는 서버에서 확인해요) ===== */
+    /* ===== 관리자 ===== */
     const modal = $("modal");
     let adminPw = "";
     try { adminPw = sessionStorage.getItem("adminPw") || ""; } catch (e) {}
@@ -428,27 +374,22 @@
       document.body.classList.toggle("admin", on);
       $("admin-toggle").textContent = on ? "로그아웃" : "관리";
     }
-
     async function api(payload) {
       const r = await fetch("/api/admin", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
+        method: "POST", headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ password: adminPw, ...payload })
       });
       const d = await r.json().catch(() => ({}));
       if (!r.ok) throw new Error(d.error || "요청에 실패했어요.");
       return d;
     }
-
     function openModal(html) {
       $("modal-box").innerHTML = html;
-      modal.classList.add("open");
-      modal.setAttribute("aria-hidden", "false");
+      modal.classList.add("open"); modal.setAttribute("aria-hidden", "false");
       document.body.classList.add("lock");
     }
     function closeModal() {
-      modal.classList.remove("open");
-      modal.setAttribute("aria-hidden", "true");
+      modal.classList.remove("open"); modal.setAttribute("aria-hidden", "true");
       if (!lightbox.classList.contains("open")) document.body.classList.remove("lock");
     }
     modal.addEventListener("click", e => {
@@ -462,70 +403,53 @@
         <form id="f">
           <label>비밀번호<input type="password" id="pw" autocomplete="current-password" required></label>
           <p class="msg" id="msg"></p>
-          <div class="row">
-            <button type="button" data-close>취소</button>
-            <button class="primary" id="f-ok">로그인</button>
-          </div>
+          <div class="row"><button type="button" data-close>취소</button><button class="primary" id="f-ok">로그인</button></div>
         </form>`);
       $("f").onsubmit = async e => {
         e.preventDefault();
         adminPw = $("pw").value;
-        $("f-ok").disabled = true;
-        setMsg("확인 중...");
+        $("f-ok").disabled = true; setMsg("확인 중...");
         try {
           await api({ action: "verify" });
           try { sessionStorage.setItem("adminPw", adminPw); } catch (er) {}
-          setAdmin(true);
-          closeModal();
-        } catch (err) {
-          adminPw = "";
-          setMsg(err.message);
-          $("f-ok").disabled = false;
-        }
+          setAdmin(true); closeModal();
+        } catch (err) { adminPw = ""; setMsg(err.message); $("f-ok").disabled = false; }
       };
     }
-
     $("admin-toggle").addEventListener("click", () => {
       if (document.body.classList.contains("admin")) {
         adminPw = "";
         try { sessionStorage.removeItem("adminPw"); } catch (e) {}
         setAdmin(false);
-      } else {
-        openLogin();
-      }
+      } else openLogin();
     });
-
     if (adminPw) {
       api({ action: "verify" }).then(() => setAdmin(true)).catch(() => {
-        adminPw = "";
-        try { sessionStorage.removeItem("adminPw"); } catch (e) {}
+        adminPw = ""; try { sessionStorage.removeItem("adminPw"); } catch (e) {}
       });
     }
 
-    /* 이미지를 줄여서 base64로 변환 */
     async function prepareImage(file) {
       let bmp;
       try { bmp = await createImageBitmap(file); }
       catch (e) { throw new Error("이 이미지는 읽을 수 없어요. JPG, PNG, WEBP로 올려주세요."); }
-      const scale = Math.min(1, 1800 / Math.max(bmp.width, bmp.height));
+      const scale = Math.min(1, 1600 / Math.max(bmp.width, bmp.height));
       const c = document.createElement("canvas");
-      c.width = Math.round(bmp.width * scale);
-      c.height = Math.round(bmp.height * scale);
+      c.width = Math.round(bmp.width * scale); c.height = Math.round(bmp.height * scale);
       const ctx = c.getContext("2d");
       ctx.drawImage(bmp, 0, 0, c.width, c.height);
-      let blob = await new Promise(r => c.toBlob(r, "image/webp", 0.9));
+      let blob = await new Promise(r => c.toBlob(r, "image/webp", 0.85));
       if (!blob || blob.type !== "image/webp") {
         ctx.globalCompositeOperation = "destination-over";
-        ctx.fillStyle = "#fff";
-        ctx.fillRect(0, 0, c.width, c.height);
-        blob = await new Promise(r => c.toBlob(r, "image/jpeg", 0.9));
+        ctx.fillStyle = "#fff"; ctx.fillRect(0, 0, c.width, c.height);
+        blob = await new Promise(r => c.toBlob(r, "image/jpeg", 0.85));
       }
       const b64 = await new Promise(r => {
         const fr = new FileReader();
         fr.onload = () => r(fr.result.split(",")[1]);
         fr.readAsDataURL(blob);
       });
-      if (b64.length > 4000000) throw new Error("이미지가 너무 커요. 더 작은 이미지로 올려주세요.");
+      if (b64.length > 3400000) throw new Error("이미지가 너무 커요. 더 작은 이미지로 올려주세요.");
       return { image: b64, imageType: blob.type };
     }
 
@@ -536,19 +460,27 @@
       const fields = isImage ? "" : `
         <label>이름<input id="f-title" maxlength="60" required></label>
         <label>한 줄 소개<input id="f-desc" maxlength="120"></label>
-        <label>자세한 설명<textarea id="f-body" rows="6" maxlength="5000"></textarea></label>`;
+        <label>자세한 설명<textarea id="f-body" rows="5" maxlength="5000"></textarea></label>
+        <label>테두리 색<input type="color" id="f-color" value="#111111"></label>
+        <label>테두리 효과
+          <select id="f-fx">
+            <option value="none">없음</option>
+            <option value="glow">은은한 빛</option>
+            <option value="pulse">숨쉬는 빛</option>
+            <option value="spin">회전하는 빛줄기</option>
+          </select>
+        </label>
+        <label>웹툰 링크 (선택)<input type="url" id="f-wurl" placeholder="https://"></label>
+        <label>웹툰 이미지 (선택)<input type="file" id="f-wimg" accept="image/*"></label>`;
       openModal(`
         <h3>${FORM_TITLE[kind]}</h3>
         <form id="f">
           ${fields}
-          <label>이미지${isImage ? " (여러 장 선택 가능)" : ""}
+          <label>${isImage ? "이미지 (여러 장 선택 가능)" : "대표 이미지"}
             <input type="file" id="f-file" accept="image/*" ${isImage ? "multiple" : ""} required>
           </label>
           <p class="msg" id="msg"></p>
-          <div class="row">
-            <button type="button" data-close>취소</button>
-            <button class="primary" id="f-ok">올리기</button>
-          </div>
+          <div class="row"><button type="button" data-close>취소</button><button class="primary" id="f-ok">올리기</button></div>
         </form>`);
 
       $("f").onsubmit = async e => {
@@ -557,30 +489,34 @@
         btn.disabled = true;
         try {
           const files = [...$("f-file").files];
-          for (let i = 0; i < files.length; i++) {
-            setMsg(`올리는 중... (${i + 1}/${files.length})`);
-            const img = await prepareImage(files[i]);
-            if (isImage) {
-              await api({ action: "addImage", ...img });
-            } else {
-              await api({
-                action: "addEntry", kind,
-                title: $("f-title").value,
-                description: $("f-desc").value,
-                body: $("f-body").value,
-                ...img
-              });
+          if (isImage) {
+            for (let i = 0; i < files.length; i++) {
+              setMsg(`올리는 중... (${i + 1}/${files.length})`);
+              await api({ action: "addImage", ...(await prepareImage(files[i])) });
             }
+            closeModal();
+            await loadGallery(true);
+          } else {
+            let webtoonImage = "";
+            const wf = $("f-wimg").files[0];
+            if (wf) {
+              setMsg("웹툰 이미지 올리는 중...");
+              webtoonImage = (await api({ action: "addAsset", ...(await prepareImage(wf)) })).url;
+            }
+            setMsg("올리는 중...");
+            await api({
+              action: "addEntry", kind,
+              title: $("f-title").value, description: $("f-desc").value, body: $("f-body").value,
+              color: $("f-color").value, effect: $("f-fx").value,
+              webtoonUrl: $("f-wurl").value, webtoonImage,
+              ...(await prepareImage(files[0]))
+            });
+            closeModal();
+            await loadData();
           }
-          closeModal();
-          if (isImage) await loadGallery(true); else await loadData();
-        } catch (err) {
-          setMsg(err.message);
-          btn.disabled = false;
-        }
+        } catch (err) { setMsg(err.message); btn.disabled = false; }
       };
     }
-
     document.querySelectorAll(".add-btn").forEach(b =>
       b.addEventListener("click", () => openForm(b.dataset.kind)));
 
