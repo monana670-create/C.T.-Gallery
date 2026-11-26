@@ -1630,3 +1630,230 @@
     display: none;
   }
 }
+
+/* ========================================
+   C.T. GALLERY
+   STARRY SKY UPDATE
+======================================== */
+
+
+/* 별이 흩뿌려진 하늘 */
+
+.hero .ct-meteors {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+
+  background-image:
+    radial-gradient(circle at 5% 8%,
+      #ffffffaa 0 1px, transparent 2px),
+
+    radial-gradient(circle at 17% 14%,
+      #ffffff66 0 .7px, transparent 1.8px),
+
+    radial-gradient(circle at 29% 5%,
+      #d8efffaa 0 1px, transparent 2px),
+
+    radial-gradient(circle at 42% 19%,
+      #ffffff55 0 .8px, transparent 2px),
+
+    radial-gradient(circle at 57% 9%,
+      #ffffff99 0 1px, transparent 2px),
+
+    radial-gradient(circle at 72% 16%,
+      #c8e7ff99 0 1px, transparent 2px),
+
+    radial-gradient(circle at 88% 6%,
+      #ffffffbb 0 1px, transparent 2.5px),
+
+    radial-gradient(circle at 94% 27%,
+      #ffffff77 0 .8px, transparent 2px),
+
+    radial-gradient(circle at 8% 34%,
+      #ffffff77 0 1px, transparent 2px),
+
+    radial-gradient(circle at 21% 41%,
+      #c8e7ff88 0 .8px, transparent 2px),
+
+    radial-gradient(circle at 35% 29%,
+      #ffffff55 0 .7px, transparent 1.7px),
+
+    radial-gradient(circle at 49% 39%,
+      #ffffff99 0 1px, transparent 2px),
+
+    radial-gradient(circle at 64% 31%,
+      #ffffff88 0 .8px, transparent 2px),
+
+    radial-gradient(circle at 81% 43%,
+      #d8efffaa 0 1px, transparent 2px),
+
+    radial-gradient(circle at 91% 53%,
+      #ffffff66 0 .8px, transparent 2px),
+
+    radial-gradient(circle at 12% 61%,
+      #ffffff55 0 .8px, transparent 2px),
+
+    radial-gradient(circle at 28% 72%,
+      #c8e7ff88 0 1px, transparent 2px),
+
+    radial-gradient(circle at 43% 58%,
+      #ffffff77 0 .8px, transparent 2px),
+
+    radial-gradient(circle at 59% 69%,
+      #ffffff55 0 .7px, transparent 2px),
+
+    radial-gradient(circle at 76% 61%,
+      #d8efff88 0 1px, transparent 2px),
+
+    radial-gradient(circle at 86% 79%,
+      #ffffff55 0 .7px, transparent 2px);
+
+  background-repeat: no-repeat;
+}
+
+
+/* 별똥별 크기 및 발광 효과 */
+
+.hero .ct-meteor {
+  position: absolute;
+
+  left: -5%;
+  right: auto;
+  bottom: auto;
+
+  width: clamp(10rem, 36vw, 28rem);
+  height: 3px;
+
+  border-radius: 100px;
+
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(110, 200, 255, .15) 20%,
+    #85d4ff 58%,
+    #d9f5ff 85%,
+    #ffffff 100%
+  );
+
+  filter: drop-shadow(
+    0 0 6px rgba(170, 220, 255, .85)
+  );
+
+  transform-origin: right center;
+
+  animation-name: ctMeteorLeftFlight;
+  animation-duration: 5s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+
+/* 첫 번째 별똥별 */
+
+.hero .ct-meteor:nth-child(1) {
+  top: 7%;
+  left: -7%;
+  animation-delay: .1s;
+}
+
+
+/* 두 번째 별똥별 */
+
+.hero .ct-meteor:nth-child(2) {
+  top: 17%;
+  left: 2%;
+  animation-delay: .45s;
+}
+
+
+/* 세 번째 별똥별 */
+
+.hero .ct-meteor:nth-child(3) {
+  top: 28%;
+  left: -4%;
+  animation-delay: .8s;
+}
+
+
+/* 왼쪽 상단에서 중앙으로 이동 */
+
+@keyframes ctMeteorLeftFlight {
+
+  0% {
+    opacity: 0;
+
+    transform:
+      translate3d(-12vw, -7vw, 0)
+      rotate(30deg);
+  }
+
+  4% {
+    opacity: 1;
+  }
+
+  16% {
+    opacity: 1;
+
+    transform:
+      translate3d(15vw, 8.6vw, 0)
+      rotate(30deg);
+  }
+
+  24% {
+    opacity: 0;
+
+    transform:
+      translate3d(29vw, 16.5vw, 0)
+      rotate(30deg);
+  }
+
+  100% {
+    opacity: 0;
+
+    transform:
+      translate3d(29vw, 16.5vw, 0)
+      rotate(30deg);
+  }
+}
+
+
+/* 모바일 최적화 */
+
+@media (max-aspect-ratio: 1/1) {
+
+  .hero .ct-meteor {
+    width: clamp(9rem, 43vw, 20rem);
+    height: 3px;
+  }
+
+  .hero .ct-meteor:nth-child(1) {
+    top: 5%;
+    left: -9%;
+  }
+
+  .hero .ct-meteor:nth-child(2) {
+    top: 14%;
+    left: -1%;
+  }
+
+  .hero .ct-meteor:nth-child(3) {
+    top: 24%;
+    left: -5%;
+  }
+}
+
+
+/* 움직임 최소화 설정 대응 */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .hero .ct-meteors {
+    display: block;
+  }
+
+  .hero .ct-meteor {
+    display: none;
+    animation: none !important;
+  }
+}
