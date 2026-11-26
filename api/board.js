@@ -100,6 +100,49 @@ module.exports = async (req, res) => {
       return res.json({ ok: true });
     }
 
+    /* ========================================
+   EDIT NOTICE
+======================================== */
+
+if (b.action === "editNotice") {
+  const n = Number(b.n);
+
+  const title = clean(b.title, 80);
+  const body = clean(b.body, 3000);
+
+  if (
+    !Number.isSafeInteger(n) ||
+    n < 1 ||
+    !title ||
+    !body
+  )
+    return res.status(400).json({
+      error: "제목과 내용을 입력해 주세요."
+    });
+
+  const issue = await gh("/issues/" + n);
+
+  if (!isNotice(issue))
+    return res.status(404).json({
+      error: "수정할 공지를 찾을 수 없어요."
+    });
+
+  await gh(
+    "/issues/" + n,
+    "PATCH",
+    {
+      title,
+      body
+    }
+  );
+
+  return res.json({
+    ok: true,
+    title,
+    body
+  });
+}
+    
     if (b.action === "delNotice") {
       const n = parseInt(b.n, 10);
       if (!n) return res.status(400).json({ error: "잘못된 요청이에요." });
