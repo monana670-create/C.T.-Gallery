@@ -1986,3 +1986,60 @@ body.admin .nt-head {
 
   accent-color: #298bd3;
 }
+
+/* ========================================
+   CHARACTER SPIN EFFECT FIX
+======================================== */
+
+.viewer[data-fx="spin"] {
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.viewer[data-fx="spin"] .v-stand {
+  overflow: hidden;
+}
+
+.viewer[data-fx="spin"] .v-stand::before {
+  position: absolute;
+
+  top: 50%;
+  left: 50%;
+
+  width: min(75%, 36svh, 24rem);
+  height: auto;
+
+  aspect-ratio: 1;
+
+  border: 2px dashed var(--c);
+  border-radius: 50%;
+
+  box-shadow:
+    0 0 14px var(--c),
+    inset 0 0 8px var(--c);
+
+  pointer-events: none;
+
+  transform-origin: center;
+
+  animation: ctSafeOrbit 12s linear infinite;
+}
+
+@keyframes ctSafeOrbit {
+  from {
+    transform:
+      translate(-50%, -50%)
+      rotate(0deg);
+  }
+
+  to {
+    transform:
+      translate(-50%, -50%)
+      rotate(360deg);
+  }
+}
+
+.viewer[data-fx="spin"] .v-stand img {
+  position: relative;
+  z-index: 1;
+}
