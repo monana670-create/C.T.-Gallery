@@ -916,3 +916,174 @@
   );
 
 })();
+
+/* HOME CHARACTER VOICE */
+
+(() => {
+  const hero = document.querySelector(".hero");
+  const art = document.getElementById("hero-art");
+
+  if (
+    !hero ||
+    !art ||
+    hero.querySelector(".ct-dialogue")
+  ) return;
+
+  const reduce = matchMedia(
+    "(prefers-reduced-motion: reduce)"
+  );
+
+  const dialogue = document.createElement("aside");
+
+  dialogue.className = "ct-dialogue";
+  dialogue.hidden = true;
+
+  dialogue.setAttribute(
+    "aria-label",
+    "캐릭터 한마디"
+  );
+
+  hero.append(dialogue);
+
+  let lastKey = "";
+
+  function url(value) {
+    try {
+      return new URL(value, location.href).href;
+    } catch {
+      return "";
+    }
+  }
+
+  function syncDialogue() {
+    const image = art.querySelector("img.on");
+
+    const list =
+      typeof characters !== "undefined" &&
+      Array.isArray(characters)
+        ? characters
+        : [];
+
+    const idx = image
+      ? list.findIndex(c =>
+          c?.image &&
+          url(c.image) === image.src
+        )
+      : -1;
+
+    if (idx < 0) {
+      dialogue.hidden = true;
+      dialogue.replaceChildren();
+
+      hero.classList.remove(
+        "ct-dialogue-ready"
+      );
+
+      lastKey = "";
+
+      return;
+    }
+
+    const character = list[idx];
+
+    const name = String(
+      character.title || "CHARACTER"
+    );
+
+    const text =
+      String(
+        character.description || ""
+      ).trim() ||
+      "아직 등록된 대사가 없어요.";
+
+    const key = JSON.stringify([
+      idx,
+      image.src,
+      name,
+      text
+    ]);
+
+    if (lastKey === key) return;
+
+    lastKey = key;
+
+    const old = dialogue.querySelector(
+      ".ct-voice-paper:not(.ct-page-out)"
+    );
+
+    const fresh = document.createElement("div");
+
+    fresh.className = "ct-voice-paper";
+
+    fresh.innerHTML = `
+      <div class="ct-voice-head">
+        <span>CHARACTER VOICE</span>
+        <span class="ct-voice-number"></span>
+      </div>
+
+      <p class="ct-voice-text"></p>
+
+      <div class="ct-voice-name"></div>
+    `;
+
+    fresh.querySelector(
+      ".ct-voice-number"
+    ).textContent =
+      String(idx + 1).padStart(2,"0");
+
+    fresh.querySelector(
+      ".ct-voice-text"
+    ).textContent = text;
+
+    fresh.querySelector(
+      ".ct-voice-name"
+    ).textContent = "— " + name;
+
+    dialogue.replaceChildren(fresh);
+
+    dialogue.hidden = false;
+
+    hero.classList.add(
+      "ct-dialogue-ready"
+    );
+
+    if (old && !reduce.matches) {
+      old.className =
+        "ct-voice-paper ct-page-out";
+
+      old.setAttribute(
+        "aria-hidden",
+        "true"
+      );
+
+      fresh.classList.add("ct-page-in");
+
+      dialogue.append(old);
+
+      old.addEventListener(
+        "animationend",
+        () => old.remove(),
+        { once: true }
+      );
+
+      setTimeout(
+        () => old.remove(),
+        900
+      );
+    }
+  }
+
+  new MutationObserver(syncDialogue)
+    .observe(art, {
+      childList: true,
+      subtree: true,
+      attributes: true,
+      attributeFilter: [
+        "class",
+        "src"
+      ]
+    });
+
+  syncDialogue();
+
+})();
