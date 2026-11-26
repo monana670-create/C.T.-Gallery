@@ -2043,3 +2043,131 @@ body.admin .nt-head {
   position: relative;
   z-index: 1;
 }
+
+/* ========================================
+   SPIN EFFECT VIEWPORT FIX V2
+======================================== */
+
+
+/* 회전 효과 전용 각도 변수 */
+
+@property --ct-spin-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
+
+/* 카드 영역 넘침 차단 */
+
+.fx-spin {
+  min-width: 0;
+
+  overflow: hidden;
+  overflow: clip;
+}
+
+.fx-spin .archive-card {
+  overflow: hidden;
+
+  isolation: isolate;
+  contain: paint;
+}
+
+
+/* 회전하는 빛줄기 방식 변경 */
+
+.fx-spin .archive-card::before {
+  content: "";
+
+  position: absolute;
+
+  inset: 0 !important;
+
+  width: auto;
+  height: auto;
+
+  z-index: -1;
+
+  transform: none !important;
+
+  background: conic-gradient(
+    from var(--ct-spin-angle),
+    transparent 0%,
+    transparent 40%,
+    var(--c) 65%,
+    #ffffff 80%,
+    var(--c) 95%,
+    transparent 100%
+  );
+
+  animation:
+    ctBorderLightRotation 4s linear infinite;
+
+  pointer-events: none;
+}
+
+
+/* 빛의 방향만 회전 */
+
+@keyframes ctBorderLightRotation {
+
+  from {
+    --ct-spin-angle: 0deg;
+  }
+
+  to {
+    --ct-spin-angle: 360deg;
+  }
+}
+
+
+/* 상세창 너비 제한 */
+
+#viewer[data-fx="spin"] {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+#viewer[data-fx="spin"] .v-stage,
+#viewer[data-fx="spin"] .v-head,
+#viewer[data-fx="spin"] .v-scene,
+#viewer[data-fx="spin"] .v-info,
+#viewer[data-fx="spin"] .v-strip {
+  min-width: 0;
+  max-width: 100%;
+}
+
+
+/* 캐릭터 효과 영역 제한 */
+
+#viewer[data-fx="spin"] .v-stand {
+  overflow: hidden;
+
+  contain: paint;
+}
+
+
+/* 모바일 상세창 보호 */
+
+@media (max-width: 849px) {
+
+  #viewer[data-fx="spin"] .v-stage {
+    width: 100%;
+    max-width: 100%;
+  }
+}
+
+
+/* 움직임 최소화 설정 */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .fx-spin .archive-card::before {
+    animation: none !important;
+  }
+}
