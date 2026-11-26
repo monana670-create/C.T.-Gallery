@@ -1442,3 +1442,191 @@
     display: none;
   }
 }
+
+/* ========================================
+   C.T. GALLERY
+   STARLIGHT UPDATE
+======================================== */
+
+
+/* ========================================
+   1. HOME SKY GRADIENT
+======================================== */
+
+.hero,
+.hero.ct-dialogue-ready {
+  background: linear-gradient(
+    180deg,
+    #8bd5ff 0%,
+    #58addf 25%,
+    #326a99 49%,
+    #162a43 73%,
+    #070b13 91%,
+    #000000 100%
+  );
+}
+
+.hero .hero-shade {
+  background:
+    linear-gradient(
+      90deg,
+      rgba(5, 15, 30, .24),
+      transparent 65%
+    ),
+    linear-gradient(
+      0deg,
+      rgba(0, 0, 0, .25),
+      transparent 45%
+    );
+}
+
+
+/* ========================================
+   2. CHARACTER LOWER BODY FADE
+======================================== */
+
+.hero.ct-dialogue-ready .hero-art img {
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    #000 0%,
+    #000 58%,
+    rgba(0, 0, 0, .95) 67%,
+    rgba(0, 0, 0, .65) 80%,
+    rgba(0, 0, 0, .25) 92%,
+    transparent 100%
+  );
+
+  mask-image: linear-gradient(
+    to bottom,
+    #000 0%,
+    #000 58%,
+    rgba(0, 0, 0, .95) 67%,
+    rgba(0, 0, 0, .65) 80%,
+    rgba(0, 0, 0, .25) 92%,
+    transparent 100%
+  );
+}
+
+.hero.ct-dialogue-ready .hero-art::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 42%;
+  z-index: 2;
+
+  pointer-events: none;
+
+  background: rgba(0, 0, 0, .005);
+
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(0, 0, 0, .3) 30%,
+    #000 85%
+  );
+
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(0, 0, 0, .3) 30%,
+    #000 85%
+  );
+}
+
+
+/* ========================================
+   3. SHOOTING STAR UPGRADE
+======================================== */
+
+.hero .ct-meteor {
+  width: clamp(10rem, 36vw, 28rem);
+  height: 3px;
+
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(100, 190, 255, .15) 15%,
+    rgba(130, 210, 255, .45) 45%,
+    #bceaff 78%,
+    #ffffff 100%
+  );
+
+  border-radius: 100px;
+
+  filter: drop-shadow(
+    0 0 5px rgba(180, 225, 255, .8)
+  );
+
+  animation-duration: 5s;
+}
+
+.hero .ct-meteor:nth-child(1) {
+  animation-delay: .15s;
+}
+
+.hero .ct-meteor:nth-child(2) {
+  animation-delay: .55s;
+}
+
+.hero .ct-meteor:nth-child(3) {
+  animation-delay: .95s;
+}
+
+
+/* ========================================
+   4. MOBILE CHARACTER AND VOICE
+======================================== */
+
+@media (max-aspect-ratio: 1/1) {
+
+  .hero.ct-dialogue-ready .hero-art img {
+    object-fit: contain;
+    object-position: right bottom;
+  }
+
+  .ct-dialogue .ct-voice-text {
+    writing-mode: vertical-rl;
+    text-orientation: upright;
+    direction: ltr;
+    text-align: start;
+
+    line-height: 1.8;
+    letter-spacing: .08em;
+  }
+
+  .ct-dialogue .ct-long-voice .ct-voice-text {
+    writing-mode: horizontal-tb;
+    direction: ltr;
+    letter-spacing: normal;
+  }
+
+  .hero .ct-meteor {
+    width: clamp(9rem, 48vw, 20rem);
+    height: 3px;
+  }
+
+  .hero.ct-dialogue-ready .hero-art::after {
+    height: 40%;
+
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+  }
+}
+
+
+/* ========================================
+   5. REDUCED MOTION
+======================================== */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .hero .ct-meteor {
+    animation: none !important;
+    display: none;
+  }
+}
