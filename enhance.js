@@ -4,7 +4,10 @@
   "use strict";
 
   const $ = id => document.getElementById(id);
-  const reduce = matchMedia("(prefers-reduced-motion: reduce)");
+
+  const reduce = matchMedia(
+    "(prefers-reduced-motion: reduce)"
+  );
 
   const hero = document.querySelector(".hero");
   const header = document.querySelector(".header");
@@ -14,7 +17,35 @@
   let fromSpotlight = false;
 
   /* ========================================
-     HOME CHARACTER SPOTLIGHT
+     THREE SHOOTING STARS
+  ======================================== */
+
+  if (
+    hero &&
+    !hero.querySelector(".ct-meteors")
+  ) {
+    const meteors = document.createElement("div");
+
+    meteors.className = "ct-meteors";
+
+    meteors.setAttribute(
+      "aria-hidden",
+      "true"
+    );
+
+    for (let i = 0; i < 3; i++) {
+      const meteor = document.createElement("i");
+
+      meteor.className = "ct-meteor";
+
+      meteors.append(meteor);
+    }
+
+    hero.append(meteors);
+  }
+
+  /* ========================================
+     HOME CHARACTER SPOTLIGHT AND VOICE
   ======================================== */
 
   if (hero && art) {
@@ -61,6 +92,18 @@
 
     hero.append(panel);
 
+    const dialogue = document.createElement("aside");
+
+    dialogue.className = "ct-dialogue";
+    dialogue.hidden = true;
+
+    dialogue.setAttribute(
+      "aria-label",
+      "캐릭터 한마디"
+    );
+
+    hero.append(dialogue);
+
     const name = panel.querySelector(".ct-spot-name");
     const index = panel.querySelector(".ct-spot-index");
     const steps = panel.querySelectorAll("[data-ct-step]");
@@ -77,7 +120,11 @@
 
     const asURL = value => {
       try {
-        return new URL(value, location.href).href;
+        return new URL(
+          value,
+          location.href
+        ).href;
+
       } catch {
         return "";
       }
@@ -107,7 +154,122 @@
       };
     };
 
-    let last = null;
+    let lastImage = null;
+    let lastVoiceKey = "";
+
+    /* ========================================
+       CALENDAR VOICE ANIMATION
+    ======================================== */
+
+    function syncDialogue(
+      record,
+      recordIndex,
+      image
+    ) {
+      const title = String(
+        record.title || "CHARACTER"
+      );
+
+      const text =
+        String(
+          record.description || ""
+        ).trim() ||
+        "아직 등록된 대사가 없어요.";
+
+      const key = JSON.stringify([
+        recordIndex,
+        image.src,
+        title,
+        text
+      ]);
+
+      if (key === lastVoiceKey) return;
+
+      lastVoiceKey = key;
+
+      const old = dialogue.querySelector(
+        ".ct-voice-paper:not(.ct-page-out)"
+      );
+
+      const fresh = document.createElement("div");
+
+      fresh.className = "ct-voice-paper";
+
+      fresh.classList.toggle(
+        "ct-long-voice",
+        Array.from(text).length > 42 ||
+        /\n/.test(text)
+      );
+
+      fresh.innerHTML = `
+        <div class="ct-voice-head">
+          <span>CHARACTER VOICE</span>
+          <span class="ct-voice-number"></span>
+        </div>
+
+        <p class="ct-voice-text"></p>
+
+        <div class="ct-voice-name"></div>
+      `;
+
+      fresh.querySelector(
+        ".ct-voice-number"
+      ).textContent =
+        String(recordIndex + 1)
+          .padStart(2,"0");
+
+      fresh.querySelector(
+        ".ct-voice-text"
+      ).textContent = text;
+
+      fresh.querySelector(
+        ".ct-voice-name"
+      ).textContent = "— " + title;
+
+      dialogue.replaceChildren(fresh);
+
+      dialogue.hidden = false;
+
+      hero.classList.add(
+        "ct-dialogue-ready"
+      );
+
+      if (old && !reduce.matches) {
+        old.classList.remove(
+          "ct-page-in"
+        );
+
+        old.classList.add(
+          "ct-page-out"
+        );
+
+        old.setAttribute(
+          "aria-hidden",
+          "true"
+        );
+
+        fresh.classList.add(
+          "ct-page-in"
+        );
+
+        dialogue.append(old);
+
+        old.addEventListener(
+          "animationend",
+          () => old.remove(),
+          { once: true }
+        );
+
+        setTimeout(
+          () => old.remove(),
+          900
+        );
+      }
+    }
+
+    /* ========================================
+       CHARACTER SYNCHRONIZATION
+    ======================================== */
 
     function syncFeature() {
       const {
@@ -120,10 +282,25 @@
       panel.hidden =
         !im || recordIndex < 0;
 
-      if (panel.hidden) return;
+      if (panel.hidden) {
+        dialogue.hidden = true;
+
+        dialogue.replaceChildren();
+
+        hero.classList.remove(
+          "ct-dialogue-ready"
+        );
+
+        lastImage = null;
+        lastVoiceKey = "";
+
+        return;
+      }
+
+      const record = records[recordIndex];
 
       name.textContent =
-        records[recordIndex]?.title ||
+        record?.title ||
         "CHARACTER";
 
       name.setAttribute(
@@ -132,13 +309,13 @@
       );
 
       index.textContent =
-        `${String(imgs.indexOf(im) + 1).padStart(2,"0")}/${String(imgs.length).padStart(2,"0")}`;
+        `${String(imgs.indexOf(im)+1).padStart(2,"0")}/${String(imgs.length).padStart(2,"0")}`;
 
       steps.forEach(b => {
         b.disabled = imgs.length < 2;
       });
 
-      if (last !== im) {
+      if (lastImage !== im) {
         panel.classList.remove(
           "ct-feature-changed"
         );
@@ -151,8 +328,14 @@
           );
         }
 
-        last = im;
+        lastImage = im;
       }
+
+      syncDialogue(
+        record,
+        recordIndex,
+        im
+      );
     }
 
     function openFeature() {
@@ -195,7 +378,7 @@
             imgs.length
           ) % imgs.length;
 
-        imgs.forEach((img, i) => {
+        imgs.forEach((img,i) => {
           img.classList.toggle(
             "on",
             i === next
@@ -218,11 +401,13 @@
       });
 
     syncFeature();
+  }
 
-    /* ========================================
-       HOME SCROLL GUIDE
-    ======================================== */
+  /* ========================================
+     SCROLL GUIDE AND INTRO
+  ======================================== */
 
+  if (hero) {
     const hint = document.createElement("button");
 
     hint.type = "button";
@@ -251,10 +436,6 @@
 
     hero.append(hint);
 
-    /* ========================================
-       HOME ENTRANCE ANIMATION
-    ======================================== */
-
     const intro = $("intro");
 
     const enter = () => {
@@ -272,7 +453,7 @@
       return false;
     };
 
-    if (intro && !enter()) {
+    if (!enter() && intro) {
       const watcher = new MutationObserver(() => {
         if (enter()) {
           watcher.disconnect();
@@ -327,7 +508,7 @@
           : "CHARACTER RECORD";
 
       meta.querySelector("strong").textContent =
-        `${fmt(active + 1)} / ${fmt(all.length)}`;
+        `${fmt(active+1)} / ${fmt(all.length)}`;
 
       if (
         fromSpotlight &&
@@ -360,7 +541,7 @@
     });
 
     /* ========================================
-       CINEMATIC CHARACTER IMAGE REVEAL
+       CINEMATIC IMAGE REVEAL
     ======================================== */
 
     const image = $("v-img");
@@ -401,10 +582,12 @@
             transform:
               "translate3d(12px,0,0) scale(.985)"
           },
+
           {
             clipPath: "inset(0)",
             transform: "none"
           }
+
         ], {
           duration: 620,
           easing: "cubic-bezier(.16,1,.3,1)"
@@ -432,7 +615,7 @@
   }
 
   /* ========================================
-     SCROLL PROGRESS / PARALLAX
+     SCROLL PROGRESS AND PARALLAX
   ======================================== */
 
   let scheduled = false;
@@ -506,10 +689,13 @@
   document.addEventListener("click", e => {
     if (
       e.target.closest?.(
-        "[data-target], #stk-work"
+        "[data-target],#stk-work"
       )
     ) {
-      setTimeout(scheduleScroll,750);
+      setTimeout(
+        scheduleScroll,
+        750
+      );
     }
   });
 
@@ -526,7 +712,7 @@
   scheduleScroll();
 
   /* ========================================
-     SCROLL REVEAL ANIMATIONS
+     SCROLL REVEAL
   ======================================== */
 
   if (
@@ -538,7 +724,9 @@
         for (const entry of entries) {
           if (!entry.isIntersecting) continue;
 
-          entry.target.classList.add("ct-in");
+          entry.target.classList.add(
+            "ct-in"
+          );
 
           io.unobserve(entry.target);
         }
@@ -558,8 +746,7 @@
   }
 
   /* ========================================
-     SIGNATURE SOUND SYSTEM
-     NO EXTERNAL AUDIO FILES
+     SIGNATURE BUTTON SOUND SYSTEM
   ======================================== */
 
   let soundOn = true;
@@ -692,7 +879,9 @@
 
         master.gain.value = .55;
 
-        master.connect(context.destination);
+        master.connect(
+          context.destination
+        );
       }
 
       const render = () => {
@@ -729,7 +918,7 @@
   }
 
   /* ========================================
-     SOUND ON / OFF BUTTON
+     SOUND ON / OFF
   ======================================== */
 
   if (header && !$("ct-sound")) {
@@ -887,7 +1076,7 @@
       if (
         !reduce.matches &&
         button.matches(
-          ".hb,.nav-btn,.mobile-nav-btn,.stk,.add-btn,.v-arr,.ct-feature-controls button,.primary,.primary-btn,.pagination button,.menu-toggle,.ct-spot-open"
+          ".hb,.nav-btn,.mobile-nav-btn,.stk,.add-btn,.v-arr,.ct-feature-controls button,.primary,.primary-btn,.pagination button,.menu-toggle,.ct-spot-open,.ct-scroll-hint"
         )
       ) {
         button.classList.remove(
@@ -914,176 +1103,5 @@
       }
     }
   );
-
-})();
-
-/* HOME CHARACTER VOICE */
-
-(() => {
-  const hero = document.querySelector(".hero");
-  const art = document.getElementById("hero-art");
-
-  if (
-    !hero ||
-    !art ||
-    hero.querySelector(".ct-dialogue")
-  ) return;
-
-  const reduce = matchMedia(
-    "(prefers-reduced-motion: reduce)"
-  );
-
-  const dialogue = document.createElement("aside");
-
-  dialogue.className = "ct-dialogue";
-  dialogue.hidden = true;
-
-  dialogue.setAttribute(
-    "aria-label",
-    "캐릭터 한마디"
-  );
-
-  hero.append(dialogue);
-
-  let lastKey = "";
-
-  function url(value) {
-    try {
-      return new URL(value, location.href).href;
-    } catch {
-      return "";
-    }
-  }
-
-  function syncDialogue() {
-    const image = art.querySelector("img.on");
-
-    const list =
-      typeof characters !== "undefined" &&
-      Array.isArray(characters)
-        ? characters
-        : [];
-
-    const idx = image
-      ? list.findIndex(c =>
-          c?.image &&
-          url(c.image) === image.src
-        )
-      : -1;
-
-    if (idx < 0) {
-      dialogue.hidden = true;
-      dialogue.replaceChildren();
-
-      hero.classList.remove(
-        "ct-dialogue-ready"
-      );
-
-      lastKey = "";
-
-      return;
-    }
-
-    const character = list[idx];
-
-    const name = String(
-      character.title || "CHARACTER"
-    );
-
-    const text =
-      String(
-        character.description || ""
-      ).trim() ||
-      "아직 등록된 대사가 없어요.";
-
-    const key = JSON.stringify([
-      idx,
-      image.src,
-      name,
-      text
-    ]);
-
-    if (lastKey === key) return;
-
-    lastKey = key;
-
-    const old = dialogue.querySelector(
-      ".ct-voice-paper:not(.ct-page-out)"
-    );
-
-    const fresh = document.createElement("div");
-
-    fresh.className = "ct-voice-paper";
-
-    fresh.innerHTML = `
-      <div class="ct-voice-head">
-        <span>CHARACTER VOICE</span>
-        <span class="ct-voice-number"></span>
-      </div>
-
-      <p class="ct-voice-text"></p>
-
-      <div class="ct-voice-name"></div>
-    `;
-
-    fresh.querySelector(
-      ".ct-voice-number"
-    ).textContent =
-      String(idx + 1).padStart(2,"0");
-
-    fresh.querySelector(
-      ".ct-voice-text"
-    ).textContent = text;
-
-    fresh.querySelector(
-      ".ct-voice-name"
-    ).textContent = "— " + name;
-
-    dialogue.replaceChildren(fresh);
-
-    dialogue.hidden = false;
-
-    hero.classList.add(
-      "ct-dialogue-ready"
-    );
-
-    if (old && !reduce.matches) {
-      old.className =
-        "ct-voice-paper ct-page-out";
-
-      old.setAttribute(
-        "aria-hidden",
-        "true"
-      );
-
-      fresh.classList.add("ct-page-in");
-
-      dialogue.append(old);
-
-      old.addEventListener(
-        "animationend",
-        () => old.remove(),
-        { once: true }
-      );
-
-      setTimeout(
-        () => old.remove(),
-        900
-      );
-    }
-  }
-
-  new MutationObserver(syncDialogue)
-    .observe(art, {
-      childList: true,
-      subtree: true,
-      attributes: true,
-      attributeFilter: [
-        "class",
-        "src"
-      ]
-    });
-
-  syncDialogue();
 
 })();
