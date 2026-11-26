@@ -1105,3 +1105,665 @@
   );
 
 })();
+
+/* ========================================
+   C.T. GALLERY
+   ADMIN EDIT SYSTEM
+======================================== */
+
+(() => {
+  "use strict";
+
+  function isAdmin() {
+    return document.body.classList.contains("admin") &&
+      !!adminPw;
+  }
+
+
+  /* 공통 수정 창 */
+
+  function editor(title, fields, fill, save) {
+    if (!isAdmin()) return;
+
+    openModal(`
+      <h3>${title}</h3>
+
+      <form id="ct-edit-form">
+        ${fields}
+
+        <p class="msg" role="status"></p>
+
+        <div class="row">
+          <button type="button" data-close>
+            취소
+          </button>
+
+          <button class="primary" type="submit">
+            변경사항 저장
+          </button>
+        </div>
+      </form>
+    `);
+
+    const form = document.getElementById(
+      "ct-edit-form"
+    );
+
+    const field = name =>
+      form.elements.namedItem(name);
+
+    const msg = form.querySelector(".msg");
+
+    const submit =
+      form.querySelector('[type="submit"]');
+
+    const cancel =
+      form.querySelector("[data-close]");
+
+    fill(field);
+
+    form.onsubmit = async e => {
+      e.preventDefault();
+
+      if (submit.disabled || !isAdmin()) return;
+
+      submit.disabled = cancel.disabled = true;
+
+      const status = text => {
+        msg.textContent = text;
+      };
+
+      try {
+        status("저장 준비 중...");
+
+        await save(field, status);
+
+        if (form.isConnected) closeModal();
+
+      } catch (err) {
+        if (form.isConnected) {
+          status(err.message);
+        } else {
+          alert(err.message);
+        }
+
+      } finally {
+        submit.disabled = cancel.disabled = false;
+      }
+    };
+  }
+
+
+  /* ========================================
+     캐릭터 및 세계관 수정
+  ======================================== */
+
+  function editEntry(kind, item) {
+
+    if (!item.id) {
+      alert("이 항목은 수정할 수 있는 ID가 없어요.");
+      return;
+    }
+
+    editor(
+      kind === "character"
+        ? "캐릭터 수정"
+        : "세계관 수정",
+
+      `
+        <label>
+          이름
+          <input name="title"
+            maxlength="60" required>
+        </label>
+
+        <label>
+          한 줄 소개
+          <input name="description"
+            maxlength="120">
+        </label>
+
+        <label>
+          자세한 설명
+          <textarea name="body"
+            rows="5"
+            maxlength="5000"></textarea>
+        </label>
+
+        <label>
+          포인트 색
+          <input name="color" type="color">
+        </label>
+
+        <label>
+          효과
+
+          <select name="effect">
+            <option value="none">없음</option>
+            <option value="glow">은은한 빛</option>
+            <option value="pulse">숨쉬는 빛</option>
+            <option value="spin">회전하는 빛줄기</option>
+          </select>
+        </label>
+
+        <label>
+          대표 이미지 교체 (선택)
+
+          <input name="image"
+            type="file"
+            accept="image/*">
+
+          <small>
+            선택하지 않으면 기존 이미지를 유지해요.
+          </small>
+        </label>
+
+        <label>
+          웹툰 링크
+
+          <input name="webtoonUrl"
+            type="url"
+            maxlength="300">
+        </label>
+
+        <label>
+          웹툰 이미지 교체 (선택)
+
+          <input name="webtoonImage"
+            type="file"
+            accept="image/*">
+        </label>
+
+        <label class="ct-edit-check">
+          <input name="clearWebtoon" type="checkbox">
+          기존 웹툰 이미지 표시 제거
+        </label>
+      `,
+
+      f => {
+        f("title").value =
+          item.title || "";
+
+        f("description").value =
+          item.description || "";
+
+        f("body").value =
+          item.body || "";
+
+        f("color").value =
+          okColor(item.color) || "#3fa9ff";
+
+        f("effect").value =
+          effects.includes(item.effect)
+            ? item.effect
+            : "none";
+
+        f("webtoonUrl").value =
+          item.webtoonUrl || "";
+      },
+
+      async (f, status) => {
+
+        const payload = {
+          action: "editEntry",
+          kind,
+          id: item.id,
+
+          title: f("title").value,
+          description: f("description").value,
+          body: f("body").value,
+          color: f("color").value,
+          effect: f("effect").value,
+          webtoonUrl: f("webtoonUrl").value
+        };
+
+        const image = f("image").files[0];
+        const web = f("webtoonImage").files[0];
+        const clear = f("clearWebtoon").checked;
+
+
+        /* 대표 이미지 변경 */
+
+        if (image) {
+          status("대표 이미지 준비 중...");
+
+          Object.assign(
+            payload,
+            await prepareImage(image)
+          );
+        }
+
+
+        /* 웹툰 이미지 변경 */
+
+        if (web) {
+          status("웹툰 이미지 올리는 중...");
+
+          const asset = await api({
+            action: "addAsset",
+            ...(await prepareImage(web))
+          });
+
+          payload.webtoonImage = asset.url;
+
+        } else if (clear) {
+          payload.webtoonImage = "";
+        }
+
+
+        /* 기존 항목 업데이트 */
+
+        status("변경사항 저장 중...");
+
+        const result = await api(payload);
+
+        const list = kind === "character"
+          ? characters
+          : worldviews;
+
+        const idx = list.findIndex(
+          x => x.id === item.id
+        );
+
+        if (idx >= 0 && result.item) {
+
+          list[idx] = result.item;
+
+          renderArchive(
+            list,
+
+            kind === "character"
+              ? "character-list"
+              : "worldview-list",
+
+            kind,
+
+            kind === "character"
+              ? "CHARACTER"
+              : "WORLDVIEW"
+          );
+
+          if (kind === "character") {
+            startHero();
+          }
+
+          updateStats();
+
+        } else {
+          await loadData();
+        }
+      }
+    );
+  }
+
+
+  /* ========================================
+     작품 교체용 이미지 변환
+  ======================================== */
+
+  async function prepareReplacement(file, name) {
+
+    const ext = name.split(".").pop().toLowerCase();
+
+    const mime = {
+      jpg: "image/jpeg",
+      jpeg: "image/jpeg",
+      png: "image/png",
+      webp: "image/webp",
+      gif: "image/gif"
+    }[ext];
+
+    if (!mime) {
+      throw new Error(
+        "지원하지 않는 이미지 형식이에요."
+      );
+    }
+
+    let blob;
+
+    if (ext === "gif") {
+
+      if (file.type !== "image/gif") {
+        throw new Error(
+          "기존 GIF 작품은 GIF 파일로 교체해 주세요."
+        );
+      }
+
+      blob = file;
+
+    } else {
+
+      const bmp = await createImageBitmap(file);
+
+      try {
+
+        const scale = Math.min(
+          1,
+          1600 / Math.max(bmp.width, bmp.height)
+        );
+
+        const canvas =
+          document.createElement("canvas");
+
+        canvas.width = Math.max(
+          1,
+          Math.round(bmp.width * scale)
+        );
+
+        canvas.height = Math.max(
+          1,
+          Math.round(bmp.height * scale)
+        );
+
+        const ctx = canvas.getContext("2d");
+
+        if (mime === "image/jpeg") {
+          ctx.fillStyle = "#ffffff";
+
+          ctx.fillRect(
+            0, 0,
+            canvas.width,
+            canvas.height
+          );
+        }
+
+        ctx.drawImage(
+          bmp,
+          0, 0,
+          canvas.width,
+          canvas.height
+        );
+
+        blob = await new Promise(resolve => {
+          canvas.toBlob(resolve, mime, .85);
+        });
+
+      } finally {
+        bmp.close();
+      }
+    }
+
+    if (!blob || blob.type !== mime) {
+      throw new Error(
+        "이 브라우저에서 이미지 변환을 지원하지 않아요."
+      );
+    }
+
+    if (blob.size > 2550000) {
+      throw new Error(
+        "이미지가 너무 커요. 더 작은 파일로 선택해 주세요."
+      );
+    }
+
+    const image = await new Promise(
+      (resolve, reject) => {
+
+        const reader = new FileReader();
+
+        reader.onload = () => {
+          resolve(
+            String(reader.result).split(",")[1]
+          );
+        };
+
+        reader.onerror = () => {
+          reject(
+            new Error("이미지를 읽지 못했어요.")
+          );
+        };
+
+        reader.readAsDataURL(blob);
+      }
+    );
+
+    return {
+      image,
+      imageType: mime
+    };
+  }
+
+
+  /* ========================================
+     작품 이미지 수정
+  ======================================== */
+
+  function editImage(file) {
+
+    editor(
+      "작품 이미지 교체",
+
+      `
+        <p>
+          기존 작품의 파일명과 순서는 그대로 유지돼요.
+        </p>
+
+        <label>
+          새 이미지
+
+          <input name="image"
+            type="file"
+            accept="image/*"
+            required>
+        </label>
+      `,
+
+      () => {},
+
+      async (f, status) => {
+
+        status("이미지 준비 중...");
+
+        const data = await prepareReplacement(
+          f("image").files[0],
+          file.name
+        );
+
+        status("작품 교체 중...");
+
+        const result = await api({
+          action: "replaceImage",
+          name: file.name,
+          ...data
+        });
+
+        ++galleryRequestId;
+
+        const current = allImageFiles.find(
+          x => x.name === file.name
+        );
+
+        if (current) {
+
+          const url = new URL(
+            result.url || current.download_url
+          );
+
+          if (!result.url) {
+            url.searchParams.set(
+              "v",
+              Date.now()
+            );
+          }
+
+          current.download_url = url.href;
+
+          refreshGalleryView();
+
+        } else {
+          await loadGallery(false, true);
+        }
+      }
+    );
+  }
+
+
+  /* ========================================
+     공지 수정
+  ======================================== */
+
+  function editNotice(nt) {
+
+    editor(
+      "공지 수정",
+
+      `
+        <label>
+          제목
+          <input name="title"
+            maxlength="80"
+            required>
+        </label>
+
+        <label>
+          내용
+
+          <textarea name="body"
+            rows="8"
+            maxlength="3000"
+            required></textarea>
+        </label>
+      `,
+
+      f => {
+        f("title").value = nt.title;
+        f("body").value = nt.body;
+      },
+
+      async (f, status) => {
+
+        status("공지 저장 중...");
+
+        const result = await board({
+          action: "editNotice",
+          n: nt.n,
+
+          title: f("title").value,
+          body: f("body").value
+        });
+
+        const current = notices.find(
+          x => x.n === nt.n
+        );
+
+        if (current) {
+
+          current.title = result.title;
+          current.body = result.body;
+
+          renderNotices();
+          updateStickers();
+
+        } else {
+          await loadNotices();
+        }
+      }
+    );
+  }
+
+
+  /* ========================================
+     관리자 수정 버튼 자동 생성
+  ======================================== */
+
+  function install() {
+
+    const targets = [
+      [
+        "gallery",
+        ".gi",
+
+        () => allImageFiles.slice(
+          (currentPage - 1) * ITEMS_PER_PAGE,
+          currentPage * ITEMS_PER_PAGE
+        ),
+
+        editImage
+      ],
+
+      [
+        "character-list",
+        ".fxw",
+        () => characters,
+        item => editEntry("character", item)
+      ],
+
+      [
+        "worldview-list",
+        ".fxw",
+        () => worldviews,
+        item => editEntry("worldview", item)
+      ],
+
+      [
+        "notices",
+        ".nt",
+        () => notices,
+        editNotice
+      ]
+    ];
+
+    for (const [id, selector, items, onEdit] of targets) {
+
+      const root = document.getElementById(id);
+
+      if (!root) continue;
+
+      const mount = () => {
+
+        const list = items();
+
+        [...root.children]
+
+          .filter(el => el.matches(selector))
+
+          .forEach((wrap, i) => {
+
+            const item = list[i];
+
+            if (
+              !item ||
+              wrap.querySelector(".ct-edit-btn")
+            ) return;
+
+            const btn =
+              document.createElement("button");
+
+            btn.type = "button";
+            btn.className = "ct-edit-btn";
+            btn.textContent = "수정";
+
+            btn.onclick = e => {
+              e.stopPropagation();
+
+              if (isAdmin()) {
+                onEdit(item);
+              }
+            };
+
+            wrap.appendChild(btn);
+          });
+      };
+
+      new MutationObserver(mount).observe(
+        root,
+        { childList: true }
+      );
+
+      mount();
+    }
+  }
+
+
+  /* 초기화 */
+
+  if (document.readyState === "loading") {
+    document.addEventListener(
+      "DOMContentLoaded",
+      install,
+      { once: true }
+    );
+  } else {
+    install();
+  }
+
+})();
