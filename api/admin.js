@@ -139,6 +139,208 @@ module.exports = async (req, res) => {
       return res.json({ ok: true, item });
     }
 
+    /* ========================================
+   EDIT CHARACTER / WORLDVIEW
+======================================== */
+
+if (b.action === "editEntry") {
+  if (!["character", "worldview"].includes(b.kind))
+    return res.status(400).json({
+      error: "잘못된 항목 종류예요."
+    });
+
+  const file = fileOf(b.kind);
+  const cur = await ghGet(file);
+
+  if (!cur || !cur.sha)
+    return res.status(404).json({
+      error: "데이터 파일을 찾을 수 없어요."
+    });
+
+  const list = JSON.parse(
+    Buffer.from(cur.content, "base64")
+      .toString("utf8")
+  );
+
+  const idx = list.findIndex(
+    x => x.id === b.id
+  );
+
+  if (idx < 0)
+    return res.status(404).json({
+      error: "수정할 항목을 찾을 수 없어요."
+    });
+
+  const old = list[idx];
+  const title = clean(b.title, 60);
+  const webtoonUrl = clean(b.webtoonUrl, 300);
+
+  if (!title)
+    return res.status(400).json({
+      error: "이름을 입력해 주세요."
+    });
+
+  if (
+    webtoonUrl &&
+    !/^https?:\/\//i.test(webtoonUrl)
+  )
+    return res.status(400).json({
+      error: "올바른 웹툰 링크를 입력해 주세요."
+    });
+
+  const item = {
+    ...old,
+
+    title,
+
+    description: clean(b.description, 120),
+
+    body: clean(b.body, 5000),
+
+    color: /^#[0-9a-f]{6}$/i.test(b.color || "")
+      ? b.color
+      : old.color,
+
+    effect: FX.includes(b.effect)
+      ? b.effect
+      : old.effect,
+
+    webtoonUrl,
+
+    updatedAt: new Date().toISOString()
+  };
+
+  /* 웹툰 이미지를 변경한 경우 */
+
+  if (b.webtoonImage !== undefined) {
+    const u = String(b.webtoonImage || "");
+
+    if (u && !pathFromUrl(u)?.startsWith("webtoon/"))
+      return res.status(400).json({
+        error: "웹툰 이미지 주소가 올바르지 않아요."
+      });
+
+    item.webtoonImage = u;
+  }
+
+  /* 대표 이미지를 변경한 경우 */
+
+  if (b.image) {
+    const ext = checkImage(b);
+
+    const dir = b.kind === "worldview"
+      ? "worldviews/images"
+      : "characters/images";
+
+    const path = dir + "/edit-" +
+      crypto.randomBytes(12).toString("hex") +
+      "." + ext;
+
+    await ghPut(
+      path,
+      b.image,
+      "Update entry image"
+    );
+
+    item.image = RAW + "HEAD/" + path;
+  }
+
+  /* 기존 ID와 등록 순서 보존 */
+
+  list[idx] = item;
+
+  await ghPut(
+    file,
+    Buffer.from(
+      JSON.stringify(list, null, 2)
+    ).toString("base64"),
+
+    "Edit " + old.title,
+
+    cur.sha
+  );
+
+  return res.json({
+    ok: true,
+    item
+  });
+}
+
+
+/* ========================================
+   REPLACE GALLERY IMAGE
+======================================== */
+
+if (b.action === "replaceImage") {
+  const name = String(b.name || "");
+
+  if (!/^[\w-]+\.(jpg|jpeg|png|gif|webp)$/i.test(name))
+    return res.status(400).json({
+      error: "파일 이름이 올바르지 않아요."
+    });
+
+  const ext = name.split(".").pop().toLowerCase();
+
+  const mime = {
+    jpg: "image/jpeg",
+    jpeg: "image/jpeg",
+    png: "image/png",
+    webp: "image/webp",
+    gif: "image/gif"
+  }[ext];
+
+  if (
+    b.imageType !== mime ||
+    typeof b.image !== "string" ||
+    !b.image
+  )
+    return res.status(400).json({
+      error: "이미지 형식을 확인해 주세요."
+    });
+
+  if (b.image.length > 3500000)
+    return res.status(413).json({
+      error: "이미지가 너무 커요."
+    });
+
+  if (
+    ext === "gif" &&
+    !/^GIF8[79]a$/.test(
+      Buffer.from(b.image, "base64")
+        .subarray(0, 6)
+        .toString("ascii")
+    )
+  )
+    return res.status(400).json({
+      error: "올바른 GIF 파일을 선택해 주세요."
+    });
+
+  const path = "images/" + name;
+  const cur = await ghGet(path);
+
+  if (!cur || !cur.sha)
+    return res.status(404).json({
+      error: "교체할 작품을 찾을 수 없어요."
+    });
+
+  const saved = await ghPut(
+    path,
+    b.image,
+    "Replace image " + name,
+    cur.sha
+  );
+
+  return res.json({
+    ok: true,
+
+    name,
+
+    url: saved.commit?.sha
+      ? RAW + saved.commit.sha + "/" + path
+      : saved.content?.download_url
+  });
+    }
+
     if (b.action === "deleteEntry") {
       const file = fileOf(b.kind);
       const cur = await ghGet(file);
