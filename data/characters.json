@@ -22,5 +22,17 @@
     "webtoonUrl": "",
     "webtoonImage": "",
     "createdAt": "2026-11-26T16:09:48.906Z"
+  },
+  {
+    "id": "cmwxt53ft",
+    "title": "오피엘",
+    "description": "...",
+    "body": ".....",
+    "image": "https://raw.githubusercontent.com/monana670-create/C.T.-Gallery/HEAD/characters/images/cmwxt53ft.webp",
+    "color": "#ff00ff",
+    "effect": "glow",
+    "webtoonUrl": "",
+    "webtoonImage": "",
+    "createdAt": "2026-11-26T17:09:36.720Z"
   }
 ]
