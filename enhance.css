@@ -897,3 +897,17 @@
     animation: none;
   }
              }
+
+/* 투명 배경 캐릭터 썸네일 보정 */
+
+.v-th {
+  background: #e6edf5;
+  border: 2px solid #acb8c6;
+  padding: 0;
+}
+
+.v-th.on {
+  background: #e6edf5;
+  border-color: var(--c);
+  box-shadow: 0 0 0 1px var(--c);
+}
