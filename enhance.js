@@ -1767,3 +1767,720 @@
   }
 
 })();
+
+/* ========================================
+   C.T. GALLERY
+   CINEMATIC HOME & WEBTOON READER
+======================================== */
+
+;(() => {
+
+  "use strict";
+
+
+  /* ========================================
+     1. CINEMATIC AMBIENT BACKGROUND
+  ======================================== */
+
+  function initCinematic() {
+
+    const hero = document.querySelector(".hero");
+
+    const art = document.getElementById("hero-art");
+
+    if (
+      !hero ||
+      !art ||
+      hero.querySelector(".ct-ambient")
+    ) return;
+
+
+    const ambient = document.createElement("div");
+
+    ambient.className = "ct-ambient";
+
+    ambient.setAttribute(
+      "aria-hidden",
+      "true"
+    );
+
+    hero.prepend(ambient);
+
+
+    let activeSrc = "";
+    let generation = 0;
+
+
+    function syncAmbient() {
+
+      const active = art.querySelector("img.on");
+
+      const src =
+        active?.currentSrc ||
+        active?.src ||
+        "";
+
+      if (src === activeSrc) return;
+
+      activeSrc = src;
+
+      const ticket = ++generation;
+
+
+      if (!src) {
+        ambient.replaceChildren();
+        return;
+      }
+
+
+      ambient.querySelectorAll("img:not(.on)")
+        .forEach(img => img.remove());
+
+
+      const frame = new Image();
+
+      frame.alt = "";
+      frame.draggable = false;
+
+      ambient.appendChild(frame);
+
+
+      function show() {
+
+        requestAnimationFrame(() => {
+
+          if (
+            ticket !== generation ||
+            !frame.isConnected
+          ) {
+            frame.remove();
+            return;
+          }
+
+
+          /* 이전 배경은 천천히 사라짐 */
+
+          ambient.querySelectorAll("img.on")
+            .forEach(old => {
+
+              old.classList.remove("on");
+
+              setTimeout(
+                () => old.remove(),
+                1450
+              );
+            });
+
+
+          /* 새로운 배경 등장 */
+
+          frame.classList.add("on");
+
+        });
+      }
+
+
+      frame.addEventListener(
+        "load",
+        show,
+        { once: true }
+      );
+
+      frame.addEventListener(
+        "error",
+        () => frame.remove(),
+        { once: true }
+      );
+
+      frame.src = src;
+    }
+
+
+    /* 기존 캐릭터 전환과 자동 연동 */
+
+    new MutationObserver(syncAmbient).observe(
+      art,
+      {
+        childList: true,
+        subtree: true,
+        attributes: true,
+        attributeFilter: ["class", "src"]
+      }
+    );
+
+    syncAmbient();
+  }
+
+
+  /* ========================================
+     2. WEBTOON READER
+  ======================================== */
+
+  function initWebtoon() {
+
+    const viewer =
+      document.getElementById("viewer");
+
+    const stage =
+      viewer?.querySelector(".v-stage");
+
+    const preview =
+      document.getElementById("v-web");
+
+    const thumb =
+      document.getElementById("v-web-img");
+
+    const info =
+      viewer?.querySelector(".v-info");
+
+    const thumbs =
+      document.getElementById("v-thumbs");
+
+
+    if (
+      !viewer ||
+      !stage ||
+      !preview ||
+      !thumb ||
+      !info ||
+      viewer.querySelector(".ct-webtoon-reader")
+    ) return;
+
+
+    /* 웹툰 열람 화면 생성 */
+
+    const reader = document.createElement("section");
+
+    reader.className = "ct-webtoon-reader";
+
+    reader.hidden = true;
+
+
+    reader.innerHTML = `
+
+      <header class="ct-reader-head">
+
+        <span class="tag">
+          WEBTOON ARCHIVE
+        </span>
+
+        <h2 id="ct-reader-title"
+          tabindex="-1"></h2>
+
+        <p>CHARACTER STORY</p>
+
+      </header>
+
+
+      <div class="ct-reader-content">
+
+        <p class="ct-reader-status"
+          role="status">
+
+          이미지를 불러오는 중...
+
+        </p>
+
+        <img class="ct-reader-image"
+          alt="웹툰 본문"
+          hidden>
+
+      </div>
+
+
+      <div class="ct-reader-end">
+
+        <span>— END OF RECORD —</span>
+
+        <a class="ct-reader-external"
+          target="_blank"
+          rel="noopener noreferrer"
+          hidden>
+
+          외부 웹툰 링크 ▶
+
+        </a>
+
+        <button type="button"
+          class="ct-reader-back">
+
+          ◀ 캐릭터 상세창으로 돌아가기
+
+        </button>
+
+      </div>
+    `;
+
+
+    viewer.appendChild(reader);
+
+
+    const title =
+      reader.querySelector("#ct-reader-title");
+
+    const status =
+      reader.querySelector(".ct-reader-status");
+
+    const image =
+      reader.querySelector(".ct-reader-image");
+
+    const external =
+      reader.querySelector(".ct-reader-external");
+
+    const back =
+      reader.querySelector(".ct-reader-back");
+
+    const label =
+      preview.querySelector("span");
+
+
+    let savedScroll = 0;
+    let returnFocus = null;
+    let readerHistory = false;
+    let goingBack = false;
+
+
+    /* 현재 캐릭터 데이터 */
+
+    const current = () =>
+
+      typeof vList !== "undefined"
+
+        ? vList[vIdx]
+
+        : null;
+
+
+    /* 이미지 및 링크 주소 확인 */
+
+    const safeUrl = value => {
+
+      try {
+
+        const raw =
+          String(value || "").trim();
+
+        if (!raw) return "";
+
+        const url =
+          new URL(raw, location.href);
+
+        return /^https?:$/.test(url.protocol)
+
+          ? url.href
+
+          : "";
+
+      } catch {
+
+        return "";
+      }
+    };
+
+
+    /* ========================================
+       3. 캐릭터 상세창 복귀
+    ======================================== */
+
+    function restoreReader(focus = true) {
+
+      if (reader.hidden) return;
+
+      reader.hidden = true;
+      stage.hidden = false;
+
+      viewer.classList.remove(
+        "ct-webtoon-reading"
+      );
+
+      viewer.setAttribute(
+        "aria-labelledby",
+        "v-name"
+      );
+
+      readerHistory = false;
+      goingBack = false;
+
+      image.hidden = true;
+      image.removeAttribute("src");
+
+      viewer.scrollTop = savedScroll;
+
+
+      if (
+        focus &&
+        viewer.classList.contains("open")
+      ) {
+
+        (
+          returnFocus?.isConnected
+            ? returnFocus
+            : preview
+        )?.focus({
+          preventScroll: true
+        });
+      }
+
+      returnFocus = null;
+    }
+
+
+    /* ========================================
+       4. 웹툰 미리보기 활성화
+    ======================================== */
+
+    function syncPreview() {
+
+      if (!viewer.classList.contains("open")) {
+
+        restoreReader(false);
+
+        return;
+      }
+
+
+      const item = current();
+
+      if (!item) return;
+
+
+      const src =
+        safeUrl(item.webtoonImage);
+
+      const link =
+        safeUrl(item.webtoonUrl);
+
+
+      preview.classList.toggle(
+        "ct-webtoon-preview",
+        !!src
+      );
+
+
+      /* 이미지 또는 링크 중 하나만 있어도 표시 */
+
+      preview.hidden = !src && !link;
+
+
+      if (src) {
+
+        preview.href = src;
+
+        thumb.src = src;
+        thumb.hidden = false;
+
+        if (label) {
+          label.textContent = "웹툰 열람하기 ▶";
+        }
+
+      } else {
+
+        thumb.hidden = true;
+
+        if (link) {
+
+          preview.href = link;
+
+        } else {
+
+          preview.removeAttribute("href");
+        }
+
+        if (label) {
+          label.textContent = "웹툰 바로가기 ▶";
+        }
+      }
+
+
+      info.hidden =
+        !item.description &&
+        !item.body &&
+        preview.hidden;
+    }
+
+
+    /* ========================================
+       5. 웹툰 전체 열람
+    ======================================== */
+
+    function openReader(pushHistory = true) {
+
+      if (
+        !reader.hidden ||
+        !viewer.classList.contains("open")
+      ) return;
+
+
+      const item = current();
+
+      const src =
+        safeUrl(item?.webtoonImage);
+
+      if (!src) return;
+
+
+      const link =
+        safeUrl(item.webtoonUrl);
+
+
+      savedScroll = viewer.scrollTop;
+
+      returnFocus = document.activeElement;
+
+
+      title.textContent =
+        item.title || "웹툰";
+
+
+      external.hidden = !link;
+
+      if (link) {
+
+        external.href = link;
+
+      } else {
+
+        external.removeAttribute("href");
+      }
+
+
+      status.hidden = false;
+
+      status.textContent =
+        "이미지를 불러오는 중...";
+
+      image.hidden = true;
+
+
+      /* 상세창 대신 웹툰 열람 화면 표시 */
+
+      stage.hidden = true;
+
+      reader.hidden = false;
+
+      viewer.classList.add(
+        "ct-webtoon-reading"
+      );
+
+      viewer.setAttribute(
+        "aria-labelledby",
+        "ct-reader-title"
+      );
+
+
+      /* 이미지 로딩 완료 */
+
+      image.onload = () => {
+
+        status.hidden = true;
+
+        image.hidden = false;
+      };
+
+
+      image.onerror = () => {
+
+        status.textContent =
+          "웹툰 이미지를 불러오지 못했어요.";
+
+        status.hidden = false;
+
+        image.hidden = true;
+      };
+
+
+      image.src = src;
+
+
+      /* 스마트폰 뒤로 가기 지원 */
+
+      readerHistory = false;
+
+      if (pushHistory) {
+
+        try {
+
+          history.pushState(
+            {
+              ...history.state,
+
+              ctViewer: true,
+              ctWebtoon: true
+            },
+            ""
+          );
+
+          readerHistory = true;
+
+        } catch {}
+      }
+
+
+      viewer.scrollTop = 0;
+
+      title.focus({
+        preventScroll: true
+      });
+    }
+
+
+    /* ========================================
+       6. 돌아가기 버튼
+    ======================================== */
+
+    function goBack() {
+
+      if (
+        reader.hidden ||
+        goingBack
+      ) return;
+
+
+      if (
+        readerHistory &&
+        history.state?.ctWebtoon
+      ) {
+
+        goingBack = true;
+
+        history.back();
+
+      } else {
+
+        restoreReader();
+      }
+    }
+
+
+    preview.addEventListener("click", e => {
+
+      if (!safeUrl(current()?.webtoonImage)) {
+        return;
+      }
+
+      if (
+        e.ctrlKey ||
+        e.metaKey ||
+        e.shiftKey ||
+        e.altKey
+      ) return;
+
+      e.preventDefault();
+
+      openReader();
+    });
+
+
+    back.addEventListener(
+      "click",
+      goBack
+    );
+
+
+    /* 브라우저 뒤로 가기 및 앞으로 가기 */
+
+    window.addEventListener("popstate", e => {
+
+      if (
+        !reader.hidden &&
+        readerHistory
+      ) {
+
+        e.stopImmediatePropagation();
+
+        restoreReader();
+
+      } else if (
+        e.state?.ctWebtoon &&
+        viewer.classList.contains("open")
+      ) {
+
+        e.stopImmediatePropagation();
+
+        openReader(false);
+
+        readerHistory = !reader.hidden;
+      }
+
+    }, true);
+
+
+    /* ESC로 웹툰 닫기 */
+
+    document.addEventListener("keydown", e => {
+
+      if (reader.hidden) return;
+
+
+      if (e.key === "Escape") {
+
+        e.preventDefault();
+
+        e.stopImmediatePropagation();
+
+        goBack();
+
+      } else if (
+        e.key === "ArrowLeft" ||
+        e.key === "ArrowRight"
+      ) {
+
+        e.stopImmediatePropagation();
+      }
+
+    }, true);
+
+
+    /* 기존 캐릭터 상세창과 자동 연동 */
+
+    const observer =
+      new MutationObserver(syncPreview);
+
+
+    observer.observe(viewer, {
+
+      attributes: true,
+
+      attributeFilter: ["class"]
+    });
+
+
+    if (thumbs) {
+
+      observer.observe(thumbs, {
+
+        childList: true
+      });
+    }
+
+
+    syncPreview();
+  }
+
+
+  /* ========================================
+     INITIALIZATION
+  ======================================== */
+
+  function install() {
+
+    initCinematic();
+
+    initWebtoon();
+  }
+
+
+  if (document.readyState === "loading") {
+
+    document.addEventListener(
+      "DOMContentLoaded",
+      install,
+      { once: true }
+    );
+
+  } else {
+
+    install();
+  }
+
+})();
