@@ -1998,3 +1998,445 @@ body.admin .nt-head {
     animation: none !important;
   }
 }
+
+/* ========================================
+   18. CINEMATIC HOME DISPLAY
+======================================== */
+
+/* 일러스트가 은은하게 반사되는 배경 */
+
+.ct-ambient {
+  position: absolute;
+  inset: 0;
+
+  z-index: -5;
+
+  overflow: hidden;
+  pointer-events: none;
+
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    #000 0%,
+    #000 55%,
+    transparent 100%
+  );
+
+  mask-image: linear-gradient(
+    to bottom,
+    #000 0%,
+    #000 55%,
+    transparent 100%
+  );
+}
+
+.ct-ambient img {
+  position: absolute;
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+  object-position: center;
+
+  opacity: 0;
+
+  filter: blur(32px) saturate(.85);
+
+  transform: scale(1.15);
+
+  transition: opacity 1.3s ease;
+}
+
+.ct-ambient img.on {
+  opacity: .22;
+}
+
+
+/* 일러스트 전시 영역 확대 */
+
+.hero.ct-dialogue-ready .hero-art {
+  inset: 3% 19% 0 16%;
+}
+
+
+/* 이미지 원본 비율 및 가장자리 페이드 */
+
+.hero.ct-dialogue-ready .hero-art img {
+  position: absolute;
+
+  inset: auto auto 0 50%;
+
+  width: auto;
+  height: auto;
+
+  max-width: 100%;
+  max-height: 100%;
+
+  object-fit: contain;
+  object-position: center;
+
+  translate: -50% 0;
+
+  transform: scale(1.045);
+  transform-origin: center bottom;
+
+  transition:
+    opacity 1.3s ease,
+    transform 1.5s var(--ct-ease);
+
+
+  /* 위쪽과 아래쪽 페이드 */
+
+  --ct-art-mask: linear-gradient(
+    to bottom,
+
+    transparent 0%,
+    rgba(0,0,0,.7) 4%,
+    #000 10%,
+
+    #000 58%,
+
+    rgba(0,0,0,.95) 67%,
+    rgba(0,0,0,.65) 80%,
+    rgba(0,0,0,.25) 92%,
+
+    transparent 100%
+  );
+
+
+  /* 왼쪽과 오른쪽 페이드 */
+
+  --ct-side-mask: linear-gradient(
+    to right,
+
+    transparent 0%,
+    rgba(0,0,0,.7) 7%,
+    #000 15%,
+
+    #000 87%,
+
+    rgba(0,0,0,.8) 94%,
+    transparent 100%
+  );
+
+
+  /* 네 방향 마스크 결합 */
+
+  -webkit-mask-image:
+    var(--ct-art-mask),
+    var(--ct-side-mask);
+
+  -webkit-mask-composite: source-in;
+
+  mask-image:
+    var(--ct-art-mask),
+    var(--ct-side-mask);
+
+  mask-composite: intersect;
+}
+
+
+/* 캐릭터 전환 시 자연스러운 확대 효과 */
+
+.hero.ct-dialogue-ready .hero-art img.on {
+  opacity: 1;
+  transform: scale(1);
+}
+
+
+/* 세로 화면 */
+
+@media (max-aspect-ratio:1/1) {
+
+  .hero.ct-dialogue-ready .hero-art {
+    inset: auto;
+
+    width: 92%;
+
+    height: clamp(
+      17rem,
+      96vw,
+      54rem
+    );
+  }
+
+  .hero.ct-dialogue-ready .hero-art img {
+    inset: auto 0 0 auto;
+
+    translate: none;
+
+    object-position: right bottom;
+  }
+
+  .ct-ambient img {
+    filter: blur(24px) saturate(.85);
+  }
+}
+
+
+/* ========================================
+   19. WEBTOON PREVIEW CARD
+======================================== */
+
+.v-web.ct-webtoon-preview {
+  display: grid;
+
+  width: min(100%,22rem);
+
+  gap: 0;
+  padding: 0;
+
+  overflow: hidden;
+
+  border: 1px solid var(--c);
+  border-radius: 4px;
+
+  background: #233044;
+
+  box-shadow: 0 5px 18px #172c4525;
+
+  transition:
+    transform .3s var(--ct-ease),
+    box-shadow .3s;
+}
+
+.v-web.ct-webtoon-preview img {
+  width: 100%;
+
+  height: clamp(
+    7rem,
+    24vw,
+    11rem
+  );
+
+  object-fit: cover;
+  object-position: center top;
+
+  transition: transform .5s var(--ct-ease);
+}
+
+.v-web.ct-webtoon-preview span {
+  display: block;
+
+  padding: .7rem 1rem;
+
+  text-align: center;
+
+  color: #ffffff;
+  background: #203b55;
+
+  font-weight: 700;
+  letter-spacing: .04em;
+
+  border-top: 2px solid var(--c);
+}
+
+@media (hover:hover) and (pointer:fine) {
+
+  .v-web.ct-webtoon-preview:hover {
+    transform: translateY(-3px);
+
+    box-shadow:
+      0 0 18px var(--c);
+  }
+
+  .v-web.ct-webtoon-preview:hover img {
+    transform: scale(1.035);
+  }
+}
+
+
+/* ========================================
+   20. FULL WEBTOON READER
+======================================== */
+
+.viewer.ct-webtoon-reading {
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.viewer.ct-webtoon-reading .v-stage {
+  display: none !important;
+}
+
+.ct-webtoon-reader {
+  width: min(100%,52rem);
+
+  min-height: 100svh;
+
+  margin: 0 auto;
+  padding: 1.2rem clamp(.65rem,3vw,2rem) 2rem;
+
+  animation: ctReaderOpen .5s var(--ct-ease) both;
+}
+
+
+/* 웹툰 상단 제목 */
+
+.ct-reader-head {
+  padding: 1.2rem 0 1.5rem;
+
+  border-bottom: 3px solid var(--c);
+
+  text-align: center;
+}
+
+.ct-reader-head h2 {
+  margin: .8rem 0 .4rem;
+
+  color: #233044;
+
+  font: 800 clamp(1.8rem,6vw,3.4rem)/1.35 var(--serif);
+
+  overflow-wrap: anywhere;
+}
+
+.ct-reader-head p {
+  color: #52748e;
+
+  font: 700 .8rem/1.5 var(--latin);
+
+  letter-spacing: .2em;
+}
+
+
+/* 웹툰 전체 이미지 */
+
+.ct-reader-content {
+  margin-top: 1rem;
+
+  overflow: hidden;
+
+  background: #ffffff;
+
+  box-shadow: 0 8px 25px #172c451a;
+}
+
+.ct-reader-image {
+  display: block;
+
+  width: 100%;
+  height: auto;
+
+  max-width: 100%;
+  max-height: none;
+
+  object-fit: contain;
+}
+
+.ct-reader-status {
+  padding: 3rem 1rem;
+
+  color: var(--muted);
+
+  text-align: center;
+}
+
+
+/* 웹툰 마지막 부분 */
+
+.ct-reader-end {
+  display: grid;
+
+  gap: 1rem;
+
+  margin: 1.5rem 0 2rem;
+
+  text-align: center;
+}
+
+.ct-reader-end > span {
+  color: #52748e;
+
+  font: 700 .8rem/1.5 var(--latin);
+  letter-spacing: .15em;
+}
+
+.ct-reader-external {
+  display: block;
+
+  padding: .75rem 1rem;
+
+  border: 1px solid #ccd6e2;
+
+  background: white;
+  color: #235d88;
+
+  text-decoration: none;
+  font-weight: 700;
+}
+
+
+/* 맨 아래로 돌아가기 버튼 */
+
+.ct-reader-back {
+  width: 100%;
+
+  min-height: 3.2rem;
+
+  padding: .85rem 1rem;
+
+  border: 0;
+  border-radius: 3px;
+
+  background: linear-gradient(
+    135deg,
+    #233044,
+    #275e87
+  );
+
+  color: white;
+
+  font-weight: 700;
+
+  box-shadow:
+    inset 0 -3px var(--c),
+    0 5px 15px #172c4525;
+
+  transition:
+    transform .2s,
+    background .2s;
+}
+
+.ct-reader-back:hover {
+  background: #357ca9;
+}
+
+.ct-reader-back:active {
+  transform: scale(.97);
+}
+
+@keyframes ctReaderOpen {
+
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+
+/* ========================================
+   ACCESSIBILITY
+======================================== */
+
+@media (prefers-reduced-motion:reduce) {
+
+  .ct-ambient img,
+  .hero.ct-dialogue-ready .hero-art img {
+    transition: none !important;
+  }
+
+  .hero.ct-dialogue-ready .hero-art img {
+    transform: none !important;
+  }
+
+  .ct-webtoon-reader {
+    animation: none !important;
+  }
+}
