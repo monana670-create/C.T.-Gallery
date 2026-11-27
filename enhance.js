@@ -6,10 +6,7 @@
   "use strict";
 
   const $ = id => document.getElementById(id);
-
-  const reduce = matchMedia(
-    "(prefers-reduced-motion: reduce)"
-  );
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)");
 
   const hero = document.querySelector(".hero");
   const header = document.querySelector(".header");
@@ -18,9 +15,7 @@
 
   let fromSpotlight = false;
 
-  /* ========================================
-     THREE SHOOTING STARS
-  ======================================== */
+  /* THREE SHOOTING STARS */
 
   if (hero && !hero.querySelector(".ct-meteors")) {
 
@@ -30,16 +25,20 @@
     meteors.setAttribute("aria-hidden","true");
 
     for (let i = 0; i < 3; i++) {
+
       const meteor = document.createElement("i");
+
       meteor.className = "ct-meteor";
+
       meteors.append(meteor);
     }
 
     hero.append(meteors);
   }
 
+
   /* ========================================
-     HOME CHARACTER SPOTLIGHT AND VOICE
+     HOME CHARACTER SPOTLIGHT / VOICE
   ======================================== */
 
   if (hero && art) {
@@ -48,11 +47,7 @@
 
     panel.className = "ct-spotlight";
     panel.hidden = true;
-
-    panel.setAttribute(
-      "aria-label",
-      "현재 전시 캐릭터"
-    );
+    panel.setAttribute("aria-label","현재 전시 캐릭터");
 
     panel.innerHTML = `
       <div class="ct-feature-top">
@@ -66,17 +61,11 @@
 
       <div class="ct-feature-controls">
 
-        <button type="button"
-          data-ct-step="-1"
-          aria-label="이전 홈 캐릭터">
-          ‹
-        </button>
+        <button type="button" data-ct-step="-1"
+          aria-label="이전 홈 캐릭터">‹</button>
 
-        <button type="button"
-          data-ct-step="1"
-          aria-label="다음 홈 캐릭터">
-          ›
-        </button>
+        <button type="button" data-ct-step="1"
+          aria-label="다음 홈 캐릭터">›</button>
 
         <button type="button" class="ct-spot-open">
           PROFILE ▶
@@ -91,11 +80,7 @@
 
     dialogue.className = "ct-dialogue";
     dialogue.hidden = true;
-
-    dialogue.setAttribute(
-      "aria-label",
-      "캐릭터 한마디"
-    );
+    dialogue.setAttribute("aria-label","캐릭터 한마디");
 
     hero.append(dialogue);
 
@@ -115,7 +100,7 @@
 
     const asURL = value => {
       try {
-        return new URL(value, location.href).href;
+        return new URL(value,location.href).href;
       } catch {
         return "";
       }
@@ -149,9 +134,7 @@
     let lastImage = null;
     let lastVoiceKey = "";
 
-    /* CALENDAR VOICE ANIMATION */
-
-    function syncDialogue(record, recordIndex, image) {
+    function syncDialogue(record,recordIndex,image) {
 
       const title =
         String(record.title || "CHARACTER");
@@ -197,7 +180,7 @@
 
       fresh.querySelector(".ct-voice-number")
         .textContent =
-          String(recordIndex + 1).padStart(2,"0");
+          String(recordIndex+1).padStart(2,"0");
 
       fresh.querySelector(".ct-voice-text")
         .textContent = text;
@@ -215,7 +198,6 @@
 
         old.classList.remove("ct-page-in");
         old.classList.add("ct-page-out");
-
         old.setAttribute("aria-hidden","true");
 
         fresh.classList.add("ct-page-in");
@@ -232,8 +214,6 @@
       }
     }
 
-    /* CHARACTER SYNCHRONIZATION */
-
     function syncFeature() {
 
       const {
@@ -248,7 +228,6 @@
       if (panel.hidden) {
 
         dialogue.hidden = true;
-
         dialogue.replaceChildren();
 
         hero.classList.remove("ct-dialogue-ready");
@@ -273,6 +252,7 @@
         `${String(imgs.indexOf(im)+1).padStart(2,"0")}/${String(imgs.length).padStart(2,"0")}`;
 
       steps.forEach(b => {
+
         b.disabled = imgs.length < 2;
       });
 
@@ -301,11 +281,13 @@
         recordIndex >= 0 &&
         typeof openViewer === "function"
       ) {
+
         fromSpotlight = true;
 
         openViewer("character",recordIndex);
 
         if ($("v-back")) {
+
           $("v-back").textContent = "홈으로 ▶";
         }
       }
@@ -320,7 +302,7 @@
 
       b.onclick = () => {
 
-        const { imgs, im } = current();
+        const { imgs,im } = current();
 
         if (imgs.length < 2) return;
 
@@ -331,6 +313,7 @@
         ) % imgs.length;
 
         imgs.forEach((img,i) => {
+
           img.classList.toggle("on",i === next);
         });
 
@@ -349,8 +332,9 @@
     syncFeature();
   }
 
+
   /* ========================================
-     SCROLL GUIDE AND INTRO
+     SCROLL GUIDE / INTRO
   ======================================== */
 
   if (hero) {
@@ -413,8 +397,9 @@
     }
   }
 
+
   /* ========================================
-     CHARACTER / WORLD ARCHIVE NUMBER
+     ARCHIVE RECORD NUMBER
   ======================================== */
 
   if (
@@ -479,6 +464,7 @@
     new MutationObserver(() => {
 
       if (!viewer.classList.contains("open")) {
+
         fromSpotlight = false;
       }
 
@@ -487,7 +473,8 @@
       attributeFilter: ["class"]
     });
 
-    /* CINEMATIC IMAGE REVEAL */
+
+    /* 대표 이미지 등장 연출 */
 
     const image = $("v-img");
 
@@ -561,8 +548,9 @@
     }
   }
 
+
   /* ========================================
-     SCROLL PROGRESS AND PARALLAX
+     SCROLL PROGRESS / PARALLAX
   ======================================== */
 
   let scheduled = false;
@@ -577,10 +565,7 @@
       root.scrollHeight - window.innerHeight;
 
     const progress = range > 0
-      ? Math.max(
-          0,
-          Math.min(1,window.scrollY / range)
-        )
+      ? Math.max(0,Math.min(1,window.scrollY/range))
       : 0;
 
     header?.style.setProperty(
@@ -651,6 +636,7 @@
 
   scheduleScroll();
 
+
   /* ========================================
      SCROLL REVEAL
   ======================================== */
@@ -684,6 +670,7 @@
       io.observe(el);
     });
   }
+
 
   /* ========================================
      SIGNATURE BUTTON SOUND SYSTEM
@@ -759,6 +746,11 @@
       [659.25,0,.12,.06],
       [987.77,.065,.14,.045],
       [1318.51,.14,.22,.035]
+    ],
+
+    illustration: [
+      [1046.5,0,.08,.05],
+      [1567.98,.035,.11,.03]
     ]
   };
 
@@ -857,6 +849,14 @@
     } catch {}
   }
 
+  /* 스와이프 전용 효과음 연동 */
+
+  document.addEventListener(
+    "ct-illustration-swipe",
+    () => play("illustration")
+  );
+
+
   /* SOUND ON / OFF */
 
   if (header && !$("ct-sound")) {
@@ -922,9 +922,14 @@
     syncSound();
   }
 
+
   /* BUTTON SOUND CLASSIFICATION */
 
   function kind(button) {
+
+    if (button.matches(".ct-art-arrow,.ct-art-dot")) {
+      return "illustration";
+    }
 
     if (button.matches(".ct-cover-link")) {
       return "webtoon";
@@ -934,7 +939,7 @@
       return "launch";
     }
 
-    if (button.matches(".del,.cdel")) {
+    if (button.matches(".del,.cdel,.ct-extra-delete")) {
       return "danger";
     }
 
@@ -951,7 +956,7 @@
     }
 
     if (button.matches(
-      "#admin-toggle,.add-btn,.ct-edit-btn,.ct-cover-admin"
+      "#admin-toggle,.add-btn,.ct-edit-btn,.ct-cover-admin,.ct-illustration-admin"
     )) {
       return "admin";
     }
@@ -974,8 +979,6 @@
 
     return "soft";
   }
-
-  /* BUTTON INTERACTION ANIMATION */
 
   document.addEventListener(
     "click",
@@ -1026,8 +1029,8 @@
 
 })();
 
+
 /* ========================================
-   C.T. GALLERY
    ADMIN EDIT SYSTEM
 ======================================== */
 
@@ -1039,8 +1042,6 @@
     return document.body.classList.contains("admin") &&
       !!adminPw;
   }
-
-  /* COMMON EDIT FORM */
 
   function editor(title,fields,fill,save) {
 
@@ -1056,7 +1057,6 @@
         <p class="msg" role="status"></p>
 
         <div class="row">
-
           <button type="button" data-close>
             취소
           </button>
@@ -1064,14 +1064,13 @@
           <button class="primary" type="submit">
             변경사항 저장
           </button>
-
         </div>
+
       </form>
     `);
 
-    const form = document.getElementById(
-      "ct-edit-form"
-    );
+    const form =
+      document.getElementById("ct-edit-form");
 
     const field = name =>
       form.elements.namedItem(name);
@@ -1104,7 +1103,12 @@
 
         await save(field,status);
 
-        if (form.isConnected) closeModal();
+        if (
+          document.getElementById("ct-edit-form") === form
+        ) {
+
+          closeModal();
+        }
 
       } catch (err) {
 
@@ -1124,9 +1128,8 @@
     };
   }
 
-  /* ========================================
-     EDIT CHARACTER / WORLDVIEW
-  ======================================== */
+
+  /* 캐릭터 / 세계관 수정 */
 
   function editEntry(kind,item) {
 
@@ -1157,8 +1160,7 @@
         <label>
           자세한 설명
           <textarea name="body"
-            rows="5"
-            maxlength="5000"></textarea>
+            rows="5" maxlength="5000"></textarea>
         </label>
 
         <label>
@@ -1181,24 +1183,21 @@
           대표 이미지 교체 (선택)
 
           <input name="image"
-            type="file"
-            accept="image/*">
+            type="file" accept="image/*">
 
           <small>
-            선택하지 않으면 기존 이미지를 유지해요.
+            이 이미지는 홈 화면과 상세창의 첫 번째 이미지에 사용돼요.
           </small>
         </label>
 
         <label>
           플레이 하러 가기 링크
 
-          <input name="webtoonUrl"
-            type="url"
-            maxlength="300"
-            placeholder="https://">
+          <input name="webtoonUrl" type="url"
+            maxlength="300" placeholder="https://">
 
           <small>
-            링크를 입력하지 않으면 플레이 버튼이 숨겨져요.
+            비워 두면 플레이 버튼이 숨겨져요.
           </small>
         </label>
 
@@ -1206,25 +1205,17 @@
           웹툰 본문 이미지 교체 (선택)
 
           <input name="webtoonImage"
-            type="file"
-            accept="image/*">
-
-          <small>
-            일러스트 클릭 시 열리는 웹툰 이미지예요.
-          </small>
+            type="file" accept="image/*">
         </label>
 
         <label class="ct-edit-check">
-
           <input name="clearWebtoon" type="checkbox">
-
           기존 웹툰 본문 표시 제거
-
         </label>
 
         <small>
-          전용 표지 일러스트는 캐릭터 상세창 하단의
-          웹툰 설정에서 등록할 수 있어요.
+          추가 일러스트는 캐릭터 상세 이미지 우측 상단,
+          웹툰 표지는 상세창 하단에서 관리할 수 있어요.
         </small>
       `,
 
@@ -1326,6 +1317,7 @@
           );
 
           if (kind === "character") {
+
             startHero();
           }
 
@@ -1339,13 +1331,13 @@
     );
   }
 
-  /* ========================================
-     GALLERY IMAGE REPLACEMENT
-  ======================================== */
+
+  /* 작품 교체 이미지 변환 */
 
   async function prepareReplacement(file,name) {
 
-    const ext = name.split(".").pop().toLowerCase();
+    const ext =
+      name.split(".").pop().toLowerCase();
 
     const mime = {
       jpg: "image/jpeg",
@@ -1439,7 +1431,7 @@
     if (blob.size > 2550000) {
 
       throw new Error(
-        "이미지가 너무 커요. 더 작은 파일로 선택해 주세요."
+        "이미지가 너무 커요. 더 작은 파일을 선택해 주세요."
       );
     }
 
@@ -1472,9 +1464,13 @@
     };
   }
 
+
+  /* 작품 이미지 교체 */
+
   function editImage(file) {
 
     editor(
+
       "작품 이미지 교체",
 
       `
@@ -1483,14 +1479,10 @@
         </p>
 
         <label>
-
           새 이미지
 
-          <input name="image"
-            type="file"
-            accept="image/*"
-            required>
-
+          <input name="image" type="file"
+            accept="image/*" required>
         </label>
       `,
 
@@ -1542,32 +1534,27 @@
     );
   }
 
-  /* ========================================
-     EDIT NOTICE
-  ======================================== */
+
+  /* 공지 수정 */
 
   function editNotice(nt) {
 
     editor(
+
       "공지 수정",
 
       `
         <label>
           제목
           <input name="title"
-            maxlength="80"
-            required>
+            maxlength="80" required>
         </label>
 
         <label>
-
           내용
-
           <textarea name="body"
-            rows="8"
-            maxlength="3000"
+            rows="8" maxlength="3000"
             required></textarea>
-
         </label>
       `,
 
@@ -1582,9 +1569,7 @@
         status("공지 저장 중...");
 
         const result = await board({
-
           action: "editNotice",
-
           n: nt.n,
           title: f("title").value,
           body: f("body").value
@@ -1610,9 +1595,8 @@
     );
   }
 
-  /* ========================================
-     AUTOMATIC ADMIN EDIT BUTTONS
-  ======================================== */
+
+  /* 관리자 수정 버튼 자동 생성 */
 
   function install() {
 
@@ -1623,8 +1607,8 @@
         ".gi",
 
         () => allImageFiles.slice(
-          (currentPage - 1) * ITEMS_PER_PAGE,
-          currentPage * ITEMS_PER_PAGE
+          (currentPage-1)*ITEMS_PER_PAGE,
+          currentPage*ITEMS_PER_PAGE
         ),
 
         editImage
@@ -1652,9 +1636,13 @@
       ]
     ];
 
-    for (const [id,selector,items,onEdit] of targets) {
+    for (
+      const [id,selector,items,onEdit]
+      of targets
+    ) {
 
-      const root = document.getElementById(id);
+      const root =
+        document.getElementById(id);
 
       if (!root) continue;
 
@@ -1663,7 +1651,9 @@
         const list = items();
 
         [...root.children]
+
           .filter(el => el.matches(selector))
+
           .forEach((wrap,i) => {
 
             const item = list[i];
@@ -1691,10 +1681,10 @@
           });
       };
 
-      new MutationObserver(mount).observe(
-        root,
-        { childList: true }
-      );
+      new MutationObserver(mount)
+        .observe(root,{
+          childList: true
+        });
 
       mount();
     }
@@ -1715,22 +1705,45 @@
 
 })();
 
+
 /* ========================================
-   C.T. GALLERY
-   CINEMATIC HOME & WEBTOON SYSTEM
+   CINEMATIC HOME / WEBTOON SYSTEM
 ======================================== */
 
 ;(() => {
   "use strict";
 
+  function safeUrl(value) {
+
+    try {
+
+      const raw = String(value || "").trim();
+
+      if (!raw) return "";
+
+      const url = new URL(raw,location.href);
+
+      return /^https?:$/.test(url.protocol)
+        ? url.href
+        : "";
+
+    } catch {
+
+      return "";
+    }
+  }
+
+
   /* ========================================
-     1. CINEMATIC AMBIENT BACKGROUND
+     CINEMATIC AMBIENT BACKGROUND
   ======================================== */
 
   function initCinematic() {
 
     const hero = document.querySelector(".hero");
-    const art = document.getElementById("hero-art");
+
+    const art =
+      document.getElementById("hero-art");
 
     if (
       !hero ||
@@ -1741,7 +1754,6 @@
     const ambient = document.createElement("div");
 
     ambient.className = "ct-ambient";
-
     ambient.setAttribute("aria-hidden","true");
 
     hero.prepend(ambient);
@@ -1836,13 +1848,15 @@
     syncAmbient();
   }
 
+
   /* ========================================
-     2. WEBTOON ILLUSTRATION AND READER
+     WEBTOON COVER / PLAY LINK / READER
   ======================================== */
 
   function initWebtoon() {
 
-    const viewer = document.getElementById("viewer");
+    const viewer =
+      document.getElementById("viewer");
 
     const stage =
       viewer?.querySelector(".v-stage");
@@ -1868,52 +1882,33 @@
       viewer.querySelector(".ct-webtoon-reader")
     ) return;
 
-    /* ========================================
-       CREATE COVER AND PLAY BUTTON
-    ======================================== */
-
     const zone = document.createElement("section");
 
     zone.className = "ct-cover-zone";
     zone.hidden = true;
 
     zone.innerHTML = `
-
       <div class="ct-cover-heading">
         WEBTOON ARCHIVE
       </div>
 
-      <button
-        type="button"
-        class="ct-cover-link"
-        aria-label="웹툰 열기"
-        hidden>
+      <button type="button" class="ct-cover-link"
+        aria-label="웹툰 열기" hidden>
 
-        <img
-          class="ct-cover-img"
-          alt="웹툰 전용 일러스트"
-          draggable="false">
+        <img class="ct-cover-img"
+          alt="웹툰 전용 일러스트" draggable="false">
 
       </button>
 
-      <a
-        class="ct-play-link"
-        target="_blank"
-        rel="noopener noreferrer"
-        hidden>
+      <a class="ct-play-link" target="_blank"
+        rel="noopener noreferrer" hidden>
 
         <span>플레이 하러 가기</span>
         <b>▶</b>
-
       </a>
 
-      <button
-        type="button"
-        class="ct-cover-admin"
-        hidden>
-
+      <button type="button" class="ct-cover-admin" hidden>
         + 웹툰 설정 수정
-
       </button>
     `;
 
@@ -1931,50 +1926,31 @@
     const adminButton =
       zone.querySelector(".ct-cover-admin");
 
-    /* ========================================
-       CREATE IMMERSIVE READER
-    ======================================== */
-
-    const reader = document.createElement("section");
+    const reader =
+      document.createElement("section");
 
     reader.className = "ct-webtoon-reader";
     reader.hidden = true;
 
     reader.innerHTML = `
-
       <header class="ct-reader-head">
-
-        <h2
-          id="ct-reader-title"
-          tabindex="-1"></h2>
-
+        <h2 id="ct-reader-title" tabindex="-1"></h2>
       </header>
 
       <div class="ct-reader-content">
 
-        <p class="ct-reader-status"
-          role="status">
-
+        <p class="ct-reader-status" role="status">
           이미지를 불러오는 중...
-
         </p>
 
-        <img
-          class="ct-reader-image"
-          alt="웹툰 본문"
-          draggable="false"
-          hidden>
-
+        <img class="ct-reader-image"
+          alt="웹툰 본문" draggable="false" hidden>
       </div>
 
       <div class="ct-reader-end">
 
-        <button
-          type="button"
-          class="ct-reader-back">
-
+        <button type="button" class="ct-reader-back">
           ◀ 상세창으로 돌아가기
-
         </button>
 
       </div>
@@ -2002,47 +1978,19 @@
 
     const failedImages = new Set();
 
-    /* CURRENT CHARACTER DATA */
-
     const current = () =>
-
       typeof vList !== "undefined"
-
         ? vList[vIdx]
-
         : null;
 
     function isAdmin() {
 
-      return document.body.classList.contains("admin") &&
-        !!adminPw;
+      return document.body.classList.contains("admin")
+        && !!adminPw;
     }
 
-    function safeUrl(value) {
 
-      try {
-
-        const raw = String(value || "").trim();
-
-        if (!raw) return "";
-
-        const url = new URL(raw,location.href);
-
-        return /^https?:$/.test(url.protocol)
-
-          ? url.href
-
-          : "";
-
-      } catch {
-
-        return "";
-      }
-    }
-
-    /* ========================================
-       RESTORE CHARACTER DETAIL
-    ======================================== */
+    /* 상세창 복귀 */
 
     function restoreReader(focus = true) {
 
@@ -2094,16 +2042,12 @@
       returnFocus = null;
     }
 
-    /* ========================================
-       SYNCHRONIZE ILLUSTRATION AND PLAY LINK
-    ======================================== */
+
+    /* 웹툰 표지 및 링크 동기화 */
 
     function syncWebtoon() {
 
-      /* 기존 미리보기 완전히 숨김 */
-
       preview.hidden = true;
-
       preview.removeAttribute("href");
 
       thumb.hidden = true;
@@ -2133,17 +2077,9 @@
       const link =
         safeUrl(item.webtoonUrl);
 
-      /*
-        전용 일러스트 우선 표시.
-        없거나 로딩에 실패하면 대표 이미지 사용.
-      */
-
       const artwork = [
-
         safeUrl(item.webtoonCover),
-
         safeUrl(item.image)
-
       ].find(src =>
         src && !failedImages.has(src)
       );
@@ -2166,8 +2102,6 @@
         cover.removeAttribute("src");
       }
 
-      /* 별도의 외부 플레이 링크 */
-
       playLink.hidden = !link;
 
       if (link) {
@@ -2179,16 +2113,12 @@
         playLink.removeAttribute("href");
       }
 
-      /* 관리자 전용 설정 버튼 */
-
       adminButton.hidden = !isAdmin();
 
       zone.hidden =
         banner.hidden &&
         playLink.hidden &&
         adminButton.hidden;
-
-      /* 설명 영역의 불필요한 공간 제거 */
 
       info.hidden =
         !item.description &&
@@ -2207,9 +2137,8 @@
       }
     });
 
-    /* ========================================
-       OPEN FULL SCREEN WEBTOON
-    ======================================== */
+
+    /* 전체 화면 웹툰 열기 */
 
     function openReader(pushHistory = true) {
 
@@ -2237,21 +2166,15 @@
 
       back.textContent =
         vKind === "worldview"
-
           ? "◀ 세계관 상세창으로 돌아가기"
-
           : "◀ 캐릭터 상세창으로 돌아가기";
 
       status.hidden = false;
-
-      status.textContent =
-        "이미지를 불러오는 중...";
+      status.textContent = "이미지를 불러오는 중...";
 
       image.hidden = true;
 
       const ticket = ++imageGeneration;
-
-      /* 캐릭터 화면 대신 웹툰 화면 표시 */
 
       stage.hidden = true;
       reader.hidden = false;
@@ -2292,8 +2215,6 @@
 
       image.src = src;
 
-      /* 스마트폰 뒤로 가기 지원 */
-
       readerHistory = false;
 
       if (pushHistory) {
@@ -2301,12 +2222,9 @@
         try {
 
           history.pushState({
-
             ...history.state,
-
             ctViewer: true,
             ctWebtoon: true
-
           },"");
 
           readerHistory = true;
@@ -2321,18 +2239,10 @@
       });
     }
 
-    /* ========================================
-       ILLUSTRATION CLICK
-    ======================================== */
+    banner.onclick = () => openReader();
 
-    banner.addEventListener("click",() => {
 
-      openReader();
-    });
-
-    /* ========================================
-       RETURN BUTTON
-    ======================================== */
+    /* 웹툰 뒤로 가기 */
 
     function goBack() {
 
@@ -2370,10 +2280,8 @@
         restoreReader();
 
       } else if (
-
         e.state?.ctWebtoon &&
         viewer.classList.contains("open")
-
       ) {
 
         e.stopImmediatePropagation();
@@ -2385,8 +2293,6 @@
 
     },true);
 
-    /* ESC 및 방향키 대응 */
-
     document.addEventListener("keydown",e => {
 
       if (reader.hidden) return;
@@ -2394,16 +2300,13 @@
       if (e.key === "Escape") {
 
         e.preventDefault();
-
         e.stopImmediatePropagation();
 
         goBack();
 
       } else if (
-
         e.key === "ArrowLeft" ||
         e.key === "ArrowRight"
-
       ) {
 
         e.stopImmediatePropagation();
@@ -2411,11 +2314,10 @@
 
     },true);
 
-    /* ========================================
-       ADMIN WEBTOON SETTINGS
-    ======================================== */
 
-    adminButton.addEventListener("click",() => {
+    /* 관리자 웹툰 설정 */
+
+    adminButton.onclick = () => {
 
       if (!isAdmin()) return;
 
@@ -2426,18 +2328,14 @@
       const kind = vKind;
 
       openModal(`
-
         <h3>웹툰 설정</h3>
 
         <form id="ct-cover-form">
 
           <label>
-
             전용 일러스트 등록 / 교체
 
-            <input
-              type="file"
-              name="cover"
+            <input type="file" name="cover"
               accept="image/*">
 
             <small>
@@ -2446,65 +2344,38 @@
 
             <small>
               이 이미지를 누르면 웹툰 본문이 열려요.
+              선택하지 않으면 기존 표지를 유지해요.
             </small>
-
-            <small>
-              새 이미지를 선택하지 않으면 기존 표지를 유지해요.
-            </small>
-
           </label>
 
           <label class="ct-edit-check">
-
-            <input
-              type="checkbox"
-              name="clear">
-
+            <input type="checkbox" name="clear">
             기존 전용 일러스트 등록 해제
-
           </label>
 
           <label>
-
             플레이 하러 가기 링크
 
-            <input
-              type="url"
-              name="playUrl"
-              maxlength="300"
-              placeholder="https://">
+            <input type="url" name="playUrl"
+              maxlength="300" placeholder="https://">
 
             <small>
               입력한 링크는 새 탭에서 열려요.
+              링크가 없으면 버튼을 숨겨요.
             </small>
-
-            <small>
-              링크가 비어 있으면 플레이 버튼을 숨겨요.
-            </small>
-
           </label>
 
-          <p
-            class="msg"
-            id="ct-cover-msg"
+          <p class="msg" id="ct-cover-msg"
             role="status"></p>
 
           <div class="row">
 
-            <button
-              type="button"
-              data-close>
-
+            <button type="button" data-close>
               취소
-
             </button>
 
-            <button
-              class="primary"
-              type="submit">
-
+            <button class="primary" type="submit">
               설정 저장
-
             </button>
 
           </div>
@@ -2535,8 +2406,7 @@
 
         if (submit.disabled || !isAdmin()) return;
 
-        const file =
-          fields.cover.files[0];
+        const file = fields.cover.files[0];
 
         submit.disabled = true;
         cancel.disabled = true;
@@ -2546,17 +2416,11 @@
         try {
 
           const payload = {
-
             action: "setWebtoonCover",
-
             kind,
             id: item.id,
-
-            playUrl:
-              fields.playUrl.value.trim(),
-
-            clear:
-              !file && fields.clear.checked
+            playUrl: fields.playUrl.value.trim(),
+            clear: !file && fields.clear.checked
           };
 
           if (file) {
@@ -2599,34 +2463,25 @@
           cancel.disabled = false;
         }
       };
-    });
-
-    /* ========================================
-       AUTOMATIC SYNCHRONIZATION
-    ======================================== */
+    };
 
     const observer =
       new MutationObserver(syncWebtoon);
 
     observer.observe(viewer,{
-
       attributes: true,
-
       attributeFilter: ["class"]
     });
 
     if (thumbs) {
 
       observer.observe(thumbs,{
-
         childList: true
       });
     }
 
     observer.observe(document.body,{
-
       attributes: true,
-
       attributeFilter: ["class"]
     });
 
@@ -2635,15 +2490,961 @@
     syncWebtoon();
   }
 
-  /* ========================================
-     INITIALIZATION
-  ======================================== */
 
   function install() {
 
     initCinematic();
 
     initWebtoon();
+  }
+
+  if (document.readyState === "loading") {
+
+    document.addEventListener(
+      "DOMContentLoaded",
+      install,
+      { once: true }
+    );
+
+  } else {
+
+    install();
+  }
+
+})();
+
+
+/* ========================================
+   CHARACTER ILLUSTRATION CAROUSEL
+======================================== */
+
+;(() => {
+  "use strict";
+
+  function install() {
+
+    const viewer =
+      document.getElementById("viewer");
+
+    const original =
+      document.getElementById("v-img");
+
+    const stand =
+      viewer?.querySelector(".v-stand");
+
+    const thumbs =
+      document.getElementById("v-thumbs");
+
+    const reduce =
+      matchMedia("(prefers-reduced-motion: reduce)");
+
+    if (
+      !viewer ||
+      !original ||
+      !stand ||
+      stand.querySelector(".ct-art-carousel")
+    ) return;
+
+
+    /* ========================================
+       CREATE ILLUSTRATION VIEWER
+    ======================================== */
+
+    const carousel = document.createElement("div");
+
+    carousel.className = "ct-art-carousel";
+    carousel.hidden = true;
+
+    carousel.setAttribute(
+      "aria-label",
+      "캐릭터 추가 일러스트"
+    );
+
+    carousel.innerHTML = `
+      <div class="ct-art-viewport"></div>
+
+      <div class="ct-art-controls">
+
+        <button type="button"
+          class="ct-art-arrow v-arr ct-art-prev"
+          aria-label="이전 일러스트">
+          ‹
+        </button>
+
+        <div class="ct-art-indicator">
+
+          <span class="ct-art-count"
+            aria-live="polite">
+            01 / 01
+          </span>
+
+          <div class="ct-art-dots"></div>
+
+        </div>
+
+        <button type="button"
+          class="ct-art-arrow v-arr ct-art-next"
+          aria-label="다음 일러스트">
+          ›
+        </button>
+
+      </div>
+    `;
+
+    stand.appendChild(carousel);
+
+    const viewport =
+      carousel.querySelector(".ct-art-viewport");
+
+    const prev =
+      carousel.querySelector(".ct-art-prev");
+
+    const next =
+      carousel.querySelector(".ct-art-next");
+
+    const counter =
+      carousel.querySelector(".ct-art-count");
+
+    const dots =
+      carousel.querySelector(".ct-art-dots");
+
+    const manage = document.createElement("button");
+
+    manage.type = "button";
+    manage.className = "ct-illustration-admin";
+    manage.textContent = "+ 일러스트 관리";
+    manage.hidden = true;
+
+    stand.appendChild(manage);
+
+
+    /* ========================================
+       DATA MANAGEMENT
+    ======================================== */
+
+    let urls = [];
+
+    let activeIndex = 0;
+    let activeKey = "";
+    let generation = 0;
+    let busy = false;
+    let pointer = null;
+
+    const current = () =>
+      typeof vList !== "undefined"
+        ? vList[vIdx]
+        : null;
+
+    function isAdmin() {
+
+      return document.body.classList.contains("admin")
+        && !!adminPw;
+    }
+
+    function safeUrl(value) {
+
+      try {
+
+        const raw = String(value || "").trim();
+
+        if (!raw) return "";
+
+        const url = new URL(raw,location.href);
+
+        return /^https?:$/.test(url.protocol)
+          ? url.href
+          : "";
+
+      } catch {
+
+        return "";
+      }
+    }
+
+    function getUrls(item) {
+
+      const extra =
+        Array.isArray(item.illustrations)
+          ? item.illustrations
+          : [];
+
+      /*
+        대표 이미지가 항상 첫 번째.
+        추가 일러스트는 상세창에서만 사용.
+      */
+
+      return [...new Set(
+
+        [item.image,...extra]
+          .map(safeUrl)
+          .filter(Boolean)
+
+      )];
+    }
+
+    function makeImage(index) {
+
+      const img = new Image();
+
+      img.className = "ct-art-slide";
+      img.draggable = false;
+
+      img.alt =
+        `${current()?.title || "캐릭터"} 일러스트 ${index+1}`;
+
+      return img;
+    }
+
+
+    /* ========================================
+       SLIDE INDICATOR
+    ======================================== */
+
+    function renderControls() {
+
+      const fmt = n =>
+        String(n).padStart(2,"0");
+
+      counter.textContent =
+        `${fmt(activeIndex+1)} / ${fmt(urls.length)}`;
+
+      prev.disabled =
+        next.disabled =
+          busy || urls.length < 2;
+
+      dots.replaceChildren();
+
+      urls.forEach((url,i) => {
+
+        const dot =
+          document.createElement("button");
+
+        dot.type = "button";
+        dot.className = "ct-art-dot";
+
+        dot.classList.toggle(
+          "on",
+          i === activeIndex
+        );
+
+        dot.disabled = busy;
+
+        dot.setAttribute(
+          "aria-label",
+          `${i+1}번 일러스트`
+        );
+
+        dot.setAttribute(
+          "aria-pressed",
+          String(i === activeIndex)
+        );
+
+        dot.onclick = () => {
+
+          if (i === activeIndex) return;
+
+          goTo(
+            i,
+            i > activeIndex ? 1 : -1
+          );
+        };
+
+        dots.appendChild(dot);
+      });
+    }
+
+
+    /* ========================================
+       CHARACTER SYNCHRONIZATION
+    ======================================== */
+
+    function sync() {
+
+      const item = current();
+
+      const visible =
+        viewer.classList.contains("open") &&
+        viewer.dataset.kind === "character" &&
+        !!item;
+
+      manage.hidden =
+        !visible || !isAdmin();
+
+      if (!visible) {
+
+        ++generation;
+
+        activeKey = "";
+        activeIndex = 0;
+        busy = false;
+        pointer = null;
+
+        carousel.hidden = true;
+
+        if (
+          viewer.classList.contains("ct-illustrations-on")
+        ) {
+
+          viewer.classList.remove(
+            "ct-illustrations-on"
+          );
+        }
+
+        viewport.replaceChildren();
+
+        return;
+      }
+
+      const fresh = getUrls(item);
+
+      const key = JSON.stringify([
+        item.id,
+        item.title,
+        fresh
+      ]);
+
+      if (key === activeKey) return;
+
+      ++generation;
+
+      activeKey = key;
+
+      urls = fresh;
+
+      activeIndex = 0;
+      busy = false;
+      pointer = null;
+
+      viewport.replaceChildren();
+
+      const available =
+        urls.length >= 2;
+
+      carousel.hidden =
+        !available;
+
+      if (
+        viewer.classList.contains("ct-illustrations-on")
+        !== available
+      ) {
+
+        viewer.classList.toggle(
+          "ct-illustrations-on",
+          available
+        );
+      }
+
+      /*
+        추가 이미지가 없으면
+        기존 대표 이미지 표시.
+      */
+
+      if (!available) return;
+
+      const img = makeImage(0);
+
+      img.src = urls[0];
+
+      viewport.appendChild(img);
+
+      renderControls();
+    }
+
+
+    /* ========================================
+       DYNAMIC SLIDE ANIMATION
+    ======================================== */
+
+    async function goTo(index,direction = 1) {
+
+      if (
+        busy ||
+        carousel.hidden ||
+        viewer.classList.contains("ct-webtoon-reading") ||
+        urls.length < 2
+      ) return;
+
+      index =
+        (index + urls.length) %
+        urls.length;
+
+      if (index === activeIndex) return;
+
+      busy = true;
+
+      const ticket = ++generation;
+
+      renderControls();
+
+      const fresh = makeImage(index);
+
+      try {
+
+        /* 새 이미지가 로딩될 때까지
+           기존 이미지 유지 */
+
+        await new Promise((resolve,reject) => {
+
+          let timer;
+
+          const done = fn => {
+            clearTimeout(timer);
+            fresh.onload = null;
+            fresh.onerror = null;
+            fn();
+          };
+
+          fresh.onload = () => done(resolve);
+
+          fresh.onerror = () => done(() => reject(
+            new Error("일러스트를 불러오지 못했어요.")
+          ));
+
+          timer = setTimeout(() => done(() => reject(
+            new Error("이미지 로딩 시간이 초과됐어요.")
+          )),20000);
+
+          fresh.src = urls[index];
+        });
+
+        if (ticket !== generation) return;
+
+        const old =
+          viewport.querySelector(".ct-art-slide");
+
+        const from =
+          direction > 0 ? "22%" : "-22%";
+
+        const to =
+          direction > 0 ? "-22%" : "22%";
+
+        viewport.appendChild(fresh);
+
+        activeIndex = index;
+
+        renderControls();
+
+        /* 슬라이드 / 확대 / 페이드 */
+
+        if (
+          !reduce.matches &&
+          typeof fresh.animate === "function"
+        ) {
+
+          const animations = [];
+
+          if (old) {
+
+            animations.push(
+
+              old.animate([
+
+                {
+                  transform:
+                    "translateX(0) scale(1)",
+
+                  opacity: 1
+                },
+
+                {
+                  transform:
+                    `translateX(${to}) scale(.97)`,
+
+                  opacity: 0
+                }
+
+              ],{
+
+                duration: 420,
+
+                easing:
+                  "cubic-bezier(.4,0,.2,1)",
+
+                fill: "forwards"
+              })
+            );
+          }
+
+          animations.push(
+
+            fresh.animate([
+
+              {
+                transform:
+                  `translateX(${from}) scale(.98)`,
+
+                opacity: 0
+              },
+
+              {
+                transform:
+                  "translateX(0) scale(1)",
+
+                opacity: 1
+              }
+
+            ],{
+
+              duration: 520,
+
+              easing:
+                "cubic-bezier(.16,1,.3,1)",
+
+              fill: "both"
+            })
+          );
+
+          await Promise.allSettled(
+            animations.map(a => a.finished)
+          );
+
+          animations.forEach(a => a.cancel());
+        }
+
+        if (ticket !== generation) return;
+
+        viewport.replaceChildren(fresh);
+
+      } catch {
+
+        if (ticket === generation) {
+
+          counter.textContent = "LOAD ERROR";
+        }
+
+      } finally {
+
+        if (ticket === generation) {
+
+          busy = false;
+
+          prev.disabled = urls.length < 2;
+
+          next.disabled = urls.length < 2;
+
+          dots.querySelectorAll("button")
+            .forEach(b => b.disabled = false);
+        }
+      }
+    }
+
+    prev.onclick = () => {
+
+      goTo(activeIndex-1,-1);
+    };
+
+    next.onclick = () => {
+
+      goTo(activeIndex+1,1);
+    };
+
+
+    /* ========================================
+       MOBILE SWIPE
+    ======================================== */
+
+    viewport.addEventListener(
+      "pointerdown",
+
+      e => {
+
+        if (
+          busy ||
+          e.button !== 0 ||
+          !e.isPrimary
+        ) return;
+
+        pointer = {
+          id: e.pointerId,
+          x: e.clientX,
+          y: e.clientY
+        };
+
+        try {
+
+          viewport.setPointerCapture(
+            e.pointerId
+          );
+
+        } catch {}
+      }
+    );
+
+    viewport.addEventListener(
+      "pointerup",
+
+      e => {
+
+        if (
+          !pointer ||
+          pointer.id !== e.pointerId
+        ) return;
+
+        const dx =
+          e.clientX - pointer.x;
+
+        const dy =
+          e.clientY - pointer.y;
+
+        pointer = null;
+
+        /*
+          세로 스크롤과 가로 스와이프 구분.
+        */
+
+        if (
+          Math.abs(dx) < 45 ||
+          Math.abs(dx) < Math.abs(dy)*1.3
+        ) return;
+
+        const direction =
+          dx < 0 ? 1 : -1;
+
+        if (!busy) {
+
+          document.dispatchEvent(
+            new Event("ct-illustration-swipe")
+          );
+        }
+
+        goTo(
+          activeIndex + direction,
+          direction
+        );
+      }
+    );
+
+    viewport.addEventListener(
+      "pointercancel",
+      () => { pointer = null; }
+    );
+
+
+    /* 일러스트 키보드 전환 */
+
+    document.addEventListener(
+      "keydown",
+
+      e => {
+
+        if (
+          carousel.hidden ||
+          viewer.classList.contains("ct-webtoon-reading") ||
+          !carousel.contains(document.activeElement)
+        ) return;
+
+        if (
+          e.key !== "ArrowLeft" &&
+          e.key !== "ArrowRight"
+        ) return;
+
+        e.preventDefault();
+        e.stopImmediatePropagation();
+
+        const direction =
+          e.key === "ArrowLeft" ? -1 : 1;
+
+        goTo(
+          activeIndex + direction,
+          direction
+        );
+      },
+
+      true
+    );
+
+
+    /* ========================================
+       ADMIN ILLUSTRATION MANAGEMENT
+    ======================================== */
+
+    manage.onclick = () => {
+
+      if (!isAdmin()) return;
+
+      const item = current();
+
+      if (!item?.id) return;
+
+      openModal(`
+        <h3>추가 일러스트 관리</h3>
+
+        <form id="ct-illustration-form">
+
+          <p>
+            대표 이미지는 홈과 상세창의 첫 번째 이미지로 사용돼요.
+            추가 일러스트는 상세창에만 표시돼요.
+          </p>
+
+          <div class="ct-extra-list"></div>
+
+          <label>
+            추가 일러스트 등록
+
+            <input type="file"
+              name="files"
+              accept="image/*"
+              multiple>
+
+            <small>
+              여러 장을 한 번에 선택할 수 있어요.
+            </small>
+          </label>
+
+          <p class="msg" role="status"></p>
+
+          <div class="row">
+
+            <button type="button" data-close>
+              닫기
+            </button>
+
+            <button class="primary" type="submit">
+              등록
+            </button>
+
+          </div>
+
+        </form>
+      `);
+
+      const form =
+        document.getElementById(
+          "ct-illustration-form"
+        );
+
+      const list =
+        form.querySelector(".ct-extra-list");
+
+      const msg =
+        form.querySelector(".msg");
+
+      const input =
+        form.elements.namedItem("files");
+
+      const submit =
+        form.querySelector('[type="submit"]');
+
+      const close =
+        form.querySelector("[data-close]");
+
+      let editing = false;
+
+      function setBusy(on) {
+
+        editing = on;
+
+        input.disabled = on;
+        submit.disabled = on;
+        close.disabled = on;
+
+        list.querySelectorAll("button")
+          .forEach(b => b.disabled = on);
+      }
+
+      function redraw() {
+
+        list.replaceChildren();
+
+        const images =
+          Array.isArray(item.illustrations)
+            ? item.illustrations
+            : [];
+
+        if (!images.length) {
+
+          const empty =
+            document.createElement("small");
+
+          empty.textContent =
+            "등록된 추가 일러스트가 없어요.";
+
+          list.appendChild(empty);
+
+          return;
+        }
+
+        images.forEach((url,i) => {
+
+          const row =
+            document.createElement("div");
+
+          row.className = "ct-extra-row";
+
+          const img = new Image();
+
+          const src = safeUrl(url);
+
+          if (src) img.src = src;
+
+          img.alt = "";
+
+          const label =
+            document.createElement("span");
+
+          label.textContent =
+            `추가 일러스트 ${i+1}`;
+
+          const remove =
+            document.createElement("button");
+
+          remove.type = "button";
+
+          remove.className =
+            "ct-extra-delete";
+
+          remove.textContent = "삭제";
+
+          remove.disabled = editing;
+
+          remove.onclick = async () => {
+
+            if (editing || !isAdmin()) return;
+
+            if (!confirm(
+              "이 추가 일러스트를 삭제할까요?"
+            )) return;
+
+            setBusy(true);
+
+            msg.textContent = "삭제 중...";
+
+            try {
+
+              const result = await api({
+                action: "removeIllustration",
+                id: item.id,
+                url
+              });
+
+              if (result.item) {
+
+                Object.assign(item,result.item);
+              }
+
+              sync();
+
+              redraw();
+
+              msg.textContent = "삭제했어요.";
+
+            } catch (error) {
+
+              msg.textContent = error.message;
+
+            } finally {
+
+              setBusy(false);
+            }
+          };
+
+          row.append(
+            img,
+            label,
+            remove
+          );
+
+          list.appendChild(row);
+        });
+      }
+
+      redraw();
+
+
+      /* 여러 장 순차 업로드 */
+
+      form.onsubmit = async e => {
+
+        e.preventDefault();
+
+        if (editing || !isAdmin()) return;
+
+        const files = [...input.files];
+
+        if (!files.length) {
+
+          msg.textContent =
+            "일러스트를 선택해 주세요.";
+
+          return;
+        }
+
+        setBusy(true);
+
+        let completed = 0;
+
+        try {
+
+          for (let i = 0; i < files.length; i++) {
+
+            msg.textContent =
+              `일러스트 등록 중... (${i+1}/${files.length})`;
+
+            const data = await prepareImage(
+              files[i]
+            );
+
+            const result = await api({
+              action: "addIllustration",
+              id: item.id,
+              ...data
+            });
+
+            if (result.item) {
+
+              Object.assign(item,result.item);
+            }
+
+            completed++;
+
+            sync();
+
+            redraw();
+          }
+
+          msg.textContent =
+            `${completed}장의 일러스트를 등록했어요.`;
+
+        } catch (error) {
+
+          msg.textContent =
+            `${completed}장 등록 완료 · ${error.message}`;
+
+        } finally {
+
+          input.value = "";
+
+          setBusy(false);
+        }
+      };
+    };
+
+
+    /* ========================================
+       AUTOMATIC SYNCHRONIZATION
+    ======================================== */
+
+    const observer =
+      new MutationObserver(sync);
+
+    observer.observe(viewer,{
+      attributes: true,
+      attributeFilter: ["class","data-kind"]
+    });
+
+    if (thumbs) {
+
+      observer.observe(thumbs,{
+        childList: true
+      });
+    }
+
+    observer.observe(document.body,{
+      attributes: true,
+      attributeFilter: ["class"]
+    });
+
+    sync();
   }
 
   if (document.readyState === "loading") {
