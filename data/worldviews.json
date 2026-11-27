@@ -16,7 +16,7 @@
       "genre": "다크 판타지",
       "era": "현대",
       "tagline": "",
-      "mapImage": "https://raw.githubusercontent.com/monana670-create/C.T.-Gallery/HEAD/worldviews/images/lore-08da4d67f302acf29557f407.webp",
+      "mapImage": "",
       "characterIds": [
         "cb58fcbf7e6d1cec7ca48c32f"
       ],
@@ -30,6 +30,6 @@
       "secrets": [],
       "custom": []
     },
-    "updatedAt": "2026-11-27T17:18:12.099Z"
+    "updatedAt": "2026-11-27T17:32:22.046Z"
   }
 ]
