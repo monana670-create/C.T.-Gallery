@@ -1561,3 +1561,82 @@
   renderWorld();
 
 })();
+
+/* ========================================
+   CARDIUM 3D WORLD ATLAS
+======================================== */
+
+;(() => {
+  "use strict";
+
+  const viewer = document.getElementById("viewer");
+
+  if (!viewer) return;
+
+  function syncAtlasLink() {
+
+    const existing = document.getElementById(
+      "ct-cardium-atlas"
+    );
+
+    const name = (
+      document.getElementById("v-name")
+        ?.textContent || ""
+    ).trim();
+
+    const isCardium =
+      /카르디움|CARDIUM|\bAMC\b/i.test(name);
+
+    const visible =
+      viewer.classList.contains("open") &&
+      viewer.dataset.kind === "worldview" &&
+      isCardium;
+
+    if (!visible) {
+      existing?.remove();
+      return;
+    }
+
+    const container =
+      document.getElementById("ctw-atlas") ||
+      viewer.querySelector(".v-info");
+
+    if (!container) return;
+
+    if (existing) {
+      if (existing.parentElement !== container) {
+        container.prepend(existing);
+      }
+      return;
+    }
+
+    const link = document.createElement("a");
+
+    link.id = "ct-cardium-atlas";
+    link.className = "ct-cardium-atlas";
+
+    link.href = "/Cardium_3D_Atlas.html";
+    link.target = "_blank";
+    link.rel = "noopener noreferrer";
+
+    link.innerHTML = `
+      <small>CARDIUM · INTERACTIVE ATLAS</small>
+      <strong>3D 세계지도</strong>
+      <span>카르디움의 다섯 구역을 탐험하세요.</span>
+      <b>EXPLORE WORLD ▶</b>
+    `;
+
+    container.prepend(link);
+  }
+
+  new MutationObserver(syncAtlasLink)
+    .observe(viewer, {
+      childList: true,
+      subtree: true,
+      attributes: true,
+      attributeFilter: ["class", "data-kind"]
+    });
+
+  syncAtlasLink();
+
+})();
