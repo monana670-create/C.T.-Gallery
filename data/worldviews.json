@@ -21,7 +21,15 @@
         "cb58fcbf7e6d1cec7ca48c32f"
       ],
       "facts": [],
-      "regions": [],
+      "regions": [
+        {
+          "title": "제 0구역",
+          "text": "",
+          "image": "",
+          "x": 50,
+          "y": 50
+        }
+      ],
       "history": [],
       "factions": [],
       "rules": [],
@@ -37,6 +45,6 @@
       "secrets": [],
       "custom": []
     },
-    "updatedAt": "2026-11-27T17:33:39.665Z"
+    "updatedAt": "2026-11-27T17:35:36.898Z"
   }
 ]
