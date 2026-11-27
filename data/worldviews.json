@@ -11,6 +11,25 @@
     "webtoonCover": "",
     "illustrations": [],
     "createdAt": "2026-11-27T09:00:26.870Z",
-    "image": "https://raw.githubusercontent.com/monana670-create/C.T.-Gallery/HEAD/worldviews/images/wa401de3f7c57c16fd8cd4d3f-d5825efc1cda06e07aee77a5.webp"
+    "image": "https://raw.githubusercontent.com/monana670-create/C.T.-Gallery/HEAD/worldviews/images/wa401de3f7c57c16fd8cd4d3f-d5825efc1cda06e07aee77a5.webp",
+    "worldDetails": {
+      "genre": "다크 판타지",
+      "era": "현대",
+      "tagline": "카르디움",
+      "mapImage": "",
+      "characterIds": [
+        "cb58fcbf7e6d1cec7ca48c32f"
+      ],
+      "facts": [],
+      "regions": [],
+      "history": [],
+      "factions": [],
+      "rules": [],
+      "lore": [],
+      "gallery": [],
+      "secrets": [],
+      "custom": []
+    },
+    "updatedAt": "2026-11-27T09:12:39.661Z"
   }
 ]
