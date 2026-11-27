@@ -10,10 +10,7 @@
   --ct-ease: cubic-bezier(.16,1,.3,1);
 }
 
-
-/* ========================================
-   01. HEADER / SOUND CONTROL
-======================================== */
+/* 01. HEADER / SOUND CONTROL */
 
 .header {
   gap: clamp(.5rem,2vw,1.5rem);
@@ -78,10 +75,7 @@
   transform: scale(.94);
 }
 
-
-/* ========================================
-   02. HOME / SKY GRADIENT
-======================================== */
+/* 02. HOME / SKY GRADIENT */
 
 .hero {
   grid-template-columns:
@@ -95,7 +89,7 @@
     #326a99 49%,
     #162a43 73%,
     #070b13 91%,
-    #000000 100%
+    #000 100%
   );
 }
 
@@ -165,89 +159,43 @@
   box-shadow: 0 7px 24px #10243e4d;
 }
 
-
-/* ========================================
-   03. STARFIELD / THREE SHOOTING STARS
-======================================== */
+/* 03. STARFIELD / THREE SHOOTING STARS */
 
 .hero .ct-meteors {
   position: absolute;
   inset: 0;
   z-index: -4;
-
   pointer-events: none;
   overflow: hidden;
 
   background-image:
-    radial-gradient(circle at 5% 8%,
-      #ffffffaa 0 1px,transparent 2px),
-
-    radial-gradient(circle at 17% 14%,
-      #ffffff66 0 .7px,transparent 1.8px),
-
-    radial-gradient(circle at 29% 5%,
-      #d8efffaa 0 1px,transparent 2px),
-
-    radial-gradient(circle at 42% 19%,
-      #ffffff55 0 .8px,transparent 2px),
-
-    radial-gradient(circle at 57% 9%,
-      #ffffff99 0 1px,transparent 2px),
-
-    radial-gradient(circle at 72% 16%,
-      #c8e7ff99 0 1px,transparent 2px),
-
-    radial-gradient(circle at 88% 6%,
-      #ffffffbb 0 1px,transparent 2.5px),
-
-    radial-gradient(circle at 94% 27%,
-      #ffffff77 0 .8px,transparent 2px),
-
-    radial-gradient(circle at 8% 34%,
-      #ffffff77 0 1px,transparent 2px),
-
-    radial-gradient(circle at 21% 41%,
-      #c8e7ff88 0 .8px,transparent 2px),
-
-    radial-gradient(circle at 35% 29%,
-      #ffffff55 0 .7px,transparent 1.7px),
-
-    radial-gradient(circle at 49% 39%,
-      #ffffff99 0 1px,transparent 2px),
-
-    radial-gradient(circle at 64% 31%,
-      #ffffff88 0 .8px,transparent 2px),
-
-    radial-gradient(circle at 81% 43%,
-      #d8efffaa 0 1px,transparent 2px),
-
-    radial-gradient(circle at 91% 53%,
-      #ffffff66 0 .8px,transparent 2px),
-
-    radial-gradient(circle at 12% 61%,
-      #ffffff55 0 .8px,transparent 2px),
-
-    radial-gradient(circle at 28% 72%,
-      #c8e7ff88 0 1px,transparent 2px),
-
-    radial-gradient(circle at 43% 58%,
-      #ffffff77 0 .8px,transparent 2px),
-
-    radial-gradient(circle at 59% 69%,
-      #ffffff55 0 .7px,transparent 2px),
-
-    radial-gradient(circle at 76% 61%,
-      #d8efff88 0 1px,transparent 2px),
-
-    radial-gradient(circle at 86% 79%,
-      #ffffff55 0 .7px,transparent 2px);
+    radial-gradient(circle at 5% 8%,#ffffffaa 0 1px,transparent 2px),
+    radial-gradient(circle at 17% 14%,#ffffff66 0 .7px,transparent 1.8px),
+    radial-gradient(circle at 29% 5%,#d8efffaa 0 1px,transparent 2px),
+    radial-gradient(circle at 42% 19%,#ffffff55 0 .8px,transparent 2px),
+    radial-gradient(circle at 57% 9%,#ffffff99 0 1px,transparent 2px),
+    radial-gradient(circle at 72% 16%,#c8e7ff99 0 1px,transparent 2px),
+    radial-gradient(circle at 88% 6%,#ffffffbb 0 1px,transparent 2.5px),
+    radial-gradient(circle at 94% 27%,#ffffff77 0 .8px,transparent 2px),
+    radial-gradient(circle at 8% 34%,#ffffff77 0 1px,transparent 2px),
+    radial-gradient(circle at 21% 41%,#c8e7ff88 0 .8px,transparent 2px),
+    radial-gradient(circle at 35% 29%,#ffffff55 0 .7px,transparent 1.7px),
+    radial-gradient(circle at 49% 39%,#ffffff99 0 1px,transparent 2px),
+    radial-gradient(circle at 64% 31%,#ffffff88 0 .8px,transparent 2px),
+    radial-gradient(circle at 81% 43%,#d8efffaa 0 1px,transparent 2px),
+    radial-gradient(circle at 91% 53%,#ffffff66 0 .8px,transparent 2px),
+    radial-gradient(circle at 12% 61%,#ffffff55 0 .8px,transparent 2px),
+    radial-gradient(circle at 28% 72%,#c8e7ff88 0 1px,transparent 2px),
+    radial-gradient(circle at 43% 58%,#ffffff77 0 .8px,transparent 2px),
+    radial-gradient(circle at 59% 69%,#ffffff55 0 .7px,transparent 2px),
+    radial-gradient(circle at 76% 61%,#d8efff88 0 1px,transparent 2px),
+    radial-gradient(circle at 86% 79%,#ffffff55 0 .7px,transparent 2px);
 
   background-repeat: no-repeat;
 }
 
 .hero .ct-meteor {
   position: absolute;
-
   left: -5%;
   right: auto;
   bottom: auto;
@@ -279,7 +227,7 @@
   animation-play-state: paused;
 }
 
-.ct-hero-ready .ct-meteor {
+.hero.ct-hero-ready .ct-meteor {
   animation-play-state: running;
 }
 
@@ -288,14 +236,10 @@
   position: absolute;
   right: 0;
   top: 50%;
-
   width: 5px;
   height: 5px;
-
   border-radius: 50%;
-
   transform: translate(50%,-50%);
-
   background: #fff;
 
   box-shadow:
@@ -324,10 +268,7 @@
 @keyframes ctMeteorLeftFlight {
   0% {
     opacity: 0;
-
-    transform:
-      translate3d(-12vw,-7vw,0)
-      rotate(30deg);
+    transform: translate3d(-12vw,-7vw,0) rotate(30deg);
   }
 
   4% {
@@ -336,43 +277,29 @@
 
   16% {
     opacity: 1;
-
-    transform:
-      translate3d(15vw,8.6vw,0)
-      rotate(30deg);
+    transform: translate3d(15vw,8.6vw,0) rotate(30deg);
   }
 
-  24%,
-  100% {
+  24%,100% {
     opacity: 0;
-
-    transform:
-      translate3d(29vw,16.5vw,0)
-      rotate(30deg);
+    transform: translate3d(29vw,16.5vw,0) rotate(30deg);
   }
 }
 
-
-/* ========================================
-   04. CHARACTER SPOTLIGHT
-======================================== */
+/* 04. CHARACTER SPOTLIGHT */
 
 .ct-spotlight {
   grid-area: 1/2;
   place-self: start end;
   position: relative;
-
   width: min(100%,15rem);
   min-width: 0;
   z-index: 2;
-
   padding: .75rem;
-
   border: 1px solid #c5eaffad;
   background: #122b45d9;
   color: white;
   border-radius: 5px;
-
   box-shadow: 0 6px 25px #10243e29;
 }
 
@@ -385,25 +312,19 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-
   gap: .4rem;
   white-space: nowrap;
-
   font: 700 .68rem/1.5 var(--latin);
-
   color: #aedfff;
   letter-spacing: .12em;
 }
 
 .ct-feature-top::before {
   content: "";
-
   width: .44rem;
   height: .44rem;
-
   flex: none;
   background: #7ce1ff;
-
   box-shadow: 0 0 10px #7ce1ff;
 }
 
@@ -414,21 +335,15 @@
 .ct-spot-name {
   width: 100%;
   min-height: 2.5rem;
-
   margin: .4rem 0;
   padding: .4rem .2rem;
-
   text-align: left;
-
   border: 0;
   background: none;
   color: #fff;
-
   font: 700 clamp(.9rem,2vw,1.15rem)/1.45 var(--serif);
-
   overflow-wrap: anywhere;
   word-break: keep-all;
-
   border-bottom: 1px solid #c3e6ff48;
 }
 
@@ -441,15 +356,11 @@
 .ct-feature-controls button {
   border: 1px solid #b8e5ff66;
   border-radius: 3px;
-
   background: #ffffff0d;
   color: #d2efff;
-
   min-height: 2rem;
   min-width: 2rem;
-
   padding: .15rem .4rem;
-
   font: 700 .85rem/1.2 var(--latin);
 }
 
@@ -467,38 +378,27 @@
   background: #377fb1;
 }
 
-
-/* ========================================
-   05. SCROLL GUIDE
-======================================== */
+/* 05. SCROLL GUIDE */
 
 #m-head {
-  scroll-margin-top:
-    calc(var(--header-h) + .75rem);
+  scroll-margin-top: calc(var(--header-h) + .75rem);
 }
 
 .ct-scroll-hint {
   position: absolute;
   bottom: 1.3rem;
   left: 50%;
-
   translate: -50% 0;
-
   z-index: 2;
-
   background: none;
   border: 0;
   color: white;
-
   text-shadow: 0 2px 8px #10243e;
-
   font: 700 .68rem/1.35 var(--latin);
   letter-spacing: .14em;
-
   display: grid;
   justify-items: center;
   gap: .15rem;
-
   padding: .4rem .75rem;
 }
 
@@ -513,10 +413,7 @@
   }
 }
 
-
-/* ========================================
-   06. HOME CHARACTER / LOWER BODY FADE
-======================================== */
+/* 06. HOME CHARACTER / LOWER BODY FADE */
 
 .hero.ct-dialogue-ready {
   grid-template-columns:
@@ -532,9 +429,7 @@
 
 .hero.ct-dialogue-ready .hero-art {
   inset: 5% 25% 0 19%;
-
-  transform:
-    translate3d(0,var(--ct-parallax,0px),0);
+  transform: translate3d(0,var(--ct-parallax,0px),0);
 }
 
 .hero.ct-dialogue-ready .hero-art img {
@@ -558,10 +453,8 @@
 .hero.ct-dialogue-ready .hero-art::after {
   content: "";
   position: absolute;
-
   inset: auto 0 0;
   height: 42%;
-
   z-index: 2;
   pointer-events: none;
 
@@ -597,32 +490,23 @@
   grid-area: 1/3;
 }
 
-
-/* ========================================
-   07. CHARACTER VOICE / CALENDAR FLIP
-======================================== */
+/* 07. CHARACTER VOICE / CALENDAR FLIP */
 
 .ct-dialogue {
   position: relative;
-
   grid-area: 2/3;
   place-self: center end;
-
   width: min(100%,18rem);
   min-width: 0;
-
   z-index: 2;
   perspective: 900px;
 }
 
 .ct-voice-paper {
   position: relative;
-
   padding: 1rem;
-
   background: #f4faff;
   color: #233044;
-
   border: 1px solid #b9ddf5;
   border-top: 4px solid #3fa9ff;
   border-radius: 4px;
@@ -639,22 +523,17 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-
   gap: .5rem;
   padding-bottom: .6rem;
-
   border-bottom: 1px solid #ccdcea;
   color: #377ba9;
-
   font: 700 .7rem/1.4 var(--latin);
   letter-spacing: .12em;
 }
 
 .ct-voice-text {
   padding: .9rem 0;
-
   font: 700 clamp(.95rem,1.4vw,1.15rem)/1.85 var(--copy);
-
   word-break: keep-all;
   overflow-wrap: anywhere;
   white-space: pre-wrap;
@@ -671,16 +550,12 @@
   position: absolute;
   inset: 0;
   z-index: 3;
-
   pointer-events: none;
-
-  animation:
-    ct-calendar-out .5s ease-in both;
+  animation: ct-calendar-out .5s ease-in both;
 }
 
 .ct-voice-paper.ct-page-in {
-  animation:
-    ct-calendar-in .65s var(--ct-ease) both;
+  animation: ct-calendar-in .65s var(--ct-ease) both;
 }
 
 @keyframes ct-calendar-out {
@@ -688,7 +563,6 @@
     transform: rotateX(0);
     opacity: 1;
   }
-
   to {
     transform: rotateX(-95deg);
     opacity: 0;
@@ -700,17 +574,13 @@
     transform: rotateX(85deg);
     opacity: .25;
   }
-
   to {
     transform: rotateX(0);
     opacity: 1;
   }
 }
 
-
-/* ========================================
-   08. ARCHIVE CARDS
-======================================== */
+/* 08. ARCHIVE CARDS */
 
 .page-header .hazard {
   background: linear-gradient(
@@ -727,10 +597,8 @@
 .page-header .hazard::after {
   content: "";
   position: absolute;
-
   inset: -1px auto -1px 0;
   width: 12%;
-
   background: #1d5f94;
   transform-origin: left;
 }
@@ -743,13 +611,10 @@
 .section-title h2::after {
   content: "";
   position: absolute;
-
   right: .5rem;
   top: .5rem;
-
   width: .28rem;
   height: .28rem;
-
   background: #8dd9ff;
 }
 
@@ -792,17 +657,12 @@
 
 .archive-desc {
   display: -webkit-box;
-
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;
-
   overflow: hidden;
 }
 
-
-/* ========================================
-   09. SAFE SPIN EFFECT — ARCHIVE CARD
-======================================== */
+/* 09. SAFE SPIN EFFECT */
 
 @property --ct-spin-angle {
   syntax: "<angle>";
@@ -812,29 +672,23 @@
 
 .fx-spin {
   min-width: 0;
-
   overflow: hidden;
   overflow: clip;
 }
 
 .fx-spin .archive-card {
   overflow: hidden;
-
   isolation: isolate;
   contain: paint;
 }
 
 .fx-spin .archive-card::before {
   content: "";
-
   position: absolute;
   inset: 0 !important;
-
   width: auto;
   height: auto;
-
   z-index: -1;
-
   transform: none !important;
 
   background: conic-gradient(
@@ -847,9 +701,7 @@
     transparent 100%
   );
 
-  animation:
-    ctBorderLightRotation 4s linear infinite;
-
+  animation: ctBorderLightRotation 4s linear infinite;
   pointer-events: none;
 }
 
@@ -857,44 +709,25 @@
   from {
     --ct-spin-angle: 0deg;
   }
-
   to {
     --ct-spin-angle: 360deg;
   }
 }
 
-
-/* ========================================
-   10. CHARACTER / WORLD VIEWER
-======================================== */
+/* 10. CHARACTER / WORLD VIEWER */
 
 .viewer {
   background-color: #eff3f7;
 
   background-image:
-    radial-gradient(
-      ellipse at 90% 12%,
-      #d1eaff 0,
-      transparent 50%
-    ),
-    linear-gradient(
-      #75869c0e 1px,
-      transparent 1px
-    ),
-    linear-gradient(
-      90deg,
-      #75869c0e 1px,
-      transparent 1px
-    );
+    radial-gradient(ellipse at 90% 12%,#d1eaff 0,transparent 50%),
+    linear-gradient(#75869c0e 1px,transparent 1px),
+    linear-gradient(90deg,#75869c0e 1px,transparent 1px);
 
-  background-size:
-    auto,
-    24px 24px,
-    24px 24px;
+  background-size: auto,24px 24px,24px 24px;
 }
 
 @supports (color: color-mix(in srgb,white,blue)) {
-
   .viewer {
     background-image:
       radial-gradient(
@@ -902,15 +735,8 @@
         color-mix(in srgb,var(--c) 23%,white) 0,
         transparent 50%
       ),
-      linear-gradient(
-        #75869c0e 1px,
-        transparent 1px
-      ),
-      linear-gradient(
-        90deg,
-        #75869c0e 1px,
-        transparent 1px
-      );
+      linear-gradient(#75869c0e 1px,transparent 1px),
+      linear-gradient(90deg,#75869c0e 1px,transparent 1px);
   }
 }
 
@@ -942,12 +768,9 @@
 .ct-view-meta strong::before {
   content: "";
   display: inline-block;
-
   width: .42em;
   height: .42em;
-
   margin-right: .4em;
-
   vertical-align: middle;
   background: var(--c);
 }
@@ -963,16 +786,8 @@
 
 .v-scene::before {
   inset: .3rem 0 .25rem 24%;
-
   clip-path: none;
-
-  background:
-    linear-gradient(
-      145deg,
-      #eff5fa,
-      #cbd8e6
-    );
-
+  background: linear-gradient(145deg,#eff5fa,#cbd8e6);
   border: 1px solid #b6c8da;
 }
 
@@ -983,12 +798,9 @@
 .v-stand::after {
   content: "";
   position: absolute;
-
   inset: .7rem;
   z-index: -1;
-
   pointer-events: none;
-
   border: 1px solid #ffffffb8;
   box-shadow: inset 0 0 0 1px #2d6c9e16;
 }
@@ -1004,20 +816,15 @@
 .v-desc {
   background: #fffffff2;
   border-left: 3px solid var(--c);
-
   padding: 1.05rem 1.15rem;
-
   box-shadow: 0 6px 18px #2d476b0d;
 }
 
 .v-desc::before {
   content: "ARCHIVE NOTES";
   display: block;
-
   margin-bottom: .65rem;
-
   color: #41718f;
-
   font: 700 .69rem/1.5 var(--latin);
   letter-spacing: .19em;
 }
@@ -1034,25 +841,16 @@
   border-color: #b8c9d9;
 }
 
-
-/* 투명 이미지 썸네일 배경 */
-
 .v-th {
   background: #e6edf5;
   border: 2px solid #acb8c6;
-
   padding: 0;
-
-  transition:
-    filter .3s,
-    opacity .3s,
-    transform .3s;
+  transition: filter .3s,opacity .3s,transform .3s;
 }
 
 .v-th.on {
   background: #e6edf5;
   border-color: var(--c);
-
   box-shadow: 0 0 0 1px var(--c);
 }
 
@@ -1068,16 +866,12 @@
   object-position: center;
 }
 
-
-/* ========================================
-   11. SAFE SPIN EFFECT — VIEWER
-======================================== */
+/* 11. SAFE SPIN EFFECT — VIEWER */
 
 #viewer[data-fx="spin"] {
   width: 100%;
   max-width: 100%;
   min-width: 0;
-
   overflow-x: hidden;
   overflow-y: auto;
 }
@@ -1098,15 +892,11 @@
 
 .viewer[data-fx="spin"] .v-stand::before {
   position: absolute;
-
   top: 50%;
   left: 50%;
-
   width: min(75%,36svh,24rem);
   height: auto;
-
   aspect-ratio: 1;
-
   border: 2px dashed var(--c);
   border-radius: 50%;
 
@@ -1115,24 +905,16 @@
     inset 0 0 8px var(--c);
 
   pointer-events: none;
-
   transform-origin: center;
-
-  animation:
-    ctSafeOrbit 12s linear infinite;
+  animation: ctSafeOrbit 12s linear infinite;
 }
 
 @keyframes ctSafeOrbit {
   from {
-    transform:
-      translate(-50%,-50%)
-      rotate(0deg);
+    transform: translate(-50%,-50%) rotate(0deg);
   }
-
   to {
-    transform:
-      translate(-50%,-50%)
-      rotate(360deg);
+    transform: translate(-50%,-50%) rotate(360deg);
   }
 }
 
@@ -1141,10 +923,7 @@
   z-index: 1;
 }
 
-
-/* ========================================
-   12. ADMIN EDIT BUTTON / FORM
-======================================== */
+/* 12. ADMIN EDIT BUTTON / FORM */
 
 .ct-edit-btn {
   display: none;
@@ -1152,31 +931,22 @@
 
 body.admin .ct-edit-btn {
   position: absolute;
-
   top: .5rem;
   right: 2.85rem;
-
   z-index: 5;
-
   display: grid;
   place-items: center;
-
   width: 2.75rem;
   height: 2rem;
-
   padding: 0;
-
   border: 1px solid #acdfff;
   border-radius: 3px;
 
   background: linear-gradient(
-    135deg,
-    #285e88,
-    #19354f
+    135deg,#285e88,#19354f
   );
 
   color: #fff;
-
   font-family: var(--body);
   font-size: .8rem;
   font-weight: 700;
@@ -1185,17 +955,12 @@ body.admin .ct-edit-btn {
     inset 0 -2px 0 #63caff,
     0 2px 8px #00000020;
 
-  transition:
-    background .2s,
-    transform .2s,
-    box-shadow .2s;
+  transition: background .2s,transform .2s,box-shadow .2s;
 }
 
 @media (hover:hover) and (pointer:fine) {
-
   body.admin .ct-edit-btn:hover {
     background: #3d92c9;
-
     transform: translateY(-2px);
 
     box-shadow:
@@ -1216,42 +981,31 @@ body.admin .nt-head {
   padding-right: 6.2rem;
 }
 
-#ct-edit-form small {
+#ct-edit-form small,
+#ct-cover-form small {
   display: block;
-
   margin-top: .35rem;
-
   color: var(--muted);
-
   font-size: .8rem;
 }
 
 .modal-box .ct-edit-check {
   display: flex;
-
   align-items: center;
   gap: .55rem;
-
   padding: .65rem;
-
   background: #edf4fa;
-
   border: 1px solid #ccd6e2;
 }
 
 .modal-box .ct-edit-check input {
   width: 1.15rem;
   height: 1.15rem;
-
   margin: 0;
-
   accent-color: #298bd3;
 }
 
-
-/* ========================================
-   13. DYNAMIC SCROLL / INTERACTIONS
-======================================== */
+/* 13. DYNAMIC SCROLL / INTERACTIONS */
 
 @media (prefers-reduced-motion:no-preference) {
 
@@ -1262,21 +1016,15 @@ body.admin .nt-head {
   }
 
   .archive-grid .reveal {
-    transform:
-      translate3d(-20px,24px,0)
-      scale(.975);
+    transform: translate3d(-20px,24px,0) scale(.975);
   }
 
   .archive-grid .reveal:nth-child(even) {
-    transform:
-      translate3d(20px,24px,0)
-      scale(.975);
+    transform: translate3d(20px,24px,0) scale(.975);
   }
 
   .gallery .reveal {
-    transform:
-      translate3d(0,32px,0)
-      scale(.96);
+    transform: translate3d(0,32px,0) scale(.96);
   }
 
   .nts .reveal {
@@ -1306,9 +1054,7 @@ body.admin .nt-head {
 
   .ct-reveal .hazard::after {
     transform: scaleX(0);
-
-    transition:
-      transform .8s .15s var(--ct-ease);
+    transition: transform .8s .15s var(--ct-ease);
   }
 
   .ct-reveal.ct-in .hazard::after {
@@ -1316,47 +1062,38 @@ body.admin .nt-head {
   }
 
   .ct-hero-ready .vtag {
-    animation:
-      ct-hero-mask .95s var(--ct-ease) both;
+    animation: ct-hero-mask .95s var(--ct-ease) both;
   }
 
   .ct-hero-ready .hero-left {
-    animation:
-      ct-hero-rise .95s .08s var(--ct-ease) both;
+    animation: ct-hero-rise .95s .08s var(--ct-ease) both;
   }
 
   .ct-hero-ready .hero-right {
-    animation:
-      ct-hero-rise .95s .2s var(--ct-ease) both;
+    animation: ct-hero-rise .95s .2s var(--ct-ease) both;
   }
 
   .ct-hero-ready .ct-spotlight {
-    animation:
-      ct-hero-rise .9s .28s var(--ct-ease) both;
+    animation: ct-hero-rise .9s .28s var(--ct-ease) both;
   }
 
   .ct-reveal.ct-in .page-main-title {
-    animation:
-      ct-title-wipe .85s var(--ct-ease) both;
+    animation: ct-title-wipe .85s var(--ct-ease) both;
   }
 
   .ct-feature-changed .ct-spot-name {
-    animation:
-      ct-label .46s var(--ct-ease) both;
+    animation: ct-label .46s var(--ct-ease) both;
   }
 
   .ct-pressed {
-    animation:
-      ct-click .36s var(--ct-ease);
+    animation: ct-click .36s var(--ct-ease);
   }
 
   .hb::after,
   .card-in::after {
     content: "";
-
     position: absolute;
     inset: 0;
-
     pointer-events: none;
 
     background: linear-gradient(
@@ -1373,8 +1110,7 @@ body.admin .nt-head {
 
     .hb:hover::after,
     .archive-card:hover .card-in::after {
-      animation:
-        ct-sweep .65s var(--ct-ease);
+      animation: ct-sweep .65s var(--ct-ease);
     }
 
     .archive-card:hover {
@@ -1398,7 +1134,6 @@ body.admin .nt-head {
     clip-path: inset(0 0 100% 0);
     opacity: 0;
   }
-
   to {
     clip-path: inset(0);
     opacity: 1;
@@ -1410,7 +1145,6 @@ body.admin .nt-head {
     opacity: 0;
     transform: translate3d(0,28px,0);
   }
-
   to {
     opacity: 1;
     transform: none;
@@ -1422,7 +1156,6 @@ body.admin .nt-head {
     clip-path: inset(0 100% 0 0);
     transform: translateX(-10px);
   }
-
   to {
     clip-path: inset(0);
     transform: none;
@@ -1434,7 +1167,6 @@ body.admin .nt-head {
     opacity: .4;
     transform: translateX(7px);
   }
-
   to {
     opacity: 1;
     transform: none;
@@ -1442,11 +1174,9 @@ body.admin .nt-head {
 }
 
 @keyframes ct-click {
-  0%,
-  100% {
+  0%,100% {
     filter: brightness(1);
   }
-
   32% {
     filter: brightness(1.24);
   }
@@ -1458,10 +1188,7 @@ body.admin .nt-head {
   }
 }
 
-
-/* ========================================
-   14. RESPONSIVE — PC VIEWER
-======================================== */
+/* 14. RESPONSIVE — PC VIEWER */
 
 @media (min-width:850px) {
 
@@ -1480,9 +1207,7 @@ body.admin .nt-head {
   .viewer[data-kind="character"] .v-stand {
     position: sticky;
     top: 1rem;
-
     height: clamp(28rem,72svh,62rem);
-
     border: 1px solid #aec5d9;
 
     background: radial-gradient(
@@ -1511,29 +1236,22 @@ body.admin .nt-head {
       minmax(0,66fr);
 
     grid-template-rows: minmax(26rem,auto);
-
     align-content: stretch;
-
     min-height: clamp(28rem,69svh,58rem);
-
     gap: 1rem;
   }
 
   .viewer[data-kind="worldview"] .v-stand {
     position: relative;
     inset: auto;
-
     grid-area: 1/2;
-
     min-width: 0;
     min-height: 0;
-
     height: clamp(26rem,69svh,58rem);
   }
 
   .viewer[data-kind="worldview"] .v-id {
     grid-area: 1/1;
-
     padding: 1.5rem;
   }
 
@@ -1544,17 +1262,13 @@ body.admin .nt-head {
 }
 
 @media (max-width:849px) {
-
   #viewer[data-fx="spin"] .v-stage {
     width: 100%;
     max-width: 100%;
   }
 }
 
-
-/* ========================================
-   15. RESPONSIVE — SMALL SCREEN
-======================================== */
+/* 15. RESPONSIVE — SMALL SCREEN */
 
 @media (max-width:760px) {
 
@@ -1564,9 +1278,7 @@ body.admin .nt-head {
 
   .ct-sound {
     margin-left: auto;
-
     padding: .35rem .48rem;
-
     min-height: 2.4rem;
     font-size: .76rem;
   }
@@ -1589,7 +1301,6 @@ body.admin .nt-head {
   .ct-feature-top {
     font-size: .58rem;
     letter-spacing: .055em;
-
     gap: .22rem;
   }
 
@@ -1649,9 +1360,7 @@ body.admin .nt-head {
   .viewer[data-kind="worldview"] .v-stand {
     position: relative;
     inset: auto;
-
     grid-area: 1/1;
-
     min-height: 0;
   }
 
@@ -1701,10 +1410,7 @@ body.admin .nt-head {
   }
 }
 
-
-/* ========================================
-   16. RESPONSIVE — PORTRAIT HOME
-======================================== */
+/* 16. RESPONSIVE — PORTRAIT HOME */
 
 @media (max-aspect-ratio:1/1) {
 
@@ -1716,31 +1422,17 @@ body.admin .nt-head {
       minmax(0,1fr)
       minmax(0,.78fr);
 
-    grid-template-rows:
-      auto
-      auto
-      auto
-      auto;
+    grid-template-rows: auto auto auto auto;
 
     gap: clamp(.65rem,2.1vw,1.4rem);
-
-    padding:
-      clamp(.85rem,3.5vw,2rem)
-      5vw
-      .75rem;
+    padding: clamp(.85rem,3.5vw,2rem) 5vw .75rem;
   }
-
-
-  /* 상단 문구 */
 
   .hero.ct-dialogue-ready .vtag {
     grid-area: 1/1;
-
     align-self: start;
     justify-self: start;
-
     font-size: clamp(.78rem,3vw,1.28rem);
-
     line-height: 1.08;
   }
 
@@ -1748,77 +1440,43 @@ body.admin .nt-head {
     margin-top: .35em;
   }
 
-
-  /* 현재 캐릭터 표시 */
-
   .hero.ct-dialogue-ready .ct-spotlight {
     grid-area: 1/2;
-
-    width: min(
-      100%,
-      clamp(9rem,37vw,20rem)
-    );
-
+    width: min(100%,clamp(9rem,37vw,20rem));
     z-index: 3;
   }
 
-
-  /* 캐릭터 오른쪽 배치 */
-
   .hero.ct-dialogue-ready .hero-art {
     position: relative;
-
     grid-area: 2/1/3/3;
-
     inset: auto;
-
     width: 77%;
-
-    height: clamp(
-      16.5rem,
-      86vw,
-      52rem
-    );
-
+    height: clamp(16.5rem,86vw,52rem);
     justify-self: end;
     align-self: center;
-
     transform: none;
   }
 
   .hero.ct-dialogue-ready .hero-art img {
     position: absolute;
-
     inset: 0;
-
     width: 100%;
     height: 100%;
-
     object-fit: contain;
     object-position: right bottom;
   }
 
   .hero.ct-dialogue-ready .hero-art::after {
     height: 40%;
-
     -webkit-backdrop-filter: blur(10px);
     backdrop-filter: blur(10px);
   }
 
-
-  /* 왼쪽 대사 카드 */
-
   .hero.ct-dialogue-ready .ct-dialogue {
     grid-area: 2/1;
-
-    width: min(
-      100%,
-      clamp(7.8rem,37vw,22rem)
-    );
-
+    width: min(100%,clamp(7.8rem,37vw,22rem));
     justify-self: start;
     align-self: center;
-
     z-index: 2;
   }
 
@@ -1828,60 +1486,31 @@ body.admin .nt-head {
 
   .ct-dialogue .ct-voice-head {
     font-size: clamp(.58rem,1.5vw,.95rem);
-
     letter-spacing: .04em;
-
     gap: .2rem;
   }
 
-
-  /* 캐릭터 대사 — 가로쓰기 */
-
   .ct-dialogue .ct-voice-text {
     writing-mode: horizontal-tb;
-
     direction: ltr;
     text-align: left;
-
     inline-size: auto;
     max-block-size: none;
-
     margin: .65rem 0;
     padding: 0;
-
-    font-size: clamp(
-      .85rem,
-      2.9vw,
-      1.35rem
-    );
-
+    font-size: clamp(.85rem,2.9vw,1.35rem);
     line-height: 1.8;
     letter-spacing: normal;
-
     white-space: pre-wrap;
   }
 
-
-  /* 긴 대사는 글자 크기 자동 축소 */
-
   .ct-dialogue .ct-long-voice .ct-voice-text {
-    font-size: clamp(
-      .8rem,
-      2.55vw,
-      1.2rem
-    );
+    font-size: clamp(.8rem,2.55vw,1.2rem);
   }
 
   .ct-dialogue .ct-voice-name {
-    font-size: clamp(
-      .68rem,
-      1.9vw,
-      1.05rem
-    );
+    font-size: clamp(.68rem,1.9vw,1.05rem);
   }
-
-
-  /* 하단 메뉴 */
 
   .hero.ct-dialogue-ready .hero-left {
     grid-area: 3/1;
@@ -1894,57 +1523,31 @@ body.admin .nt-head {
   }
 
   .hero.ct-dialogue-ready .hero-left .hb {
-    min-height: clamp(
-      3rem,
-      6.5vw,
-      4.2rem
-    );
+    min-height: clamp(3rem,6.5vw,4.2rem);
   }
-
-
-  /* 스크롤 안내 */
 
   .hero.ct-dialogue-ready .ct-scroll-hint {
     grid-area: 4/1/5/3;
-
     position: relative;
-
     left: auto;
     bottom: auto;
-
     translate: none;
-
     justify-self: center;
     align-self: center;
-
     display: grid;
-
     margin: .1rem 0 0;
-
-    font-size: clamp(
-      .68rem,
-      1.5vw,
-      1rem
-    );
+    font-size: clamp(.68rem,1.5vw,1rem);
   }
 
   .hero:not(.ct-dialogue-ready) .ct-scroll-hint {
     grid-area: 3/1/4/-1;
-
     position: relative;
-
     left: auto;
     bottom: auto;
-
     translate: none;
-
     justify-self: center;
-
     display: grid;
   }
-
-
-  /* 세로 화면 별똥별 */
 
   .hero .ct-meteor {
     width: clamp(9rem,43vw,20rem);
@@ -1966,10 +1569,7 @@ body.admin .nt-head {
   }
 }
 
-
-/* ========================================
-   17. ACCESSIBILITY — REDUCED MOTION
-======================================== */
+/* 17. ACCESSIBILITY */
 
 @media (prefers-reduced-motion:reduce) {
 
@@ -1999,18 +1599,12 @@ body.admin .nt-head {
   }
 }
 
-/* ========================================
-   18. CINEMATIC HOME DISPLAY
-======================================== */
-
-/* 일러스트가 은은하게 반사되는 배경 */
+/* 18. CINEMATIC HOME DISPLAY */
 
 .ct-ambient {
   position: absolute;
   inset: 0;
-
   z-index: -5;
-
   overflow: hidden;
   pointer-events: none;
 
@@ -2032,19 +1626,13 @@ body.admin .nt-head {
 .ct-ambient img {
   position: absolute;
   inset: 0;
-
   width: 100%;
   height: 100%;
-
   object-fit: cover;
   object-position: center;
-
   opacity: 0;
-
   filter: blur(32px) saturate(.85);
-
   transform: scale(1.15);
-
   transition: opacity 1.3s ease;
 }
 
@@ -2052,32 +1640,20 @@ body.admin .nt-head {
   opacity: .22;
 }
 
-
-/* 일러스트 전시 영역 확대 */
-
 .hero.ct-dialogue-ready .hero-art {
   inset: 3% 19% 0 16%;
 }
 
-
-/* 이미지 원본 비율 및 가장자리 페이드 */
-
 .hero.ct-dialogue-ready .hero-art img {
   position: absolute;
-
   inset: auto auto 0 50%;
-
   width: auto;
   height: auto;
-
   max-width: 100%;
   max-height: 100%;
-
   object-fit: contain;
   object-position: center;
-
   translate: -50% 0;
-
   transform: scale(1.045);
   transform-origin: center bottom;
 
@@ -2085,43 +1661,27 @@ body.admin .nt-head {
     opacity 1.3s ease,
     transform 1.5s var(--ct-ease);
 
-
-  /* 위쪽과 아래쪽 페이드 */
-
   --ct-art-mask: linear-gradient(
     to bottom,
-
     transparent 0%,
     rgba(0,0,0,.7) 4%,
     #000 10%,
-
     #000 58%,
-
     rgba(0,0,0,.95) 67%,
     rgba(0,0,0,.65) 80%,
     rgba(0,0,0,.25) 92%,
-
     transparent 100%
   );
-
-
-  /* 왼쪽과 오른쪽 페이드 */
 
   --ct-side-mask: linear-gradient(
     to right,
-
     transparent 0%,
     rgba(0,0,0,.7) 7%,
     #000 15%,
-
     #000 87%,
-
     rgba(0,0,0,.8) 94%,
     transparent 100%
   );
-
-
-  /* 네 방향 마스크 결합 */
 
   -webkit-mask-image:
     var(--ct-art-mask),
@@ -2136,36 +1696,22 @@ body.admin .nt-head {
   mask-composite: intersect;
 }
 
-
-/* 캐릭터 전환 시 자연스러운 확대 효과 */
-
 .hero.ct-dialogue-ready .hero-art img.on {
   opacity: 1;
   transform: scale(1);
 }
 
-
-/* 세로 화면 */
-
 @media (max-aspect-ratio:1/1) {
 
   .hero.ct-dialogue-ready .hero-art {
     inset: auto;
-
     width: 92%;
-
-    height: clamp(
-      17rem,
-      96vw,
-      54rem
-    );
+    height: clamp(17rem,96vw,54rem);
   }
 
   .hero.ct-dialogue-ready .hero-art img {
     inset: auto 0 0 auto;
-
     translate: none;
-
     object-position: right bottom;
   }
 
@@ -2174,143 +1720,286 @@ body.admin .nt-head {
   }
 }
 
-
 /* ========================================
-   19. WEBTOON PREVIEW CARD
+   19. WEBTOON ILLUSTRATION / PLAY BUTTON
 ======================================== */
 
-.v-web.ct-webtoon-preview {
-  display: grid;
+/* 기존 웹툰 미리보기 제거 */
 
-  width: min(100%,22rem);
+#viewer.ct-webtoon-ready #v-web {
+  display: none !important;
+}
 
-  gap: 0;
+/* 상세창 가장 아래 일러스트 영역 */
+
+.ct-cover-zone {
+  width: min(100%,44rem);
+  min-width: 0;
+  margin: 1.5rem auto 0;
+  padding-top: 1.25rem;
+  border-top: 1px solid #b8c9d9;
+}
+
+.ct-cover-heading {
+  color: #52748e;
+  font: 700 .8rem/1.5 var(--latin);
+  letter-spacing: .2em;
+  margin-bottom: .75rem;
+}
+
+/* 전용 일러스트 자체가 버튼 */
+
+.ct-cover-link {
+  position: relative;
+  display: block;
+  width: 100%;
   padding: 0;
-
   overflow: hidden;
-
   border: 1px solid var(--c);
-  border-radius: 4px;
+  border-radius: 5px;
+  background: #e4edf5;
+  cursor: pointer;
 
-  background: #233044;
-
-  box-shadow: 0 5px 18px #172c4525;
+  box-shadow: 0 6px 20px #172c4520;
 
   transition:
     transform .3s var(--ct-ease),
     box-shadow .3s;
 }
 
-.v-web.ct-webtoon-preview img {
+.ct-cover-img {
+  display: block;
   width: 100%;
-
-  height: clamp(
-    7rem,
-    24vw,
-    11rem
-  );
-
+  height: auto;
+  aspect-ratio: 16/9;
   object-fit: cover;
-  object-position: center top;
+  object-position: center;
 
-  transition: transform .5s var(--ct-ease);
+  transition:
+    transform .6s var(--ct-ease),
+    filter .3s;
 }
 
-.v-web.ct-webtoon-preview span {
-  display: block;
+/* 일러스트 위의 빛 반사 효과 */
 
-  padding: .7rem 1rem;
+.ct-cover-link::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
 
-  text-align: center;
+  background: linear-gradient(
+    110deg,
+    transparent 25%,
+    #ffffff55 50%,
+    transparent 75%
+  );
 
-  color: #ffffff;
-  background: #203b55;
-
-  font-weight: 700;
-  letter-spacing: .04em;
-
-  border-top: 2px solid var(--c);
+  transform: translateX(-130%);
 }
 
 @media (hover:hover) and (pointer:fine) {
 
-  .v-web.ct-webtoon-preview:hover {
-    transform: translateY(-3px);
-
-    box-shadow:
-      0 0 18px var(--c);
+  .ct-cover-link:hover {
+    box-shadow: 0 0 20px var(--c);
   }
 
-  .v-web.ct-webtoon-preview:hover img {
-    transform: scale(1.035);
+  .ct-cover-link:hover img {
+    transform: scale(1.045);
+    filter: brightness(1.08);
+  }
+
+  .ct-cover-link:hover::after {
+    animation: ctCoverSweep .85s ease;
   }
 }
 
+@keyframes ctCoverSweep {
+  to {
+    transform: translateX(130%);
+  }
+}
+
+.ct-cover-link:active {
+  transform: scale(.98);
+}
+
+/* 별도의 플레이 하러 가기 버튼 */
+
+.ct-play-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .85rem;
+
+  width: 100%;
+  min-height: 3.3rem;
+  margin-top: .65rem;
+  padding: .85rem 1rem;
+
+  border: 1px solid #719ebf;
+  border-radius: 4px;
+
+  background:
+    linear-gradient(120deg,#172c45,#285f87);
+
+  color: #fff;
+  text-decoration: none;
+
+  font: 700 1rem/1.5 var(--body);
+
+  box-shadow:
+    inset 0 -3px var(--c),
+    0 5px 14px #172c4525;
+
+  transition:
+    background .25s,
+    transform .25s,
+    box-shadow .25s;
+}
+
+.ct-play-link b {
+  color: #caedff;
+  font-size: .8rem;
+  transition: transform .25s;
+}
+
+@media (hover:hover) and (pointer:fine) {
+
+  .ct-play-link:hover {
+    background: #327fac;
+    box-shadow: 0 0 18px #69bfff70;
+  }
+
+  .ct-play-link:hover b {
+    transform: translateX(5px);
+  }
+}
+
+.ct-play-link:active {
+  transform: scale(.97);
+}
+
+/* 관리자 전용 웹툰 설정 */
+
+.ct-cover-admin {
+  display: none;
+}
+
+body.admin .ct-cover-admin {
+  display: block;
+
+  width: 100%;
+  margin-top: .75rem;
+  padding: .65rem;
+
+  border: 1px dashed #8bb9dc;
+  border-radius: 4px;
+
+  background: #fff;
+  color: #285e88;
+  font-weight: 700;
+}
+
+.ct-cover-admin:hover {
+  background: #e5f4ff;
+}
+
+.ct-cover-zone[hidden],
+.ct-cover-link[hidden],
+.ct-play-link[hidden],
+.ct-cover-admin[hidden] {
+  display: none !important;
+}
+
+@media (min-width:850px) {
+
+  .viewer[data-kind="character"] .ct-cover-zone {
+    grid-area: 5/1/6/-1;
+    align-self: start;
+  }
+}
+
+@media (max-width:760px) {
+
+  .ct-cover-zone {
+    margin-top: 1.2rem;
+  }
+
+  .ct-play-link {
+    min-height: 3rem;
+    font-size: .95rem;
+  }
+}
 
 /* ========================================
-   20. FULL WEBTOON READER
+   20. IMMERSIVE WEBTOON READER
 ======================================== */
 
-.viewer.ct-webtoon-reading {
+/* 웹툰 열람 중 배경 완전 검정 */
+
+#viewer.ct-webtoon-reading {
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+
   overflow-x: hidden;
   overflow-y: auto;
+
+  background: #000;
+  background-image: none;
 }
 
-.viewer.ct-webtoon-reading .v-stage {
+#viewer.ct-webtoon-reading .v-stage {
   display: none !important;
 }
 
 .ct-webtoon-reader {
-  width: min(100%,52rem);
-
+  position: relative;
+  width: 100%;
+  max-width: none;
+  min-height: 100vh;
   min-height: 100svh;
 
-  margin: 0 auto;
-  padding: 1.2rem clamp(.65rem,3vw,2rem) 2rem;
+  margin: 0;
+  padding: 0;
 
-  animation: ctReaderOpen .5s var(--ct-ease) both;
+  background: #000;
+
+  animation: ctReaderOpen .35s ease both;
 }
 
-
-/* 웹툰 상단 제목 */
+/* 제목은 화면에서 숨기되 접근성 유지 */
 
 .ct-reader-head {
-  padding: 1.2rem 0 1.5rem;
+  position: absolute;
 
-  border-bottom: 3px solid var(--c);
-
-  text-align: center;
-}
-
-.ct-reader-head h2 {
-  margin: .8rem 0 .4rem;
-
-  color: #233044;
-
-  font: 800 clamp(1.8rem,6vw,3.4rem)/1.35 var(--serif);
-
-  overflow-wrap: anywhere;
-}
-
-.ct-reader-head p {
-  color: #52748e;
-
-  font: 700 .8rem/1.5 var(--latin);
-
-  letter-spacing: .2em;
-}
-
-
-/* 웹툰 전체 이미지 */
-
-.ct-reader-content {
-  margin-top: 1rem;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
 
   overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
 
-  background: #ffffff;
+  border: 0;
+}
 
-  box-shadow: 0 8px 25px #172c451a;
+/* 웹툰 이미지의 원본 비율 유지 */
+
+.ct-reader-content {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+
+  border: 0;
+  border-radius: 0;
+  background: #000;
+  box-shadow: none;
+
+  overflow: hidden;
 }
 
 .ct-reader-image {
@@ -2319,80 +2008,71 @@ body.admin .nt-head {
   width: 100%;
   height: auto;
 
-  max-width: 100%;
+  max-width: none;
   max-height: none;
+
+  margin: 0;
+  padding: 0;
+  border: 0;
 
   object-fit: contain;
 }
 
+.ct-reader-image[hidden] {
+  display: none !important;
+}
+
 .ct-reader-status {
   padding: 3rem 1rem;
-
-  color: var(--muted);
-
+  color: #dbeeff;
+  background: #000;
   text-align: center;
 }
 
+.ct-reader-status[hidden] {
+  display: none !important;
+}
 
-/* 웹툰 마지막 부분 */
+/* 웹툰 맨 마지막 돌아가기 버튼 */
 
 .ct-reader-end {
   display: grid;
-
+  justify-items: center;
   gap: 1rem;
 
-  margin: 1.5rem 0 2rem;
+  padding: 1.2rem 1rem;
+  padding-bottom: max(1.2rem,env(safe-area-inset-bottom));
 
+  margin: 0;
+
+  background: #000;
   text-align: center;
 }
 
-.ct-reader-end > span {
-  color: #52748e;
-
-  font: 700 .8rem/1.5 var(--latin);
-  letter-spacing: .15em;
-}
-
+.ct-reader-end > span,
 .ct-reader-external {
-  display: block;
-
-  padding: .75rem 1rem;
-
-  border: 1px solid #ccd6e2;
-
-  background: white;
-  color: #235d88;
-
-  text-decoration: none;
-  font-weight: 700;
+  display: none !important;
 }
-
-
-/* 맨 아래로 돌아가기 버튼 */
 
 .ct-reader-back {
-  width: 100%;
-
+  width: min(100%,44rem);
   min-height: 3.2rem;
 
   padding: .85rem 1rem;
 
-  border: 0;
-  border-radius: 3px;
+  border: 1px solid #385b78;
+  border-radius: 4px;
 
   background: linear-gradient(
     135deg,
-    #233044,
+    #172c45,
     #275e87
   );
 
-  color: white;
-
+  color: #fff;
   font-weight: 700;
 
-  box-shadow:
-    inset 0 -3px var(--c),
-    0 5px 15px #172c4525;
+  box-shadow: inset 0 -3px var(--c);
 
   transition:
     transform .2s,
@@ -2408,27 +2088,25 @@ body.admin .nt-head {
 }
 
 @keyframes ctReaderOpen {
-
   from {
     opacity: 0;
-    transform: translateY(16px);
   }
-
   to {
     opacity: 1;
-    transform: none;
   }
 }
 
-
 /* ========================================
-   ACCESSIBILITY
+   21. ACCESSIBILITY — REDUCED MOTION
 ======================================== */
 
 @media (prefers-reduced-motion:reduce) {
 
   .ct-ambient img,
-  .hero.ct-dialogue-ready .hero-art img {
+  .hero.ct-dialogue-ready .hero-art img,
+  .ct-cover-link,
+  .ct-cover-img,
+  .ct-play-link {
     transition: none !important;
   }
 
@@ -2436,7 +2114,8 @@ body.admin .nt-head {
     transform: none !important;
   }
 
+  .ct-cover-link::after,
   .ct-webtoon-reader {
     animation: none !important;
   }
-}
+     }
