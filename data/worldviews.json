@@ -25,7 +25,7 @@
         {
           "title": "제 0구역",
           "text": "",
-          "image": "",
+          "image": "https://raw.githubusercontent.com/monana670-create/C.T.-Gallery/HEAD/worldviews/images/lore-250aaadb9b3aaadb34361865.webp",
           "x": 50,
           "y": 50
         }
@@ -45,6 +45,6 @@
       "secrets": [],
       "custom": []
     },
-    "updatedAt": "2026-11-27T17:35:36.898Z"
+    "updatedAt": "2026-11-27T17:36:18.711Z"
   }
 ]
