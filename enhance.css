@@ -1,7 +1,4 @@
-/* ========================================
-   C.T. GALLERY — SIGNATURE UI EXTENSION
-   CONSOLIDATED EDITION
-======================================== */
+/* C.T. GALLERY — CONSOLIDATED UI EXTENSION */
 
 :root {
   --ct-ice: #d9efff;
@@ -10,19 +7,13 @@
   --ct-ease: cubic-bezier(.16,1,.3,1);
 }
 
-/* 01. HEADER / SOUND CONTROL */
+/* ========================================
+   01. HEADER / SOUND CONTROL
+======================================== */
 
-.header {
-  gap: clamp(.5rem,2vw,1.5rem);
-}
-
-.header-nav {
-  margin-left: auto;
-}
-
-.logo {
-  flex: none;
-}
+.header { gap: clamp(.5rem,2vw,1.5rem); }
+.header-nav { margin-left: auto; }
+.logo { flex: none; }
 
 .nav-btn,
 .mobile-nav-btn {
@@ -71,16 +62,14 @@
   color: #586575;
 }
 
-.ct-sound:active {
-  transform: scale(.94);
-}
+.ct-sound:active { transform: scale(.94); }
 
-/* 02. HOME / SKY GRADIENT */
+/* ========================================
+   02. HOME / SKY GRADIENT
+======================================== */
 
 .hero {
-  grid-template-columns:
-    minmax(0,1fr)
-    minmax(0,.75fr);
+  grid-template-columns: minmax(0,1fr) minmax(0,.75fr);
 
   background: linear-gradient(
     180deg,
@@ -103,41 +92,16 @@
 
 .hero .hero-shade {
   background:
-    linear-gradient(
-      90deg,
-      rgba(5,15,30,.24),
-      transparent 65%
-    ),
-    linear-gradient(
-      0deg,
-      rgba(0,0,0,.25),
-      transparent 45%
-    );
+    linear-gradient(90deg,rgba(5,15,30,.24),transparent 65%),
+    linear-gradient(0deg,rgba(0,0,0,.25),transparent 45%);
 }
 
-.hero-left {
-  width: min(100%,23rem);
-}
-
-.hero-right {
-  width: min(100%,14rem);
-}
-
-.hero .tag {
-  letter-spacing: .16em;
-}
-
-.logo-big {
-  margin: .95rem 0 1.2rem;
-}
-
-.logo-big b {
-  letter-spacing: -.045em;
-}
-
-.logo-big em {
-  color: #e1f4ff;
-}
+.hero-left { width: min(100%,23rem); }
+.hero-right { width: min(100%,14rem); }
+.hero .tag { letter-spacing: .16em; }
+.logo-big { margin: .95rem 0 1.2rem; }
+.logo-big b { letter-spacing: -.045em; }
+.logo-big em { color: #e1f4ff; }
 
 .hero-left .hb {
   position: relative;
@@ -150,16 +114,16 @@
   box-shadow: 0 0 12px #65c4ff30;
 }
 
-.hb b {
-  font-variant-numeric: tabular-nums;
-}
+.hb b { font-variant-numeric: tabular-nums; }
 
 .stk-b {
   border-color: #c7ebff;
   box-shadow: 0 7px 24px #10243e4d;
 }
 
-/* 03. STARFIELD / THREE SHOOTING STARS */
+/* ========================================
+   03. STARFIELD / SHOOTING STARS
+======================================== */
 
 .hero .ct-meteors {
   position: absolute;
@@ -199,10 +163,8 @@
   left: -5%;
   right: auto;
   bottom: auto;
-
   width: clamp(10rem,36vw,28rem);
   height: 3px;
-
   opacity: 0;
   border-radius: 100px;
 
@@ -216,13 +178,8 @@
   );
 
   box-shadow: 0 0 8px #b0e5ff60;
-
-  filter: drop-shadow(
-    0 0 6px rgba(170,220,255,.85)
-  );
-
+  filter: drop-shadow(0 0 6px rgba(170,220,255,.85));
   transform-origin: right center;
-
   animation: ctMeteorLeftFlight 5s linear infinite;
   animation-play-state: paused;
 }
@@ -270,23 +227,20 @@
     opacity: 0;
     transform: translate3d(-12vw,-7vw,0) rotate(30deg);
   }
-
-  4% {
-    opacity: 1;
-  }
-
+  4% { opacity: 1; }
   16% {
     opacity: 1;
     transform: translate3d(15vw,8.6vw,0) rotate(30deg);
   }
-
   24%,100% {
     opacity: 0;
     transform: translate3d(29vw,16.5vw,0) rotate(30deg);
   }
 }
 
-/* 04. CHARACTER SPOTLIGHT */
+/* ========================================
+   04. CHARACTER SPOTLIGHT
+======================================== */
 
 .ct-spotlight {
   grid-area: 1/2;
@@ -328,9 +282,7 @@
   box-shadow: 0 0 10px #7ce1ff;
 }
 
-.ct-feature-top span:first-child {
-  flex: 1;
-}
+.ct-feature-top span:first-child { flex: 1; }
 
 .ct-spot-name {
   width: 100%;
@@ -370,15 +322,15 @@
   white-space: nowrap;
 }
 
-.ct-feature-controls button:disabled {
-  opacity: .35;
-}
+.ct-feature-controls button:disabled { opacity: .35; }
 
 .ct-feature-controls button:not(:disabled):hover {
   background: #377fb1;
 }
 
-/* 05. SCROLL GUIDE */
+/* ========================================
+   05. SCROLL GUIDE
+======================================== */
 
 #m-head {
   scroll-margin-top: calc(var(--header-h) + .75rem);
@@ -408,12 +360,12 @@
 }
 
 @keyframes ct-nudge {
-  50% {
-    transform: translateY(5px);
-  }
+  50% { transform: translateY(5px); }
 }
 
-/* 06. HOME CHARACTER / LOWER BODY FADE */
+/* ========================================
+   06. HOME CHARACTER / LOWER BODY FADE
+======================================== */
 
 .hero.ct-dialogue-ready {
   grid-template-columns:
@@ -457,9 +409,7 @@
   height: 42%;
   z-index: 2;
   pointer-events: none;
-
   background: rgba(0,0,0,.005);
-
   -webkit-backdrop-filter: blur(12px);
   backdrop-filter: blur(12px);
 
@@ -474,23 +424,14 @@
   mask-image: var(--ct-blur-mask);
 }
 
-.hero.ct-dialogue-ready .vtag {
-  grid-area: 1/1/3/2;
-}
+.hero.ct-dialogue-ready .vtag { grid-area: 1/1/3/2; }
+.hero.ct-dialogue-ready .hero-left { grid-area: 3/1; }
+.hero.ct-dialogue-ready .hero-right { grid-area: 3/3; }
+.hero.ct-dialogue-ready .ct-spotlight { grid-area: 1/3; }
 
-.hero.ct-dialogue-ready .hero-left {
-  grid-area: 3/1;
-}
-
-.hero.ct-dialogue-ready .hero-right {
-  grid-area: 3/3;
-}
-
-.hero.ct-dialogue-ready .ct-spotlight {
-  grid-area: 1/3;
-}
-
-/* 07. CHARACTER VOICE / CALENDAR FLIP */
+/* ========================================
+   07. CHARACTER VOICE / CALENDAR FLIP
+======================================== */
 
 .ct-dialogue {
   position: relative;
@@ -559,28 +500,18 @@
 }
 
 @keyframes ct-calendar-out {
-  from {
-    transform: rotateX(0);
-    opacity: 1;
-  }
-  to {
-    transform: rotateX(-95deg);
-    opacity: 0;
-  }
+  from { transform: rotateX(0); opacity: 1; }
+  to { transform: rotateX(-95deg); opacity: 0; }
 }
 
 @keyframes ct-calendar-in {
-  from {
-    transform: rotateX(85deg);
-    opacity: .25;
-  }
-  to {
-    transform: rotateX(0);
-    opacity: 1;
-  }
+  from { transform: rotateX(85deg); opacity: .25; }
+  to { transform: rotateX(0); opacity: 1; }
 }
 
-/* 08. ARCHIVE CARDS */
+/* ========================================
+   08. ARCHIVE CARDS
+======================================== */
 
 .page-header .hazard {
   background: linear-gradient(
@@ -589,7 +520,6 @@
     #a5d6f8 17% 32%,
     #d4dfe9 32%
   );
-
   height: 3px;
   position: relative;
 }
@@ -618,9 +548,7 @@
   background: #8dd9ff;
 }
 
-.archive-card {
-  transition: transform .32s var(--ct-ease);
-}
+.archive-card { transition: transform .32s var(--ct-ease); }
 
 .card-in {
   position: relative;
@@ -638,9 +566,7 @@
 }
 
 .archive-type,
-.archive-view {
-  color: #276d9f;
-}
+.archive-view { color: #276d9f; }
 
 .archive-view {
   display: flex;
@@ -662,7 +588,9 @@
   overflow: hidden;
 }
 
-/* 09. SAFE SPIN EFFECT */
+/* ========================================
+   09. SAFE SPIN EFFECT
+======================================== */
 
 @property --ct-spin-angle {
   syntax: "<angle>";
@@ -706,15 +634,13 @@
 }
 
 @keyframes ctBorderLightRotation {
-  from {
-    --ct-spin-angle: 0deg;
-  }
-  to {
-    --ct-spin-angle: 360deg;
-  }
+  from { --ct-spin-angle: 0deg; }
+  to { --ct-spin-angle: 360deg; }
 }
 
-/* 10. CHARACTER / WORLD VIEWER */
+/* ========================================
+   10. CHARACTER / WORLD VIEWER
+======================================== */
 
 .viewer {
   background-color: #eff3f7;
@@ -775,9 +701,7 @@
   background: var(--c);
 }
 
-.v-name {
-  box-shadow: 0 7px 20px #172c4525;
-}
+.v-name { box-shadow: 0 7px 20px #172c4525; }
 
 .v-big {
   color: #334d6533;
@@ -791,9 +715,7 @@
   border: 1px solid #b6c8da;
 }
 
-.v-stand {
-  isolation: isolate;
-}
+.v-stand { isolation: isolate; }
 
 .v-stand::after {
   content: "";
@@ -805,13 +727,8 @@
   box-shadow: inset 0 0 0 1px #2d6c9e16;
 }
 
-.v-info {
-  gap: .8rem;
-}
-
-.v-sub {
-  background: #23374c;
-}
+.v-info { gap: .8rem; }
+.v-sub { background: #23374c; }
 
 .v-desc {
   background: #fffffff2;
@@ -829,17 +746,9 @@
   letter-spacing: .19em;
 }
 
-.v-web {
-  transition: background .2s;
-}
-
-.v-web:hover {
-  background: #315b7d;
-}
-
-.v-strip {
-  border-color: #b8c9d9;
-}
+.v-web { transition: background .2s; }
+.v-web:hover { background: #315b7d; }
+.v-strip { border-color: #b8c9d9; }
 
 .v-th {
   background: #e6edf5;
@@ -854,19 +763,13 @@
   box-shadow: 0 0 0 1px var(--c);
 }
 
-.viewer[data-kind="worldview"] .v-scene::before {
-  inset: 0;
-}
+.viewer[data-kind="worldview"] .v-scene::before { inset: 0; }
+.viewer[data-kind="worldview"] .v-id { max-width: 100%; }
+.viewer[data-kind="worldview"] .v-stand img { object-position: center; }
 
-.viewer[data-kind="worldview"] .v-id {
-  max-width: 100%;
-}
-
-.viewer[data-kind="worldview"] .v-stand img {
-  object-position: center;
-}
-
-/* 11. SAFE SPIN EFFECT — VIEWER */
+/* ========================================
+   11. SAFE SPIN VIEWER
+======================================== */
 
 #viewer[data-fx="spin"] {
   width: 100%;
@@ -910,12 +813,8 @@
 }
 
 @keyframes ctSafeOrbit {
-  from {
-    transform: translate(-50%,-50%) rotate(0deg);
-  }
-  to {
-    transform: translate(-50%,-50%) rotate(360deg);
-  }
+  from { transform: translate(-50%,-50%) rotate(0deg); }
+  to { transform: translate(-50%,-50%) rotate(360deg); }
 }
 
 .viewer[data-fx="spin"] .v-stand img {
@@ -923,11 +822,11 @@
   z-index: 1;
 }
 
-/* 12. ADMIN EDIT BUTTON / FORM */
+/* ========================================
+   12. ADMIN EDIT BUTTON / FORM
+======================================== */
 
-.ct-edit-btn {
-  display: none;
-}
+.ct-edit-btn { display: none; }
 
 body.admin .ct-edit-btn {
   position: absolute;
@@ -941,11 +840,7 @@ body.admin .ct-edit-btn {
   padding: 0;
   border: 1px solid #acdfff;
   border-radius: 3px;
-
-  background: linear-gradient(
-    135deg,#285e88,#19354f
-  );
-
+  background: linear-gradient(135deg,#285e88,#19354f);
   color: #fff;
   font-family: var(--body);
   font-size: .8rem;
@@ -969,20 +864,13 @@ body.admin .ct-edit-btn {
   }
 }
 
-body.admin .ct-edit-btn:active {
-  transform: scale(.93);
-}
-
-body.admin .fxw .card-in {
-  padding-top: 2.7rem;
-}
-
-body.admin .nt-head {
-  padding-right: 6.2rem;
-}
+body.admin .ct-edit-btn:active { transform: scale(.93); }
+body.admin .fxw .card-in { padding-top: 2.7rem; }
+body.admin .nt-head { padding-right: 6.2rem; }
 
 #ct-edit-form small,
-#ct-cover-form small {
+#ct-cover-form small,
+#ct-illustration-form small {
   display: block;
   margin-top: .35rem;
   color: var(--muted);
@@ -1005,7 +893,9 @@ body.admin .nt-head {
   accent-color: #298bd3;
 }
 
-/* 13. DYNAMIC SCROLL / INTERACTIONS */
+/* ========================================
+   13. DYNAMIC SCROLL / INTERACTIONS
+======================================== */
 
 @media (prefers-reduced-motion:no-preference) {
 
@@ -1027,21 +917,16 @@ body.admin .nt-head {
     transform: translate3d(0,32px,0) scale(.96);
   }
 
-  .nts .reveal {
-    transform: translate3d(0,18px,0);
-  }
+  .nts .reveal { transform: translate3d(0,18px,0); }
 
   .reveal.in,
   .archive-grid .reveal.in,
   .gallery .reveal.in,
-  .nts .reveal.in {
-    transform: none;
-  }
+  .nts .reveal.in { transform: none; }
 
   .ct-reveal {
     opacity: 0;
     transform: translate3d(0,24px,0);
-
     transition:
       opacity .55s var(--ct-ease),
       transform .8s var(--ct-ease);
@@ -1057,9 +942,7 @@ body.admin .nt-head {
     transition: transform .8s .15s var(--ct-ease);
   }
 
-  .ct-reveal.ct-in .hazard::after {
-    transform: scaleX(1);
-  }
+  .ct-reveal.ct-in .hazard::after { transform: scaleX(1); }
 
   .ct-hero-ready .vtag {
     animation: ct-hero-mask .95s var(--ct-ease) both;
@@ -1085,9 +968,7 @@ body.admin .nt-head {
     animation: ct-label .46s var(--ct-ease) both;
   }
 
-  .ct-pressed {
-    animation: ct-click .36s var(--ct-ease);
-  }
+  .ct-pressed { animation: ct-click .36s var(--ct-ease); }
 
   .hb::after,
   .card-in::after {
@@ -1095,14 +976,7 @@ body.admin .nt-head {
     position: absolute;
     inset: 0;
     pointer-events: none;
-
-    background: linear-gradient(
-      90deg,
-      transparent,
-      #ffffff3d,
-      transparent
-    );
-
+    background: linear-gradient(90deg,transparent,#ffffff3d,transparent);
     transform: translateX(-120%);
   }
 
@@ -1113,13 +987,8 @@ body.admin .nt-head {
       animation: ct-sweep .65s var(--ct-ease);
     }
 
-    .archive-card:hover {
-      transform: translateY(-3px);
-    }
-
-    .archive-card:hover img {
-      transform: scale(1.055);
-    }
+    .archive-card:hover { transform: translateY(-3px); }
+    .archive-card:hover img { transform: scale(1.055); }
 
     .v-th:hover {
       opacity: 1;
@@ -1130,72 +999,42 @@ body.admin .nt-head {
 }
 
 @keyframes ct-hero-mask {
-  from {
-    clip-path: inset(0 0 100% 0);
-    opacity: 0;
-  }
-  to {
-    clip-path: inset(0);
-    opacity: 1;
-  }
+  from { clip-path: inset(0 0 100% 0); opacity: 0; }
+  to { clip-path: inset(0); opacity: 1; }
 }
 
 @keyframes ct-hero-rise {
-  from {
-    opacity: 0;
-    transform: translate3d(0,28px,0);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
+  from { opacity: 0; transform: translate3d(0,28px,0); }
+  to { opacity: 1; transform: none; }
 }
 
 @keyframes ct-title-wipe {
-  from {
-    clip-path: inset(0 100% 0 0);
-    transform: translateX(-10px);
-  }
-  to {
-    clip-path: inset(0);
-    transform: none;
-  }
+  from { clip-path: inset(0 100% 0 0); transform: translateX(-10px); }
+  to { clip-path: inset(0); transform: none; }
 }
 
 @keyframes ct-label {
-  from {
-    opacity: .4;
-    transform: translateX(7px);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
+  from { opacity: .4; transform: translateX(7px); }
+  to { opacity: 1; transform: none; }
 }
 
 @keyframes ct-click {
-  0%,100% {
-    filter: brightness(1);
-  }
-  32% {
-    filter: brightness(1.24);
-  }
+  0%,100% { filter: brightness(1); }
+  32% { filter: brightness(1.24); }
 }
 
 @keyframes ct-sweep {
-  to {
-    transform: translateX(120%);
-  }
+  to { transform: translateX(120%); }
 }
 
-/* 14. RESPONSIVE — PC VIEWER */
+/* ========================================
+   14. RESPONSIVE — PC VIEWER
+======================================== */
 
 @media (min-width:850px) {
 
   .viewer[data-kind="character"] .v-stage {
-    grid-template-columns:
-      minmax(0,43fr)
-      minmax(0,57fr);
+    grid-template-columns: minmax(0,43fr) minmax(0,57fr);
 
     grid-template-rows:
       auto
@@ -1209,7 +1048,6 @@ body.admin .nt-head {
     top: 1rem;
     height: clamp(28rem,72svh,62rem);
     border: 1px solid #aec5d9;
-
     background: radial-gradient(
       ellipse at 45% 38%,
       #fff,
@@ -1218,23 +1056,12 @@ body.admin .nt-head {
     );
   }
 
-  .viewer[data-kind="character"] .v-stand img {
-    padding: .35rem;
-  }
-
-  .viewer[data-kind="character"] .v-id {
-    padding-top: 6.5rem;
-  }
-
-  .viewer[data-kind="character"] .v-info {
-    margin-top: 1rem;
-  }
+  .viewer[data-kind="character"] .v-stand img { padding: .35rem; }
+  .viewer[data-kind="character"] .v-id { padding-top: 6.5rem; }
+  .viewer[data-kind="character"] .v-info { margin-top: 1rem; }
 
   .viewer[data-kind="worldview"] .v-scene {
-    grid-template-columns:
-      minmax(0,34fr)
-      minmax(0,66fr);
-
+    grid-template-columns: minmax(0,34fr) minmax(0,66fr);
     grid-template-rows: minmax(26rem,auto);
     align-content: stretch;
     min-height: clamp(28rem,69svh,58rem);
@@ -1262,19 +1089,20 @@ body.admin .nt-head {
 }
 
 @media (max-width:849px) {
+
   #viewer[data-fx="spin"] .v-stage {
     width: 100%;
     max-width: 100%;
   }
 }
 
-/* 15. RESPONSIVE — SMALL SCREEN */
+/* ========================================
+   15. RESPONSIVE — SMALL SCREEN
+======================================== */
 
 @media (max-width:760px) {
 
-  .header {
-    gap: .5rem;
-  }
+  .header { gap: .5rem; }
 
   .ct-sound {
     margin-left: auto;
@@ -1284,14 +1112,10 @@ body.admin .nt-head {
   }
 
   .hero:not(.ct-dialogue-ready) {
-    grid-template-columns:
-      minmax(0,1fr)
-      minmax(0,.7fr);
+    grid-template-columns: minmax(0,1fr) minmax(0,.7fr);
   }
 
-  .hero-right {
-    width: min(100%,9.5rem);
-  }
+  .hero-right { width: min(100%,9.5rem); }
 
   .ct-spotlight {
     width: min(100%,10rem);
@@ -1304,35 +1128,23 @@ body.admin .nt-head {
     gap: .22rem;
   }
 
-  .ct-feature-controls {
-    gap: .2rem;
-  }
+  .ct-feature-controls { gap: .2rem; }
 
   .ct-feature-controls button {
     min-width: 1.8rem;
     padding: .2rem;
   }
 
-  .ct-feature-controls button:last-child {
-    font-size: .69rem;
-  }
-
-  .hero-left .tag {
-    letter-spacing: .05em;
-  }
+  .ct-feature-controls button:last-child { font-size: .69rem; }
+  .hero-left .tag { letter-spacing: .05em; }
 
   .ct-view-meta small {
     font-size: .58rem;
     letter-spacing: .06em;
   }
 
-  .v-head {
-    gap: .4rem;
-  }
-
-  .v-head h2 {
-    font-size: 1.25rem;
-  }
+  .v-head { gap: .4rem; }
+  .v-head h2 { font-size: 1.25rem; }
 
   #v-back {
     padding: .3rem .45rem;
@@ -1349,10 +1161,7 @@ body.admin .nt-head {
   }
 
   .viewer[data-kind="worldview"] .v-scene {
-    grid-template-rows:
-      minmax(14rem,39svh)
-      auto;
-
+    grid-template-rows: minmax(14rem,39svh) auto;
     align-content: start;
     gap: .4rem;
   }
@@ -1374,56 +1183,31 @@ body.admin .nt-head {
     height: 39svh;
   }
 
-  .viewer[data-kind="worldview"] .v-big {
-    top: 6%;
-  }
-
-  .card-in {
-    min-height: 0;
-  }
+  .viewer[data-kind="worldview"] .v-big { top: 6%; }
+  .card-in { min-height: 0; }
 }
 
 @media (max-width:360px) {
 
-  .header .logo small {
-    font-size: 1rem;
-  }
-
-  .ct-sound {
-    font-size: .69rem;
-  }
-
-  .ct-spotlight {
-    padding: .35rem;
-  }
-
-  .ct-feature-top {
-    letter-spacing: 0;
-  }
-
-  .ct-feature-controls button {
-    min-width: 1.55rem;
-  }
-
-  .ct-feature-controls button:last-child {
-    display: none;
-  }
+  .header .logo small { font-size: 1rem; }
+  .ct-sound { font-size: .69rem; }
+  .ct-spotlight { padding: .35rem; }
+  .ct-feature-top { letter-spacing: 0; }
+  .ct-feature-controls button { min-width: 1.55rem; }
+  .ct-feature-controls button:last-child { display: none; }
 }
 
-/* 16. RESPONSIVE — PORTRAIT HOME */
+/* ========================================
+   16. RESPONSIVE — PORTRAIT HOME
+======================================== */
 
 @media (max-aspect-ratio:1/1) {
 
   .hero.ct-dialogue-ready {
     min-height: 0;
     height: auto;
-
-    grid-template-columns:
-      minmax(0,1fr)
-      minmax(0,.78fr);
-
+    grid-template-columns: minmax(0,1fr) minmax(0,.78fr);
     grid-template-rows: auto auto auto auto;
-
     gap: clamp(.65rem,2.1vw,1.4rem);
     padding: clamp(.85rem,3.5vw,2rem) 5vw .75rem;
   }
@@ -1549,9 +1333,7 @@ body.admin .nt-head {
     display: grid;
   }
 
-  .hero .ct-meteor {
-    width: clamp(9rem,43vw,20rem);
-  }
+  .hero .ct-meteor { width: clamp(9rem,43vw,20rem); }
 
   .hero .ct-meteor:nth-child(1) {
     top: 5%;
@@ -1569,7 +1351,9 @@ body.admin .nt-head {
   }
 }
 
-/* 17. ACCESSIBILITY */
+/* ========================================
+   17. MOTION ACCESSIBILITY
+======================================== */
 
 @media (prefers-reduced-motion:reduce) {
 
@@ -1589,9 +1373,7 @@ body.admin .nt-head {
     animation: none !important;
   }
 
-  .hero .ct-meteors {
-    display: block;
-  }
+  .hero .ct-meteors { display: block; }
 
   .hero .ct-meteor {
     display: none;
@@ -1599,7 +1381,9 @@ body.admin .nt-head {
   }
 }
 
-/* 18. CINEMATIC HOME DISPLAY */
+/* ========================================
+   18. CINEMATIC HOME DISPLAY
+======================================== */
 
 .ct-ambient {
   position: absolute;
@@ -1608,19 +1392,11 @@ body.admin .nt-head {
   overflow: hidden;
   pointer-events: none;
 
-  -webkit-mask-image: linear-gradient(
-    to bottom,
-    #000 0%,
-    #000 55%,
-    transparent 100%
-  );
+  -webkit-mask-image:
+    linear-gradient(to bottom,#000 0%,#000 55%,transparent 100%);
 
-  mask-image: linear-gradient(
-    to bottom,
-    #000 0%,
-    #000 55%,
-    transparent 100%
-  );
+  mask-image:
+    linear-gradient(to bottom,#000 0%,#000 55%,transparent 100%);
 }
 
 .ct-ambient img {
@@ -1636,9 +1412,7 @@ body.admin .nt-head {
   transition: opacity 1.3s ease;
 }
 
-.ct-ambient img.on {
-  opacity: .22;
-}
+.ct-ambient img.on { opacity: .22; }
 
 .hero.ct-dialogue-ready .hero-art {
   inset: 3% 19% 0 16%;
@@ -1683,16 +1457,10 @@ body.admin .nt-head {
     transparent 100%
   );
 
-  -webkit-mask-image:
-    var(--ct-art-mask),
-    var(--ct-side-mask);
-
+  -webkit-mask-image: var(--ct-art-mask),var(--ct-side-mask);
   -webkit-mask-composite: source-in;
 
-  mask-image:
-    var(--ct-art-mask),
-    var(--ct-side-mask);
-
+  mask-image: var(--ct-art-mask),var(--ct-side-mask);
   mask-composite: intersect;
 }
 
@@ -1724,13 +1492,9 @@ body.admin .nt-head {
    19. WEBTOON ILLUSTRATION / PLAY BUTTON
 ======================================== */
 
-/* 기존 웹툰 미리보기 제거 */
-
 #viewer.ct-webtoon-ready #v-web {
   display: none !important;
 }
-
-/* 상세창 가장 아래 일러스트 영역 */
 
 .ct-cover-zone {
   width: min(100%,44rem);
@@ -1747,8 +1511,6 @@ body.admin .nt-head {
   margin-bottom: .75rem;
 }
 
-/* 전용 일러스트 자체가 버튼 */
-
 .ct-cover-link {
   position: relative;
   display: block;
@@ -1759,7 +1521,6 @@ body.admin .nt-head {
   border-radius: 5px;
   background: #e4edf5;
   cursor: pointer;
-
   box-shadow: 0 6px 20px #172c4520;
 
   transition:
@@ -1779,8 +1540,6 @@ body.admin .nt-head {
     transform .6s var(--ct-ease),
     filter .3s;
 }
-
-/* 일러스트 위의 빛 반사 효과 */
 
 .ct-cover-link::after {
   content: "";
@@ -1815,47 +1574,32 @@ body.admin .nt-head {
 }
 
 @keyframes ctCoverSweep {
-  to {
-    transform: translateX(130%);
-  }
+  to { transform: translateX(130%); }
 }
 
-.ct-cover-link:active {
-  transform: scale(.98);
-}
-
-/* 별도의 플레이 하러 가기 버튼 */
+.ct-cover-link:active { transform: scale(.98); }
 
 .ct-play-link {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: .85rem;
-
   width: 100%;
   min-height: 3.3rem;
   margin-top: .65rem;
   padding: .85rem 1rem;
-
   border: 1px solid #719ebf;
   border-radius: 4px;
-
-  background:
-    linear-gradient(120deg,#172c45,#285f87);
-
+  background: linear-gradient(120deg,#172c45,#285f87);
   color: #fff;
   text-decoration: none;
-
   font: 700 1rem/1.5 var(--body);
 
   box-shadow:
     inset 0 -3px var(--c),
     0 5px 14px #172c4525;
 
-  transition:
-    background .25s,
-    transform .25s,
-    box-shadow .25s;
+  transition: background .25s,transform .25s,box-shadow .25s;
 }
 
 .ct-play-link b {
@@ -1871,39 +1615,26 @@ body.admin .nt-head {
     box-shadow: 0 0 18px #69bfff70;
   }
 
-  .ct-play-link:hover b {
-    transform: translateX(5px);
-  }
+  .ct-play-link:hover b { transform: translateX(5px); }
 }
 
-.ct-play-link:active {
-  transform: scale(.97);
-}
+.ct-play-link:active { transform: scale(.97); }
 
-/* 관리자 전용 웹툰 설정 */
-
-.ct-cover-admin {
-  display: none;
-}
+.ct-cover-admin { display: none; }
 
 body.admin .ct-cover-admin {
   display: block;
-
   width: 100%;
   margin-top: .75rem;
   padding: .65rem;
-
   border: 1px dashed #8bb9dc;
   border-radius: 4px;
-
   background: #fff;
   color: #285e88;
   font-weight: 700;
 }
 
-.ct-cover-admin:hover {
-  background: #e5f4ff;
-}
+.ct-cover-admin:hover { background: #e5f4ff; }
 
 .ct-cover-zone[hidden],
 .ct-cover-link[hidden],
@@ -1922,9 +1653,7 @@ body.admin .ct-cover-admin {
 
 @media (max-width:760px) {
 
-  .ct-cover-zone {
-    margin-top: 1.2rem;
-  }
+  .ct-cover-zone { margin-top: 1.2rem; }
 
   .ct-play-link {
     min-height: 3rem;
@@ -1936,17 +1665,13 @@ body.admin .ct-cover-admin {
    20. IMMERSIVE WEBTOON READER
 ======================================== */
 
-/* 웹툰 열람 중 배경 완전 검정 */
-
 #viewer.ct-webtoon-reading {
   width: 100%;
   max-width: 100%;
   margin: 0;
   padding: 0;
-
   overflow-x: hidden;
   overflow-y: auto;
-
   background: #000;
   background-image: none;
 }
@@ -1961,66 +1686,48 @@ body.admin .ct-cover-admin {
   max-width: none;
   min-height: 100vh;
   min-height: 100svh;
-
   margin: 0;
   padding: 0;
-
   background: #000;
-
   animation: ctReaderOpen .35s ease both;
 }
 
-/* 제목은 화면에서 숨기되 접근성 유지 */
-
 .ct-reader-head {
   position: absolute;
-
   width: 1px;
   height: 1px;
   padding: 0;
   margin: -1px;
-
   overflow: hidden;
   clip-path: inset(50%);
   white-space: nowrap;
-
   border: 0;
 }
-
-/* 웹툰 이미지의 원본 비율 유지 */
 
 .ct-reader-content {
   width: 100%;
   margin: 0;
   padding: 0;
-
   border: 0;
   border-radius: 0;
   background: #000;
   box-shadow: none;
-
   overflow: hidden;
 }
 
 .ct-reader-image {
   display: block;
-
   width: 100%;
   height: auto;
-
   max-width: none;
   max-height: none;
-
   margin: 0;
   padding: 0;
   border: 0;
-
   object-fit: contain;
 }
 
-.ct-reader-image[hidden] {
-  display: none !important;
-}
+.ct-reader-image[hidden] { display: none !important; }
 
 .ct-reader-status {
   padding: 3rem 1rem;
@@ -2029,22 +1736,15 @@ body.admin .ct-cover-admin {
   text-align: center;
 }
 
-.ct-reader-status[hidden] {
-  display: none !important;
-}
-
-/* 웹툰 맨 마지막 돌아가기 버튼 */
+.ct-reader-status[hidden] { display: none !important; }
 
 .ct-reader-end {
   display: grid;
   justify-items: center;
   gap: 1rem;
-
   padding: 1.2rem 1rem;
   padding-bottom: max(1.2rem,env(safe-area-inset-bottom));
-
   margin: 0;
-
   background: #000;
   text-align: center;
 }
@@ -2057,47 +1757,253 @@ body.admin .ct-cover-admin {
 .ct-reader-back {
   width: min(100%,44rem);
   min-height: 3.2rem;
-
   padding: .85rem 1rem;
-
   border: 1px solid #385b78;
   border-radius: 4px;
-
-  background: linear-gradient(
-    135deg,
-    #172c45,
-    #275e87
-  );
-
+  background: linear-gradient(135deg,#172c45,#275e87);
   color: #fff;
   font-weight: 700;
-
   box-shadow: inset 0 -3px var(--c);
-
-  transition:
-    transform .2s,
-    background .2s;
+  transition: transform .2s,background .2s;
 }
 
-.ct-reader-back:hover {
-  background: #357ca9;
-}
-
-.ct-reader-back:active {
-  transform: scale(.97);
-}
+.ct-reader-back:hover { background: #357ca9; }
+.ct-reader-back:active { transform: scale(.97); }
 
 @keyframes ctReaderOpen {
-  from {
-    opacity: 0;
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* ========================================
+   21. CHARACTER ILLUSTRATION CAROUSEL
+======================================== */
+
+#viewer.ct-illustrations-on #v-img {
+  visibility: hidden !important;
+}
+
+.ct-art-carousel {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  isolation: isolate;
+  pointer-events: auto;
+}
+
+.ct-art-carousel[hidden] {
+  display: none !important;
+}
+
+.ct-art-viewport {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  touch-action: pan-y;
+  user-select: none;
+}
+
+#viewer .ct-art-carousel img.ct-art-slide {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  object-position: center bottom;
+  pointer-events: none;
+  will-change: transform,opacity;
+}
+
+/* 일러스트 좌우 전환 컨트롤 */
+
+.ct-art-controls {
+  position: absolute;
+  left: 50%;
+  bottom: .8rem;
+  translate: -50% 0;
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  width: max-content;
+  max-width: calc(100% - 1rem);
+  padding: .4rem;
+  z-index: 5;
+  border: 1px solid #ffffff65;
+  border-radius: 6px;
+  background: #172c45df;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 5px 20px #14283d30;
+}
+
+.ct-art-arrow {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 2rem;
+  height: 2rem;
+  padding: 0;
+  border: 1px solid #ffffff55;
+  border-radius: 3px;
+  background: #ffffff12;
+  color: #fff;
+  font: 700 1.4rem/1 var(--latin);
+  transition: background .2s,transform .2s;
+}
+
+.ct-art-arrow:hover { background: #367fae; }
+.ct-art-arrow:active { transform: scale(.9); }
+.ct-art-arrow:disabled { opacity: .35; }
+
+.ct-art-indicator {
+  display: grid;
+  justify-items: center;
+  gap: .2rem;
+  min-width: 4.5rem;
+  min-width: 0;
+}
+
+.ct-art-count {
+  color: #fff;
+  font: 700 .75rem/1.2 var(--latin);
+  letter-spacing: .12em;
+  white-space: nowrap;
+}
+
+.ct-art-dots {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: .1rem;
+}
+
+.ct-art-dot {
+  display: grid;
+  place-items: center;
+  width: 14px;
+  height: 18px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+
+.ct-art-dot::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #ffffff55;
+  transition: background .2s,transform .2s;
+}
+
+.ct-art-dot.on::before {
+  background: #9cddff;
+  transform: scale(1.15);
+  box-shadow: 0 0 8px #78cfff;
+}
+
+/* 추가 일러스트 관리자 버튼 */
+
+.ct-illustration-admin {
+  display: none;
+}
+
+body.admin .ct-illustration-admin {
+  position: absolute;
+  top: .8rem;
+  right: .8rem;
+  z-index: 10;
+  display: block;
+  padding: .45rem .7rem;
+  border: 1px solid #b7ddf6;
+  border-radius: 4px;
+  background: #193751ed;
+  color: #fff;
+  font-size: .75rem;
+  font-weight: 700;
+  pointer-events: auto;
+
+  box-shadow: 0 3px 12px #172c4530;
+}
+
+.ct-illustration-admin[hidden] {
+  display: none !important;
+}
+
+.ct-illustration-admin:hover {
+  background: #327fab;
+}
+
+.ct-extra-list {
+  display: grid;
+  gap: .55rem;
+  margin: 1rem 0;
+}
+
+.ct-extra-row {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  padding: .55rem;
+  border: 1px solid #c8d8e5;
+  background: #f2f7fb;
+}
+
+.ct-extra-row img {
+  flex: none;
+  width: 3.5rem;
+  height: 4.5rem;
+  object-fit: cover;
+}
+
+.ct-extra-row span {
+  flex: 1;
+  color: #294a66;
+  font-size: .85rem;
+  font-weight: 700;
+}
+
+.ct-extra-delete {
+  padding: .35rem .55rem;
+  border: 0;
+  border-radius: 3px;
+  background: #c6404b;
+  color: #fff;
+  font-size: .75rem;
+}
+
+.ct-extra-delete:disabled {
+  opacity: .4;
+}
+
+@media (max-width:760px) {
+
+  .ct-art-controls {
+    bottom: .4rem;
+    gap: .25rem;
+    padding: .3rem;
   }
-  to {
-    opacity: 1;
+
+  .ct-art-arrow {
+    width: 1.75rem;
+    height: 1.75rem;
+  }
+
+  .ct-art-count {
+    font-size: .65rem;
+  }
+
+  body.admin .ct-illustration-admin {
+    top: .4rem;
+    right: .4rem;
+    padding: .35rem .45rem;
+    font-size: .68rem;
   }
 }
 
 /* ========================================
-   21. ACCESSIBILITY — REDUCED MOTION
+   22. REDUCED MOTION
 ======================================== */
 
 @media (prefers-reduced-motion:reduce) {
@@ -2106,7 +2012,9 @@ body.admin .ct-cover-admin {
   .hero.ct-dialogue-ready .hero-art img,
   .ct-cover-link,
   .ct-cover-img,
-  .ct-play-link {
+  .ct-play-link,
+  .ct-art-slide,
+  .ct-art-dot::before {
     transition: none !important;
   }
 
