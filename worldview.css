@@ -758,3 +758,99 @@ body.admin .ctw-admin {
     animation: none !important;
   }
   }
+
+/* ========================================
+   CARDIUM 3D ATLAS BUTTON
+======================================== */
+
+.ct-cardium-atlas {
+  position: relative;
+  isolation: isolate;
+
+  display: grid;
+  gap: .65rem;
+
+  width: 100%;
+  padding: 1.5rem;
+  margin: 1rem 0;
+
+  overflow: hidden;
+
+  border: 1px solid #5a928b;
+  border-radius: 5px;
+
+  background:
+    linear-gradient(
+      125deg,
+      #08171c,
+      #173e43,
+      #0b2026
+    );
+
+  color: #e0eee9;
+  text-decoration: none;
+
+  box-shadow: 0 5px 20px #0003;
+
+  transition:
+    transform .3s,
+    box-shadow .3s;
+}
+
+.ct-cardium-atlas small {
+  color: #91c3b7;
+  font-family: var(--latin);
+  font-size: .75rem;
+  letter-spacing: .18em;
+}
+
+.ct-cardium-atlas strong {
+  font-family: var(--serif);
+  font-size: clamp(1.5rem, 4vw, 2.4rem);
+  color: #fff;
+}
+
+.ct-cardium-atlas span {
+  color: #a6c7c0;
+  font-size: .9rem;
+}
+
+.ct-cardium-atlas b {
+  margin-top: .65rem;
+  padding-top: .75rem;
+
+  border-top: 1px solid #ffffff30;
+
+  color: #a9e6d4;
+  font-family: var(--latin);
+  letter-spacing: .13em;
+}
+
+.ct-cardium-atlas::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+
+  background-image:
+    linear-gradient(#ffffff09 1px, transparent 1px),
+    linear-gradient(90deg, #ffffff09 1px, transparent 1px);
+
+  background-size: 25px 25px;
+}
+
+.ct-cardium-atlas:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 0 25px #74d8bf44;
+}
+
+.ct-cardium-atlas:active {
+  transform: scale(.98);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ct-cardium-atlas {
+    transition: none;
+    transform: none;
+  }
+}
