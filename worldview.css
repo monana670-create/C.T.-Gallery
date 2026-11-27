@@ -1,0 +1,760 @@
+/* ========================================
+   C.T. WORLD ARCHIVE
+   WORLDVIEW EXCLUSIVE DESIGN
+======================================== */
+
+#worldview-section .archive-grid {
+  grid-template-columns: repeat(2,minmax(0,1fr));
+  gap: 1.5rem;
+  counter-reset: world-record;
+}
+
+#worldview-section .fxw {
+  counter-increment: world-record;
+}
+
+#worldview-section .archive-card {
+  background: var(--c,#53b9ff);
+  padding: 2px;
+}
+
+#worldview-section .card-in {
+  display: grid;
+  gap: 0;
+  padding: 0;
+  background: #15273d;
+  color: white;
+}
+
+#worldview-section .archive-image {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16/9;
+  overflow: hidden;
+  background: #0d1a2a;
+}
+
+#worldview-section .archive-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transition: transform .75s cubic-bezier(.16,1,.3,1);
+}
+
+#worldview-section .archive-image::after {
+  content: "WORLD RECORD / " counter(world-record,decimal-leading-zero);
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  padding: .5rem .9rem;
+  background: #0b182de8;
+  border-left: 3px solid var(--c,#53b9ff);
+  color: white;
+  font: 700 .8rem var(--latin);
+  letter-spacing: .15em;
+  pointer-events: none;
+}
+
+#worldview-section .archive-info {
+  padding: 1.25rem;
+  gap: .55rem;
+}
+
+#worldview-section .archive-type,
+#worldview-section .archive-view {
+  color: #9ed8ff;
+}
+
+#worldview-section .archive-title {
+  font-size: clamp(1.4rem,3vw,2.25rem);
+}
+
+#worldview-section .archive-desc {
+  color: #c5d6e6;
+  line-height: 1.7;
+}
+
+#worldview-section .archive-view {
+  padding-top: .8rem;
+  border-top: 1px solid #ffffff24;
+}
+
+body.admin #worldview-section .fxw .card-in {
+  padding-top: 0;
+}
+
+@media (hover:hover) and (pointer:fine) {
+  #worldview-section .archive-card:hover img {
+    transform: scale(1.075);
+  }
+}
+
+
+/* ========================================
+   WORLDVIEW DETAIL PAGE
+======================================== */
+
+#viewer[data-kind="worldview"]:not(.ct-webtoon-reading) {
+  color: #e6f1ff;
+  background-color: #0b1726;
+
+  background-image:
+    radial-gradient(
+      ellipse at 80% 0%,
+      #2c557c55,
+      transparent 55%
+    ),
+    linear-gradient(
+      #8eb9db0b 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      #8eb9db0b 1px,
+      transparent 1px
+    );
+
+  background-size: auto,30px 30px,30px 30px;
+  overflow-x: hidden;
+}
+
+#viewer[data-kind="worldview"] .v-stage {
+  width: min(100%,76rem);
+  min-width: 0;
+}
+
+#viewer[data-kind="worldview"] .v-head {
+  border-color: #779cbd55;
+}
+
+#viewer[data-kind="worldview"] .ct-view-meta small,
+#viewer[data-kind="worldview"] .ct-view-meta strong {
+  color: #c5e5ff;
+}
+
+#viewer[data-kind="worldview"] .v-scene {
+  display: grid;
+  grid-template-columns: minmax(0,1fr);
+  grid-template-rows: auto auto;
+  gap: 0;
+  min-height: 0;
+}
+
+#viewer[data-kind="worldview"] .v-scene::before,
+#viewer[data-kind="worldview"] .v-big {
+  display: none;
+}
+
+#viewer[data-kind="worldview"] .v-stand {
+  position: relative;
+  inset: auto;
+  grid-area: 1/1;
+  width: 100%;
+  height: auto;
+  min-height: 0;
+  aspect-ratio: 16/9;
+  max-height: 65svh;
+  overflow: hidden;
+  background: #070e18;
+  border: 1px solid #86b9dc55;
+}
+
+#viewer[data-kind="worldview"] .v-stand img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+#viewer[data-kind="worldview"] .v-stand::after {
+  z-index: 3;
+  inset: .65rem;
+  border: 1px solid #d2e9ff55;
+  box-shadow: none;
+}
+
+#viewer[data-kind="worldview"] .v-id {
+  grid-area: 2/1;
+  max-width: 100%;
+  padding: 1.25rem 0 .75rem;
+}
+
+#viewer[data-kind="worldview"] .v-kind {
+  background: #203c56;
+}
+
+#viewer[data-kind="worldview"] .v-name {
+  padding: 0 0 .6rem;
+  background: transparent;
+  color: white;
+  border-bottom: 3px solid var(--c,#53b9ff);
+  box-shadow: none;
+  font-size: clamp(2rem,5vw,4rem);
+}
+
+#viewer[data-kind="worldview"] .v-info {
+  width: 100%;
+  margin-top: .5rem;
+}
+
+#viewer[data-kind="worldview"] .v-sub {
+  color: #dcecff;
+  background: #1b3047;
+}
+
+#viewer[data-kind="worldview"] .v-desc {
+  background: #16283b;
+  color: #d9e9fa;
+  border-color: var(--c,#53b9ff);
+  line-height: 1.95;
+}
+
+#viewer[data-kind="worldview"] .v-desc::before {
+  content: "WORLD PROLOGUE";
+  color: #9bc9ea;
+}
+
+#viewer[data-kind="worldview"] .v-strip {
+  border-color: #ffffff25;
+}
+
+#viewer[data-kind="worldview"] .v-arr {
+  color: #b5ddff;
+}
+
+
+/* ========================================
+   WORLD ATLAS
+======================================== */
+
+.ctw-atlas {
+  min-width: 0;
+  margin-top: 1.5rem;
+}
+
+#viewer:not([data-kind="worldview"]) .ctw-atlas,
+.ctw-atlas[hidden] {
+  display: none !important;
+}
+
+.ctw-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .45rem;
+  margin-bottom: 1rem;
+}
+
+.ctw-badge {
+  padding: .35rem .7rem;
+  border: 1px solid #729cbe66;
+  background: #213b55;
+  color: #d1ebff;
+  font-size: .85rem;
+}
+
+.ctw-tagline {
+  width: 100%;
+  color: #c0ddf4;
+  line-height: 1.8;
+  margin-top: .5rem;
+}
+
+.ctw-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem;
+  padding: .9rem;
+  margin: 1.2rem 0;
+  border: 1px solid #789fc044;
+  background: #142b40;
+}
+
+.ctw-nav button {
+  min-height: 2.5rem;
+  padding: .45rem .85rem;
+  border: 1px solid #6990af66;
+  border-radius: 3px;
+  background: #1a364e;
+  color: #e0efff;
+  transition: background .2s,transform .2s;
+}
+
+.ctw-nav button:hover {
+  background: #31668c;
+}
+
+.ctw-nav button:active {
+  transform: scale(.96);
+}
+
+
+/* ========================================
+   WORLD SECTION TITLES
+======================================== */
+
+.ctw-section {
+  position: relative;
+  margin: 2.5rem 0;
+  min-width: 0;
+  scroll-margin-top: 1rem;
+}
+
+.ctw-heading {
+  display: grid;
+  gap: .4rem;
+  padding-bottom: .8rem;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid #779fc044;
+}
+
+.ctw-heading small {
+  color: #8ebcdd;
+  font: 700 .8rem var(--latin);
+  letter-spacing: .18em;
+}
+
+.ctw-heading h3 {
+  color: #eff7ff;
+  font: 700 clamp(1.45rem,3vw,2.15rem) var(--serif);
+  letter-spacing: -.045em;
+}
+
+.ctw-heading h3::before {
+  content: "✦";
+  display: inline-block;
+  margin-right: .6rem;
+  color: var(--c,#53b9ff);
+  font-size: .8em;
+}
+
+
+/* ========================================
+   WORLD FACTS
+======================================== */
+
+.ctw-facts {
+  display: grid;
+  grid-template-columns: repeat(2,minmax(0,1fr));
+  gap: .65rem;
+}
+
+.ctw-fact {
+  padding: .85rem 1rem;
+  background: #14273b;
+  border-left: 2px solid var(--c,#53b9ff);
+}
+
+.ctw-fact strong {
+  display: block;
+  margin-bottom: .35rem;
+  color: #9dcfee;
+}
+
+.ctw-fact p {
+  color: #e1ecf8;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+
+/* ========================================
+   INTERACTIVE WORLD MAP
+======================================== */
+
+.ctw-map {
+  position: relative;
+  overflow: hidden;
+  background: #071422;
+  border: 1px solid #85bce866;
+}
+
+.ctw-map img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.ctw-pin {
+  position: absolute;
+  translate: -50% -50%;
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  border: 2px solid white;
+  border-radius: 50%;
+  background: #227cae;
+  color: white;
+  font-weight: 700;
+  box-shadow: 0 0 16px #6edaff;
+  z-index: 2;
+  animation: ctw-pin-pulse 2s ease-in-out infinite;
+}
+
+@keyframes ctw-pin-pulse {
+  50% {
+    box-shadow: 0 0 25px 5px #83dbff88;
+  }
+}
+
+
+/* ========================================
+   WORLD INFORMATION CARDS
+======================================== */
+
+.ctw-grid {
+  display: grid;
+  grid-template-columns: repeat(2,minmax(0,1fr));
+  gap: 1rem;
+}
+
+.ctw-card {
+  min-width: 0;
+  overflow: hidden;
+  padding: 1rem;
+  background: #14273a;
+  border: 1px solid #759bbd44;
+  border-top: 2px solid var(--c,#53b9ff);
+}
+
+.ctw-card > img {
+  width: 100%;
+  height: auto;
+  margin-bottom: .9rem;
+}
+
+.ctw-card h4 {
+  margin: .35rem 0 .6rem;
+  color: #ffffff;
+  font: 700 1.25rem/1.45 var(--serif);
+  overflow-wrap: anywhere;
+}
+
+.ctw-card small {
+  color: #8ebada;
+}
+
+.ctw-card p {
+  color: #cbddeb;
+  line-height: 1.85;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  word-break: keep-all;
+}
+
+.ctw-card.ctw-highlight {
+  animation: ctw-highlight 1.6s ease-out;
+}
+
+@keyframes ctw-highlight {
+  0%,40% {
+    box-shadow: 0 0 25px #6cd8ff77;
+  }
+  100% {
+    box-shadow: none;
+  }
+}
+
+
+/* ========================================
+   WORLD HISTORY TIMELINE
+======================================== */
+
+.ctw-timeline {
+  display: grid;
+  gap: 1.1rem;
+  padding-left: 1.5rem;
+  border-left: 2px solid #6995ba77;
+}
+
+.ctw-event {
+  position: relative;
+  min-width: 0;
+}
+
+.ctw-event::before {
+  content: "";
+  position: absolute;
+  left: calc(-1.5rem - 6px);
+  top: 1.1rem;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--c,#70c7ff);
+  box-shadow: 0 0 10px var(--c,#70c7ff);
+}
+
+.ctw-date {
+  display: block;
+  margin-bottom: .5rem;
+  color: #9edaff;
+  font-weight: 700;
+  letter-spacing: .06em;
+}
+
+
+/* ========================================
+   RELATED CHARACTERS
+======================================== */
+
+.ctw-character-grid {
+  display: grid;
+  grid-template-columns: repeat(3,minmax(0,1fr));
+  gap: .75rem;
+}
+
+.ctw-character {
+  min-width: 0;
+  padding: 0;
+  overflow: hidden;
+  border: 1px solid #86c0eb66;
+  background: #192e44;
+  color: white;
+  text-align: left;
+}
+
+.ctw-character img {
+  width: 100%;
+  aspect-ratio: 4/5;
+  object-fit: cover;
+  object-position: center top;
+  background: #253c54;
+}
+
+.ctw-character span {
+  display: block;
+  padding: .8rem;
+  overflow-wrap: anywhere;
+  font-weight: 700;
+}
+
+
+/* ========================================
+   CLASSIFIED RECORDS
+======================================== */
+
+.ctw-secret {
+  margin-bottom: .65rem;
+  background: #281f2b;
+  border: 1px solid #b9798c66;
+}
+
+.ctw-secret summary {
+  padding: 1rem;
+  color: #ffc4ce;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.ctw-secret .ctw-card {
+  border: 0;
+  border-top: 1px solid #b9798c44;
+}
+
+
+/* ========================================
+   ADMIN WORLD SETTINGS
+======================================== */
+
+.ctw-admin {
+  display: none;
+}
+
+body.admin .ctw-admin {
+  display: block;
+  width: 100%;
+  margin-top: .8rem;
+  padding: .85rem 1rem;
+  border: 1px solid #8bcefa88;
+  background: #1d4565;
+  color: white;
+  font-weight: 700;
+  box-shadow: inset 0 -3px #58b9ff;
+}
+
+#modal-box:has(#ctw-editor) {
+  width: min(100%,48rem);
+  max-height: 90svh;
+}
+
+#ctw-editor fieldset {
+  min-width: 0;
+  padding: .85rem;
+  margin: 1rem 0;
+  border: 1px solid #c3d8e7;
+}
+
+#ctw-editor legend {
+  padding: 0 .4rem;
+  color: #235d87;
+  font-weight: 700;
+}
+
+#ctw-editor details {
+  margin-top: .7rem;
+  border: 1px solid #cbdce9;
+  background: #f3f8fc;
+}
+
+#ctw-editor summary {
+  padding: .75rem;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.ctw-editor-inner {
+  padding: .8rem;
+}
+
+.ctw-editor-row {
+  border-left: 3px solid #66b4ee;
+  background: white;
+  padding: .75rem;
+  margin-bottom: .75rem;
+}
+
+.ctw-editor-row input,
+.ctw-editor-row textarea {
+  min-width: 0;
+}
+
+.ctw-editor-add {
+  width: 100%;
+  padding: .65rem;
+  border: 1px dashed #75b0db;
+  background: #e5f3ff;
+  color: #245b87;
+  font-weight: 700;
+}
+
+.ctw-editor-remove {
+  padding: .35rem .7rem;
+  border: 0;
+  background: #b84e60;
+  color: white;
+}
+
+.ctw-editor-image img {
+  width: 100%;
+  max-height: 9rem;
+  object-fit: contain;
+  background: #edf2f6;
+}
+
+#ctw-editor .ctw-check {
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+}
+
+#ctw-editor .ctw-check input {
+  flex: none;
+  width: 1.1rem;
+  height: 1.1rem;
+  margin: 0;
+}
+
+.ctw-coordinate {
+  display: grid;
+  grid-template-columns: repeat(2,minmax(0,1fr));
+  gap: .5rem;
+}
+
+.ctw-editor-help {
+  display: block;
+  margin: .4rem 0;
+  color: #667888;
+  font-size: .78rem;
+}
+
+
+/* ========================================
+   WORLD SCROLL ANIMATIONS
+======================================== */
+
+@media (prefers-reduced-motion:no-preference) {
+
+  .ctw-wait {
+    opacity: 0;
+    transform: translateY(25px);
+    transition:
+      opacity .6s ease,
+      transform .85s cubic-bezier(.16,1,.3,1);
+  }
+
+  .ctw-wait.ctw-in {
+    opacity: 1;
+    transform: none;
+  }
+
+  .ctw-wait .ctw-heading {
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path .85s cubic-bezier(.16,1,.3,1);
+  }
+
+  .ctw-wait.ctw-in .ctw-heading {
+    clip-path: inset(0);
+  }
+}
+
+
+/* ========================================
+   MOBILE RESPONSIVE
+======================================== */
+
+@media (max-width:760px) {
+
+  #worldview-section .archive-grid {
+    grid-template-columns: 1fr;
+    gap: 1.1rem;
+  }
+
+  #worldview-section .archive-info {
+    padding: .9rem;
+  }
+
+  #viewer[data-kind="worldview"] .v-stand {
+    max-height: none;
+  }
+
+  #viewer[data-kind="worldview"] .v-name {
+    font-size: clamp(1.7rem,7vw,3rem);
+  }
+
+  .ctw-section {
+    margin: 1.8rem 0;
+  }
+
+  .ctw-grid,
+  .ctw-facts {
+    grid-template-columns: 1fr;
+  }
+
+  .ctw-character-grid {
+    grid-template-columns: repeat(2,minmax(0,1fr));
+  }
+
+  .ctw-pin {
+    width: 1.65rem;
+    height: 1.65rem;
+    font-size: .8rem;
+  }
+
+  .ctw-nav {
+    gap: .35rem;
+    padding: .65rem;
+  }
+
+  .ctw-nav button {
+    font-size: .85rem;
+    padding: .35rem .65rem;
+  }
+}
+
+@media (prefers-reduced-motion:reduce) {
+  .ctw-pin,
+  .ctw-highlight {
+    animation: none !important;
+  }
+  }
