@@ -269,10 +269,9 @@
 
   box-shadow: 0 0 8px #b0e5ff60;
 
-  filter:
-    drop-shadow(
-      0 0 6px rgba(170,220,255,.85)
-    );
+  filter: drop-shadow(
+    0 0 6px rgba(170,220,255,.85)
+  );
 
   transform-origin: right center;
 
@@ -1836,24 +1835,18 @@ body.admin .nt-head {
   }
 
 
-  /* 짧은 대사 — 왼쪽부터 오른쪽으로 */
+  /* 캐릭터 대사 — 가로쓰기 */
 
   .ct-dialogue .ct-voice-text {
-    writing-mode: vertical-lr;
+    writing-mode: horizontal-tb;
 
-    text-orientation: upright;
     direction: ltr;
-    text-align: start;
+    text-align: left;
 
-    inline-size: clamp(
-      7.4rem,
-      35vw,
-      17rem
-    );
+    inline-size: auto;
+    max-block-size: none;
 
-    max-block-size: 100%;
-
-    margin: .65rem auto;
+    margin: .65rem 0;
     padding: 0;
 
     font-size: clamp(
@@ -1863,33 +1856,20 @@ body.admin .nt-head {
     );
 
     line-height: 1.8;
-    letter-spacing: .08em;
+    letter-spacing: normal;
 
-    white-space: normal;
+    white-space: pre-wrap;
   }
 
 
-  /* 긴 대사 — 가로쓰기 유지 */
+  /* 긴 대사는 글자 크기 자동 축소 */
 
   .ct-dialogue .ct-long-voice .ct-voice-text {
-    writing-mode: horizontal-tb;
-
-    direction: ltr;
-
-    inline-size: auto;
-    max-block-size: none;
-
-    margin: .65rem 0;
-
-    white-space: pre-wrap;
-
     font-size: clamp(
       .8rem,
       2.55vw,
       1.2rem
     );
-
-    letter-spacing: normal;
   }
 
   .ct-dialogue .ct-voice-name {
@@ -2017,4 +1997,4 @@ body.admin .nt-head {
     display: none;
     animation: none !important;
   }
-  }
+}
