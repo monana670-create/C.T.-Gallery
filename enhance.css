@@ -1,4 +1,7 @@
-/* C.T. GALLERY — SIGNATURE UI EXTENSION */
+/* ========================================
+   C.T. GALLERY — SIGNATURE UI EXTENSION
+   CONSOLIDATED EDITION
+======================================== */
 
 :root {
   --ct-ice: #d9efff;
@@ -6,6 +9,11 @@
   --ct-accent: #3fa9ff;
   --ct-ease: cubic-bezier(.16,1,.3,1);
 }
+
+
+/* ========================================
+   01. HEADER / SOUND CONTROL
+======================================== */
 
 .header {
   gap: clamp(.5rem,2vw,1.5rem);
@@ -35,15 +43,13 @@
   position: absolute;
   left: 0;
   bottom: -3px;
-  height: 3px;
   width: 100%;
+  height: 3px;
   transform: scaleX(var(--ct-progress,0));
   transform-origin: left;
   background: #123e65;
   pointer-events: none;
 }
-
-/* SOUND CONTROL */
 
 .ct-sound {
   flex: none;
@@ -72,7 +78,10 @@
   transform: scale(.94);
 }
 
-/* HOME */
+
+/* ========================================
+   02. HOME / SKY GRADIENT
+======================================== */
 
 .hero {
   grid-template-columns:
@@ -81,23 +90,35 @@
 
   background: linear-gradient(
     180deg,
-    #6cbff5,
-    #c7e8fb
+    #8bd5ff 0%,
+    #58addf 25%,
+    #326a99 49%,
+    #162a43 73%,
+    #070b13 91%,
+    #000000 100%
   );
 }
 
 .hero-art {
   inset: -22px 0;
+
   transform:
     translate3d(0,var(--ct-parallax,0px),0)
     scale(1.03);
 }
 
-.hero-shade {
+.hero .hero-shade {
   background:
-    linear-gradient(90deg,#142d48a8,#142d4825 55%,transparent 80%),
-    linear-gradient(180deg,#152d483d,transparent 35%),
-    linear-gradient(0deg,#14283db8,transparent 46%);
+    linear-gradient(
+      90deg,
+      rgba(5,15,30,.24),
+      transparent 65%
+    ),
+    linear-gradient(
+      0deg,
+      rgba(0,0,0,.25),
+      transparent 45%
+    );
 }
 
 .hero-left {
@@ -144,43 +165,118 @@
   box-shadow: 0 7px 24px #10243e4d;
 }
 
+
 /* ========================================
-   THREE SHOOTING STARS
+   03. STARFIELD / THREE SHOOTING STARS
 ======================================== */
 
-.ct-meteors {
+.hero .ct-meteors {
   position: absolute;
   inset: 0;
   z-index: -4;
+
   pointer-events: none;
   overflow: hidden;
+
+  background-image:
+    radial-gradient(circle at 5% 8%,
+      #ffffffaa 0 1px,transparent 2px),
+
+    radial-gradient(circle at 17% 14%,
+      #ffffff66 0 .7px,transparent 1.8px),
+
+    radial-gradient(circle at 29% 5%,
+      #d8efffaa 0 1px,transparent 2px),
+
+    radial-gradient(circle at 42% 19%,
+      #ffffff55 0 .8px,transparent 2px),
+
+    radial-gradient(circle at 57% 9%,
+      #ffffff99 0 1px,transparent 2px),
+
+    radial-gradient(circle at 72% 16%,
+      #c8e7ff99 0 1px,transparent 2px),
+
+    radial-gradient(circle at 88% 6%,
+      #ffffffbb 0 1px,transparent 2.5px),
+
+    radial-gradient(circle at 94% 27%,
+      #ffffff77 0 .8px,transparent 2px),
+
+    radial-gradient(circle at 8% 34%,
+      #ffffff77 0 1px,transparent 2px),
+
+    radial-gradient(circle at 21% 41%,
+      #c8e7ff88 0 .8px,transparent 2px),
+
+    radial-gradient(circle at 35% 29%,
+      #ffffff55 0 .7px,transparent 1.7px),
+
+    radial-gradient(circle at 49% 39%,
+      #ffffff99 0 1px,transparent 2px),
+
+    radial-gradient(circle at 64% 31%,
+      #ffffff88 0 .8px,transparent 2px),
+
+    radial-gradient(circle at 81% 43%,
+      #d8efffaa 0 1px,transparent 2px),
+
+    radial-gradient(circle at 91% 53%,
+      #ffffff66 0 .8px,transparent 2px),
+
+    radial-gradient(circle at 12% 61%,
+      #ffffff55 0 .8px,transparent 2px),
+
+    radial-gradient(circle at 28% 72%,
+      #c8e7ff88 0 1px,transparent 2px),
+
+    radial-gradient(circle at 43% 58%,
+      #ffffff77 0 .8px,transparent 2px),
+
+    radial-gradient(circle at 59% 69%,
+      #ffffff55 0 .7px,transparent 2px),
+
+    radial-gradient(circle at 76% 61%,
+      #d8efff88 0 1px,transparent 2px),
+
+    radial-gradient(circle at 86% 79%,
+      #ffffff55 0 .7px,transparent 2px);
+
+  background-repeat: no-repeat;
 }
 
-.ct-meteor {
+.hero .ct-meteor {
   position: absolute;
-  top: var(--my);
-  left: var(--mx);
 
-  width: clamp(6rem,23vw,19rem);
-  height: 2px;
+  left: -5%;
+  right: auto;
+  bottom: auto;
+
+  width: clamp(10rem,36vw,28rem);
+  height: 3px;
 
   opacity: 0;
-  border-radius: 99px;
+  border-radius: 100px;
 
   background: linear-gradient(
     90deg,
-    transparent,
-    #cceeff55 45%,
-    #e9faff 91%,
-    #fff
+    transparent 0%,
+    rgba(110,200,255,.15) 20%,
+    #85d4ff 58%,
+    #d9f5ff 85%,
+    #fff 100%
   );
 
   box-shadow: 0 0 8px #b0e5ff60;
 
+  filter:
+    drop-shadow(
+      0 0 6px rgba(170,220,255,.85)
+    );
+
   transform-origin: right center;
 
-  animation: ct-meteor-flight 11s linear infinite;
-  animation-delay: var(--md);
+  animation: ctMeteorLeftFlight 5s linear infinite;
   animation-play-state: paused;
 }
 
@@ -208,59 +304,59 @@
     0 0 18px 5px #8cdfff65;
 }
 
-.ct-meteor:nth-child(1) {
-  --mx: 3%;
-  --my: 8%;
-  --md: .2s;
+.hero .ct-meteor:nth-child(1) {
+  top: 7%;
+  left: -7%;
+  animation-delay: .1s;
 }
 
-.ct-meteor:nth-child(2) {
-  --mx: 22%;
-  --my: 15%;
-  --md: .65s;
+.hero .ct-meteor:nth-child(2) {
+  top: 17%;
+  left: 2%;
+  animation-delay: .45s;
 }
 
-.ct-meteor:nth-child(3) {
-  --mx: 45%;
-  --my: 6%;
-  --md: 1.1s;
+.hero .ct-meteor:nth-child(3) {
+  top: 28%;
+  left: -4%;
+  animation-delay: .8s;
 }
 
-@keyframes ct-meteor-flight {
+@keyframes ctMeteorLeftFlight {
   0% {
     opacity: 0;
 
     transform:
       translate3d(-12vw,-7vw,0)
-      rotate(30deg)
-      scaleX(.2);
+      rotate(30deg);
   }
 
-  3% {
-    opacity: .95;
+  4% {
+    opacity: 1;
   }
 
-  8% {
+  16% {
     opacity: 1;
 
     transform:
-      translate3d(40vw,23vw,0)
-      rotate(30deg)
-      scaleX(1);
+      translate3d(15vw,8.6vw,0)
+      rotate(30deg);
   }
 
-  13%,
+  24%,
   100% {
     opacity: 0;
 
     transform:
-      translate3d(57vw,33vw,0)
-      rotate(30deg)
-      scaleX(.8);
+      translate3d(29vw,16.5vw,0)
+      rotate(30deg);
   }
 }
 
-/* CHARACTER SPOTLIGHT */
+
+/* ========================================
+   04. CHARACTER SPOTLIGHT
+======================================== */
 
 .ct-spotlight {
   grid-area: 1/2;
@@ -269,7 +365,6 @@
 
   width: min(100%,15rem);
   min-width: 0;
-
   z-index: 2;
 
   padding: .75rem;
@@ -296,17 +391,20 @@
   white-space: nowrap;
 
   font: 700 .68rem/1.5 var(--latin);
+
   color: #aedfff;
   letter-spacing: .12em;
 }
 
 .ct-feature-top::before {
   content: "";
+
   width: .44rem;
   height: .44rem;
-  flex: none;
 
+  flex: none;
   background: #7ce1ff;
+
   box-shadow: 0 0 10px #7ce1ff;
 }
 
@@ -370,10 +468,14 @@
   background: #377fb1;
 }
 
-/* SCROLL GUIDE */
+
+/* ========================================
+   05. SCROLL GUIDE
+======================================== */
 
 #m-head {
-  scroll-margin-top: calc(var(--header-h) + .75rem);
+  scroll-margin-top:
+    calc(var(--header-h) + .75rem);
 }
 
 .ct-scroll-hint {
@@ -412,7 +514,10 @@
   }
 }
 
-/* CHARACTER VOICE — WIDE SCREEN */
+
+/* ========================================
+   06. HOME CHARACTER / LOWER BODY FADE
+======================================== */
 
 .hero.ct-dialogue-ready {
   grid-template-columns:
@@ -436,6 +541,45 @@
 .hero.ct-dialogue-ready .hero-art img {
   object-fit: contain;
   object-position: center bottom;
+
+  --ct-art-mask: linear-gradient(
+    to bottom,
+    #000 0%,
+    #000 58%,
+    rgba(0,0,0,.95) 67%,
+    rgba(0,0,0,.65) 80%,
+    rgba(0,0,0,.25) 92%,
+    transparent 100%
+  );
+
+  -webkit-mask-image: var(--ct-art-mask);
+  mask-image: var(--ct-art-mask);
+}
+
+.hero.ct-dialogue-ready .hero-art::after {
+  content: "";
+  position: absolute;
+
+  inset: auto 0 0;
+  height: 42%;
+
+  z-index: 2;
+  pointer-events: none;
+
+  background: rgba(0,0,0,.005);
+
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+
+  --ct-blur-mask: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(0,0,0,.3) 30%,
+    #000 85%
+  );
+
+  -webkit-mask-image: var(--ct-blur-mask);
+  mask-image: var(--ct-blur-mask);
 }
 
 .hero.ct-dialogue-ready .vtag {
@@ -453,6 +597,11 @@
 .hero.ct-dialogue-ready .ct-spotlight {
   grid-area: 1/3;
 }
+
+
+/* ========================================
+   07. CHARACTER VOICE / CALENDAR FLIP
+======================================== */
 
 .ct-dialogue {
   position: relative;
@@ -519,8 +668,6 @@
   overflow-wrap: anywhere;
 }
 
-/* CALENDAR FLIP */
-
 .ct-voice-paper.ct-page-out {
   position: absolute;
   inset: 0;
@@ -528,11 +675,13 @@
 
   pointer-events: none;
 
-  animation: ct-calendar-out .5s ease-in both;
+  animation:
+    ct-calendar-out .5s ease-in both;
 }
 
 .ct-voice-paper.ct-page-in {
-  animation: ct-calendar-in .65s var(--ct-ease) both;
+  animation:
+    ct-calendar-in .65s var(--ct-ease) both;
 }
 
 @keyframes ct-calendar-out {
@@ -559,7 +708,10 @@
   }
 }
 
-/* ARCHIVE CARDS */
+
+/* ========================================
+   08. ARCHIVE CARDS
+======================================== */
 
 .page-header .hazard {
   background: linear-gradient(
@@ -576,6 +728,7 @@
 .page-header .hazard::after {
   content: "";
   position: absolute;
+
   inset: -1px auto -1px 0;
   width: 12%;
 
@@ -640,25 +793,109 @@
 
 .archive-desc {
   display: -webkit-box;
+
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;
+
   overflow: hidden;
 }
 
-/* CHARACTER / WORLD VIEWER */
+
+/* ========================================
+   09. SAFE SPIN EFFECT — ARCHIVE CARD
+======================================== */
+
+@property --ct-spin-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
+.fx-spin {
+  min-width: 0;
+
+  overflow: hidden;
+  overflow: clip;
+}
+
+.fx-spin .archive-card {
+  overflow: hidden;
+
+  isolation: isolate;
+  contain: paint;
+}
+
+.fx-spin .archive-card::before {
+  content: "";
+
+  position: absolute;
+  inset: 0 !important;
+
+  width: auto;
+  height: auto;
+
+  z-index: -1;
+
+  transform: none !important;
+
+  background: conic-gradient(
+    from var(--ct-spin-angle),
+    transparent 0%,
+    transparent 40%,
+    var(--c) 65%,
+    #fff 80%,
+    var(--c) 95%,
+    transparent 100%
+  );
+
+  animation:
+    ctBorderLightRotation 4s linear infinite;
+
+  pointer-events: none;
+}
+
+@keyframes ctBorderLightRotation {
+  from {
+    --ct-spin-angle: 0deg;
+  }
+
+  to {
+    --ct-spin-angle: 360deg;
+  }
+}
+
+
+/* ========================================
+   10. CHARACTER / WORLD VIEWER
+======================================== */
 
 .viewer {
   background-color: #eff3f7;
 
   background-image:
-    radial-gradient(ellipse at 90% 12%,#d1eaff 0,transparent 50%),
-    linear-gradient(#75869c0e 1px,transparent 1px),
-    linear-gradient(90deg,#75869c0e 1px,transparent 1px);
+    radial-gradient(
+      ellipse at 90% 12%,
+      #d1eaff 0,
+      transparent 50%
+    ),
+    linear-gradient(
+      #75869c0e 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      #75869c0e 1px,
+      transparent 1px
+    );
 
-  background-size: auto,24px 24px,24px 24px;
+  background-size:
+    auto,
+    24px 24px,
+    24px 24px;
 }
 
 @supports (color: color-mix(in srgb,white,blue)) {
+
   .viewer {
     background-image:
       radial-gradient(
@@ -666,8 +903,15 @@
         color-mix(in srgb,var(--c) 23%,white) 0,
         transparent 50%
       ),
-      linear-gradient(#75869c0e 1px,transparent 1px),
-      linear-gradient(90deg,#75869c0e 1px,transparent 1px);
+      linear-gradient(
+        #75869c0e 1px,
+        transparent 1px
+      ),
+      linear-gradient(
+        90deg,
+        #75869c0e 1px,
+        transparent 1px
+      );
   }
 }
 
@@ -720,9 +964,16 @@
 
 .v-scene::before {
   inset: .3rem 0 .25rem 24%;
+
   clip-path: none;
 
-  background: linear-gradient(145deg,#eff5fa,#cbd8e6);
+  background:
+    linear-gradient(
+      145deg,
+      #eff5fa,
+      #cbd8e6
+    );
+
   border: 1px solid #b6c8da;
 }
 
@@ -733,6 +984,7 @@
 .v-stand::after {
   content: "";
   position: absolute;
+
   inset: .7rem;
   z-index: -1;
 
@@ -755,6 +1007,7 @@
   border-left: 3px solid var(--c);
 
   padding: 1.05rem 1.15rem;
+
   box-shadow: 0 6px 18px #2d476b0d;
 }
 
@@ -765,6 +1018,7 @@
   margin-bottom: .65rem;
 
   color: #41718f;
+
   font: 700 .69rem/1.5 var(--latin);
   letter-spacing: .19em;
 }
@@ -781,19 +1035,25 @@
   border-color: #b8c9d9;
 }
 
-/* TRANSPARENT CHARACTER THUMBNAIL FIX */
+
+/* 투명 이미지 썸네일 배경 */
 
 .v-th {
   background: #e6edf5;
   border: 2px solid #acb8c6;
+
   padding: 0;
 
-  transition: filter .3s,opacity .3s,transform .3s;
+  transition:
+    filter .3s,
+    opacity .3s,
+    transform .3s;
 }
 
 .v-th.on {
   background: #e6edf5;
   border-color: var(--c);
+
   box-shadow: 0 0 0 1px var(--c);
 }
 
@@ -809,9 +1069,403 @@
   object-position: center;
 }
 
-/* PC VIEWER */
+
+/* ========================================
+   11. SAFE SPIN EFFECT — VIEWER
+======================================== */
+
+#viewer[data-fx="spin"] {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+#viewer[data-fx="spin"] .v-stage,
+#viewer[data-fx="spin"] .v-head,
+#viewer[data-fx="spin"] .v-scene,
+#viewer[data-fx="spin"] .v-info,
+#viewer[data-fx="spin"] .v-strip {
+  min-width: 0;
+  max-width: 100%;
+}
+
+#viewer[data-fx="spin"] .v-stand {
+  overflow: hidden;
+  contain: paint;
+}
+
+.viewer[data-fx="spin"] .v-stand::before {
+  position: absolute;
+
+  top: 50%;
+  left: 50%;
+
+  width: min(75%,36svh,24rem);
+  height: auto;
+
+  aspect-ratio: 1;
+
+  border: 2px dashed var(--c);
+  border-radius: 50%;
+
+  box-shadow:
+    0 0 14px var(--c),
+    inset 0 0 8px var(--c);
+
+  pointer-events: none;
+
+  transform-origin: center;
+
+  animation:
+    ctSafeOrbit 12s linear infinite;
+}
+
+@keyframes ctSafeOrbit {
+  from {
+    transform:
+      translate(-50%,-50%)
+      rotate(0deg);
+  }
+
+  to {
+    transform:
+      translate(-50%,-50%)
+      rotate(360deg);
+  }
+}
+
+.viewer[data-fx="spin"] .v-stand img {
+  position: relative;
+  z-index: 1;
+}
+
+
+/* ========================================
+   12. ADMIN EDIT BUTTON / FORM
+======================================== */
+
+.ct-edit-btn {
+  display: none;
+}
+
+body.admin .ct-edit-btn {
+  position: absolute;
+
+  top: .5rem;
+  right: 2.85rem;
+
+  z-index: 5;
+
+  display: grid;
+  place-items: center;
+
+  width: 2.75rem;
+  height: 2rem;
+
+  padding: 0;
+
+  border: 1px solid #acdfff;
+  border-radius: 3px;
+
+  background: linear-gradient(
+    135deg,
+    #285e88,
+    #19354f
+  );
+
+  color: #fff;
+
+  font-family: var(--body);
+  font-size: .8rem;
+  font-weight: 700;
+
+  box-shadow:
+    inset 0 -2px 0 #63caff,
+    0 2px 8px #00000020;
+
+  transition:
+    background .2s,
+    transform .2s,
+    box-shadow .2s;
+}
+
+@media (hover:hover) and (pointer:fine) {
+
+  body.admin .ct-edit-btn:hover {
+    background: #3d92c9;
+
+    transform: translateY(-2px);
+
+    box-shadow:
+      inset 0 -2px 0 #c1efff,
+      0 0 12px #69bfff88;
+  }
+}
+
+body.admin .ct-edit-btn:active {
+  transform: scale(.93);
+}
+
+body.admin .fxw .card-in {
+  padding-top: 2.7rem;
+}
+
+body.admin .nt-head {
+  padding-right: 6.2rem;
+}
+
+#ct-edit-form small {
+  display: block;
+
+  margin-top: .35rem;
+
+  color: var(--muted);
+
+  font-size: .8rem;
+}
+
+.modal-box .ct-edit-check {
+  display: flex;
+
+  align-items: center;
+  gap: .55rem;
+
+  padding: .65rem;
+
+  background: #edf4fa;
+
+  border: 1px solid #ccd6e2;
+}
+
+.modal-box .ct-edit-check input {
+  width: 1.15rem;
+  height: 1.15rem;
+
+  margin: 0;
+
+  accent-color: #298bd3;
+}
+
+
+/* ========================================
+   13. DYNAMIC SCROLL / INTERACTIONS
+======================================== */
+
+@media (prefers-reduced-motion:no-preference) {
+
+  .reveal {
+    transition:
+      opacity .58s var(--ct-ease),
+      transform .8s var(--ct-ease);
+  }
+
+  .archive-grid .reveal {
+    transform:
+      translate3d(-20px,24px,0)
+      scale(.975);
+  }
+
+  .archive-grid .reveal:nth-child(even) {
+    transform:
+      translate3d(20px,24px,0)
+      scale(.975);
+  }
+
+  .gallery .reveal {
+    transform:
+      translate3d(0,32px,0)
+      scale(.96);
+  }
+
+  .nts .reveal {
+    transform: translate3d(0,18px,0);
+  }
+
+  .reveal.in,
+  .archive-grid .reveal.in,
+  .gallery .reveal.in,
+  .nts .reveal.in {
+    transform: none;
+  }
+
+  .ct-reveal {
+    opacity: 0;
+    transform: translate3d(0,24px,0);
+
+    transition:
+      opacity .55s var(--ct-ease),
+      transform .8s var(--ct-ease);
+  }
+
+  .ct-reveal.ct-in {
+    opacity: 1;
+    transform: none;
+  }
+
+  .ct-reveal .hazard::after {
+    transform: scaleX(0);
+
+    transition:
+      transform .8s .15s var(--ct-ease);
+  }
+
+  .ct-reveal.ct-in .hazard::after {
+    transform: scaleX(1);
+  }
+
+  .ct-hero-ready .vtag {
+    animation:
+      ct-hero-mask .95s var(--ct-ease) both;
+  }
+
+  .ct-hero-ready .hero-left {
+    animation:
+      ct-hero-rise .95s .08s var(--ct-ease) both;
+  }
+
+  .ct-hero-ready .hero-right {
+    animation:
+      ct-hero-rise .95s .2s var(--ct-ease) both;
+  }
+
+  .ct-hero-ready .ct-spotlight {
+    animation:
+      ct-hero-rise .9s .28s var(--ct-ease) both;
+  }
+
+  .ct-reveal.ct-in .page-main-title {
+    animation:
+      ct-title-wipe .85s var(--ct-ease) both;
+  }
+
+  .ct-feature-changed .ct-spot-name {
+    animation:
+      ct-label .46s var(--ct-ease) both;
+  }
+
+  .ct-pressed {
+    animation:
+      ct-click .36s var(--ct-ease);
+  }
+
+  .hb::after,
+  .card-in::after {
+    content: "";
+
+    position: absolute;
+    inset: 0;
+
+    pointer-events: none;
+
+    background: linear-gradient(
+      90deg,
+      transparent,
+      #ffffff3d,
+      transparent
+    );
+
+    transform: translateX(-120%);
+  }
+
+  @media (hover:hover) and (pointer:fine) {
+
+    .hb:hover::after,
+    .archive-card:hover .card-in::after {
+      animation:
+        ct-sweep .65s var(--ct-ease);
+    }
+
+    .archive-card:hover {
+      transform: translateY(-3px);
+    }
+
+    .archive-card:hover img {
+      transform: scale(1.055);
+    }
+
+    .v-th:hover {
+      opacity: 1;
+      filter: none;
+      transform: translateY(-2px);
+    }
+  }
+}
+
+@keyframes ct-hero-mask {
+  from {
+    clip-path: inset(0 0 100% 0);
+    opacity: 0;
+  }
+
+  to {
+    clip-path: inset(0);
+    opacity: 1;
+  }
+}
+
+@keyframes ct-hero-rise {
+  from {
+    opacity: 0;
+    transform: translate3d(0,28px,0);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes ct-title-wipe {
+  from {
+    clip-path: inset(0 100% 0 0);
+    transform: translateX(-10px);
+  }
+
+  to {
+    clip-path: inset(0);
+    transform: none;
+  }
+}
+
+@keyframes ct-label {
+  from {
+    opacity: .4;
+    transform: translateX(7px);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes ct-click {
+  0%,
+  100% {
+    filter: brightness(1);
+  }
+
+  32% {
+    filter: brightness(1.24);
+  }
+}
+
+@keyframes ct-sweep {
+  to {
+    transform: translateX(120%);
+  }
+}
+
+
+/* ========================================
+   14. RESPONSIVE — PC VIEWER
+======================================== */
 
 @media (min-width:850px) {
+
   .viewer[data-kind="character"] .v-stage {
     grid-template-columns:
       minmax(0,43fr)
@@ -860,13 +1514,16 @@
     grid-template-rows: minmax(26rem,auto);
 
     align-content: stretch;
+
     min-height: clamp(28rem,69svh,58rem);
+
     gap: 1rem;
   }
 
   .viewer[data-kind="worldview"] .v-stand {
     position: relative;
     inset: auto;
+
     grid-area: 1/2;
 
     min-width: 0;
@@ -877,6 +1534,7 @@
 
   .viewer[data-kind="worldview"] .v-id {
     grid-area: 1/1;
+
     padding: 1.5rem;
   }
 
@@ -886,207 +1544,30 @@
   }
 }
 
-/* DYNAMIC SCROLL AND BUTTON ANIMATIONS */
+@media (max-width:849px) {
 
-@media (prefers-reduced-motion:no-preference) {
-  .reveal {
-    transition:
-      opacity .58s var(--ct-ease),
-      transform .8s var(--ct-ease);
-  }
-
-  .archive-grid .reveal {
-    transform: translate3d(-20px,24px,0) scale(.975);
-  }
-
-  .archive-grid .reveal:nth-child(even) {
-    transform: translate3d(20px,24px,0) scale(.975);
-  }
-
-  .gallery .reveal {
-    transform: translate3d(0,32px,0) scale(.96);
-  }
-
-  .nts .reveal {
-    transform: translate3d(0,18px,0);
-  }
-
-  .reveal.in,
-  .archive-grid .reveal.in,
-  .gallery .reveal.in,
-  .nts .reveal.in {
-    transform: none;
-  }
-
-  .ct-reveal {
-    opacity: 0;
-    transform: translate3d(0,24px,0);
-
-    transition:
-      opacity .55s var(--ct-ease),
-      transform .8s var(--ct-ease);
-  }
-
-  .ct-reveal.ct-in {
-    opacity: 1;
-    transform: none;
-  }
-
-  .ct-reveal .hazard::after {
-    transform: scaleX(0);
-    transition: transform .8s .15s var(--ct-ease);
-  }
-
-  .ct-reveal.ct-in .hazard::after {
-    transform: scaleX(1);
-  }
-
-  .ct-hero-ready .vtag {
-    animation: ct-hero-mask .95s var(--ct-ease) both;
-  }
-
-  .ct-hero-ready .hero-left {
-    animation: ct-hero-rise .95s .08s var(--ct-ease) both;
-  }
-
-  .ct-hero-ready .hero-right {
-    animation: ct-hero-rise .95s .2s var(--ct-ease) both;
-  }
-
-  .ct-hero-ready .ct-spotlight {
-    animation: ct-hero-rise .9s .28s var(--ct-ease) both;
-  }
-
-  .ct-reveal.ct-in .page-main-title {
-    animation: ct-title-wipe .85s var(--ct-ease) both;
-  }
-
-  @keyframes ct-hero-mask {
-    from {
-      clip-path: inset(0 0 100% 0);
-      opacity: 0;
-    }
-
-    to {
-      clip-path: inset(0);
-      opacity: 1;
-    }
-  }
-
-  @keyframes ct-hero-rise {
-    from {
-      opacity: 0;
-      transform: translate3d(0,28px,0);
-    }
-
-    to {
-      opacity: 1;
-      transform: none;
-    }
-  }
-
-  @keyframes ct-title-wipe {
-    from {
-      clip-path: inset(0 100% 0 0);
-      transform: translateX(-10px);
-    }
-
-    to {
-      clip-path: inset(0);
-      transform: none;
-    }
-  }
-
-  .ct-feature-changed .ct-spot-name {
-    animation: ct-label .46s var(--ct-ease) both;
-  }
-
-  @keyframes ct-label {
-    from {
-      opacity: .4;
-      transform: translateX(7px);
-    }
-
-    to {
-      opacity: 1;
-      transform: none;
-    }
-  }
-
-  .ct-pressed {
-    animation: ct-click .36s var(--ct-ease);
-  }
-
-  @keyframes ct-click {
-    0% {
-      filter: brightness(1);
-    }
-
-    32% {
-      filter: brightness(1.24);
-    }
-
-    100% {
-      filter: brightness(1);
-    }
-  }
-
-  .hb::after,
-  .card-in::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-
-    pointer-events: none;
-
-    background: linear-gradient(
-      90deg,
-      transparent,
-      #ffffff3d,
-      transparent
-    );
-
-    transform: translateX(-120%);
-  }
-
-  @media (hover:hover) and (pointer:fine) {
-    .hb:hover::after,
-    .archive-card:hover .card-in::after {
-      animation: ct-sweep .65s var(--ct-ease);
-    }
-
-    .archive-card:hover {
-      transform: translateY(-3px);
-    }
-
-    .archive-card:hover img {
-      transform: scale(1.055);
-    }
-
-    .v-th:hover {
-      opacity: 1;
-      filter: none;
-      transform: translateY(-2px);
-    }
-  }
-
-  @keyframes ct-sweep {
-    to {
-      transform: translateX(120%);
-    }
+  #viewer[data-fx="spin"] .v-stage {
+    width: 100%;
+    max-width: 100%;
   }
 }
 
-/* SMALL SCREEN OPTIMIZATION */
+
+/* ========================================
+   15. RESPONSIVE — SMALL SCREEN
+======================================== */
 
 @media (max-width:760px) {
+
   .header {
     gap: .5rem;
   }
 
   .ct-sound {
     margin-left: auto;
+
     padding: .35rem .48rem;
+
     min-height: 2.4rem;
     font-size: .76rem;
   }
@@ -1109,6 +1590,7 @@
   .ct-feature-top {
     font-size: .58rem;
     letter-spacing: .055em;
+
     gap: .22rem;
   }
 
@@ -1157,7 +1639,9 @@
   }
 
   .viewer[data-kind="worldview"] .v-scene {
-    grid-template-rows: minmax(14rem,39svh) auto;
+    grid-template-rows:
+      minmax(14rem,39svh)
+      auto;
 
     align-content: start;
     gap: .4rem;
@@ -1166,7 +1650,9 @@
   .viewer[data-kind="worldview"] .v-stand {
     position: relative;
     inset: auto;
+
     grid-area: 1/1;
+
     min-height: 0;
   }
 
@@ -1190,6 +1676,7 @@
 }
 
 @media (max-width:360px) {
+
   .header .logo small {
     font-size: 1rem;
   }
@@ -1215,9 +1702,9 @@
   }
 }
 
+
 /* ========================================
-   PORTRAIT RESPONSIVE LAYOUT
-   MOBILE & MOBILE DESKTOP SITE
+   16. RESPONSIVE — PORTRAIT HOME
 ======================================== */
 
 @media (max-aspect-ratio:1/1) {
@@ -1244,7 +1731,8 @@
       .75rem;
   }
 
-  /* 상단 문구 크기 및 여백 축소 */
+
+  /* 상단 문구 */
 
   .hero.ct-dialogue-ready .vtag {
     grid-area: 1/1;
@@ -1253,12 +1741,14 @@
     justify-self: start;
 
     font-size: clamp(.78rem,3vw,1.28rem);
+
     line-height: 1.08;
   }
 
   .hero.ct-dialogue-ready .vtag span:last-child {
     margin-top: .35em;
   }
+
 
   /* 현재 캐릭터 표시 */
 
@@ -1273,10 +1763,12 @@
     z-index: 3;
   }
 
-  /* 캐릭터 원본 비율 유지 및 오른쪽 배치 */
+
+  /* 캐릭터 오른쪽 배치 */
 
   .hero.ct-dialogue-ready .hero-art {
     position: relative;
+
     grid-area: 2/1/3/3;
 
     inset: auto;
@@ -1297,16 +1789,25 @@
 
   .hero.ct-dialogue-ready .hero-art img {
     position: absolute;
+
     inset: 0;
 
     width: 100%;
     height: 100%;
 
     object-fit: contain;
-    object-position: right center;
+    object-position: right bottom;
   }
 
-  /* 왼쪽 세로형 대사 카드 */
+  .hero.ct-dialogue-ready .hero-art::after {
+    height: 40%;
+
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+  }
+
+
+  /* 왼쪽 대사 카드 */
 
   .hero.ct-dialogue-ready .ct-dialogue {
     grid-area: 2/1;
@@ -1328,32 +1829,52 @@
 
   .ct-dialogue .ct-voice-head {
     font-size: clamp(.58rem,1.5vw,.95rem);
+
     letter-spacing: .04em;
+
     gap: .2rem;
   }
 
-  /* 짧은 대사 세로쓰기 */
+
+  /* 짧은 대사 — 왼쪽부터 오른쪽으로 */
 
   .ct-dialogue .ct-voice-text {
-    writing-mode: vertical-rl;
-    text-orientation: upright;
+    writing-mode: vertical-lr;
 
-    inline-size: clamp(7.4rem,35vw,17rem);
+    text-orientation: upright;
+    direction: ltr;
+    text-align: start;
+
+    inline-size: clamp(
+      7.4rem,
+      35vw,
+      17rem
+    );
+
     max-block-size: 100%;
 
     margin: .65rem auto;
     padding: 0;
 
-    font-size: clamp(.85rem,2.9vw,1.35rem);
-    line-height: 1.65;
+    font-size: clamp(
+      .85rem,
+      2.9vw,
+      1.35rem
+    );
+
+    line-height: 1.8;
+    letter-spacing: .08em;
 
     white-space: normal;
   }
 
-  /* 긴 대사는 잘림 방지를 위해 가로쓰기 */
+
+  /* 긴 대사 — 가로쓰기 유지 */
 
   .ct-dialogue .ct-long-voice .ct-voice-text {
     writing-mode: horizontal-tb;
+
+    direction: ltr;
 
     inline-size: auto;
     max-block-size: none;
@@ -1362,12 +1883,23 @@
 
     white-space: pre-wrap;
 
-    font-size: clamp(.8rem,2.55vw,1.2rem);
+    font-size: clamp(
+      .8rem,
+      2.55vw,
+      1.2rem
+    );
+
+    letter-spacing: normal;
   }
 
   .ct-dialogue .ct-voice-name {
-    font-size: clamp(.68rem,1.9vw,1.05rem);
+    font-size: clamp(
+      .68rem,
+      1.9vw,
+      1.05rem
+    );
   }
+
 
   /* 하단 메뉴 */
 
@@ -1382,15 +1914,21 @@
   }
 
   .hero.ct-dialogue-ready .hero-left .hb {
-    min-height: clamp(3rem,6.5vw,4.2rem);
+    min-height: clamp(
+      3rem,
+      6.5vw,
+      4.2rem
+    );
   }
 
-  /* 세로 화면에서도 SCROLL TO EXPLORE 표시 */
+
+  /* 스크롤 안내 */
 
   .hero.ct-dialogue-ready .ct-scroll-hint {
     grid-area: 4/1/5/3;
 
     position: relative;
+
     left: auto;
     bottom: auto;
 
@@ -1403,428 +1941,33 @@
 
     margin: .1rem 0 0;
 
-    font-size: clamp(.68rem,1.5vw,1rem);
+    font-size: clamp(
+      .68rem,
+      1.5vw,
+      1rem
+    );
   }
 
   .hero:not(.ct-dialogue-ready) .ct-scroll-hint {
     grid-area: 3/1/4/-1;
 
     position: relative;
+
     left: auto;
     bottom: auto;
 
     translate: none;
 
     justify-self: center;
+
     display: grid;
   }
-}
-
-/* ACCESSIBILITY */
-
-@media (prefers-reduced-motion:reduce) {
-  .hero-art,
-  .hero.ct-dialogue-ready .hero-art {
-    transform: none;
-  }
-
-  .ct-reveal {
-    opacity: 1;
-    transform: none;
-  }
-
-  .ct-scroll-hint span,
-  .ct-voice-paper {
-    animation: none !important;
-  }
-
-  .ct-meteors {
-    display: none;
-  }
-}
-
-/* ========================================
-   C.T. GALLERY
-   STARLIGHT UPDATE
-======================================== */
 
 
-/* ========================================
-   1. HOME SKY GRADIENT
-======================================== */
-
-.hero,
-.hero.ct-dialogue-ready {
-  background: linear-gradient(
-    180deg,
-    #8bd5ff 0%,
-    #58addf 25%,
-    #326a99 49%,
-    #162a43 73%,
-    #070b13 91%,
-    #000000 100%
-  );
-}
-
-.hero .hero-shade {
-  background:
-    linear-gradient(
-      90deg,
-      rgba(5, 15, 30, .24),
-      transparent 65%
-    ),
-    linear-gradient(
-      0deg,
-      rgba(0, 0, 0, .25),
-      transparent 45%
-    );
-}
-
-
-/* ========================================
-   2. CHARACTER LOWER BODY FADE
-======================================== */
-
-.hero.ct-dialogue-ready .hero-art img {
-  -webkit-mask-image: linear-gradient(
-    to bottom,
-    #000 0%,
-    #000 58%,
-    rgba(0, 0, 0, .95) 67%,
-    rgba(0, 0, 0, .65) 80%,
-    rgba(0, 0, 0, .25) 92%,
-    transparent 100%
-  );
-
-  mask-image: linear-gradient(
-    to bottom,
-    #000 0%,
-    #000 58%,
-    rgba(0, 0, 0, .95) 67%,
-    rgba(0, 0, 0, .65) 80%,
-    rgba(0, 0, 0, .25) 92%,
-    transparent 100%
-  );
-}
-
-.hero.ct-dialogue-ready .hero-art::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: 42%;
-  z-index: 2;
-
-  pointer-events: none;
-
-  background: rgba(0, 0, 0, .005);
-
-  -webkit-backdrop-filter: blur(12px);
-  backdrop-filter: blur(12px);
-
-  -webkit-mask-image: linear-gradient(
-    to bottom,
-    transparent 0%,
-    rgba(0, 0, 0, .3) 30%,
-    #000 85%
-  );
-
-  mask-image: linear-gradient(
-    to bottom,
-    transparent 0%,
-    rgba(0, 0, 0, .3) 30%,
-    #000 85%
-  );
-}
-
-
-/* ========================================
-   3. SHOOTING STAR UPGRADE
-======================================== */
-
-.hero .ct-meteor {
-  width: clamp(10rem, 36vw, 28rem);
-  height: 3px;
-
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    rgba(100, 190, 255, .15) 15%,
-    rgba(130, 210, 255, .45) 45%,
-    #bceaff 78%,
-    #ffffff 100%
-  );
-
-  border-radius: 100px;
-
-  filter: drop-shadow(
-    0 0 5px rgba(180, 225, 255, .8)
-  );
-
-  animation-duration: 5s;
-}
-
-.hero .ct-meteor:nth-child(1) {
-  animation-delay: .15s;
-}
-
-.hero .ct-meteor:nth-child(2) {
-  animation-delay: .55s;
-}
-
-.hero .ct-meteor:nth-child(3) {
-  animation-delay: .95s;
-}
-
-
-/* ========================================
-   4. MOBILE CHARACTER AND VOICE
-======================================== */
-
-@media (max-aspect-ratio: 1/1) {
-
-  .hero.ct-dialogue-ready .hero-art img {
-    object-fit: contain;
-    object-position: right bottom;
-  }
-
-  .ct-dialogue .ct-voice-text {
-    writing-mode: vertical-rl;
-    text-orientation: upright;
-    direction: ltr;
-    text-align: start;
-
-    line-height: 1.8;
-    letter-spacing: .08em;
-  }
-
-  .ct-dialogue .ct-long-voice .ct-voice-text {
-    writing-mode: horizontal-tb;
-    direction: ltr;
-    letter-spacing: normal;
-  }
+  /* 세로 화면 별똥별 */
 
   .hero .ct-meteor {
-    width: clamp(9rem, 48vw, 20rem);
-    height: 3px;
-  }
-
-  .hero.ct-dialogue-ready .hero-art::after {
-    height: 40%;
-
-    -webkit-backdrop-filter: blur(10px);
-    backdrop-filter: blur(10px);
-  }
-}
-
-
-/* ========================================
-   5. REDUCED MOTION
-======================================== */
-
-@media (prefers-reduced-motion: reduce) {
-
-  .hero .ct-meteor {
-    animation: none !important;
-    display: none;
-  }
-}
-
-/* ========================================
-   C.T. GALLERY
-   STARRY SKY UPDATE
-======================================== */
-
-
-/* 별이 흩뿌려진 하늘 */
-
-.hero .ct-meteors {
-  position: absolute;
-  inset: 0;
-  overflow: hidden;
-  pointer-events: none;
-
-  background-image:
-    radial-gradient(circle at 5% 8%,
-      #ffffffaa 0 1px, transparent 2px),
-
-    radial-gradient(circle at 17% 14%,
-      #ffffff66 0 .7px, transparent 1.8px),
-
-    radial-gradient(circle at 29% 5%,
-      #d8efffaa 0 1px, transparent 2px),
-
-    radial-gradient(circle at 42% 19%,
-      #ffffff55 0 .8px, transparent 2px),
-
-    radial-gradient(circle at 57% 9%,
-      #ffffff99 0 1px, transparent 2px),
-
-    radial-gradient(circle at 72% 16%,
-      #c8e7ff99 0 1px, transparent 2px),
-
-    radial-gradient(circle at 88% 6%,
-      #ffffffbb 0 1px, transparent 2.5px),
-
-    radial-gradient(circle at 94% 27%,
-      #ffffff77 0 .8px, transparent 2px),
-
-    radial-gradient(circle at 8% 34%,
-      #ffffff77 0 1px, transparent 2px),
-
-    radial-gradient(circle at 21% 41%,
-      #c8e7ff88 0 .8px, transparent 2px),
-
-    radial-gradient(circle at 35% 29%,
-      #ffffff55 0 .7px, transparent 1.7px),
-
-    radial-gradient(circle at 49% 39%,
-      #ffffff99 0 1px, transparent 2px),
-
-    radial-gradient(circle at 64% 31%,
-      #ffffff88 0 .8px, transparent 2px),
-
-    radial-gradient(circle at 81% 43%,
-      #d8efffaa 0 1px, transparent 2px),
-
-    radial-gradient(circle at 91% 53%,
-      #ffffff66 0 .8px, transparent 2px),
-
-    radial-gradient(circle at 12% 61%,
-      #ffffff55 0 .8px, transparent 2px),
-
-    radial-gradient(circle at 28% 72%,
-      #c8e7ff88 0 1px, transparent 2px),
-
-    radial-gradient(circle at 43% 58%,
-      #ffffff77 0 .8px, transparent 2px),
-
-    radial-gradient(circle at 59% 69%,
-      #ffffff55 0 .7px, transparent 2px),
-
-    radial-gradient(circle at 76% 61%,
-      #d8efff88 0 1px, transparent 2px),
-
-    radial-gradient(circle at 86% 79%,
-      #ffffff55 0 .7px, transparent 2px);
-
-  background-repeat: no-repeat;
-}
-
-
-/* 별똥별 크기 및 발광 효과 */
-
-.hero .ct-meteor {
-  position: absolute;
-
-  left: -5%;
-  right: auto;
-  bottom: auto;
-
-  width: clamp(10rem, 36vw, 28rem);
-  height: 3px;
-
-  border-radius: 100px;
-
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    rgba(110, 200, 255, .15) 20%,
-    #85d4ff 58%,
-    #d9f5ff 85%,
-    #ffffff 100%
-  );
-
-  filter: drop-shadow(
-    0 0 6px rgba(170, 220, 255, .85)
-  );
-
-  transform-origin: right center;
-
-  animation-name: ctMeteorLeftFlight;
-  animation-duration: 5s;
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
-}
-
-
-/* 첫 번째 별똥별 */
-
-.hero .ct-meteor:nth-child(1) {
-  top: 7%;
-  left: -7%;
-  animation-delay: .1s;
-}
-
-
-/* 두 번째 별똥별 */
-
-.hero .ct-meteor:nth-child(2) {
-  top: 17%;
-  left: 2%;
-  animation-delay: .45s;
-}
-
-
-/* 세 번째 별똥별 */
-
-.hero .ct-meteor:nth-child(3) {
-  top: 28%;
-  left: -4%;
-  animation-delay: .8s;
-}
-
-
-/* 왼쪽 상단에서 중앙으로 이동 */
-
-@keyframes ctMeteorLeftFlight {
-
-  0% {
-    opacity: 0;
-
-    transform:
-      translate3d(-12vw, -7vw, 0)
-      rotate(30deg);
-  }
-
-  4% {
-    opacity: 1;
-  }
-
-  16% {
-    opacity: 1;
-
-    transform:
-      translate3d(15vw, 8.6vw, 0)
-      rotate(30deg);
-  }
-
-  24% {
-    opacity: 0;
-
-    transform:
-      translate3d(29vw, 16.5vw, 0)
-      rotate(30deg);
-  }
-
-  100% {
-    opacity: 0;
-
-    transform:
-      translate3d(29vw, 16.5vw, 0)
-      rotate(30deg);
-  }
-}
-
-
-/* 모바일 최적화 */
-
-@media (max-aspect-ratio: 1/1) {
-
-  .hero .ct-meteor {
-    width: clamp(9rem, 43vw, 20rem);
-    height: 3px;
+    width: clamp(9rem,43vw,20rem);
   }
 
   .hero .ct-meteor:nth-child(1) {
@@ -1844,9 +1987,27 @@
 }
 
 
-/* 움직임 최소화 설정 대응 */
+/* ========================================
+   17. ACCESSIBILITY — REDUCED MOTION
+======================================== */
 
-@media (prefers-reduced-motion: reduce) {
+@media (prefers-reduced-motion:reduce) {
+
+  .hero-art,
+  .hero.ct-dialogue-ready .hero-art {
+    transform: none;
+  }
+
+  .ct-reveal {
+    opacity: 1;
+    transform: none;
+  }
+
+  .ct-scroll-hint span,
+  .ct-voice-paper,
+  .fx-spin .archive-card::before {
+    animation: none !important;
+  }
 
   .hero .ct-meteors {
     display: block;
@@ -1856,318 +2017,4 @@
     display: none;
     animation: none !important;
   }
-}
-
-/* ========================================
-   C.T. GALLERY
-   ADMIN EDIT BUTTON DESIGN
-======================================== */
-
-
-/* 일반 방문자에게는 숨김 */
-
-.ct-edit-btn {
-  display: none;
-}
-
-
-/* 관리자에게만 표시 */
-
-body.admin .ct-edit-btn {
-  position: absolute;
-
-  top: .5rem;
-  right: 2.85rem;
-
-  z-index: 5;
-
-  display: grid;
-  place-items: center;
-
-  width: 2.75rem;
-  height: 2rem;
-
-  padding: 0;
-
-  border: 1px solid #acdfff;
-  border-radius: 3px;
-
-  background: linear-gradient(
-    135deg,
-    #285e88,
-    #19354f
-  );
-
-  color: #ffffff;
-
-  font-family: var(--body);
-  font-size: .8rem;
-  font-weight: 700;
-
-  box-shadow:
-    inset 0 -2px 0 #63caff,
-    0 2px 8px #00000020;
-
-  transition:
-    background .2s,
-    transform .2s,
-    box-shadow .2s;
-}
-
-
-/* 수정 버튼 인터랙션 */
-
-@media (hover: hover) and (pointer: fine) {
-
-  body.admin .ct-edit-btn:hover {
-    background: #3d92c9;
-
-    transform: translateY(-2px);
-
-    box-shadow:
-      inset 0 -2px 0 #c1efff,
-      0 0 12px #69bfff88;
   }
-}
-
-body.admin .ct-edit-btn:active {
-  transform: scale(.93);
-}
-
-
-/* 캐릭터 / 세계관 버튼 공간 확보 */
-
-body.admin .fxw .card-in {
-  padding-top: 2.7rem;
-}
-
-
-/* 공지 제목과 버튼 겹침 방지 */
-
-body.admin .nt-head {
-  padding-right: 6.2rem;
-}
-
-
-/* 수정 창 내부 안내 문구 */
-
-#ct-edit-form small {
-  display: block;
-
-  margin-top: .35rem;
-
-  color: var(--muted);
-
-  font-size: .8rem;
-}
-
-
-/* 체크박스 */
-
-.modal-box .ct-edit-check {
-  display: flex;
-
-  align-items: center;
-
-  gap: .55rem;
-
-  padding: .65rem;
-
-  background: #edf4fa;
-
-  border: 1px solid #ccd6e2;
-}
-
-.modal-box .ct-edit-check input {
-  width: 1.15rem;
-  height: 1.15rem;
-
-  margin: 0;
-
-  accent-color: #298bd3;
-}
-
-/* ========================================
-   CHARACTER SPIN EFFECT FIX
-======================================== */
-
-.viewer[data-fx="spin"] {
-  overflow-x: hidden;
-  overflow-y: auto;
-}
-
-.viewer[data-fx="spin"] .v-stand {
-  overflow: hidden;
-}
-
-.viewer[data-fx="spin"] .v-stand::before {
-  position: absolute;
-
-  top: 50%;
-  left: 50%;
-
-  width: min(75%, 36svh, 24rem);
-  height: auto;
-
-  aspect-ratio: 1;
-
-  border: 2px dashed var(--c);
-  border-radius: 50%;
-
-  box-shadow:
-    0 0 14px var(--c),
-    inset 0 0 8px var(--c);
-
-  pointer-events: none;
-
-  transform-origin: center;
-
-  animation: ctSafeOrbit 12s linear infinite;
-}
-
-@keyframes ctSafeOrbit {
-  from {
-    transform:
-      translate(-50%, -50%)
-      rotate(0deg);
-  }
-
-  to {
-    transform:
-      translate(-50%, -50%)
-      rotate(360deg);
-  }
-}
-
-.viewer[data-fx="spin"] .v-stand img {
-  position: relative;
-  z-index: 1;
-}
-
-/* ========================================
-   SPIN EFFECT VIEWPORT FIX V2
-======================================== */
-
-
-/* 회전 효과 전용 각도 변수 */
-
-@property --ct-spin-angle {
-  syntax: "<angle>";
-  inherits: false;
-  initial-value: 0deg;
-}
-
-
-/* 카드 영역 넘침 차단 */
-
-.fx-spin {
-  min-width: 0;
-
-  overflow: hidden;
-  overflow: clip;
-}
-
-.fx-spin .archive-card {
-  overflow: hidden;
-
-  isolation: isolate;
-  contain: paint;
-}
-
-
-/* 회전하는 빛줄기 방식 변경 */
-
-.fx-spin .archive-card::before {
-  content: "";
-
-  position: absolute;
-
-  inset: 0 !important;
-
-  width: auto;
-  height: auto;
-
-  z-index: -1;
-
-  transform: none !important;
-
-  background: conic-gradient(
-    from var(--ct-spin-angle),
-    transparent 0%,
-    transparent 40%,
-    var(--c) 65%,
-    #ffffff 80%,
-    var(--c) 95%,
-    transparent 100%
-  );
-
-  animation:
-    ctBorderLightRotation 4s linear infinite;
-
-  pointer-events: none;
-}
-
-
-/* 빛의 방향만 회전 */
-
-@keyframes ctBorderLightRotation {
-
-  from {
-    --ct-spin-angle: 0deg;
-  }
-
-  to {
-    --ct-spin-angle: 360deg;
-  }
-}
-
-
-/* 상세창 너비 제한 */
-
-#viewer[data-fx="spin"] {
-  width: 100%;
-  max-width: 100%;
-  min-width: 0;
-
-  overflow-x: hidden;
-  overflow-y: auto;
-}
-
-#viewer[data-fx="spin"] .v-stage,
-#viewer[data-fx="spin"] .v-head,
-#viewer[data-fx="spin"] .v-scene,
-#viewer[data-fx="spin"] .v-info,
-#viewer[data-fx="spin"] .v-strip {
-  min-width: 0;
-  max-width: 100%;
-}
-
-
-/* 캐릭터 효과 영역 제한 */
-
-#viewer[data-fx="spin"] .v-stand {
-  overflow: hidden;
-
-  contain: paint;
-}
-
-
-/* 모바일 상세창 보호 */
-
-@media (max-width: 849px) {
-
-  #viewer[data-fx="spin"] .v-stage {
-    width: 100%;
-    max-width: 100%;
-  }
-}
-
-
-/* 움직임 최소화 설정 */
-
-@media (prefers-reduced-motion: reduce) {
-
-  .fx-spin .archive-card::before {
-    animation: none !important;
-  }
-}
