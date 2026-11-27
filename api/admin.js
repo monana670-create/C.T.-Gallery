@@ -94,12 +94,17 @@ function passwordOk(input) {
     crypto.timingSafeEqual(a, b);
 }
 
-const clean = (s, n) => String(s || "").trim().slice(0, n);
+const clean = (s, n) =>
+  String(s || "").trim().slice(0, n);
 
 function checkImage(b) {
   const ext = EXT[b.imageType];
 
-  if (!ext || !b.image) {
+  if (
+    !ext ||
+    typeof b.image !== "string" ||
+    !b.image
+  ) {
     throw Object.assign(
       new Error("이미지를 확인할 수 없어요."),
       { code: 400 }
@@ -120,6 +125,17 @@ const fileOf = kind =>
   kind === "worldview"
     ? "data/worldviews.json"
     : "data/characters.json";
+
+const encodeList = list =>
+  Buffer.from(
+    JSON.stringify(list, null, 2)
+  ).toString("base64");
+
+const decodeList = cur =>
+  JSON.parse(
+    Buffer.from(cur.content, "base64")
+      .toString("utf8")
+  );
 
 module.exports = async (req, res) => {
 
@@ -148,19 +164,21 @@ module.exports = async (req, res) => {
   try {
 
     /* ========================================
-       ADMIN VERIFICATION
+       01. ADMIN VERIFICATION
     ======================================== */
 
     if (b.action === "verify") {
       return res.json({ ok: true });
     }
 
+
     /* ========================================
-       ADD GALLERY IMAGE
+       02. ADD GALLERY IMAGE
     ======================================== */
 
     if (b.action === "addImage") {
       const ext = checkImage(b);
+
       const list = await ghGet("images");
 
       const nums = (Array.isArray(list) ? list : [])
@@ -182,8 +200,9 @@ module.exports = async (req, res) => {
       });
     }
 
+
     /* ========================================
-       DELETE GALLERY IMAGE
+       03. DELETE GALLERY IMAGE
     ======================================== */
 
     if (b.action === "deleteImage") {
@@ -203,8 +222,9 @@ module.exports = async (req, res) => {
       return res.json({ ok: true });
     }
 
+
     /* ========================================
-       ADD WEBTOON IMAGE
+       04. ADD WEBTOON ASSET
     ======================================== */
 
     if (b.action === "addAsset") {
@@ -225,8 +245,9 @@ module.exports = async (req, res) => {
       });
     }
 
+
     /* ========================================
-       ADD CHARACTER / WORLDVIEW
+       05. ADD CHARACTER / WORLDVIEW
     ======================================== */
 
     if (b.action === "addEntry") {
@@ -264,13 +285,11 @@ module.exports = async (req, res) => {
       const cur = await ghGet(file);
 
       const list = cur
-        ? JSON.parse(
-            Buffer.from(cur.content, "base64")
-              .toString("utf8")
-          )
+        ? decodeList(cur)
         : [];
 
-      const wImg = clean(b.webtoonImage, 300);
+      const wImg =
+        clean(b.webtoonImage, 300);
 
       const item = {
         id,
@@ -289,6 +308,8 @@ module.exports = async (req, res) => {
           ? b.effect
           : "none",
 
+        illustrations: [],
+
         webtoonUrl: /^https?:\/\//i.test(b.webtoonUrl || "")
           ? clean(b.webtoonUrl, 300)
           : "",
@@ -306,12 +327,8 @@ module.exports = async (req, res) => {
 
       await ghPut(
         file,
-        Buffer.from(
-          JSON.stringify(list, null, 2)
-        ).toString("base64"),
-
+        encodeList(list),
         `Add ${isChar ? "character" : "worldview"} ${title}`,
-
         cur && cur.sha
       );
 
@@ -321,11 +338,13 @@ module.exports = async (req, res) => {
       });
     }
 
+
     /* ========================================
-       EDIT CHARACTER / WORLDVIEW
+       06. EDIT CHARACTER / WORLDVIEW
     ======================================== */
 
     if (b.action === "editEntry") {
+
       if (!["character", "worldview"].includes(b.kind)) {
         return res.status(400).json({
           error: "잘못된 항목 종류예요."
@@ -341,10 +360,7 @@ module.exports = async (req, res) => {
         });
       }
 
-      const list = JSON.parse(
-        Buffer.from(cur.content, "base64")
-          .toString("utf8")
-      );
+      const list = decodeList(cur);
 
       const idx = list.findIndex(
         x => x.id === b.id
@@ -359,7 +375,9 @@ module.exports = async (req, res) => {
       const old = list[idx];
 
       const title = clean(b.title, 60);
-      const webtoonUrl = clean(b.webtoonUrl, 300);
+
+      const webtoonUrl =
+        clean(b.webtoonUrl, 300);
 
       if (!title) {
         return res.status(400).json({
@@ -378,9 +396,11 @@ module.exports = async (req, res) => {
 
       const item = {
         ...old,
+
         title,
 
         description: clean(b.description, 120),
+
         body: clean(b.body, 5000),
 
         color: /^#[0-9a-f]{6}$/i.test(b.color || "")
@@ -396,10 +416,13 @@ module.exports = async (req, res) => {
         updatedAt: new Date().toISOString()
       };
 
-      /* 웹툰 본문 이미지 변경 */
+      /* 웹툰 본문 변경 */
 
       if (b.webtoonImage !== undefined) {
-        const u = String(b.webtoonImage || "");
+
+        const u = String(
+          b.webtoonImage || ""
+        );
 
         if (
           u &&
@@ -422,7 +445,8 @@ module.exports = async (req, res) => {
           ? "worldviews/images"
           : "characters/images";
 
-        const path = dir + "/edit-" +
+        const path =
+          dir + "/edit-" +
           crypto.randomBytes(12).toString("hex") +
           "." + ext;
 
@@ -435,18 +459,14 @@ module.exports = async (req, res) => {
         item.image = RAW + "HEAD/" + path;
       }
 
-      /* 기존 ID 및 순서 유지 */
+      /* 추가 일러스트와 웹툰 정보는 그대로 유지 */
 
       list[idx] = item;
 
       await ghPut(
         file,
-        Buffer.from(
-          JSON.stringify(list, null, 2)
-        ).toString("base64"),
-
+        encodeList(list),
         "Edit " + old.title,
-
         cur.sha
       );
 
@@ -456,8 +476,9 @@ module.exports = async (req, res) => {
       });
     }
 
+
     /* ========================================
-       REPLACE GALLERY IMAGE
+       07. REPLACE GALLERY IMAGE
     ======================================== */
 
     if (b.action === "replaceImage") {
@@ -469,7 +490,8 @@ module.exports = async (req, res) => {
         });
       }
 
-      const ext = name.split(".").pop().toLowerCase();
+      const ext =
+        name.split(".").pop().toLowerCase();
 
       const mime = {
         jpg: "image/jpeg",
@@ -509,6 +531,7 @@ module.exports = async (req, res) => {
       }
 
       const path = "images/" + name;
+
       const cur = await ghGet(path);
 
       if (!cur || !cur.sha) {
@@ -534,8 +557,9 @@ module.exports = async (req, res) => {
       });
     }
 
+
     /* ========================================
-       WEBTOON COVER / PLAY LINK SETTINGS
+       08. WEBTOON COVER / PLAY LINK
     ======================================== */
 
     if (b.action === "setWebtoonCover") {
@@ -555,10 +579,7 @@ module.exports = async (req, res) => {
         });
       }
 
-      const list = JSON.parse(
-        Buffer.from(cur.content, "base64")
-          .toString("utf8")
-      );
+      const list = decodeList(cur);
 
       const idx = list.findIndex(
         x => x.id === b.id
@@ -573,15 +594,18 @@ module.exports = async (req, res) => {
       const old = list[idx];
 
       let coverUrl = old.webtoonCover || "";
+
       let playUrl = old.webtoonUrl || "";
 
-      /* 플레이 링크 등록 및 수정 */
+      /* 플레이 링크 수정 */
 
       if (typeof b.playUrl === "string") {
+
         playUrl = clean(b.playUrl, 300);
 
         if (playUrl) {
           try {
+
             const url = new URL(playUrl);
 
             if (!["http:", "https:"].includes(url.protocol)) {
@@ -596,9 +620,10 @@ module.exports = async (req, res) => {
         }
       }
 
-      /* 전용 일러스트 등록 및 교체 */
+      /* 전용 일러스트 등록 */
 
       if (b.image) {
+
         const ext = checkImage(b);
 
         const path =
@@ -615,15 +640,15 @@ module.exports = async (req, res) => {
         coverUrl = `${RAW}HEAD/${path}`;
 
       } else if (b.clear === true) {
+
         coverUrl = "";
       }
-
-      /* 기존 캐릭터 데이터는 모두 유지 */
 
       const item = {
         ...old,
 
         webtoonCover: coverUrl,
+
         webtoonUrl: playUrl,
 
         updatedAt: new Date().toISOString()
@@ -633,12 +658,8 @@ module.exports = async (req, res) => {
 
       await ghPut(
         file,
-        Buffer.from(
-          JSON.stringify(list, null, 2)
-        ).toString("base64"),
-
+        encodeList(list),
         `Update webtoon settings ${item.title}`,
-
         cur.sha
       );
 
@@ -648,13 +669,154 @@ module.exports = async (req, res) => {
       });
     }
 
+
     /* ========================================
-       DELETE CHARACTER / WORLDVIEW
+       09. ADD / REMOVE CHARACTER ILLUSTRATION
+    ======================================== */
+
+    if (
+      b.action === "addIllustration" ||
+      b.action === "removeIllustration"
+    ) {
+
+      const file = "data/characters.json";
+
+      const cur = await ghGet(file);
+
+      if (!cur || !cur.sha) {
+        return res.status(404).json({
+          error: "캐릭터 데이터를 찾을 수 없어요."
+        });
+      }
+
+      const list = decodeList(cur);
+
+      const idx = list.findIndex(
+        x => x.id === b.id
+      );
+
+      if (idx < 0) {
+        return res.status(404).json({
+          error: "캐릭터를 찾을 수 없어요."
+        });
+      }
+
+      const old = list[idx];
+
+      const illustrations =
+        Array.isArray(old.illustrations)
+          ? [...old.illustrations]
+          : [];
+
+      let removed = "";
+
+      /* 추가 일러스트 등록 */
+
+      if (b.action === "addIllustration") {
+
+        const ext = checkImage(b);
+
+        const path =
+          "characters/images/extra-" +
+          crypto.randomBytes(12).toString("hex") +
+          "." + ext;
+
+        await ghPut(
+          path,
+          b.image,
+          "Add character illustration"
+        );
+
+        illustrations.push(
+          RAW + "HEAD/" + path
+        );
+      }
+
+      /* 추가 일러스트 삭제 */
+
+      if (b.action === "removeIllustration") {
+
+        const index =
+          illustrations.indexOf(b.url);
+
+        if (index < 0) {
+          return res.status(404).json({
+            error: "일러스트를 찾을 수 없어요."
+          });
+        }
+
+        removed = illustrations[index];
+
+        illustrations.splice(index, 1);
+      }
+
+      /* 대표 이미지 및 기존 데이터 유지 */
+
+      const item = {
+        ...old,
+
+        illustrations,
+
+        updatedAt: new Date().toISOString()
+      };
+
+      list[idx] = item;
+
+      await ghPut(
+        file,
+        encodeList(list),
+        "Update character illustrations",
+        cur.sha
+      );
+
+      /* 사용하지 않는 추가 이미지 파일 정리 */
+
+      if (removed) {
+
+        const path =
+          pathFromUrl(removed);
+
+        const stillUsed = list.some(entry =>
+          entry.image === removed ||
+          entry.webtoonCover === removed ||
+          entry.webtoonImage === removed ||
+          (
+            Array.isArray(entry.illustrations) &&
+            entry.illustrations.includes(removed)
+          )
+        );
+
+        if (
+          path &&
+          /^characters\/images\/extra-[0-9a-f]{24}\.(webp|jpg|png)$/.test(path) &&
+          !stillUsed
+        ) {
+          try {
+
+            await ghDelete(
+              path,
+              "Remove character illustration"
+            );
+
+          } catch {}
+        }
+      }
+
+      return res.json({
+        ok: true,
+        item
+      });
+    }
+
+
+    /* ========================================
+       10. DELETE CHARACTER / WORLDVIEW
     ======================================== */
 
     if (b.action === "deleteEntry") {
 
       const file = fileOf(b.kind);
+
       const cur = await ghGet(file);
 
       if (!cur) {
@@ -663,10 +825,7 @@ module.exports = async (req, res) => {
         });
       }
 
-      const list = JSON.parse(
-        Buffer.from(cur.content, "base64")
-          .toString("utf8")
-      );
+      const list = decodeList(cur);
 
       const idx = list.findIndex(
         x => x.id === b.id
@@ -684,42 +843,49 @@ module.exports = async (req, res) => {
 
       await ghPut(
         file,
-        Buffer.from(
-          JSON.stringify(list, null, 2)
-        ).toString("base64"),
-
+        encodeList(list),
         `Delete ${item.title}`,
-
         cur.sha
       );
 
       const urls = new Set([
         item.image,
         item.webtoonImage,
-        item.webtoonCover
+        item.webtoonCover,
+
+        ...(Array.isArray(item.illustrations)
+          ? item.illustrations
+          : [])
       ]);
 
       for (const u of urls) {
+
         const p = pathFromUrl(u);
 
         if (p) {
           try {
+
             await ghDelete(
               p,
               `Delete file ${p}`
             );
+
           } catch {}
         }
       }
 
-      return res.json({ ok: true });
+      return res.json({
+        ok: true
+      });
     }
+
 
     return res.status(400).json({
       error: "알 수 없는 요청이에요."
     });
 
   } catch (err) {
+
     return res.status(err.code || 500).json({
       error: err.message || "서버 오류가 났어요."
     });
