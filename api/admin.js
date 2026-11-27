@@ -3,7 +3,7 @@ const sharp = require("sharp");
 
 /* ========================================
    C.T. GALLERY
-   SECURE ADMIN SYSTEM
+   SECURE ADMIN & WORLD ARCHIVE
 ======================================== */
 
 const OWNER = process.env.GH_OWNER || "monana670-create";
@@ -19,12 +19,7 @@ const EXT = {
   "image/gif": "gif"
 };
 
-const FX = [
-  "none",
-  "glow",
-  "pulse",
-  "spin"
-];
+const FX = ["none", "glow", "pulse", "spin"];
 
 const MAX_B64 = 3500000;
 const MAX_PIXELS = 40000000;
@@ -33,11 +28,6 @@ const RECORD_FILES = [
   "data/characters.json",
   "data/worldviews.json"
 ];
-
-
-/* ========================================
-   BASIC UTILITIES
-======================================== */
 
 const err = (message, code = 400) =>
   Object.assign(new Error(message), { code });
@@ -64,13 +54,8 @@ const headers = () => ({
 ======================================== */
 
 function passwordOk(input) {
-  const a = Buffer.from(
-    String(input || "")
-  );
-
-  const b = Buffer.from(
-    process.env.ADMIN_PASSWORD || ""
-  );
+  const a = Buffer.from(String(input || ""));
+  const b = Buffer.from(process.env.ADMIN_PASSWORD || "");
 
   return (
     b.length > 0 &&
@@ -126,7 +111,6 @@ function managedImage(path) {
     /^(characters|worldviews|webtoon|illustrations)\/[\w./-]+\.(jpg|jpeg|png|gif|webp)$/i.test(path) &&
 
     !path.includes("..") &&
-
     !path.includes("//")
   );
 }
@@ -152,22 +136,12 @@ function pathFromUrl(value) {
     : null;
 }
 
-
-/* ========================================
-   IMAGE REFERENCE TRACKING
-======================================== */
-
-function collectPaths(
-  value,
-  set = new Set()
-) {
+function collectPaths(value, set = new Set()) {
   if (typeof value === "string") {
 
     const path = pathFromUrl(value);
 
-    if (path) {
-      set.add(path);
-    }
+    if (path) set.add(path);
 
   } else if (
     value &&
@@ -186,9 +160,7 @@ function assetUrl(value) {
   const url = clean(value, 300);
 
   if (url && !pathFromUrl(url)) {
-    throw err(
-      "이미지 주소가 올바르지 않아요."
-    );
+    throw err("이미지 주소가 올바르지 않아요.");
   }
 
   return url;
@@ -200,6 +172,7 @@ function linkUrl(value) {
   if (!link) return "";
 
   try {
+
     const u = new URL(link);
 
     if (!/^https?:$/.test(u.protocol)) {
@@ -209,9 +182,8 @@ function linkUrl(value) {
     return u.href;
 
   } catch {
-    throw err(
-      "올바른 링크를 입력해 주세요."
-    );
+
+    throw err("올바른 링크를 입력해 주세요.");
   }
 }
 
@@ -228,16 +200,11 @@ function checkImage(b) {
     typeof b.image !== "string" ||
     !b.image
   ) {
-    throw err(
-      "이미지를 확인할 수 없어요."
-    );
+    throw err("이미지를 확인할 수 없어요.");
   }
 
   if (b.image.length > MAX_B64) {
-    throw err(
-      "이미지가 너무 커요.",
-      413
-    );
+    throw err("이미지가 너무 커요.", 413);
   }
 
   return ext;
@@ -248,10 +215,7 @@ function checkImage(b) {
    IMAGE METADATA REMOVAL
 ======================================== */
 
-async function sanitizeImage(
-  path,
-  content
-) {
+async function sanitizeImage(path, content) {
 
   if (
     typeof content !== "string" ||
@@ -271,26 +235,18 @@ async function sanitizeImage(
       Buffer.from(content, "base64"),
       {
         animated: true,
-
         limitInputPixels: MAX_PIXELS,
-
         failOn: "warning"
       }
     );
 
     const meta = await input.metadata();
 
-
-    /* 실제 이미지 형식 검사 */
-
     if (meta.format !== format) {
       throw err(
         "이미지 확장자와 실제 형식이 달라요."
       );
     }
-
-
-    /* 이미지 해상도 및 프레임 검사 */
 
     const pages = meta.pages || 1;
 
@@ -309,60 +265,36 @@ async function sanitizeImage(
       );
     }
 
-
-    /* 이미지 원래 방향 보존 */
-
     if (pages === 1) {
       input.autoOrient();
     }
 
-
-    /* 원본 메타데이터와 이미지 픽셀 분리 */
-
     const { data, info } = await input
-
       .toColourspace("srgb")
-
       .ensureAlpha()
-
       .raw()
-
       .toBuffer({
         resolveWithObject: true
       });
 
-
     if (info.channels !== 4) {
-      throw err(
-        "이미지 채널 확인 실패"
-      );
+      throw err("이미지 채널 확인 실패");
     }
 
 
-    /* ========================================
-       NOVELAI STEALTH METADATA REMOVAL
-    ======================================== */
-
-    /*
-      알파 채널에 숨겨진
-      NovelAI의 LSB 메타데이터 제거.
-
-      투명 배경을 유지하면서
-      알려진 알파 채널 정보 저장 방식 제거.
-    */
+    /* NovelAI 알파 채널 숨김 정보 제거 */
 
     for (
       let i = 3;
       i < data.length;
       i += 4
     ) {
+
       data[i] = data[i] >= 254
         ? 255
         : data[i] & 0xfe;
     }
 
-
-    /* 원래 이미지 크기 유지 */
 
     const raw = {
       width: info.width,
@@ -373,9 +305,6 @@ async function sanitizeImage(
         ? { pageHeight }
         : {})
     };
-
-
-    /* GIF 등의 재생 정보 유지 */
 
     const animation = {
 
@@ -389,19 +318,12 @@ async function sanitizeImage(
     };
 
 
-    /* ========================================
-       CLEAN IMAGE ENCODING
-    ======================================== */
-
-    for (const quality of [95, 85, 75]) {
+    for (const quality of [95,85,75]) {
 
       let output = sharp(data, {
         raw,
         limitInputPixels: MAX_PIXELS
       });
-
-
-      /* PNG */
 
       if (format === "png") {
 
@@ -409,44 +331,29 @@ async function sanitizeImage(
           compressionLevel: 9
         });
 
-
-      /* JPEG */
-
       } else if (format === "jpeg") {
 
         output = output
-
           .flatten({
             background: "#ffffff"
           })
-
           .jpeg({
             quality
           });
-
-
-      /* WEBP */
 
       } else if (format === "webp") {
 
         output = output.webp({
           quality,
-
           alphaQuality: 100,
-
           ...animation
         });
-
-
-      /* GIF */
 
       } else if (format === "gif") {
 
         output = output.gif({
           effort: 3,
-
           keepDuplicateFrames: true,
-
           ...animation
         });
 
@@ -457,13 +364,9 @@ async function sanitizeImage(
         );
       }
 
-
-      /* 메타데이터 없는 새 이미지 생성 */
-
       const encoded = (
         await output.toBuffer()
       ).toString("base64");
-
 
       if (encoded.length <= MAX_B64) {
         return encoded;
@@ -475,7 +378,6 @@ async function sanitizeImage(
       ) break;
     }
 
-
     throw err(
       "보안 처리된 이미지가 너무 커요. 크기를 줄여 주세요.",
       413
@@ -486,9 +388,7 @@ async function sanitizeImage(
     if (
       e.code === 400 ||
       e.code === 413
-    ) {
-      throw e;
-    }
+    ) throw e;
 
     console.warn(
       "Image sanitize:",
@@ -519,8 +419,7 @@ async function ghGet(path) {
   if (!r.ok) {
     throw new Error(
       "GitHub 읽기 실패 (" +
-      r.status +
-      ")"
+      r.status + ")"
     );
   }
 
@@ -529,7 +428,7 @@ async function ghGet(path) {
 
 
 /* ========================================
-   SECURE GITHUB FILE SAVE
+   GITHUB FILE SAVE
 ======================================== */
 
 async function ghPut(
@@ -539,15 +438,12 @@ async function ghPut(
   sha
 ) {
 
-  /* 모든 이미지 저장 전 보안 처리 */
-
   if (formatOf(path)) {
     content = await sanitizeImage(
       path,
       content
     );
   }
-
 
   const r = await fetch(API + path, {
 
@@ -557,19 +453,16 @@ async function ghPut(
 
     body: JSON.stringify({
       message,
-
       content,
-
       ...(sha ? { sha } : {})
     })
   });
 
-
   if (!r.ok) {
+
     throw new Error(
       "GitHub 저장 실패 (" +
-      r.status +
-      ")"
+      r.status + ")"
     );
   }
 
@@ -608,7 +501,6 @@ function decodeRecords(cur) {
   return list;
 }
 
-
 async function loadRecords(kind) {
 
   const file = fileOf(kind);
@@ -619,18 +511,15 @@ async function loadRecords(kind) {
 
   return {
     file,
-
     sha: cur?.sha,
-
     list,
-
     before: collectPaths(list)
   };
 }
 
 
 /* ========================================
-   CHECK ACTIVE IMAGE REFERENCES
+   IMAGE REFERENCE CHECK
 ======================================== */
 
 async function livePaths() {
@@ -657,16 +546,7 @@ async function livePaths() {
    SAFE FILE DELETE
 ======================================== */
 
-async function ghDelete(
-  path,
-  message
-) {
-
-  /*
-    다른 캐릭터 또는 세계관이
-    같은 이미지를 사용하고 있다면
-    삭제하지 않음.
-  */
+async function ghDelete(path, message) {
 
   if (
     managedImage(path) &&
@@ -674,7 +554,6 @@ async function ghDelete(
   ) {
     return false;
   }
-
 
   const cur = await ghGet(path);
 
@@ -684,7 +563,6 @@ async function ghDelete(
   ) {
     return false;
   }
-
 
   const r = await fetch(API + path, {
 
@@ -698,12 +576,11 @@ async function ghDelete(
     })
   });
 
-
   if (!r.ok) {
+
     throw new Error(
       "GitHub 삭제 실패 (" +
-      r.status +
-      ")"
+      r.status + ")"
     );
   }
 
@@ -712,14 +589,12 @@ async function ghDelete(
 
 
 /* ========================================
-   AUTOMATIC IMAGE CLEANUP
+   UNUSED IMAGE CLEANUP
 ======================================== */
 
 async function cleanup(path) {
 
-  if (!managedImage(path)) {
-    return;
-  }
+  if (!managedImage(path)) return;
 
   try {
 
@@ -740,33 +615,25 @@ async function cleanup(path) {
 
 
 /* ========================================
-   SAVE RECORDS & REMOVE OLD IMAGES
+   SAVE RECORDS
 ======================================== */
 
-async function saveRecords(
-  state,
-  message
-) {
+async function saveRecords(state, message) {
 
   const after = collectPaths(
     state.list
   );
 
   const content = Buffer.from(
-
     JSON.stringify(
       state.list,
       null,
       2
     )
-
   ).toString("base64");
 
 
-  /*
-    먼저 새로운 데이터를 정상적으로 저장.
-    저장 실패 시 기존 이미지는 유지.
-  */
+  /* 정상 저장 후 기존 파일 정리 */
 
   await ghPut(
     state.file,
@@ -774,12 +641,6 @@ async function saveRecords(
     message,
     state.sha
   );
-
-
-  /*
-    저장 성공 후 기존 데이터와 비교하여
-    აღარ 사용하지 않는 이미지만 삭제.
-  */
 
   for (const path of state.before) {
 
@@ -789,17 +650,14 @@ async function saveRecords(
   }
 }
 
-
-function findIndex(
-  state,
-  id
-) {
+function findIndex(state, id) {
 
   const index = state.list.findIndex(
     x => x.id === id
   );
 
   if (index < 0) {
+
     throw err(
       "항목을 찾을 수 없어요.",
       404
@@ -821,14 +679,12 @@ module.exports = async (req, res) => {
     "no-store"
   );
 
-
   if (req.method !== "POST") {
 
     return res.status(405).json({
       error: "POST만 가능해요."
     });
   }
-
 
   if (
     !process.env.GITHUB_TOKEN ||
@@ -841,11 +697,7 @@ module.exports = async (req, res) => {
     });
   }
 
-
   const b = req.body || {};
-
-
-  /* 관리자 인증 */
 
   if (!passwordOk(b.password)) {
 
@@ -859,15 +711,9 @@ module.exports = async (req, res) => {
   }
 
 
-  /* 새로 업로드한 이미지 추적 */
-
   const pending = [];
 
-
-  async function upload(
-    dir,
-    prefix
-  ) {
+  async function upload(dir, prefix) {
 
     const ext = checkImage(b);
 
@@ -901,6 +747,307 @@ module.exports = async (req, res) => {
 
 
     /* ========================================
+       WORLD ASSET UPLOAD
+    ======================================== */
+
+    if (b.action === "addWorldAsset") {
+
+      const url = await upload(
+        "worldviews/images",
+        "lore"
+      );
+
+      return res.json({
+        ok: true,
+        url
+      });
+    }
+
+
+    /* ========================================
+       SAVE WORLD DETAILS
+    ======================================== */
+
+    if (b.action === "saveWorldDetails") {
+
+      const state = await loadRecords(
+        "worldview"
+      );
+
+      const index = findIndex(
+        state,
+        b.id
+      );
+
+      const raw = b.worldDetails;
+
+
+      if (
+        !raw ||
+        typeof raw !== "object" ||
+        Array.isArray(raw)
+      ) {
+
+        throw err(
+          "세계관 설정 형식이 올바르지 않아요."
+        );
+      }
+
+
+      /* 지도 좌표 검사 */
+
+      function coordinate(value) {
+
+        if (
+          value === "" ||
+          value === null ||
+          value === undefined
+        ) return null;
+
+        const n = Number(value);
+
+        return (
+          Number.isFinite(n) &&
+          n >= 0 &&
+          n <= 100
+        ) ? n : null;
+      }
+
+
+      /* 모든 세부 항목은 선택 사항 */
+
+      const details = {
+
+        genre: clean(
+          raw.genre,
+          120
+        ),
+
+        era: clean(
+          raw.era,
+          120
+        ),
+
+        tagline: clean(
+          raw.tagline,
+          250
+        ),
+
+        mapImage: assetUrl(
+          raw.mapImage
+        ),
+
+        characterIds: [
+
+          ...new Set(
+
+            (
+              Array.isArray(raw.characterIds)
+
+                ? raw.characterIds
+
+                : []
+            )
+
+              .map(
+                id => clean(id,100)
+              )
+
+              .filter(Boolean)
+          )
+
+        ].slice(0,200)
+      };
+
+
+      const groups = [
+
+        "facts",
+        "regions",
+        "history",
+        "factions",
+        "rules",
+        "lore",
+        "gallery",
+        "secrets",
+        "custom"
+
+      ];
+
+
+      for (const key of groups) {
+
+        const input =
+          Array.isArray(raw[key])
+
+            ? raw[key]
+
+            : [];
+
+
+        if (input.length > 20) {
+
+          throw err(
+            "한 분류에 최대 20개 항목을 등록할 수 있어요."
+          );
+        }
+
+
+        details[key] = input
+
+          .filter(row =>
+
+            row &&
+            typeof row === "object" &&
+            !Array.isArray(row)
+
+          )
+
+          .map(row => {
+
+            const value = {
+
+              title: clean(
+                row.title,
+                120
+              ),
+
+              text: clean(
+                row.text,
+                3000
+              )
+            };
+
+
+            if (
+              [
+                "history",
+                "factions",
+                "lore",
+                "custom"
+              ].includes(key)
+            ) {
+
+              value.label = clean(
+                row.label,
+                120
+              );
+            }
+
+
+            if (key !== "facts") {
+
+              value.image = assetUrl(
+                row.image
+              );
+            }
+
+
+            if (key === "regions") {
+
+              value.x = coordinate(
+                row.x
+              );
+
+              value.y = coordinate(
+                row.y
+              );
+            }
+
+            return value;
+          })
+
+          .filter(row =>
+
+            row.title ||
+            row.text ||
+            row.label ||
+            row.image
+
+          );
+      }
+
+
+      if (
+        Buffer.byteLength(
+          JSON.stringify(details),
+          "utf8"
+        ) > 90000
+      ) {
+
+        throw err(
+          "세계관 설정 내용이 너무 많아요.",
+          413
+        );
+      }
+
+
+      /* 기존 세계관 정보 보존 */
+
+      const item = {
+
+        ...state.list[index],
+
+        worldDetails: details,
+
+        updatedAt:
+          new Date().toISOString()
+      };
+
+
+      state.list[index] = item;
+
+
+      await saveRecords(
+        state,
+        "Update world archive " +
+        item.title
+      );
+
+
+      return res.json({
+        ok: true,
+        item
+      });
+    }
+
+
+    /* ========================================
+       DISCARD UNUSED WORLD ASSETS
+    ======================================== */
+
+    if (b.action === "discardWorldAssets") {
+
+      const urls = Array.isArray(b.urls)
+
+        ? b.urls.slice(0,20)
+
+        : [];
+
+
+      for (const url of urls) {
+
+        const path = pathFromUrl(url);
+
+        if (
+          path &&
+
+          /^worldviews\/images\/lore-[a-f0-9]{24}\.(png|jpg|webp|gif)$/i
+            .test(path)
+        ) {
+
+          await cleanup(path);
+        }
+      }
+
+
+      return res.json({
+        ok: true
+      });
+    }
+
+
+    /* ========================================
        ADD GALLERY IMAGE
     ======================================== */
 
@@ -916,27 +1063,29 @@ module.exports = async (req, res) => {
           : []
       )
 
-        .map(
-          f => parseInt(f.name, 10)
-        )
+        .map(f => parseInt(f.name,10))
 
         .filter(Number.isFinite);
 
 
       const next = (
         numbers.length
+
           ? Math.max(...numbers)
+
           : 0
       ) + 1;
 
 
       const name = next + "." + ext;
 
+
       await ghPut(
         "images/" + name,
         b.image,
         "Add image " + next
       );
+
 
       return res.json({
         ok: true,
@@ -951,10 +1100,13 @@ module.exports = async (req, res) => {
 
     if (b.action === "replaceImage") {
 
-      const name = String(b.name || "");
+      const name = String(
+        b.name || ""
+      );
 
       if (
-        !/^[\w-]+\.(jpg|jpeg|png|gif|webp)$/i.test(name)
+        !/^[\w-]+\.(jpg|jpeg|png|gif|webp)$/i
+          .test(name)
       ) {
 
         throw err(
@@ -962,13 +1114,11 @@ module.exports = async (req, res) => {
         );
       }
 
-
       checkImage(b);
 
       const path = "images/" + name;
 
       const actual = formatOf(name);
-
 
       if (
         b.imageType !== "image/" + actual
@@ -978,7 +1128,6 @@ module.exports = async (req, res) => {
           "기존 작품과 동일한 이미지 형식을 선택해 주세요."
         );
       }
-
 
       const cur = await ghGet(path);
 
@@ -990,16 +1139,12 @@ module.exports = async (req, res) => {
         );
       }
 
-
-      /* 기존 파일명 그대로 교체 */
-
       const saved = await ghPut(
         path,
         b.image,
         "Replace image " + name,
         cur.sha
       );
-
 
       return res.json({
 
@@ -1025,10 +1170,13 @@ module.exports = async (req, res) => {
 
     if (b.action === "deleteImage") {
 
-      const name = String(b.name || "");
+      const name = String(
+        b.name || ""
+      );
 
       if (
-        !/^[\w-]+\.(jpg|jpeg|png|gif|webp)$/i.test(name)
+        !/^[\w-]+\.(jpg|jpeg|png|gif|webp)$/i
+          .test(name)
       ) {
 
         throw err(
@@ -1036,12 +1184,10 @@ module.exports = async (req, res) => {
         );
       }
 
-
       await ghDelete(
         "images/" + name,
         "Delete image " + name
       );
-
 
       return res.json({
         ok: true
@@ -1077,7 +1223,7 @@ module.exports = async (req, res) => {
 
       const state = await loadRecords(kind);
 
-      const title = clean(b.title, 60);
+      const title = clean(b.title,60);
 
 
       if (!title) {
@@ -1180,9 +1326,6 @@ module.exports = async (req, res) => {
 
       const old = state.list[index];
 
-
-      /* 기존 데이터 보존 */
-
       const item = {
 
         ...old,
@@ -1192,9 +1335,12 @@ module.exports = async (req, res) => {
       };
 
 
-      if (has(b, "title")) {
+      if (has(b,"title")) {
 
-        item.title = clean(b.title, 60);
+        item.title = clean(
+          b.title,
+          60
+        );
 
         if (!item.title) {
 
@@ -1205,7 +1351,7 @@ module.exports = async (req, res) => {
       }
 
 
-      if (has(b, "description")) {
+      if (has(b,"description")) {
 
         item.description = clean(
           b.description,
@@ -1214,7 +1360,7 @@ module.exports = async (req, res) => {
       }
 
 
-      if (has(b, "body")) {
+      if (has(b,"body")) {
 
         item.body = clean(
           b.body,
@@ -1237,15 +1383,13 @@ module.exports = async (req, res) => {
       }
 
 
-      /* 플레이 링크 수정 */
-
-      if (has(b, "webtoonUrl")) {
+      if (has(b,"webtoonUrl")) {
 
         item.webtoonUrl = linkUrl(
           b.webtoonUrl
         );
 
-      } else if (has(b, "playUrl")) {
+      } else if (has(b,"playUrl")) {
 
         item.webtoonUrl = linkUrl(
           b.playUrl
@@ -1253,9 +1397,7 @@ module.exports = async (req, res) => {
       }
 
 
-      /* 웹툰 이미지 교체 또는 제거 */
-
-      if (has(b, "webtoonImage")) {
+      if (has(b,"webtoonImage")) {
 
         item.webtoonImage = assetUrl(
           b.webtoonImage
@@ -1263,17 +1405,13 @@ module.exports = async (req, res) => {
       }
 
 
-      /* 전용 표지 수정 */
-
-      if (has(b, "webtoonCover")) {
+      if (has(b,"webtoonCover")) {
 
         item.webtoonCover = assetUrl(
           b.webtoonCover
         );
       }
 
-
-      /* 대표 이미지 교체 */
 
       if (b.image) {
 
@@ -1286,11 +1424,6 @@ module.exports = async (req, res) => {
 
       state.list[index] = item;
 
-
-      /*
-        새 항목 저장 성공 후
-        기존 미사용 이미지 자동 정리.
-      */
 
       await saveRecords(
         state,
@@ -1320,7 +1453,6 @@ module.exports = async (req, res) => {
         b.id
       );
 
-
       const item = {
 
         ...state.list[index],
@@ -1330,23 +1462,19 @@ module.exports = async (req, res) => {
       };
 
 
-      /* 플레이 링크 */
-
-      if (has(b, "playUrl")) {
+      if (has(b,"playUrl")) {
 
         item.webtoonUrl = linkUrl(
           b.playUrl
         );
 
-      } else if (has(b, "webtoonUrl")) {
+      } else if (has(b,"webtoonUrl")) {
 
         item.webtoonUrl = linkUrl(
           b.webtoonUrl
         );
       }
 
-
-      /* 전용 웹툰 표지 업로드 */
 
       if (b.image) {
 
@@ -1396,7 +1524,6 @@ module.exports = async (req, res) => {
         state,
         b.id
       );
-
 
       const item = {
 
@@ -1466,7 +1593,6 @@ module.exports = async (req, res) => {
         b.id
       );
 
-
       const item = {
 
         ...state.list[index],
@@ -1484,7 +1610,9 @@ module.exports = async (req, res) => {
           : [];
 
 
-      const url = String(b.url || "");
+      const url = String(
+        b.url || ""
+      );
 
 
       if (!list.includes(url)) {
@@ -1503,11 +1631,6 @@ module.exports = async (req, res) => {
 
       state.list[index] = item;
 
-
-      /*
-        목록에서 먼저 제거한 후
-        실제 이미지 파일도 자동 삭제.
-      */
 
       await saveRecords(
         state,
@@ -1543,17 +1666,10 @@ module.exports = async (req, res) => {
         b.id
       );
 
-
       const item = state.list[index];
 
-      state.list.splice(index, 1);
+      state.list.splice(index,1);
 
-
-      /*
-        캐릭터를 삭제하면 연결된
-        대표 이미지, 웹툰 이미지, 표지,
-        추가 일러스트도 미사용 여부 확인 후 삭제.
-      */
 
       await saveRecords(
         state,
@@ -1567,19 +1683,18 @@ module.exports = async (req, res) => {
     }
 
 
+    /* 요청 이름을 포함한 오류 메시지 */
+
     return res.status(400).json({
-      error: "알 수 없는 요청이에요."
+
+      error:
+        "알 수 없는 요청이에요. (" +
+        clean(b.action,80) +
+        ")"
     });
 
 
   } catch (e) {
-
-    /*
-      데이터 저장 실패 시
-      이번 요청에서 새로 만든 미사용 파일 정리.
-
-      기존에 사용 중인 파일은 삭제하지 않음.
-    */
 
     for (const path of pending) {
 
