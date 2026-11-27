@@ -25,11 +25,18 @@
       "history": [],
       "factions": [],
       "rules": [],
-      "lore": [],
+      "lore": [
+        {
+          "title": "스티그마",
+          "text": "",
+          "label": "",
+          "image": ""
+        }
+      ],
       "gallery": [],
       "secrets": [],
       "custom": []
     },
-    "updatedAt": "2026-11-27T17:32:22.046Z"
+    "updatedAt": "2026-11-27T17:33:39.665Z"
   }
 ]
